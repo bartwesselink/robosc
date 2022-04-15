@@ -12,6 +12,13 @@ Require-Bundle: nl.tue.robotsupervisorycontrollerdsl,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
  org.eclipse.ui.editors;bundle-version="3.5.0",
- org.eclipse.ui.ide;bundle-version="3.5.0"
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: nl.tue.robotsupervisorycontrollerdsl.ui.internal,
+ nl.tue.robotsupervisorycontrollerdsl.ui.quickfix,
+ nl.tue.robotsupervisorycontrollerdsl.ui.contentassist
+Bundle-Activator: nl.tue.robotsupervisorycontrollerdsl.ui.internal.RobotsupervisorycontrollerdslActivator

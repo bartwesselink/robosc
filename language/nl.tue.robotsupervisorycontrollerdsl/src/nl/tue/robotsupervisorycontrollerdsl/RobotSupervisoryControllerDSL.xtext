@@ -1,0 +1,9 @@
+grammar nl.tue.robotsupervisorycontrollerdsl.RobotSupervisoryControllerDSL with org.eclipse.xtext.common.Terminals
+
+generate robotSupervisoryControllerDSL "http://www.tue.nl/robotsupervisorycontrollerdsl/RobotSupervisoryControllerDSL"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

@@ -8,5 +8,8 @@ Bundle-SymbolicName: nl.tue.robotsupervisorycontrollerdsl.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: nl.tue.robotsupervisorycontrollerdsl,
  org.eclipse.xtext.ide,
- org.eclipse.xtext.xbase.ide
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: nl.tue.robotsupervisorycontrollerdsl.ide.contentassist.antlr,
+ nl.tue.robotsupervisorycontrollerdsl.ide.contentassist.antlr.internal
