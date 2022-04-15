@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: nl.tue.robotsupervisorycontrollerdsl.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.tue.robotsupervisorycontrollerdsl.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: nl.tue.robotsupervisorycontrollerdsl.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: nl.tue.robotsupervisorycontrollerdsl,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-11

@@ -1,0 +1,3 @@
+include 'nl.tue.robotsupervisorycontrollerdsl'
+include 'nl.tue.robotsupervisorycontrollerdsl.ide'
+include 'nl.tue.robotsupervisorycontrollerdsl.tests'
