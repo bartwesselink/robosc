@@ -1,0 +1,25 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build-language:
+    name: Build language
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: language/
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+    - run: ./gradlew build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: language
+        path: nl.tue.robotsupervisorycontrollerdsl/build/libs/nl.tue.robotsupervisorycontrollerdsl-*.jar
