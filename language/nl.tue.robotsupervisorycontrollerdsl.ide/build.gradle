@@ -25,3 +25,15 @@ shadowJar {
 //this is an eclipse plugin project
 eclipseClasspath.enabled=false
 cleanEclipseClasspath.enabled=false
+
+version = ''
+
+task unzipServer(type: Copy, dependsOn: distZip) {
+	def zipFile = file("${buildDir}/distributions/nl.tue.robotsupervisorycontrollerdsl.ide.zip")
+	def outputDir = file("${buildDir}/../../../extension/server")
+
+	from zipTree(zipFile)
+	into outputDir
+}
+
+build.finalizedBy unzipServer
