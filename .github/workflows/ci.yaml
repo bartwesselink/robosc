@@ -38,7 +38,7 @@ jobs:
         node-version: '16'
     - run: ./gradlew build
       working-directory: language/
-    - run: yarn
+    - run: yarn && yarn package
       working-directory: extension/
     - uses: actions/upload-artifact@v3
       with:
