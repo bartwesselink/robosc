@@ -2,6 +2,7 @@ dependencies {
 	api "org.eclipse.xtext:org.eclipse.xtext:${xtextVersion}"
 	api "org.eclipse.xtext:org.eclipse.xtext.xbase:${xtextVersion}"
 }
+
 configurations {
 	mwe2 {
 		extendsFrom compileClasspath
@@ -13,6 +14,7 @@ dependencies {
 	mwe2 "org.eclipse.xtext:org.eclipse.xtext.common.types:${xtextVersion}"
 	mwe2 "org.eclipse.xtext:org.eclipse.xtext.xtext.generator:${xtextVersion}"
 	mwe2 'org.eclipse.xtext:xtext-antlr-generator'
+	mwe2 project(':nl.tue.robotsupervisorycontrollerdsl.mwe2')
 }
 
 task generateXtextLanguage(type: JavaExec) {
@@ -25,6 +27,13 @@ task generateXtextLanguage(type: JavaExec) {
 	args += "-p"
 	args += "rootPath=/${projectDir}/.."
 }
+
+task copyTextMateFile(type: Copy) {
+	from "${buildDir}/../../nl.tue.robotsupervisorycontrollerdsl.ide/textmate-gen/rscd.tmLanguage.json"
+	into "${buildDir}/../../../extension/syntaxes/"
+}
+
+build.finalizedBy copyTextMateFile
 
 processResources.dependsOn(generateXtextLanguage)
 generateXtext.dependsOn(generateXtextLanguage)

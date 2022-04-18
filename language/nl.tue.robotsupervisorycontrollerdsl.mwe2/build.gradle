@@ -1,0 +1,10 @@
+
+dependencies {
+	api "org.eclipse.xtext:org.eclipse.xtext.ide:${xtextVersion}"
+	api "org.eclipse.xtext:org.eclipse.xtext.xbase.ide:${xtextVersion}"
+}
+
+dependencies {
+	implementation "org.eclipse.xtext:org.eclipse.xtext.common.types:${xtextVersion}"
+	implementation "org.eclipse.xtext:org.eclipse.xtext.xtext.generator:${xtextVersion}"
+}

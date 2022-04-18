@@ -24,6 +24,7 @@
 		<module>nl.tue.robotsupervisorycontrollerdsl</module>
 		<module>nl.tue.robotsupervisorycontrollerdsl.ide</module>
 		<module>nl.tue.robotsupervisorycontrollerdsl.ui</module>
+		<module>nl.tue.robotsupervisorycontrollerdsl.mwe2</module>
 		<module>nl.tue.robotsupervisorycontrollerdsl.target</module>
 		<module>nl.tue.robotsupervisorycontrollerdsl.ui.tests</module>
 	</modules>

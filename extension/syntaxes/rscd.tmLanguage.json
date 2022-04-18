@@ -1,9 +1,7 @@
 {
 	"name": "Robot Supervisory Controller DSL",
     "scopeName": "source.rscd",
-    "fileTypes": [
-        "rscd"
-    ],
+    "fileTypes": ["rscd"],
     "repository": {
         "general": {
             "patterns": [
@@ -30,7 +28,7 @@
         },
         "keyword": {
             "name": "keyword.control.rscd",
-            "match": "\\b(Hello|from|said)\\b|!"
+            "match": "\\b(Hello|from)\\b"
         }
     },
     "patterns": [

@@ -9,3 +9,4 @@ xtend-gen
 bin
 generated
 plugin.xml_gen
+textmate-gen

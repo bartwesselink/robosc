@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: nl.tue.robotsupervisorycontrollerdsl.mwe2
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.tue.robotsupervisorycontrollerdsl.mwe2
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: nl.tue.robotsupervisorycontrollerdsl.mwe2; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: nl.tue.robotsupervisorycontrollerdsl,
+ org.eclipse.xtext.mwe2,
+ org.eclipse.xtext.xbase.mwe2,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: nl.tue.robotsupervisorycontrollerdsl.mwe

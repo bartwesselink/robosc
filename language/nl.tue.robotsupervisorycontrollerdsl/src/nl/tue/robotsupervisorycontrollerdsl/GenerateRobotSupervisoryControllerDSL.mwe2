@@ -2,6 +2,7 @@ module nl.tue.robotsupervisorycontrollerdsl.GenerateRobotSupervisoryControllerDS
 
 import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.model.project.*
+import nl.tue.robotsupervisorycontrollerdsl.mwe2.TextMateKeywordFragment
 
 var rootPath = ".."
 
@@ -54,6 +55,11 @@ Workflow {
 			}
 			junitSupport = {
 				junitVersion = "5"
+			}
+			fragment = TextMateKeywordFragment {
+				id = "rscd"
+				name = "Robot Supervisory Controller DSL"
+				scope = "source.rscd"
 			}
 		}
 	}
