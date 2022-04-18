@@ -8,3 +8,4 @@ xtend-gen
 .metadata
 bin
 generated
+plugin.xml_gen

@@ -3,9 +3,8 @@
  */
 package nl.tue.robotsupervisorycontrollerdsl.ide;
 
-
 /**
  * Use this class to register ide components.
  */
-public class RobotSupervisoryControllerDSLIdeModule extends AbstractRobotSupervisoryControllerDSLIdeModule {
+public class RobotSupervisoryControllerDSLIdeModule extends AbstractRobotSupervisoryControllerDSLIdeModule {	
 }

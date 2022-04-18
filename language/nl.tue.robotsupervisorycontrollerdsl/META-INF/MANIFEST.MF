@@ -25,5 +25,6 @@ Export-Package: nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerD
  nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.util,
  nl.tue.robotsupervisorycontrollerdsl.validation,
  nl.tue.robotsupervisorycontrollerdsl.scoping,
- nl.tue.robotsupervisorycontrollerdsl.serializer
+ nl.tue.robotsupervisorycontrollerdsl.serializer,
+ nl.tue.robotsupervisorycontrollerdsl.formatting2
 Import-Package: org.apache.log4j

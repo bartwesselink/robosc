@@ -1,19 +1,18 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node';
+import { LanguageClient, LanguageClientOptions, ServerOptions, Trace } from 'vscode-languageclient/node';
 
 export function activate(context: vscode.ExtensionContext) {
     const executable = process.platform === 'win32' ? 'nl.tue.robotsupervisorycontrollerdsl.ide.bat' : 'nl.tue.robotsupervisorycontrollerdsl.ide';
     const languageServerPath =  path.join('server', 'nl.tue.robotsupervisorycontrollerdsl.ide', 'bin', executable);
-    const serverLauncher = context.asAbsolutePath(languageServerPath);
+    const script = context.asAbsolutePath(languageServerPath);
+
     const serverOptions: ServerOptions = {
         run: {
-            command: serverLauncher,
-            args: ['-trace']
+            command: script,
         },
         debug: {
-            command: serverLauncher,
-            args: ['-trace']
+            command: script,
         }
     };
     
@@ -24,7 +23,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
     };
 
-    const languageClient = new LanguageClient('rscdLanguageClient', 'Robot Supervisory Controller DSL Language Server', serverOptions, clientOptions);
+    const languageClient = new LanguageClient('Xtext Server', serverOptions, clientOptions);
+    languageClient.trace = Trace.Verbose;
     languageClient.start();
 
     return languageClient;

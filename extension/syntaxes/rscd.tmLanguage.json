@@ -19,26 +19,23 @@
             ]
         },
         "linecomment": {
-            "name": "comment.line.double-dash.robot-supervisory-controller",
+            "name": "comment.line.double-dash.rscd",
             "begin": "(^[ \\t]+)?(?=//)",
 			"end": "(?=$)"
         },
         "blockcomment": {
-            "name": "comment.block.robot-supervisory-controller",
+            "name": "comment.block.rscd",
             "begin": "/\\*(\\*)?(?!/)",
 			"end": "\\*/"
         },
-        
         "keyword": {
-            "name": "keyword.control.robot-supervisory-controller",
-            "match": "\\b(Hello|from)\\b|!"
-
+            "name": "keyword.control.rscd",
+            "match": "\\b(Hello|from|said)\\b|!"
         }
     },
     "patterns": [
         {
             "include": "#general"
         }
-    ],
-    "uuid": "8383e49a-fa0d-4bb5-827b-10e8abb294ca"
+    ]
 }

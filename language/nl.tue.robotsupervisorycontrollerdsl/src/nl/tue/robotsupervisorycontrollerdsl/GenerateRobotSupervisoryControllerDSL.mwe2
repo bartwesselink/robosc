@@ -21,6 +21,9 @@ Workflow {
 				eclipsePluginTest = {
 					enabled = true
 				}
+				genericIde = {
+					enabled = true
+				}
 				createEclipseMetaData = true
 			}
 			code = {
@@ -43,6 +46,10 @@ Workflow {
 				generateDeprecationValidation = true
 			}
 			generator = {
+				generateXtendStub = true
+			}
+			formatter = {
+				generateStub = true
 				generateXtendStub = true
 			}
 			junitSupport = {
