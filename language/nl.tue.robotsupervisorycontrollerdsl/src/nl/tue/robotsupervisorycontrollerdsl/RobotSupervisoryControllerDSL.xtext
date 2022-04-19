@@ -1,47 +1,314 @@
 grammar nl.tue.robotsupervisorycontrollerdsl.RobotSupervisoryControllerDSL with org.eclipse.xtext.common.Terminals
-import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+import 'http://www.eclipse.org/emf/2002/Ecore' as ecore
 generate robotSupervisoryControllerDSL 'http://www.tue.nl/robotsupervisorycontrollerdsl/RobotSupervisoryControllerDSL'
 
-/* GLOBAL MODELS */
-Base: Robot | Library;
-Robot: 'robot' name=ID '{'
+/////////////////////////////
+// GLOBAL MODELS           //
+/////////////////////////////
+Base:
+	Robot | Library;
+
+Robot:
+	'robot' name=ID '{'
 	(definitions+=RobotDefinition)*
-'}';
+	'}';
 
-Library: 'library' name=ID '{'
+Library:
+	'library' name=ID '{'
 	(definitions+=LibraryDefinition)*
-'}';
+	'}';
 
-RobotDefinition: Component;
-LibraryDefinition: Component;
+RobotDefinition:
+	Component | Requirement | ProvideStatement | ComplexDataType;
 
-/* COMPONENTS */
-Component: 'component' name=ID;
+LibraryDefinition:
+	Component | ComplexDataType;
 
-/* COMMUNICATION */
+/////////////////////////////
+// COMPONENTS              //
+/////////////////////////////
+Component:
+	'component' name=ID type=ComponentType;
 
-/* VARIABLES */
+ComponentType:
+	LocalComponent | ImportedComponent;
 
-/* AUTOMATA */
+ImportedComponent:
+	'from' library=[Library] 'import' definition=[LibraryDefinition];
 
-/* DATA */
-StringDataType: {StringDataType} 'string';
-IntegerDataType: {IntegerDataType} 'integer' ('(' from=LiteralInt '..' to=LiteralInt ')')?;
-NoneDataType: {NoneDataType} 'none';
-BooleanDataType: {BooleanDataType} 'boolean';
-DoubleDataType: {DoubleDataType} 'double';
-Array: {Array} 'array' '(' type=DataType ')';
+LocalComponent:
+	{LocalComponent} '{'
+	(definitions+=ComponentDefinition)*
+	'}';
 
-BasicDataType: IntegerDataType | StringDataType | NoneDataType | BooleanDataType | DoubleDataType;
-DataType: BasicDataType | Array;
+ComponentDefinition:
+	ComponentBehaviour | CommunicationType;
 
-LiteralBoolean: value=("true" | "false");
-LiteralString: {LiteralString} value=STRING;
-LiteralInt: {LiteralInt} sign='-'? value=INT;
-LiteralDouble: {LiteralDouble} one=INT'.'two=INT;
-Literal: LiteralInt | LiteralString | LiteralBoolean | LiteralDouble;
+ComponentBehaviour:
+	'behaviour' '{' automaton=Automaton '}';
 
-/* EXPRESSIONS */
+/////////////////////////////
+// COMMUNICATION          //
+/////////////////////////////
+CommunicationType:
+	Message | Action | Service;
 
-/* CONTROLLER */
+MessageFrom:
+	{MessageFrom} 'incoming';
+
+MessageTo:
+	{MessageTo} 'outgoing';
+
+MessageDirection:
+	MessageFrom | MessageTo;
+
+CustomTypeSettings:
+	'(' 'import' name=ID 'from' package=ID ')';
+
+Message:
+	(direction=MessageDirection) 'message' name=ID 'with' ('identifier:' identifier=STRING ',')? 'type:' (type=DataType)
+	(typeSettings=CustomTypeSettings)?;
+
+Action:
+	'action' name=ID 'with' ('identifier:' identifier=STRING ',')? 'request:' (requestType=DataType) ',' 'response:'
+	(responseType=DataType) ',' 'feedback:' (feedbackType=DataType) (typeSettings=CustomTypeSettings)?;
+
+Service:
+	'service' name=ID 'with' ('identifier:' identifier=STRING ',')? 'request:' (requestType=DataType) ',' 'response:'
+	(responseType=DataType) (typeSettings=CustomTypeSettings)?;
+
+/////////////////////////////
+// VARIABLES               //
+/////////////////////////////
+Variable:
+	name=ID ':' type=DataType ('=' initial=Literal)?;
+
+/////////////////////////////
+// AUTOMATA                //
+/////////////////////////////
+Automaton:
+	{Automaton} (definitions+=AutomatonDefinition)*;
+
+AutomatonVariable:
+	'variable' variable=Variable;
+
+AutomatonDefinition:
+	Transition | State | AutomatonVariable;
+
+RequestResultType:
+	{RequestResultType} 'request';
+
+ResponseResultType:
+	{ResponseResultType} 'response';
+
+FeedbackResultType:
+	{FeedbackResultType} 'feedback';
+
+ResultType:
+	ResponseResultType | FeedbackResultType | RequestResultType;
+
+TransitionGuard:
+	'if' expression=Expression;
+
+TransitionAssignment:
+	'do' assignment=Assignment;
+
+TransitionStateChange:
+	'goto' state=[State];
+
+ResultTransition:
+	'on' (resultType=ResultType) ('from' | 'to') (communicationType=[CommunicationType])
+	(assignment=TransitionAssignment)? (stateChange=TransitionStateChange)?;
+
+TauTransition:
+	{TauTransition} 'transition' (guard=TransitionGuard)? (stateChange=TransitionStateChange)? ('named' name=ID)?;
+
+Transition:
+	ResultTransition | TauTransition;
+
+State:
+	{State} (initial?='initial')? 'state' name=ID '{'
+	(transitions+=Transition)*
+	'}';
+
+/////////////////////////////
+// DATA                   //
+/////////////////////////////
+AccessibleItem:
+	ObjectProperty | Component | State | Variable | LiteralValue;
+
+Access:
+	{Access} items+=[AccessibleItem] ('.' items+=[AccessibleItem])*;
+
+StringDataType:
+	{StringDataType} 'string';
+
+IntegerDataType:
+	{IntegerDataType} 'integer' ('(' from=LiteralInt '..' to=LiteralInt ')')?;
+
+NoneDataType:
+	{NoneDataType} 'none';
+
+BooleanDataType:
+	{BooleanDataType} 'boolean';
+
+DoubleDataType:
+	{DoubleDataType} 'double';
+
+Array:
+	{Array} 'array' '(' type=DataType ')';
+
+BasicDataType:
+	IntegerDataType | StringDataType | NoneDataType | BooleanDataType | DoubleDataType;
+
+ComplexDataTypeReference:
+	type=[ComplexDataType];
+
+DataType:
+	BasicDataType | Array | ComplexDataTypeReference;
+
+LiteralBoolean:
+	value=('true' | 'false');
+
+LiteralString:
+	{LiteralString} value=STRING;
+
+LiteralValue:
+	{LiteralValue} 'value';
+
+LiteralInt:
+	{LiteralInt} sign='-'? value=INT;
+
+LiteralDouble hidden(WS):
+	{LiteralDouble} one=INT '.' two=INT;
+
+Literal:
+	LiteralInt | LiteralString | LiteralBoolean | LiteralDouble | Access;
+
+ComplexDataType:
+	'datatype' (ObjectDataType | EnumDataType);
+
+ObjectDataType:
+	'object' (name=ID) '{'
+	(properties+=ObjectProperty)*
+	'}';
+
+ObjectProperty:
+	(name=ID) ':' (type=DataType);
+
+ObjectPropertyValueContent:
+	Expression | ObjectValue;
+
+ObjectPropertyValue:
+	property=[ObjectProperty] ':' value=ObjectPropertyValueContent;
+
+ObjectValue:
+	{ObjectValue} '{' (properties+=ObjectPropertyValue (',' properties+=ObjectPropertyValue)*)? '}';
+
+EnumDataType:
+	'enum' (name=ID) 'from' type=DataType (typeSettings=CustomTypeSettings)? 'to' '{'
+	(rules+=EnumRule)*
+	'}';
+
+EnumValue returns ComponentItem:
+	{EnumValue} name=ID;
+
+EnumTransformationRule:
+	expression=Expression '->' value=EnumValue;
+
+EnumDefaultRule:
+	'default' '->' value=EnumValue;
+
+EnumRule:
+	EnumTransformationRule | EnumDefaultRule;
+
+/////////////////////////////
+// EXPRESSIONS             //
+/////////////////////////////
+Expression:
+	Or;
+
+Or returns Expression:
+	And ({Or.left=current} 'or' right=And)*;
+
+And returns Expression:
+	Equation ({And.left=current} 'and' right=Equation)*;
+
+Equation returns Expression:
+	Inequality ({Equation.left=current} '=' right=Inequality)*;
+
+Inequality returns Expression:
+	GreaterThan ({Inequality.left=current} '!=' right=GreaterThan)*;
+
+GreaterThan returns Expression:
+	GreaterThanEqual ({GreaterThan.left=current} '>' right=GreaterThanEqual)*;
+
+GreaterThanEqual returns Expression:
+	SmallerThan ({GreaterThanEqual.left=current} '>=' right=SmallerThan)*;
+
+SmallerThan returns Expression:
+	SmallerThanEqual ({SmallerThan.left=current} '<' right=SmallerThanEqual)*;
+
+SmallerThanEqual returns Expression:
+	Implies ({SmallerThanEqual.left=current} '<=' right=Implies)*;
+
+Implies returns Expression:
+	Plus ({Implies.left=current} '=>' right=Plus)*;
+
+Plus returns Expression:
+	Minus ({Plus.left=current} '+' right=Minus)*;
+
+Minus returns Expression:
+	Multiply ({Plus.left=current} '-' right=Multiply)*;
+
+Multiply returns Expression:
+	Divide ({Multiply.left=current} '*' right=Divide)*;
+
+Divide returns Expression:
+	Negation ({Divide.left=current} '/' right=Negation)*;
+
+Negation returns Expression:
+	'!' value=Negation |
+	Parenthesized;
+
+Parenthesized returns Expression:
+	'(' Expression ')' |
+	Atom;
+
+Atom returns Expression:
+	value=SimpleAtom;
+
+SimpleAtom:
+	Literal;
+
+Assignment returns Expression:
+	{Assignment}
+	(item=Access) ':=' (value=Expression);
+
+/////////////////////////////
+// CONTOLLER               //
+/////////////////////////////
+CommunicationTypeSet:
+	{CommunicationTypeSet} '{' (communicationTypes+=[CommunicationType] (',' communicationTypes+=[CommunicationType])*)?
+	'}';
+
+CommunicationTypeSingle:
+	{CommunicationTypeSingle} communicationType=[CommunicationType];
+
+CommunicationTypeOrSet:
+	CommunicationTypeSet | CommunicationTypeSingle;
+
+Requirement:
+	'requirement' ((communicationType=CommunicationTypeOrSet 'needs' needsExpression=Expression)
+	|
+	(disablesExpression=Expression 'disables' communicationType=CommunicationTypeOrSet));
+
+WithDataValue:
+	ObjectValue | Expression;
+
+WithData:
+	'with' (data=WithDataValue);
+
+ProvideStatement:
+	'provide' communicationType=[CommunicationType] data=WithData ('if' expression=Expression)? ('named' name=ID)?;

@@ -3,13 +3,55 @@
  */
 package nl.tue.robotsupervisorycontrollerdsl.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
+
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.*;
 
 /**
  * This class contains custom scoping description.
  * 
- * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
+ * See
+ * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
  * on how and when to use it.
  */
 public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSupervisoryControllerDSLScopeProvider {
+	@SuppressWarnings("unchecked")
+	@Override
+	public IScope getScope(EObject context, EReference reference) {
+		Robot robot = findParentOfType(context, Robot.class);
+		Library library = findParentOfType(context, Library.class);
+		List<EObject> candidates = new ArrayList<>();
 
+		if (robot != null) {
+			candidates = EcoreUtil2.getAllContentsOfType(robot,
+					(Class<EObject>) reference.getEReferenceType().getInstanceClass());
+		} else if (library != null) {
+			candidates = EcoreUtil2.getAllContentsOfType(library,
+					(Class<EObject>) reference.getEReferenceType().getInstanceClass());
+		}
+		
+        return Scopes.scopeFor(candidates);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <T> T findParentOfType(EObject object, Class<T> type) {
+		if (type.isInstance(object)) {
+			return (T) object;
+		} else {
+			EObject container = object.eContainer();
+			
+			if (container != null) {
+				return findParentOfType(container, type);
+			}
+			
+			return null;
+		}
+	}
 }
