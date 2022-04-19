@@ -4,24 +4,26 @@
 package nl.tue.robotsupervisorycontrollerdsl.tests
 
 import com.google.inject.Inject
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Model
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Base
 
 @ExtendWith(InjectionExtension)
 @InjectWith(RobotSupervisoryControllerDSLInjectorProvider)
 class RobotSupervisoryControllerDSLParsingTest {
 	@Inject
-	ParseHelper<Model> parseHelper
+	ParseHelper<Base> parseHelper
 	
 	@Test
 	def void loadModel() {
 		val result = parseHelper.parse('''
-			Hello Xtext!
+			robot TestRobot {
+				
+			}
 		''')
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors

@@ -1,9 +1,47 @@
 grammar nl.tue.robotsupervisorycontrollerdsl.RobotSupervisoryControllerDSL with org.eclipse.xtext.common.Terminals
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-generate robotSupervisoryControllerDSL "http://www.tue.nl/robotsupervisorycontrollerdsl/RobotSupervisoryControllerDSL"
+generate robotSupervisoryControllerDSL 'http://www.tue.nl/robotsupervisorycontrollerdsl/RobotSupervisoryControllerDSL'
 
-Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID ('from' from=[Greeting])? '!';
+/* GLOBAL MODELS */
+Base: Robot | Library;
+Robot: 'robot' name=ID '{'
+	(definitions+=RobotDefinition)*
+'}';
+
+Library: 'library' name=ID '{'
+	(definitions+=LibraryDefinition)*
+'}';
+
+RobotDefinition: Component;
+LibraryDefinition: Component;
+
+/* COMPONENTS */
+Component: 'component' name=ID;
+
+/* COMMUNICATION */
+
+/* VARIABLES */
+
+/* AUTOMATA */
+
+/* DATA */
+StringDataType: {StringDataType} 'string';
+IntegerDataType: {IntegerDataType} 'integer' ('(' from=LiteralInt '..' to=LiteralInt ')')?;
+NoneDataType: {NoneDataType} 'none';
+BooleanDataType: {BooleanDataType} 'boolean';
+DoubleDataType: {DoubleDataType} 'double';
+Array: {Array} 'array' '(' type=DataType ')';
+
+BasicDataType: IntegerDataType | StringDataType | NoneDataType | BooleanDataType | DoubleDataType;
+DataType: BasicDataType | Array;
+
+LiteralBoolean: value=("true" | "false");
+LiteralString: {LiteralString} value=STRING;
+LiteralInt: {LiteralInt} sign='-'? value=INT;
+LiteralDouble: {LiteralDouble} one=INT'.'two=INT;
+Literal: LiteralInt | LiteralString | LiteralBoolean | LiteralDouble;
+
+/* EXPRESSIONS */
+
+/* CONTROLLER */

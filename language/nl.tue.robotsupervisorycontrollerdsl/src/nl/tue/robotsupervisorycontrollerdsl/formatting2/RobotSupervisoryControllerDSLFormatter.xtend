@@ -3,21 +3,14 @@
  */
 package nl.tue.robotsupervisorycontrollerdsl.formatting2
 
-import com.google.inject.Inject
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Model
-import nl.tue.robotsupervisorycontrollerdsl.services.RobotSupervisoryControllerDSLGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Base
 
 class RobotSupervisoryControllerDSLFormatter extends AbstractFormatter2 {
-	
-	@Inject extension RobotSupervisoryControllerDSLGrammarAccess
 
-	def dispatch void format(Model model, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (greeting : model.greetings) {
-			greeting.format
-		}
+	def dispatch void format(Base model, extension IFormattableDocument document) {
+
 	}
 	
 }

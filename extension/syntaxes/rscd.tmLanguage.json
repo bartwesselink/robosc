@@ -28,7 +28,7 @@
         },
         "keyword": {
             "name": "keyword.control.rscd",
-            "match": "\\b(Hello|from)\\b"
+            "match": "\\b(string|double|false|integer|none|robot|component|library|boolean|array|true)\\b"
         }
     },
     "patterns": [
