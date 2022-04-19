@@ -54,7 +54,7 @@
         "server",
         "syntaxes"
     ],
-    "main": "./lib/robot-supervisory-controller-extension",
+    "main": "./pack/robot-supervisory-controller-extension",
     "dependencies": {
         "vscode-languageclient": "^7.0.0"
     },
@@ -72,7 +72,7 @@
     "scripts": {
         "prepare": "yarn run clean && yarn run build",
         "clean": "rimraf lib pack",
-        "build": "tsc",
+        "build": "tsc && webpack --mode=development",
         "watch": "tsc -w",
         "package": "yarn run build && vsce package",
         "publish": "vsce publish"
