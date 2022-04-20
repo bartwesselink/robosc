@@ -28,7 +28,7 @@
         },
         "keyword": {
             "name": "keyword.control.rscd",
-            "match": "\\b(named|do|integer|none|robot|feedback|action|from|state|if|needs|incoming|double|disables|enum|provide|true|object|outgoing|request|import|string|default|library|goto|array|datatype|and|value|on|or|initial|false|requirement|message|transition|with|component|boolean|service|response|variable|behaviour|to)\\b"
+            "match": "\\b(do|integer|none|robot|feedback|action|from|state|if|needs|incoming|double|disables|enum|provide|true|object|outgoing|request|import|string|default|library|goto|array|datatype|and|value|on|or|initial|false|requirement|message|transition|with|component|boolean|service|response|variable|behaviour|to)\\b"
         }
     },
     "patterns": [

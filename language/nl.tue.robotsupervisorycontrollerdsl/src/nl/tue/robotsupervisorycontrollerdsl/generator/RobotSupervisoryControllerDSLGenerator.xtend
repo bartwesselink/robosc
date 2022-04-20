@@ -7,6 +7,9 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import nl.tue.robotsupervisorycontrollerdsl.generator.cif.CifGenerator
+import javax.inject.Inject
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 
 /**
  * Generates code from your model files on save.
@@ -14,12 +17,15 @@ import org.eclipse.xtext.generator.IGeneratorContext
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
+	@Inject CifGenerator cifGenerator
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(Greeting)
-//				.map[name]
-//				.join(', '))
+		resource.findInstancesOfRobot.forEach[
+			cifGenerator.generate(it, fsa)
+		]
+	}
+	
+	private def findInstancesOfRobot(Resource resource) {
+		return resource.allContents.toIterable.filter(Robot)
 	}
 }

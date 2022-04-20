@@ -1,6 +1,5 @@
 grammar nl.tue.robotsupervisorycontrollerdsl.RobotSupervisoryControllerDSL with org.eclipse.xtext.common.Terminals
 
-import 'http://www.eclipse.org/emf/2002/Ecore' as ecore
 generate robotSupervisoryControllerDSL 'http://www.tue.nl/robotsupervisorycontrollerdsl/RobotSupervisoryControllerDSL'
 
 /////////////////////////////
@@ -122,7 +121,7 @@ ResultTransition:
 	(assignment=TransitionAssignment)? (stateChange=TransitionStateChange)?;
 
 TauTransition:
-	{TauTransition} 'transition' (guard=TransitionGuard)? (stateChange=TransitionStateChange)? ('named' name=ID)?;
+	{TauTransition} 'transition' (guard=TransitionGuard)? (stateChange=TransitionStateChange)?;
 
 Transition:
 	ResultTransition | TauTransition;
@@ -136,10 +135,10 @@ State:
 // DATA                   //
 /////////////////////////////
 AccessibleItem:
-	ObjectProperty | Component | State | Variable | LiteralValue;
+	ObjectProperty | Component | State | Variable | LiteralValue | EnumValue;
 
 Access:
-	{Access} items+=[AccessibleItem] ('.' items+=[AccessibleItem])*;
+	{Access} (items+=[AccessibleItem] | value=LiteralValue) ('.' items+=[AccessibleItem])*;
 
 StringDataType:
 	{StringDataType} 'string';
@@ -195,6 +194,7 @@ ObjectDataType:
 	'}';
 
 ObjectProperty:
+	{ObjectProperty}
 	(name=ID) ':' (type=DataType);
 
 ObjectPropertyValueContent:
@@ -211,7 +211,7 @@ EnumDataType:
 	(rules+=EnumRule)*
 	'}';
 
-EnumValue returns ComponentItem:
+EnumValue:
 	{EnumValue} name=ID;
 
 EnumTransformationRule:
@@ -260,7 +260,7 @@ Plus returns Expression:
 	Minus ({Plus.left=current} '+' right=Minus)*;
 
 Minus returns Expression:
-	Multiply ({Plus.left=current} '-' right=Multiply)*;
+	Multiply ({Minus.left=current} '-' right=Multiply)*;
 
 Multiply returns Expression:
 	Divide ({Multiply.left=current} '*' right=Divide)*;
@@ -273,10 +273,12 @@ Negation returns Expression:
 	Parenthesized;
 
 Parenthesized returns Expression:
-	'(' Expression ')' |
+	{Parenthesized}
+	'(' value=Expression ')' |
 	Atom;
 
 Atom returns Expression:
+	{Atom}
 	value=SimpleAtom;
 
 SimpleAtom:
@@ -287,7 +289,7 @@ Assignment returns Expression:
 	(item=Access) ':=' (value=Expression);
 
 /////////////////////////////
-// CONTOLLER               //
+// CONTROLLER              //
 /////////////////////////////
 CommunicationTypeSet:
 	{CommunicationTypeSet} '{' (communicationTypes+=[CommunicationType] (',' communicationTypes+=[CommunicationType])*)?
@@ -311,4 +313,4 @@ WithData:
 	'with' (data=WithDataValue);
 
 ProvideStatement:
-	'provide' communicationType=[CommunicationType] data=WithData ('if' expression=Expression)? ('named' name=ID)?;
+	'provide' communicationType=[CommunicationType] data=WithData ('if' expression=Expression)?;

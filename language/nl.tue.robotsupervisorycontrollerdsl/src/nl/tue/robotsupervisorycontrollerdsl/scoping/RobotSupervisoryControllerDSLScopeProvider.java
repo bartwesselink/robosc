@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
 
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.*;
 
 /**
@@ -25,8 +26,8 @@ public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSup
 	@SuppressWarnings("unchecked")
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
-		Robot robot = findParentOfType(context, Robot.class);
-		Library library = findParentOfType(context, Library.class);
+		Robot robot = ModelHelper.findParentOfType(context, Robot.class);
+		Library library = ModelHelper.findParentOfType(context, Library.class);
 		List<EObject> candidates = new ArrayList<>();
 
 		if (robot != null) {
@@ -38,20 +39,5 @@ public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSup
 		}
 		
         return Scopes.scopeFor(candidates);
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <T> T findParentOfType(EObject object, Class<T> type) {
-		if (type.isInstance(object)) {
-			return (T) object;
-		} else {
-			EObject container = object.eContainer();
-			
-			if (container != null) {
-				return findParentOfType(container, type);
-			}
-			
-			return null;
-		}
 	}
 }
