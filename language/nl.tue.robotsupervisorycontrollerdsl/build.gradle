@@ -15,6 +15,9 @@ dependencies {
 	mwe2 "org.eclipse.xtext:org.eclipse.xtext.xtext.generator:${xtextVersion}"
 	mwe2 'org.eclipse.xtext:xtext-antlr-generator'
 	mwe2 project(':nl.tue.robotsupervisorycontrollerdsl.mwe2')
+
+	implementation project(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper')
+	implementation fileTree(dir: '../nl.tue.robotsupervisorycontrollerdsl.cifwrapper/build/libs', includes: ['*.jar'])
 }
 
 task generateXtextLanguage(type: JavaExec) {
@@ -33,6 +36,7 @@ task copyTextMateFile(type: Copy) {
 	into "${buildDir}/../../../extension/syntaxes/"
 }
 
+build.dependsOn(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
 build.finalizedBy copyTextMateFile
 
 processResources.dependsOn(generateXtextLanguage)

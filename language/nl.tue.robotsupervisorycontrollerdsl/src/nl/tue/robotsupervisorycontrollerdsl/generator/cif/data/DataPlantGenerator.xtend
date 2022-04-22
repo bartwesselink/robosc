@@ -28,6 +28,7 @@ class DataPlantGenerator {
 			«communicationType.transitions(robot)»
 		«FOR statement : communicationType.provideStatements(robot)»
 		location «statement.dataLocationName»:
+			marked;
 			«communicationType.transitions(robot)»
 		«ENDFOR»
 	end

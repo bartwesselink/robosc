@@ -18,6 +18,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '11'
+        cache: 'maven' # Maven cache is used for building CIF
     - run: ./gradlew build
     - uses: actions/upload-artifact@v3
       with:
@@ -33,6 +34,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '11'
+        cache: 'maven' # Maven cache is used for building CIF
     - uses: actions/setup-node@v3
       with:
         node-version: '16'

@@ -12,17 +12,23 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.data.EnumDataTypeGener
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.requirements.RequirementGenerator
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Requirement
+import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
 
 @Singleton
 class CifGenerator implements GeneratorInterface {
 	@Inject extension ComponentGenerator
 	@Inject extension EnumDataTypeGenerator
 	@Inject extension RequirementGenerator
+	@Inject CifSynthesisTool cifSynthesisTool 
 
 	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess) {
 		val fileName = '''«robot.name»/controller.cif'''
 
 		fileSystemAccess.generateFile(fileName, robot.controller)
+		
+		val path = FileHelper.findAbsolutePath(fileName, fileSystemAccess, robot.eResource.resourceSet)
+		cifSynthesisTool.applySynthesis(path)
 		
 		return new GeneratorResult(newArrayList)
 	}
