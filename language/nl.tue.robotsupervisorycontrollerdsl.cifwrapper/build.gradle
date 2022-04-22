@@ -30,7 +30,6 @@ ext.branch = 'merge-two-funcs';
 task downloadAndBuildEscet(type: Exec) {
     commandLine './build_escet.sh', repository, branch
 
-  
     inputs.property("is-built", true)
     outputs.dir "escet-repo"
 }

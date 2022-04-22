@@ -46,4 +46,5 @@ eclipse.classpath.plusConfigurations += [configurations.mwe2]
 eclipseClasspath.enabled=false
 cleanEclipseClasspath.enabled=false
 
+generateXtextLanguage.dependsOn(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
 assemble.shouldRunAfter(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
