@@ -36,7 +36,6 @@ task copyTextMateFile(type: Copy) {
 	into "${buildDir}/../../../extension/syntaxes/"
 }
 
-build.dependsOn(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
 build.finalizedBy copyTextMateFile
 
 processResources.dependsOn(generateXtextLanguage)
@@ -46,3 +45,5 @@ eclipse.classpath.plusConfigurations += [configurations.mwe2]
 //this is an eclipse plugin project
 eclipseClasspath.enabled=false
 cleanEclipseClasspath.enabled=false
+
+assemble.shouldRunAfter(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
