@@ -31,7 +31,7 @@ task downloadAndBuildEscet(type: Exec) {
     commandLine './build_escet.sh', repository, branch
 
   
-    inputs.property("built", true)
+    inputs.property("is-built", true)
     outputs.dir "escet-repo"
 }
 
