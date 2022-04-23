@@ -35,6 +35,18 @@ task copyTextMateFile(type: Copy) {
 	into "${buildDir}/../../../extension/syntaxes/"
 }
 
+task buildEscet(type: Exec) {
+	commandLine './gradlew', 'build'
+	workingDir '../escet-wrapper'
+}
+
+task copyWrapperJar(type: Copy) {
+	from "../escet-wrapper/build/libs/escet-wrapper.jar"
+	into "./libs/"
+}
+
+copyWrapperJar.dependsOn buildEscet
+
 build.finalizedBy copyTextMateFile
 
 processResources.dependsOn(generateXtextLanguage)
@@ -45,5 +57,4 @@ eclipse.classpath.plusConfigurations += [configurations.mwe2]
 eclipseClasspath.enabled=false
 cleanEclipseClasspath.enabled=false
 
-generateXtextLanguage.dependsOn(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
-assemble.shouldRunAfter(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper:build')
+generateXtextLanguage.dependsOn copyWrapperJar

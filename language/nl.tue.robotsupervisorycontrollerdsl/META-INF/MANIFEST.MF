@@ -29,3 +29,5 @@ Export-Package: nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerD
  nl.tue.robotsupervisorycontrollerdsl.serializer,
  nl.tue.robotsupervisorycontrollerdsl.formatting2
 Import-Package: org.apache.log4j
+Bundle-ClassPath: .,
+ libs/escet-wrapper.jar
