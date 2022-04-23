@@ -16,8 +16,7 @@ dependencies {
 	mwe2 'org.eclipse.xtext:xtext-antlr-generator'
 	mwe2 project(':nl.tue.robotsupervisorycontrollerdsl.mwe2')
 
-	implementation project(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper')
-	implementation fileTree(dir: '../nl.tue.robotsupervisorycontrollerdsl.cifwrapper/build/libs', includes: ['*.jar'])
+	implementation fileTree(dir: 'libs', includes: ['*.jar'])
 }
 
 task generateXtextLanguage(type: JavaExec) {

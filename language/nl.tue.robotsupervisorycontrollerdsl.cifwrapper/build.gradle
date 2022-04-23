@@ -34,4 +34,13 @@ task downloadAndBuildEscet(type: Exec) {
     outputs.dir "escet-repo"
 }
 
+task copyLibrary(type: Copy) {
+    from "${buildDir}/libs/"
+    include "*.jar"
+	into "${buildDir}/../../nl.tue.robotsupervisorycontrollerdsl/libs/"
+}
+
 build.dependsOn downloadAndBuildEscet
+build.dependsOn copyLibrary
+jar.dependsOn downloadAndBuildEscet
+jar.dependsOn copyLibrary

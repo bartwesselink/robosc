@@ -12,3 +12,4 @@ plugin.xml_gen
 textmate-gen
 .project
 .classpath
+libs/
