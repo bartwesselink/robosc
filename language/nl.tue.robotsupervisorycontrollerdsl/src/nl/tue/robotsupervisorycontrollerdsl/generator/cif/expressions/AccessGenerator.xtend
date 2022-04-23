@@ -66,7 +66,7 @@ class AccessGenerator {
 		return (glueFirst ? '_' : '') + parts.join('_')
 	}
 
-	private dispatch def accessName(Component component) '''«component.name»'''
+	private dispatch def accessName(Component component) '''«component.plantName»'''
 
 	private dispatch def accessName(EnumValue value) '''«value.name»'''
 

@@ -21,20 +21,18 @@ public abstract class AbstractCifTool<T extends Application<IOutputComponent>> {
 	protected boolean execute(String[] args) {
 		this.captureOutput();
 
-		System.err.printf("Executing command %s\n", this.getClass().getName());
+		System.out.printf("Executing command %s\n", this.getClass().getName());
 
 		T app;
 		try {
 			app = this.getApplication().getDeclaredConstructor().newInstance();
 
-			int exitCode = app.run(args);
-			
-			System.err.printf("Executed CIF-command %s\n", this.getClass().getName());
-			System.err.printf("Received exit code: %d\n", exitCode);
+			app.run(args);
 			
 			// This code is not reachable, as CIF will terminate
 			return false;
 		} catch (EarlyExitException e) {
+			this.restoreOutput();
 			int exitCode = e.getStatusCode();
 			
 			boolean success = exitCode == 0;
@@ -47,12 +45,11 @@ public abstract class AbstractCifTool<T extends Application<IOutputComponent>> {
 			
 			return success;
 		} catch (Exception e) {
+			this.restoreOutput();
 			e.printStackTrace();
 			
 			return false;
-		} finally {
-			this.restoreOutput();
-		}
+		}		
 	}
 	
 	private void captureOutput() {
