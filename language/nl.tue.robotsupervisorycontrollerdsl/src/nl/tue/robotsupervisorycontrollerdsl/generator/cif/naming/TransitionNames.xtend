@@ -22,12 +22,12 @@ class TransitionNames {
 	def transitionName(ProvideStatement statement)'''c_«provideStatementNamer.getName(statement)»'''
 	def transitionName(Message message) {
 		if (message.direction instanceof MessageFrom) {
-			return 'u_evt'
+			return 'u_response'
 		} else {
-			return 'c_evt'
+			return 'c_trigger'
 		}
 	}
-	def dispatch triggerTransitionName(Message message)'''c_evt'''
+	def dispatch triggerTransitionName(Message message)'''c_trigger'''
 	def dispatch triggerTransitionName(Service service)'''c_trigger'''
 	def dispatch triggerTransitionName(Action action)'''c_trigger'''
 	

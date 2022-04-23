@@ -26,6 +26,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Service
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
 
 @Singleton
 class AutomatonGenerator {
@@ -98,15 +99,15 @@ class AutomatonGenerator {
 			«robot.allowUncontrollableEvents(automaton)»
 			
 			«FOR transition : state.transitions»
-				«transition.edge»
+				«transition.edge(robot)»
 			«ENDFOR»
 	'''
 
 	private def dispatch edge(
-		TauTransition transition) '''edge «transition.transitionName»«transition.guard?.compile»«transition.stateChange?.compile»;'''
+		TauTransition transition, Robot robot) '''edge «transition.transitionName»«transition.guard?.compile»«transition.stateChange?.compile»;'''
 
-	private def dispatch edge(ResultTransition transition) {
-		return '''edge «transition.communicationType.plantName».«transition.resultType.uncontrollableTransitionName» «transition.assignment?.compile» «transition.stateChange?.compile»;'''
+	private def dispatch edge(ResultTransition transition, Robot robot) {
+		return '''edge «transition.communicationType.plantName».«transition.resultType.uncontrollableTransitionName» «transition.assignment?.compile(robot)» «transition.stateChange?.compile»;'''
 	}
 
 	private def allTauTransitions(Automaton automaton) {
@@ -120,7 +121,13 @@ class AutomatonGenerator {
 
 	private def compile(TransitionGuard guard) ''' when «guard.expression.compile»'''
 
-	private def compile(TransitionAssignment assignment) ''' do «assignment.assignment.compile»'''
+	private def compile(TransitionAssignment transitionAssignment, Robot robot) {
+		val expression = transitionAssignment.assignment as Assignment
+		
+		if (this.eliminationChecker.assignmentRequiredInSynthesis(robot, expression)) {
+			return ''' do «transitionAssignment.assignment.compile»'''
+		}
+	}
 
 	private def compile(
 		Variable variable) '''disc «variable.type.compile» «variable.variableName»«IF variable.initial !== null» = «variable.initial.compile»«ENDIF»;'''

@@ -16,7 +16,7 @@ dependencies {
 	mwe2 'org.eclipse.xtext:xtext-antlr-generator'
 	mwe2 project(':nl.tue.robotsupervisorycontrollerdsl.mwe2')
 
-	implementation fileTree(dir: 'libs', includes: ['*.jar'])
+	implementation files('./libs/escet-wrapper.jar')
 }
 
 task generateXtextLanguage(type: JavaExec) {
@@ -60,3 +60,4 @@ eclipseClasspath.enabled=false
 cleanEclipseClasspath.enabled=false
 
 generateXtextLanguage.dependsOn copyWrapperJar
+compileJava.dependsOn copyWrapperJar

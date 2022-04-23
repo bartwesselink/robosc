@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.eclipse.escet.common.app.framework.Application;
 import org.eclipse.escet.common.app.framework.output.IOutputComponent;
 
+import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.exception.CIFException;
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.exception.EarlyExitException;
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.wrapper.CodeFlowControl;
 
@@ -36,7 +37,15 @@ public abstract class AbstractCifTool<T extends Application<IOutputComponent>> {
 		} catch (EarlyExitException e) {
 			int exitCode = e.getStatusCode();
 			
-			return exitCode == 0;
+			boolean success = exitCode == 0;
+			
+			if (!success) {
+				String output = this.capturer.toString();
+				
+				throw new CIFException("CIF synthesis failed: " + output);
+			}
+			
+			return success;
 		} catch (Exception e) {
 			e.printStackTrace();
 			
