@@ -41,6 +41,6 @@ task copyLibrary(type: Copy) {
 }
 
 build.dependsOn downloadAndBuildEscet
-build.dependsOn copyLibrary
+build.finalizedBy copyLibrary
 jar.dependsOn downloadAndBuildEscet
-jar.dependsOn copyLibrary
+jar.finalizedBy copyLibrary
