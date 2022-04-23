@@ -17,15 +17,15 @@ repositories {
 }
 
 dependencies {
-	implementation fileTree(dir: './escet-repo/common', includes: ['**/*.jar'])
-	implementation fileTree(dir: './escet-repo/cif', includes: ['**/*.jar'])
-	implementation fileTree(dir: './escet-repo/thirdparty', includes: ['**/*.jar'])
-	implementation fileTree(dir: './escet-repo/setext', includes: ['**/*.jar'])
-	implementation 'org.apache.commons:commons-lang3:3.12.0'
-	implementation 'commons-lang:commons-lang:2.4'
-	implementation 'commons-io:commons-io:2.6'
-	implementation 'org.eclipse.core:org.eclipse.core.resources:3.7.100'
-    implementation "${swtGroupId}:${swtArtifact}:${swtVersion}"
+	api fileTree(dir: './escet-repo/common', includes: ['**/*.jar'])
+	api fileTree(dir: './escet-repo/cif', includes: ['**/*.jar'])
+	api fileTree(dir: './escet-repo/thirdparty', includes: ['**/*.jar'])
+	api fileTree(dir: './escet-repo/setext', includes: ['**/*.jar'])
+	api 'org.apache.commons:commons-lang3:3.12.0'
+	api 'commons-lang:commons-lang:2.4'
+	api 'commons-io:commons-io:2.6'
+	api 'org.eclipse.core:org.eclipse.core.resources:3.7.100'
+    api "${swtGroupId}:${swtArtifact}:${swtVersion}"
 }
 
 jar {
