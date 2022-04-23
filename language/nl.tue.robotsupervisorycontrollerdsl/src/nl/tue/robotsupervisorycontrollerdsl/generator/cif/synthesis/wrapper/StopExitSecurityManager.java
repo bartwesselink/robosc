@@ -12,7 +12,7 @@ public class StopExitSecurityManager extends SecurityManager {
 
 	public void checkExit(int status) {
 		super.checkExit(status);
-		throw new EarlyExitException("Exited code");
+		throw new EarlyExitException("Exited with code: " + status, status);
 	}
 
 	public SecurityManager getPreviousMgr() {

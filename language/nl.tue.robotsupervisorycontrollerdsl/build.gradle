@@ -43,6 +43,8 @@ task buildEscet(type: Exec) {
 task copyWrapperJar(type: Copy) {
 	from "../escet-wrapper/build/libs/escet-wrapper.jar"
 	into "./libs/"
+
+	outputs.file "libs/escet-wrapper.jar"
 }
 
 copyWrapperJar.dependsOn buildEscet

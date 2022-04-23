@@ -1,5 +1,9 @@
 package nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.tools;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import javax.inject.Inject;
 
 import org.eclipse.escet.common.app.framework.Application;
@@ -10,7 +14,9 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.wrapper.Code
 
 public abstract class AbstractCifTool<T extends Application<IOutputComponent>> {
 	@Inject CodeFlowControl codeFlowControl;
-	
+	private OutputStream capturer;
+	private PrintStream previousOut;
+
 	protected boolean execute(String[] args) {
 		this.captureOutput();
 
@@ -25,20 +31,36 @@ public abstract class AbstractCifTool<T extends Application<IOutputComponent>> {
 			System.err.printf("Executed CIF-command %s\n", this.getClass().getName());
 			System.err.printf("Received exit code: %d\n", exitCode);
 			
-			return exitCode == 0;
+			// This code is not reachable, as CIF will terminate
+			return false;
 		} catch (EarlyExitException e) {
-			// Ignore and continue
+			int exitCode = e.getStatusCode();
+			
+			return exitCode == 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 			
 			return false;
+		} finally {
+			this.restoreOutput();
 		}
-		
-		return true;
 	}
 	
 	private void captureOutput() {
 		this.codeFlowControl.disableSystemExit();
+
+		capturer = new ByteArrayOutputStream();
+		previousOut = System.err;
+		
+		PrintStream printStream = new PrintStream(capturer);
+		System.setErr(printStream);
+	}
+	
+	private void restoreOutput() {
+		this.codeFlowControl.enableSystemExit();
+		
+		capturer = null;
+		System.setErr(previousOut);		
 	}
 	
 	abstract Class<T> getApplication();
