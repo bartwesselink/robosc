@@ -16,31 +16,6 @@ repositories {
     mavenCentral()
 }
 
-// SWT is platform dependent
-def swtGroupId = 'org.eclipse.platform'
-def swtVersion = '3.119.0'
-def swtArtifact = 'org.eclipse.swt.'
-
-def os = System.getProperty("os.name").toLowerCase()
-if (os.contains("windows")) { swtArtifact += 'win32.win32.x86_64' }
-else if (os.contains("linux")) { swtArtifact += 'gtk.linux.x86_64' }
-else if (os.contains("mac")) { swtArtifact += 'cocoa.macosx.x86_64' }
-
-ext.swtGroupId = swtGroupId;
-ext.swtVersion = swtVersion;
-ext.swtArtifact = swtArtifact;
-
-sourceCompatibility = '11'
-targetCompatibility = '11'
-
-configurations.all {
-    resolutionStrategy {
-        dependencySubstitution {
-            substitute module('org.eclipse.platform:org.eclipse.swt.${osgi.platform}') with module("${swtGroupId}:${swtArtifact}:${swtVersion}")
-        }
-    }
-}
-
 dependencies {
 	implementation fileTree(dir: './escet-repo/common', includes: ['**/*.jar'])
 	implementation fileTree(dir: './escet-repo/cif', includes: ['**/*.jar'])

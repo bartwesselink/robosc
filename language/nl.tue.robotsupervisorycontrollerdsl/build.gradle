@@ -16,7 +16,7 @@ dependencies {
 	mwe2 'org.eclipse.xtext:xtext-antlr-generator'
 	mwe2 project(':nl.tue.robotsupervisorycontrollerdsl.mwe2')
 
-	implementation fileTree(dir: 'libs', includes: ['*.jar'])
+	implementation project(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper')
 }
 
 task generateXtextLanguage(type: JavaExec) {
@@ -35,20 +35,6 @@ task copyTextMateFile(type: Copy) {
 	into "${buildDir}/../../../extension/syntaxes/"
 }
 
-task buildEscet(type: Exec) {
-	commandLine './gradlew', 'build'
-	workingDir '../escet-wrapper'
-}
-
-task copyWrapperJar(type: Copy) {
-	from "../escet-wrapper/build/libs/escet-wrapper.jar"
-	into "./libs/"
-
-	outputs.file "libs/escet-wrapper.jar"
-}
-
-copyWrapperJar.dependsOn buildEscet
-
 build.finalizedBy copyTextMateFile
 
 processResources.dependsOn(generateXtextLanguage)
@@ -58,6 +44,3 @@ eclipse.classpath.plusConfigurations += [configurations.mwe2]
 //this is an eclipse plugin project
 eclipseClasspath.enabled=false
 cleanEclipseClasspath.enabled=false
-
-generateXtextLanguage.dependsOn copyWrapperJar
-processResources.dependsOn copyWrapperJar
