@@ -1,4 +1,4 @@
-package nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data
+package nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data
 
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataType
@@ -7,9 +7,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Comple
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicDataType
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractPlatformTypeGenerator
-import com.google.common.base.CaseFormat
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.StringDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BooleanDataType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.StringDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DoubleDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.IntegerDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.NoneDataType
@@ -23,7 +22,7 @@ class PlatformTypeGenerator extends AbstractPlatformTypeGenerator {
 			if (referenced instanceof EnumDataType) {
 				return referenced.type.messageType(referenced.typeSettings)
 			} else {
-				return '''«settings.package»::msg::«settings.name»'''
+				return '''«settings.package»::«settings.name»'''
 			}
 		} else if (data instanceof BasicDataType) {
 			return data.platformType
@@ -31,33 +30,29 @@ class PlatformTypeGenerator extends AbstractPlatformTypeGenerator {
 	}
 	
 	override actionType(CustomTypeSettings settings) {
-		return  '''«settings.package»::action::«settings.name»'''
+		return  '''«settings.package»::«settings.name»'''
 	}
 	
 	override serviceType(CustomTypeSettings settings) {
-		return  '''«settings.package»::srv::«settings.name»'''
+		return  '''«settings.package»::«settings.name»Action'''
 	}
 	
 	override String messageImport(CustomTypeSettings settings) {
-		return '''«settings.package»/msg/«settings.name.snakeCase»'''
+		return '''«settings.package»/«settings.name»'''
 	}
 	
 	override actionImport(CustomTypeSettings settings) {
-		return  '''«settings.package»/action/«settings.name.snakeCase»'''
+		return  '''«settings.package»/«settings.name»Action'''
 	}
 	
 	override serviceImport(CustomTypeSettings settings) {
-		return  '''«settings.package»/srv/«settings.name.snakeCase»'''
-	}
-
-	protected def snakeCase(String input) {
-		return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, input)
+		return  '''«settings.package»/«settings.name»'''
 	}
 	
 	override platformType(BasicDataType type)'''«type.typeName»'''
-	private def dispatch String typeName(BooleanDataType type)'''std_msgs::msg::Bool'''
-	private def dispatch String typeName(StringDataType type)'''std_msgs::msg::String'''
-	private def dispatch String typeName(DoubleDataType type)'''std_msgs::msg::Float32'''
-	private def dispatch String typeName(IntegerDataType type)'''std_msgs::msg::Int16'''
-	private def dispatch String typeName(NoneDataType type)'''std_msgs::msg::Empty'''
+	private def dispatch String typeName(BooleanDataType type)'''std_msgs::Bool'''
+	private def dispatch String typeName(StringDataType type)'''std_msgs::String'''
+	private def dispatch String typeName(DoubleDataType type)'''std_msgs::Float32'''
+	private def dispatch String typeName(IntegerDataType type)'''std_msgs::Int16'''
+	private def dispatch String typeName(NoneDataType type)'''std_msgs::Empty'''
 }

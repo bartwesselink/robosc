@@ -1,4 +1,4 @@
-package nl.tue.robotsupervisorycontrollerdsl.generator.ros2
+package nl.tue.robotsupervisorycontrollerdsl.generator.ros1
 
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.GeneratorInterface
@@ -11,18 +11,18 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDa
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.ShuffleHelperGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.InitializationGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.EventExecutionGenerator
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.communication.CommunicationTypeGenerator
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.metadata.CMakeGenerator
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.metadata.PackageInfoGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.communication.CommunicationTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.metadata.CMakeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.metadata.PackageInfoGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.CommunicationTypeHookGenerator
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.metadata.ImportsGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.metadata.ImportsGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EliminationHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data.PlatformTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data.PlatformTypeGenerator
 
 @Singleton
-class Ros2Generator implements GeneratorInterface {
+class Ros1Generator implements GeneratorInterface {
 	@Inject extension EnumDataTypeGenerator
 	@Inject extension EventExecutionGenerator
 	@Inject extension CommunicationTypeGenerator
@@ -37,8 +37,8 @@ class Ros2Generator implements GeneratorInterface {
 	@Inject PlatformTypeGenerator platformTypeGenerator
 
 	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess) {
-		val base = '''«robot.name»/ros2/controller'''
-		val fileName = '''«base»/src/controller_member_function.cpp'''
+		val base = '''«robot.name»/ros1/controller'''
+		val fileName = '''«base»/src/controller.cpp'''
 
 		fileSystemAccess.generateFile(fileName, robot.controller)
 		fileSystemAccess.generateFile(base + '/package.xml', robot.compilePackageFile)
@@ -58,28 +58,32 @@ class Ros2Generator implements GeneratorInterface {
 		
 		«robot.compileCodeOnlyVariables»
 		
-		class Controller : public rclcpp::Node {
+		class Controller {
 		public:	
+			Controller() «IF !robot.constructorInvocations.empty»: «robot.constructorInvocations.join(', ')»«ENDIF» {
+				
+			}
+		
 			// Enum conversions
 			«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
 
 			«robot.compileCommunicationFieldDefinitions»
 			
-			Controller() : Node("controller") {
+			void start(ros::NodeHandle& node) {
 				«robot.compileCommunicationFieldInitializations»
 
-				timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
+				timer = node.createTimer(ros::Duration(0.1), &Controller::tick, this);
 				«CifSynthesisTool.codePrefix»_EngineFirstStep();
 			}
 
 			«robot.compileCommunicationFunctions»
 		private:
 			// Heart of the controller
-			void tick() {
+			void tick(const ros::TimerEvent &) {
 				«robot.compilePerformEventEngine»
 			}
 			
-			rclcpp::TimerBase::SharedPtr timer;
+			ros::Timer timer;
 		};
 		
 		std::shared_ptr<Controller> node_controller = nullptr;
@@ -89,12 +93,13 @@ class Ros2Generator implements GeneratorInterface {
 		«robot.compileHooks»
 		
 		int main(int argc, char *argv[]) {
-		    rclcpp::init(argc, argv);
-		
-		    node_controller = std::make_shared<Controller>();
-		
-		    rclcpp::spin(node_controller);
-		    rclcpp::shutdown();
+		    ros::init(argc, argv, "talker");
+		        
+	        ros::NodeHandle n;
+	    
+	        node_controller = std::make_shared<Controller>();
+	        node_controller->start(n);
+	        ros::spin();
 		
 		    return 0;
 		}

@@ -11,6 +11,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.CifGenerator
 import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.Ros2Generator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.Ros1Generator
 
 /**
  * Generates code from your model files on save.
@@ -20,11 +21,13 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.Ros2Generator
 class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
 	@Inject CifGenerator cifGenerator
 	@Inject Ros2Generator ros2Generator
+	@Inject Ros1Generator ros1Generator
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		resource.findInstancesOfRobot.forEach[
 			cifGenerator.generate(it, fsa)
 			ros2Generator.generate(it, fsa)
+			ros1Generator.generate(it, fsa)
 		]
 	}
 	

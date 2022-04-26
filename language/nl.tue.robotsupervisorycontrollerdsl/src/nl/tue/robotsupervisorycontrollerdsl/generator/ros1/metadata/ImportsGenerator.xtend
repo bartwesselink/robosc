@@ -1,10 +1,10 @@
-package nl.tue.robotsupervisorycontrollerdsl.generator.ros2.metadata
+package nl.tue.robotsupervisorycontrollerdsl.generator.ros1.metadata
 
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.library.PackageHelper
 import javax.inject.Inject
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data.PlatformTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data.PlatformTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 
 @Singleton
@@ -21,16 +21,18 @@ class ImportsGenerator {
 	#include <future>
 	#include <memory>
 	#include <sstream>
+	#include <stdbool.h>
+	#include <actionlib/client/simple_action_client.h>
 	
-	#include "rclcpp/rclcpp.hpp"
-	#include "rclcpp_action/rclcpp_action.hpp"
-	#include "std_msgs/msg/string.hpp"
-	#include "std_msgs/msg/bool.hpp"
-	#include "std_msgs/msg/empty.hpp"
-	#include "std_msgs/msg/int16.hpp"
-	#include "std_msgs/msg/float32.hpp"
+	#include <ros/ros.h>
+	#include <actionlib/client/simple_action_client.h>
+	#include "std_msgs/String.h"
+	#include "std_msgs/Bool.h"
+	#include "std_msgs/Empty.h"
+	#include "std_msgs/Int16.h"
+	#include "std_msgs/Float32.h"
 	«FOR importName : robot.getAllImports(typeGenerator)»
-	#include "«importName».hpp"
+	#include "«importName».h"
 	«ENDFOR»
 	#include <cinttypes>
 	

@@ -1,11 +1,11 @@
-package nl.tue.robotsupervisorycontrollerdsl.generator.ros2.communication
+package nl.tue.robotsupervisorycontrollerdsl.generator.ros1.communication
 
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.MessageFrom
 import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.FieldNames
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data.PlatformTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data.PlatformTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.MessageTo
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.MethodNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
@@ -24,19 +24,19 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 
 	override initializeField(Message entity, Robot robot) {
 		if (entity.direction instanceof MessageFrom) {
-			return '''«entity.fieldName» = this->create_subscription<«entity.type.messageType(entity.typeSettings)»>("«entity.topicName»", 10, std::bind(&Controller::«entity.callbackMethod», this, std::placeholders::_1));'''
+			return '''«entity.fieldName» = node.subscribe("«entity.topicName»", 10, &Controller::«entity.callbackMethod», this);'''
 		} else if (entity.direction instanceof MessageTo) {
-			return '''«entity.fieldName» = this->create_publisher<«entity.type.messageType(entity.typeSettings)»>("«entity.topicName»", 10);'''
+			return '''«entity.fieldName» = node.advertise<«entity.type.messageType(entity.typeSettings)»>("«entity.topicName»", 10);'''
 		}
 	}
 	
 	override declareField(Message entity, Robot robot) {
-		return '''rclcpp::«IF entity.direction instanceof MessageFrom»Subscription«ELSE»Publisher«ENDIF»<«entity.type.messageType(entity.typeSettings)»>::SharedPtr «entity.fieldName»;'''
+		return '''ros::«IF entity.direction instanceof MessageFrom»Subscriber«ELSE»Publisher«ENDIF» «entity.fieldName»;'''
 	}
 	
 	override functions(Message entity, Robot robot)'''
 	«IF entity.direction instanceof MessageFrom»
-	void «entity.callbackMethod»(const «entity.type.messageType(entity.typeSettings)»::SharedPtr msg) {
+	void «entity.callbackMethod»(const «entity.type.messageType(entity.typeSettings)»::ConstPtr& msg) {
 		«entity.prepareResult(entity.type, robot, 'msg')»
 		
 		// Call engine function
@@ -51,7 +51,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 		
 		«entity.compileDataStates(entity.type, 'value', robot, false)»
 		
-		this->«entity.fieldName»->publish(value);
+		this->«entity.fieldName».publish(value);
 	}
 	«ENDIF»
 	'''

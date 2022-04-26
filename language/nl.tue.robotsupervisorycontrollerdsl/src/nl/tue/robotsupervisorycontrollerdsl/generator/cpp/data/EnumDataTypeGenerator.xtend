@@ -11,6 +11,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicD
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.EnumHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.MethodNames
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumValue
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractPlatformTypeGenerator
 
 @Singleton
 class EnumDataTypeGenerator {
@@ -19,8 +20,8 @@ class EnumDataTypeGenerator {
 	@Inject extension EnumHelper
 	@Inject extension MethodNames
 	
-	def compile(EnumDataType ^enum)'''
-	«enumTypeName» «^enum.convertMethod»(const «enum.parameterInputType» value) {
+	def compile(EnumDataType ^enum, AbstractPlatformTypeGenerator generator)'''
+	«enumTypeName» «^enum.convertMethod»(const «enum.parameterInputType(generator)» value) {
 		«FOR rule : enum.rules.filter(EnumTransformationRule) SEPARATOR '\n} else '»if («rule.expression.compile») {
 			return «rule.value.correspondingEngineType»;«ENDFOR»
 		}
@@ -33,13 +34,13 @@ class EnumDataTypeGenerator {
 		return '''_«CifSynthesisTool.codePrefix»_«value.name»'''
 	}
 	
-	def parameterInputType(EnumDataType ^enum) {
+	def parameterInputType(EnumDataType ^enum, AbstractPlatformTypeGenerator generator) {
 		val type = enum.type
 		
 		if (type instanceof ComplexDataTypeReference) {
 			return '''«enum.typeSettings?.name»::SharedPtr'''
 		} else if (type instanceof BasicDataType) {
-			return type.compile
+			return type.compile(generator)
 		}
 	}
 }

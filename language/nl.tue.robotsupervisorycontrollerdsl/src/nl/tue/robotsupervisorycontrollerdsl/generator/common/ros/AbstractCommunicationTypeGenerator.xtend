@@ -1,4 +1,4 @@
-package nl.tue.robotsupervisorycontrollerdsl.generator.ros2.communication
+package nl.tue.robotsupervisorycontrollerdsl.generator.common.ros
 
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicDataType

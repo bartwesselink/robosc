@@ -13,18 +13,15 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDa
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.EnumHelper
 import javax.inject.Inject
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractPlatformTypeGenerator
 
 @Singleton
 class DataTypeGenerator {
 	@Inject extension EnumHelper	
 
-	def String compile(BasicDataType type)'''«type.typeName»'''
-	private def dispatch String typeName(BooleanDataType type)'''std_msgs::msg::Bool'''
-	private def dispatch String typeName(StringDataType type)'''std_msgs::msg::String'''
-	private def dispatch String typeName(DoubleDataType type)'''std_msgs::msg::Float32'''
-	private def dispatch String typeName(IntegerDataType type)'''std_msgs::msg::Int16'''
-	private def dispatch String typeName(NoneDataType type)'''std_msgs::msg::Empty'''
+	def String compile(BasicDataType type, AbstractPlatformTypeGenerator generator)'''«generator.platformType(type)»'''
 	def String enumTypeName()'''controllerEnum'''
+
 
 	def dispatch String primitiveType(BooleanDataType type)'''bool'''
 	def dispatch String primitiveType(StringDataType type)'''string'''

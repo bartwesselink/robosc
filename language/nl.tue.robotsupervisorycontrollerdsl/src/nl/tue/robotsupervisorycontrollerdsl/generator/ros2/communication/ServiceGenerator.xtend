@@ -10,6 +10,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.DataPlantHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.MethodNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractCommunicationTypeGenerator
 
 @Singleton
 class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {

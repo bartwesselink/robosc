@@ -23,32 +23,30 @@ class EventExecutionGenerator {
 		val dataEvents = robot.allDataTransitions
 
 		return '''
-			void tick() {				
-				«IF !dataEvents.empty»
-					int nOfDataEvents = «dataEvents.size»;
-					      «CifSynthesisTool.codePrefix»_Event_ data_events[«dataEvents.size»] = { «dataEvents.join(",")» };
-					
-					// Always execute data transitions that are possible
-					shuffle_events(data_events, nOfDataEvents);
-					
-					for (int i = 0; i < nOfDataEvents; i++) {
-						«CifSynthesisTool.codePrefix»_EnginePerformEvent(data_events[i]);
-					}
-				«ENDIF»
+			«IF !dataEvents.empty»
+				int nOfDataEvents = «dataEvents.size»;
+				      «CifSynthesisTool.codePrefix»_Event_ data_events[«dataEvents.size»] = { «dataEvents.join(",")» };
 				
-				«IF !controllableEvents.empty»
-					int nOfControllableEvents = «controllableEvents.size»;
-					      «CifSynthesisTool.codePrefix»_Event_ controllable_events[«controllableEvents.size»] = { «controllableEvents.join(",")» };
-					
-					shuffle_events(controllable_events, nOfControllableEvents);
-					
-					for (int i = 0; i < nOfControllableEvents; i++) {
-						if («CifSynthesisTool.codePrefix»_EnginePerformEvent(controllable_events[i])) {
-							break;
-						}
+				// Always execute data transitions that are possible
+				shuffle_events(data_events, nOfDataEvents);
+				
+				for (int i = 0; i < nOfDataEvents; i++) {
+					«CifSynthesisTool.codePrefix»_EnginePerformEvent(data_events[i]);
+				}
+			«ENDIF»
+			
+			«IF !controllableEvents.empty»
+				int nOfControllableEvents = «controllableEvents.size»;
+				      «CifSynthesisTool.codePrefix»_Event_ controllable_events[«controllableEvents.size»] = { «controllableEvents.join(",")» };
+				
+				shuffle_events(controllable_events, nOfControllableEvents);
+				
+				for (int i = 0; i < nOfControllableEvents; i++) {
+					if («CifSynthesisTool.codePrefix»_EnginePerformEvent(controllable_events[i])) {
+						break;
 					}
-				«ENDIF»
-			}
+				}
+			«ENDIF»
 		'''
 	}
 

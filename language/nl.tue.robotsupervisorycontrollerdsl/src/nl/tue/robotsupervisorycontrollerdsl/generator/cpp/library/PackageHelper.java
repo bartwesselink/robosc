@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Singleton;
 
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractPlatformTypeGenerator;
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
-import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data.PlatformTypeGenerator;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference;
@@ -26,8 +26,8 @@ public class PackageHelper {
 				.collect(Collectors.toList());
 	}
 	
-	public List<String> getAllImports(Robot robot, PlatformTypeGenerator typeGenerator) {
-		List<String> result = new ArrayList<>();
+	public List<CharSequence> getAllImports(Robot robot, AbstractPlatformTypeGenerator typeGenerator) {
+		List<CharSequence> result = new ArrayList<>();
 		
 		// First, we list all imports from communication types
 		List<CommunicationType> communicationTypes = ModelHelper.findWithinRobot(robot, CommunicationType.class);
@@ -52,15 +52,15 @@ public class PackageHelper {
 		return result.stream().filter(it -> it != null).collect(Collectors.toList());
 	}
 	
-	private List<String> getImportsForCommunicationTypes(List<CommunicationType> list, PlatformTypeGenerator typeGenerator) {
-		List<String> result = new ArrayList<>();
+	private List<CharSequence> getImportsForCommunicationTypes(List<CommunicationType> list, AbstractPlatformTypeGenerator typeGenerator) {
+		List<CharSequence> result = new ArrayList<>();
 		
 		result.addAll(list.stream().map(it -> getImportForCommunicationType(it, typeGenerator)).collect(Collectors.toList()));
 		
 		return result;
 	}
 	
-	private String getImportForCommunicationType(CommunicationType input, PlatformTypeGenerator typeGenerator) {		
+	private CharSequence getImportForCommunicationType(CommunicationType input, AbstractPlatformTypeGenerator typeGenerator) {		
 		if (input == null || input.getTypeSettings() == null) {
 			return null;
 		}
