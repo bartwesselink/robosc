@@ -1,11 +1,12 @@
 package nl.tue.robotsupervisorycontrollerdsl.generator.common.data;
 
-import javax.inject.Singleton;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.EcoreUtil2;
@@ -27,6 +28,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Variab
 
 @Singleton
 public class EliminationChecker {
+	@Inject AccessHelper accessHelper;
+	
 	public boolean variableRequiredInSynthesis(Robot robot, Variable variable) {
 		List<EObject> guards = ModelHelper.findWithinRobot(robot, TransitionGuard.class).stream()
 				.map(it -> (EObject) it).collect(Collectors.toList());
@@ -51,9 +54,9 @@ public class EliminationChecker {
 		return variableRequiredInSynthesis(robot, variable);
 	}
 	
-	private Variable lastVariableOfAssignment(Assignment assignment) {
+	public Variable lastVariableOfAssignment(Assignment assignment) {
 		Access access = assignment.getItem();
-		List<AccessibleItem> items = access.getItems();
+		List<AccessibleItem> items = accessHelper.getAccessItems(access);
 		
 		AccessibleItem lastItem = items.get(items.size() - 1);
 		
@@ -77,7 +80,7 @@ public class EliminationChecker {
 				.filter(entity -> entity.getAssignment() != null)
 				.flatMap(entity -> findLiteralValues(entity.getAssignment().getAssignment()))
 				.map(entity -> ModelHelper.findParentOfType(entity, Access.class))
-				.filter(entity -> entity.getItems().isEmpty())
+				.filter(entity -> accessHelper.getAccessItems(entity).isEmpty())
 				.anyMatch(entity -> {
 					Assignment assignment = ModelHelper.findParentOfType(entity, Assignment.class);
 					Variable v = lastVariableOfAssignment(assignment);
@@ -97,7 +100,7 @@ public class EliminationChecker {
 				.filter(entity -> entity.getAssignment() != null)
 				.flatMap(entity -> findLiteralValues(entity.getAssignment().getAssignment()))
 				.map(entity -> ModelHelper.findParentOfType(entity, Access.class))
-				.filter(entity -> !entity.getItems().isEmpty())
+				.filter(entity -> !accessHelper.getAccessItems(entity).isEmpty())
 				.filter(entity -> accessPropertyIsSame(entity, p)).anyMatch(entity -> {
 					Assignment assignment = ModelHelper.findParentOfType(entity, Assignment.class);
 					Variable v = lastVariableOfAssignment(assignment);
@@ -110,7 +113,7 @@ public class EliminationChecker {
 	}
 
 	public boolean accessPropertyIsSame(Access access, ObjectProperty property) {
-		List<AccessibleItem> items = access.getItems();
+		List<AccessibleItem> items = accessHelper.getAccessItems(access);
 
 		for (AccessibleItem item : items) {
 			if (item == property)
@@ -145,7 +148,7 @@ public class EliminationChecker {
 					return references
 							.stream()
 							.anyMatch(it -> {
-								return it.getItems().contains(v);
+								return accessHelper.getAccessItems(it).contains(v);
 							})
 					;
 							

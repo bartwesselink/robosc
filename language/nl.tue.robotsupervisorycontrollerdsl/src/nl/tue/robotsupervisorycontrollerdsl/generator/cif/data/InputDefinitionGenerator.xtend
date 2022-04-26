@@ -43,7 +43,7 @@ class InputDefinitionGenerator {
 
 	private def basic(DataType dataType, Robot robot, CommunicationType communication, String prefix) {
 		if (eliminationChecker.communicationTypeInputRequiredInSynthesis(robot, communication)) {
-			return '''input «dataType.compile» i_«prefix»'''
+			return '''input «dataType.compile» i_«prefix»;'''
 
 		}
 

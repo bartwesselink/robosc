@@ -4,11 +4,11 @@ import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.PlantNames
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ProvideStatement
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.StateNames
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.expressions.ExpressionGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.TransitionNames
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.DataProvisioningHelper
 
 @Singleton
 class DataPlantGenerator {
@@ -16,6 +16,7 @@ class DataPlantGenerator {
 	@Inject extension StateNames
 	@Inject extension TransitionNames
 	@Inject extension ExpressionGenerator
+	@Inject extension DataProvisioningHelper
 
 	def compileDataplant(CommunicationType communicationType, Robot robot)'''
 	plant «communicationType.dataPlantName»:
@@ -39,10 +40,4 @@ class DataPlantGenerator {
 	edge «statement.transitionName» «IF statement.expression !== null»when «statement.expression?.compile»«ENDIF» goto «statement.dataLocationName»;
 	«ENDFOR»
 	'''
-	
-	private def provideStatements(CommunicationType communicationType, Robot robot) {
-		return robot.definitions
-			.filter(ProvideStatement)
-			.filter[it.communicationType == communicationType]
-	}
 }

@@ -136,9 +136,11 @@ State:
 /////////////////////////////
 AccessibleItem:
 	ObjectProperty | Component | State | Variable | LiteralValue | EnumValue;
+	
+AccessType: ('[' index=INT ']') | ('.' item=[AccessibleItem]);
 
 Access:
-	{Access} (items+=[AccessibleItem] | value=LiteralValue) ('.' items+=[AccessibleItem])*;
+	{Access} (firstItem=[AccessibleItem] | value=LiteralValue) (types+=AccessType)*;
 
 StringDataType:
 	{StringDataType} 'string';
@@ -268,7 +270,7 @@ Multiply returns Expression:
 Divide returns Expression:
 	Negation ({Divide.left=current} '/' right=Negation)*;
 
-Negation returns Expression:
+Negation returns Expression: {Negation}
 	'!' value=Negation |
 	Parenthesized;
 

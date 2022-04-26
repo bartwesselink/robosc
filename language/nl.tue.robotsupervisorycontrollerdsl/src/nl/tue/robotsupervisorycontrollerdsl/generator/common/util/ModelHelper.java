@@ -25,6 +25,10 @@ public class ModelHelper {
 			return null;
 		}
 	}
+
+	public static <T extends EObject> List<T> findChildren(EObject object, Class<T> type) {
+		return EcoreUtil2.getAllContentsOfType(object, type);
+	}
 	
 	public static <T extends EObject> List<T> findWithinRobot(Robot robot, Class<T> type) {
 		List<T> result = new ArrayList<>();

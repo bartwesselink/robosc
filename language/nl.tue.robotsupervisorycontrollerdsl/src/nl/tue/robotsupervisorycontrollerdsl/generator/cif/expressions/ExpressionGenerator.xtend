@@ -13,7 +13,6 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Plus
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Minus
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Multiply
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Divide
-import org.eclipse.xtext.Negation
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.SmallerThanEqual
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.SmallerThan
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Parenthesized
@@ -26,6 +25,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Litera
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
 import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negation
 
 @Singleton
 class ExpressionGenerator {

@@ -27,6 +27,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Servic
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Transition
 
 @Singleton
 class AutomatonGenerator {
@@ -49,17 +50,17 @@ class AutomatonGenerator {
 		«FOR state : automaton.states»«state.compile(robot, automaton)»«ENDFOR»
 	'''
 
-	private def allowUncontrollableEvents(Robot robot, Automaton automaton) '''
+	private def allowUncontrollableEvents(Robot robot, Automaton automaton, State state) '''
 		// allow uncontrollable events to occur, if not specified
 		«FOR type : ModelHelper.findWithinRobot(robot, CommunicationType)»
-			«type.allowUncontrollableEventsEdge(automaton)»
+			«type.allowUncontrollableEventsEdge(automaton, state)»
 		«ENDFOR»
 		// end allow uncontrollable events to occur
 	'''
 
-	private def dispatch String allowUncontrollableEventsEdge(Message message, Automaton automaton) {
+	private def dispatch String allowUncontrollableEventsEdge(Message message, Automaton automaton, State state) {
 		if (message.direction instanceof MessageFrom) {
-			if (automaton.allResultTransitions(message).empty) {
+			if (automaton.allResultTransitions(message, state).empty) {
 				return '''
 					edge «message.plantName».«message.transitionName»;
 				'''
@@ -67,28 +68,28 @@ class AutomatonGenerator {
 		}
 	}
 
-	private def dispatch String allowUncontrollableEventsEdge(Service service, Automaton automaton) {
-		if (automaton.allResultTransitions(service).filter[it.resultType instanceof ResponseResultType].empty) {
+	private def dispatch String allowUncontrollableEventsEdge(Service service, Automaton automaton, State state) {
+		if (automaton.allResultTransitions(service, state).filter[it.resultType instanceof ResponseResultType].empty) {
 			return '''
 				edge «service.plantName».«responseTransitionName»;
 			'''
 		}
 	}
 
-	private def dispatch String allowUncontrollableEventsEdge(Action action, Automaton automaton)'''
-		«IF automaton.allResultTransitions(action).filter[it.resultType instanceof ResponseResultType].empty»
+	private def dispatch String allowUncontrollableEventsEdge(Action action, Automaton automaton, State state)'''
+		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof ResponseResultType].empty»
 		edge «action.plantName».«responseTransitionName»;
 		«ENDIF»
 		
-		«IF automaton.allResultTransitions(action).filter[it.resultType instanceof FeedbackResultType].empty»
+		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof FeedbackResultType].empty»
 		edge «action.plantName».«feedbackTransitionName»;
 		«ENDIF»
 	'''
 
-	private def allResultTransitions(Automaton automaton, CommunicationType type) {
+	private def allResultTransitions(Automaton automaton, CommunicationType type, State state) {
 		return (
 			automaton.definitions.filter(ResultTransition) +
-			automaton.definitions.filter(State).flatMap[it.transitions].filter(ResultTransition)
+			state.transitions.filter(ResultTransition)
 		).filter[it.communicationType == type]
 	}
 
@@ -96,9 +97,13 @@ class AutomatonGenerator {
 		location «state.name»:
 			«IF state.initial»initial;«ENDIF» marked;
 					
-			«robot.allowUncontrollableEvents(automaton)»
+			«robot.allowUncontrollableEvents(automaton, state)»
 			
 			«FOR transition : state.transitions»
+				«transition.edge(robot)»
+			«ENDFOR»
+						
+			«FOR transition : automaton.definitions.filter(Transition)»
 				«transition.edge(robot)»
 			«ENDFOR»
 	'''

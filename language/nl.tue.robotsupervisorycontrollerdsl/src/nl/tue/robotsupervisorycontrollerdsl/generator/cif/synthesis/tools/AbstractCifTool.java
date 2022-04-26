@@ -65,7 +65,6 @@ public abstract class AbstractCifTool<T extends Application<IOutputComponent>> {
 	private void restoreOutput() {
 		this.codeFlowControl.enableSystemExit();
 		
-		capturer = null;
 		System.setErr(previousOut);		
 	}
 	

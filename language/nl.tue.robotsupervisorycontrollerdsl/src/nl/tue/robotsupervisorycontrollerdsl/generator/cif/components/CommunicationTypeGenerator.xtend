@@ -45,7 +45,6 @@ class CommunicationTypeGenerator {
 		uncontrollable u_response, u_error;
 	
 		«service.responseType.inputs(robot, service, 'response')»
-	
 		
 		location idle:
 			initial; marked;
