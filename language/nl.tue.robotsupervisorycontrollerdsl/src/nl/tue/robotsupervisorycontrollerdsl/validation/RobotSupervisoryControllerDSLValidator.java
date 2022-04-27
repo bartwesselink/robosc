@@ -3,23 +3,30 @@
  */
 package nl.tue.robotsupervisorycontrollerdsl.validation;
 
+import org.eclipse.xtext.validation.ComposedChecks;
 
-/**
- * This class contains custom validation rules. 
- *
- * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
- */
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.CorrectDataProvisioningRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.CorrectResultTypeRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOnMessagesToNodeRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOutsideScopeRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleComponentBehaviourRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleDefaultEnumRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleInitialStateRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueCommunicationTypeNameRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueDataTypeNameRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule;
+
+@ComposedChecks(validators = {
+		SingleInitialStateRule.class,
+		UniqueCommunicationTypeNameRule.class,
+		UniqueDataTypeNameRule.class,
+		UniqueStateNameRule.class,
+		SingleComponentBehaviourRule.class,
+		SingleDefaultEnumRule.class,
+		NoAssignmentOnMessagesToNodeRule.class,
+		NoAssignmentOutsideScopeRule.class,
+		CorrectResultTypeRule.class,
+		CorrectDataProvisioningRule.class,
+})
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
-	
-//	public static final String INVALID_NAME = "invalidName";
-//
-//	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital",
-//					RobotSupervisoryControllerDSLPackage.Literals.GREETING__NAME,
-//					INVALID_NAME);
-//		}
-//	}
-	
 }
