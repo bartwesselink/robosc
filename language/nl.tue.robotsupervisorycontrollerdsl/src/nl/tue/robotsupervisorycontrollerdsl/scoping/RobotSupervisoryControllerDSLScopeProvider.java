@@ -6,38 +6,42 @@ package nl.tue.robotsupervisorycontrollerdsl.scoping;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
 
-import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.*;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.common.AbstractScopeProvider;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.AccessScopeProvider;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.CommunicationTypeScopeProvider;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.DefaultScopeProvider;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.LibraryDefinitionScopeProvider;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.PropertyValueScopeProvider;
 
-/**
- * This class contains custom scoping description.
- * 
- * See
- * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
- * on how and when to use it.
- */
 public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSupervisoryControllerDSLScopeProvider {
-	@SuppressWarnings("unchecked")
-	@Override
-	public IScope getScope(EObject context, EReference reference) {
-		Robot robot = ModelHelper.findParentOfType(context, Robot.class);
-		Library library = ModelHelper.findParentOfType(context, Library.class);
-		List<EObject> candidates = new ArrayList<>();
+	@Inject DefaultScopeProvider defaultScopeProvider;
+	@Inject CommunicationTypeScopeProvider communicationTypeScopeProvider;
+	@Inject PropertyValueScopeProvider propertyValueScopeProvder;
+	@Inject LibraryDefinitionScopeProvider libraryDefinitionScopeProvider;
+	@Inject AccessScopeProvider accessScopeProvider;
 
-		if (robot != null) {
-			candidates = EcoreUtil2.getAllContentsOfType(robot,
-					(Class<EObject>) reference.getEReferenceType().getInstanceClass());
-		} else if (library != null) {
-			candidates = EcoreUtil2.getAllContentsOfType(library,
-					(Class<EObject>) reference.getEReferenceType().getInstanceClass());
-		}
+	@Override
+	public IScope getScope(EObject context, EReference reference) {		
+		List<AbstractScopeProvider> all = new ArrayList<>();
+		all.add(propertyValueScopeProvder);
+		all.add(communicationTypeScopeProvider);
+		all.add(libraryDefinitionScopeProvider);
+		all.add(accessScopeProvider);
+		all.add(defaultScopeProvider);
 		
-        return Scopes.scopeFor(candidates);
+		for (AbstractScopeProvider provider : all) {
+			if (provider.supports(context, reference)) {
+				return Scopes.scopeFor(provider.determineCandidates(context, reference)); 
+			}
+		}
+
+		return Scopes.scopeFor(new ArrayList<>());
 	}
 }
