@@ -34,6 +34,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Messag
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Minus;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Multiply;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negation;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.NoneDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectValue;
@@ -111,7 +112,7 @@ public class ExpressionTypesystem {
 			return new TypesystemDataType<ObjectDataType>(ObjectDataType.class, null, "object");
 		}
 		
-		return TypesystemDataType.NONE;
+		return TypesystemDataType.UNKNOWN;
 	}
 	
 	public TypesystemDataType<?> simpleType(SimpleAtom atom) {
@@ -127,7 +128,7 @@ public class ExpressionTypesystem {
 			return accessType(((Access) atom));
 		}
 		
-		return TypesystemDataType.NONE;		
+		return TypesystemDataType.UNKNOWN;		
 	}
 	
 	public TypesystemDataType<?> accessType(Access access) {
@@ -181,7 +182,7 @@ public class ExpressionTypesystem {
 			}
 		}
 		
-		return TypesystemDataType.NONE;	
+		return TypesystemDataType.UNKNOWN;	
 	}
 	
 	public TypesystemDataType<?> dataType(DataType type) {
@@ -193,12 +194,14 @@ public class ExpressionTypesystem {
 			return TypesystemDataType.DOUBLE;
 		} else if (type instanceof StringDataType) {
 			return TypesystemDataType.STRING;
+		} else if (type instanceof NoneDataType) {
+			return TypesystemDataType.NONE;
 		} else if (type instanceof Array) {
 			return typeOf(((Array) type).getType());
 		} else if (type instanceof ComplexDataTypeReference) {
 			return typeOf(((ComplexDataTypeReference) type).getType());
 		}
 		
-		return TypesystemDataType.NONE;		
+		return TypesystemDataType.UNKNOWN;		
 	}
 }

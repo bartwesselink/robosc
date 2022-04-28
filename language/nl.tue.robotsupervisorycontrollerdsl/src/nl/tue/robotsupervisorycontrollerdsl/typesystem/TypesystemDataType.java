@@ -14,7 +14,8 @@ public class TypesystemDataType<T extends EObject> {
 	public static TypesystemDataType<BooleanDataType> BOOLEAN = new TypesystemDataType<>(BooleanDataType.class, null, "boolean");
 	public static TypesystemDataType<DoubleDataType> DOUBLE = new TypesystemDataType<>(DoubleDataType.class, null, "double");
 	public static TypesystemDataType<NoneDataType> NONE = new TypesystemDataType<>(NoneDataType.class, null, "none");
-	
+	public static TypesystemDataType<NoneDataType> UNKNOWN = new TypesystemDataType<>(null, null, "unknown");
+
 	private Class<T> primitive;
 	private EObject referenced = null;
 	private String label = null;
