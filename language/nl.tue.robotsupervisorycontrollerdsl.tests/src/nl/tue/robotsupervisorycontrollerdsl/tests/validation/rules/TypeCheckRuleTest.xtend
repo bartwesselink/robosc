@@ -28,7 +28,7 @@ class TypeCheckRuleTest {
 
 				component Component {
 					incoming message test_message_one with type: integer(0..20)
-					outgoing message test_message_two with type: TestObject
+					outgoing message test_message_two with type: TestObject  (import name from package)
 					outgoing message test_message_three with type: integer(0..20)
 
 					behaviour {
@@ -360,7 +360,7 @@ class TypeCheckRuleTest {
 				}
 
 				component Component {
-					outgoing message test_message_two with type: TestObject
+					outgoing message test_message_two with type: TestObject (import name from package)
 				}
 
 				provide test_message_two with { result: true }
