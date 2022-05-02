@@ -157,8 +157,8 @@ BooleanDataType:
 DoubleDataType:
 	{DoubleDataType} 'double';
 
-Array:
-	{Array} 'array' '(' type=DataType ')';
+ArrayDataType:
+	{ArrayDataType} 'array' '(' type=DataType ')';
 
 BasicDataType:
 	IntegerDataType | StringDataType | NoneDataType | BooleanDataType | DoubleDataType;
@@ -167,7 +167,7 @@ ComplexDataTypeReference:
 	type=[ComplexDataType];
 
 DataType:
-	BasicDataType | Array | ComplexDataTypeReference;
+	BasicDataType | ArrayDataType | ComplexDataTypeReference;
 
 LiteralBoolean:
 	value=('true' | 'false');

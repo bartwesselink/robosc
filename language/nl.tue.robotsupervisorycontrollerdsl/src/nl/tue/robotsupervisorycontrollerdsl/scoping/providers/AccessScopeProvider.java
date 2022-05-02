@@ -12,7 +12,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.AccessType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.AccessibleItem;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action;
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Array;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ArrayDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Component;
@@ -96,8 +96,8 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 						if (implementation.basicGetItem() instanceof ObjectProperty) {
 							dataType = ((ObjectProperty) type.getItem()).getType();
 						}
-					} else if (type instanceof Array){
-						dataType = ((Array) type).getType();
+					} else if (type instanceof ArrayDataType){
+						dataType = ((ArrayDataType) type).getType();
 					}
 				}
 

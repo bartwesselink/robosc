@@ -9,7 +9,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.AccessibleItem;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.And;
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Array;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ArrayDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Atom;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BooleanDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
@@ -162,7 +162,15 @@ public class ExpressionTypesystem {
 					}
 				}
 				
-				return typeOf(first);
+				if (first != null) {
+					return typeOf(first);
+				} else {
+					ResultTransition parentResultTransition = ModelHelper.findParentOfType(access, ResultTransition.class);
+					DataType dataType = findValueDataType(parentResultTransition);
+					
+					return typeOf(dataType);
+		
+				}
 			} else if (last == null && access.getValue() != null) {
 				EnumDataType parentEnum = ModelHelper.findParentOfType(access, EnumDataType.class);
 				ResultTransition parentResultTransition = ModelHelper.findParentOfType(access, ResultTransition.class);
@@ -170,26 +178,7 @@ public class ExpressionTypesystem {
 				if (parentEnum != null) {
 					return typeOf(parentEnum.getType());
 				} else if (parentResultTransition != null) {
-					CommunicationType communicationType = parentResultTransition.getCommunicationType();
-					DataType dataType = null;
-					
-					if (communicationType instanceof Message) {
-						if (parentResultTransition.getResultType() instanceof ResponseResultType) {
-							dataType = ((Message) communicationType).getType();
-						}
-					} else if (communicationType instanceof Service) {
-						if (parentResultTransition.getResultType() instanceof ResponseResultType) {
-							dataType = ((Service) communicationType).getResponseType();
-						}
-					} else if (communicationType instanceof Action) {
-						if (parentResultTransition.getResultType() instanceof FeedbackResultType) {
-							dataType = ((Action) communicationType).getFeedbackType();
-						}
-				
-						if (parentResultTransition.getResultType() instanceof ResponseResultType) {
-							dataType = ((Action) communicationType).getResponseType();
-						}
-					}
+					DataType dataType = findValueDataType(parentResultTransition);
 					
 					return typeOf(dataType);
 				}
@@ -197,6 +186,30 @@ public class ExpressionTypesystem {
 		}
 		
 		return TypesystemDataType.UNKNOWN;	
+	}
+
+	private DataType findValueDataType(ResultTransition parentResultTransition) {
+		CommunicationType communicationType = parentResultTransition.getCommunicationType();
+		DataType dataType = null;
+		
+		if (communicationType instanceof Message) {
+			if (parentResultTransition.getResultType() instanceof ResponseResultType) {
+				dataType = ((Message) communicationType).getType();
+			}
+		} else if (communicationType instanceof Service) {
+			if (parentResultTransition.getResultType() instanceof ResponseResultType) {
+				dataType = ((Service) communicationType).getResponseType();
+			}
+		} else if (communicationType instanceof Action) {
+			if (parentResultTransition.getResultType() instanceof FeedbackResultType) {
+				dataType = ((Action) communicationType).getFeedbackType();
+			}
+
+			if (parentResultTransition.getResultType() instanceof ResponseResultType) {
+				dataType = ((Action) communicationType).getResponseType();
+			}
+		}
+		return dataType;
 	}
 	
 	public TypesystemDataType<?> dataType(DataType type) {
@@ -210,8 +223,8 @@ public class ExpressionTypesystem {
 			return TypesystemDataType.STRING;
 		} else if (type instanceof NoneDataType) {
 			return TypesystemDataType.NONE;
-		} else if (type instanceof Array) {
-			return typeOf(((Array) type).getType());
+		} else if (type instanceof ArrayDataType) {
+			return typeOf(((ArrayDataType) type).getType());
 		} else if (type instanceof ComplexDataTypeReference) {
 			return typeOf(((ComplexDataTypeReference) type).getType());
 		}

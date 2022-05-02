@@ -10,11 +10,11 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Base
 import nl.tue.robotsupervisorycontrollerdsl.tests.RobotSupervisoryControllerDSLInjectorProvider
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotSupervisoryControllerDSLPackage
-import nl.tue.robotsupervisorycontrollerdsl.validation.rules.IntegerRangeRequiredRule
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoArrayAllowedRule
 
 @ExtendWith(InjectionExtension)
 @InjectWith(RobotSupervisoryControllerDSLInjectorProvider)
-class IntegerRangeRequiredRuleTest {
+class NoArrayAllowedRuleTest {
 	@Inject extension ParseHelper<Base>
 	@Inject extension ValidationTestHelper
 
@@ -23,32 +23,29 @@ class IntegerRangeRequiredRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: integer(0..20)
-					outgoing message move with type: none
+					incoming message distance with type: array(integer)
 
 					behaviour {
-						variable current_distance: integer(0..20) = 0
+						variable current_distance: array(integer)
 
 						initial state idle {
 							on response from distance do current_distance := value		
 						}
 					}
 				}
-
-				requirement move needs Component.current_distance > 1
 			}
 		".parse.assertNoErrors
 	}
 	
-	def void checkVariableHasIntegerRange() {
+	def void checkVariableHasNoArrayType() {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: integer(0..20)
+					incoming message distance with type: array(integer)
 					outgoing message move with type: none
 
 					behaviour {
-						variable current_distance: integer = 0
+						variable current_distance: array(integer)
 
 						initial state idle {
 							on response from distance do current_distance := value		
@@ -56,43 +53,43 @@ class IntegerRangeRequiredRuleTest {
 					}
 				}
 
-				requirement move needs Component.current_distance > 1
+				requirement move needs Component.current_distance[0] > 1
 			}
 		".parse.assertError(
 			RobotSupervisoryControllerDSLPackage.Literals.VARIABLE,
-			IntegerRangeRequiredRule.INTEGER_RANGE_REQUIRED
+			NoArrayAllowedRule.NO_ARRAY_ALLOWED
 		)
 	}
 	
-	def void checkMessageTypeHasIntegerRange() {
+	def void checkMessageTypeHasNoArrayType() {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: integer
+					incoming message distance with type: array(integer)
 					outgoing message move with type: none
 
 					behaviour {
-						variable current_distance: integer(0..20) = 0
+						variable current_distance: array(integer)
 
 						initial state idle {
-							on response from distance do current_distance := value		
+							on response from distance do current_distance := value[0]		
 						}
 					}
 				}
 
-				requirement move needs Component.current_distance > 1
+				requirement move needs Component.current_distance[0] > 1
 			}
 		".parse.assertError(
 			RobotSupervisoryControllerDSLPackage.Literals.MESSAGE,
-			IntegerRangeRequiredRule.INTEGER_RANGE_REQUIRED
+			NoArrayAllowedRule.NO_ARRAY_ALLOWED
 		)
 	}
 	
-	def void checkObjectTypeHasIntegerRange() {
+	def void checkObjectTypeHasNoArrayType() {
 		"
 			robot UnitTestRobot {
 				datatype object Complex {
-					distance: integer 
+					distance: array(integer) 
 				}
 
 				component Component {
@@ -100,19 +97,19 @@ class IntegerRangeRequiredRuleTest {
 					outgoing message move with type: none
 
 					behaviour {
-						variable current_distance: integer(0..20) = 0
+						variable current_distance: array(integer) = 0
 
 						initial state idle {
-							on response from distance do current_distance := value.distance	
+							on response from distance do current_distance := value.distance[0]	
 						}
 					}
 				}
 
-				requirement move needs Component.current_distance > 1
+				requirement move needs Component.current_distance[0] > 1
 			}
 		".parse.assertError(
 			RobotSupervisoryControllerDSLPackage.Literals.OBJECT_PROPERTY,
-			IntegerRangeRequiredRule.INTEGER_RANGE_REQUIRED
+			NoArrayAllowedRule.NO_ARRAY_ALLOWED
 		)
 	}
 }

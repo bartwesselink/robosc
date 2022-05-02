@@ -5,6 +5,7 @@ import org.eclipse.xtext.validation.ComposedChecks;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.CorrectDataProvisioningRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.CorrectResultTypeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.IntegerRangeRequiredRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoArrayAllowedRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOnMessagesToNodeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOutsideScopeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoObjectVariableTypeRule;
@@ -34,6 +35,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueTopicNameRule
 		NoObjectVariableTypeRule.class,
 		IntegerRangeRequiredRule.class,
 		TypeSettingsRequiredRule.class,
+		NoArrayAllowedRule.class,
 })
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
 }
