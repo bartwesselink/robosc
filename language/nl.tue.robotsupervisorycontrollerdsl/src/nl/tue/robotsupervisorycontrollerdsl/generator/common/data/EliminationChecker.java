@@ -36,7 +36,7 @@ public class EliminationChecker {
 		List<EObject> requirements = ModelHelper.findWithinRobot(robot, Requirement.class).stream()
 				.map(it -> (EObject) it).collect(Collectors.toList());
 		List<EObject> provideStatements = ModelHelper.findWithinRobot(robot, ProvideStatement.class).stream()
-				.map(it -> (EObject) it).collect(Collectors.toList());
+				.map(it -> (EObject) it.getExpression()).collect(Collectors.toList());
 
 		if (listContainsVariableReference(guards, variable))
 			return true;
