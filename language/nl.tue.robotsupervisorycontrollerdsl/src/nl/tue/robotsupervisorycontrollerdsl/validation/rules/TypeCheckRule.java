@@ -31,7 +31,7 @@ import nl.tue.robotsupervisorycontrollerdsl.typesystem.ExpressionTypesystem;
 import nl.tue.robotsupervisorycontrollerdsl.typesystem.TypesystemDataType;
 import nl.tue.robotsupervisorycontrollerdsl.validation.common.AbstractValidationRule;
 
-public class TypeCheckRules extends AbstractValidationRule {
+public class TypeCheckRule extends AbstractValidationRule {
 	@Inject
 	ExpressionTypesystem typesystem;
 
@@ -128,7 +128,7 @@ public class TypeCheckRules extends AbstractValidationRule {
 	@Check
 	public void checkObjectValueType(ObjectPropertyValue entity) {
 		ensureTypesEqual(entity.getValue(), entity.getProperty().getType(),
-				RobotSupervisoryControllerDSLPackage.Literals.ASSIGNMENT__VALUE);
+				RobotSupervisoryControllerDSLPackage.Literals.OBJECT_PROPERTY_VALUE__VALUE);
 	}
 
 	@Check

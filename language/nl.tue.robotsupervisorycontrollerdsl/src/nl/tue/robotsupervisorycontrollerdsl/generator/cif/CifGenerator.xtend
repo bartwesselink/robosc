@@ -4,7 +4,6 @@ import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.GeneratorInterface
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import nl.tue.robotsupervisorycontrollerdsl.generator.common.GeneratorResult
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.components.ComponentGenerator
 import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Component
@@ -29,8 +28,6 @@ class CifGenerator implements GeneratorInterface {
 		
 		val path = FileHelper.findAbsolutePath(fileName, fileSystemAccess, robot.eResource.resourceSet)
 		cifSynthesisTool.applySynthesis(path)
-		
-		return new GeneratorResult(newArrayList)
 	}
 
 	def controller(Robot robot) '''

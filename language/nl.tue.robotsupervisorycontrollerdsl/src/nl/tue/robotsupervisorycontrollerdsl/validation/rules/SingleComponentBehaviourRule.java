@@ -24,7 +24,7 @@ public class SingleComponentBehaviourRule extends AbstractValidationRule {
 		
 		if (behaviours.size() > 1) {
 			error("A component can only have a single behaviour definition.",
-					RobotSupervisoryControllerDSLPackage.Literals.COMPONENT_BEHAVIOUR__AUTOMATON,
+					RobotSupervisoryControllerDSLPackage.Literals.LOCAL_COMPONENT__DEFINITIONS,
 					MULTIPLE_COMPONENT_BEHAVIOUR);
 		}
 	}

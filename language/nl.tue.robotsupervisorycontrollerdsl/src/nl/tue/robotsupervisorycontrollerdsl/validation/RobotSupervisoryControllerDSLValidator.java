@@ -12,7 +12,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOutside
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleComponentBehaviourRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleDefaultEnumRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleInitialStateRule;
-import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeCheckRules;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeCheckRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueCommunicationTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueDataTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule;
@@ -28,7 +28,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule
 		NoAssignmentOutsideScopeRule.class,
 		CorrectResultTypeRule.class,
 		CorrectDataProvisioningRule.class,
-		TypeCheckRules.class,
+		TypeCheckRule.class,
 })
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
 }

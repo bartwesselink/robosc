@@ -110,6 +110,10 @@ public class ExpressionTypesystem {
 			}
 		} else if (expression instanceof ObjectValue) {
 			return new TypesystemDataType<ObjectDataType>(ObjectDataType.class, null, "object");
+		} else if (expression instanceof ObjectProperty) {
+			return dataType(((ObjectProperty) expression).getType());
+		} else if (expression instanceof Variable) {
+			return dataType(((Variable) expression).getType());
 		}
 		
 		return TypesystemDataType.UNKNOWN;
@@ -149,6 +153,17 @@ public class ExpressionTypesystem {
 				} else if (lastAccessibleItem instanceof ObjectProperty) {
 					return typeOf(((ObjectProperty) lastAccessibleItem).getType());
 				}
+			} else if (last != null && last.getItem() == null) {
+				for (int i = access.getTypes().size() - 1; i >= 0; i--) {
+					AccessType type = access.getTypes().get(i);
+					
+					if (type.getItem() != null) {
+						System.err.println("hoihoh -- -- -- ");
+						return typeOf(type.getItem());
+					}
+				}
+				
+				return typeOf(first);
 			} else if (last == null && access.getValue() != null) {
 				EnumDataType parentEnum = ModelHelper.findParentOfType(access, EnumDataType.class);
 				ResultTransition parentResultTransition = ModelHelper.findParentOfType(access, ResultTransition.class);

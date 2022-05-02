@@ -4,7 +4,6 @@ import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.GeneratorInterface
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import nl.tue.robotsupervisorycontrollerdsl.generator.common.GeneratorResult
 import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EnumDataTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
@@ -46,8 +45,6 @@ class Ros2Generator implements GeneratorInterface {
 		
 		val absolutePath = FileHelper.findAbsolutePath(robot.name, fileSystemAccess, robot.eResource.resourceSet)
 		cifSynthesisTool.copyOutputFiles(fileSystemAccess, absolutePath, '''«base»/include/controller/''')
-
-		return new GeneratorResult(newArrayList)
 	}
 
 	def controller(Robot robot) '''
