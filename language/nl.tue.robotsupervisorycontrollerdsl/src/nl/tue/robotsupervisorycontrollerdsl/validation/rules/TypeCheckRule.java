@@ -26,6 +26,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Servic
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.SmallerThan;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.SmallerThanEqual;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.TransitionGuard;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Variable;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.WithDataValue;
 import nl.tue.robotsupervisorycontrollerdsl.typesystem.ExpressionTypesystem;
 import nl.tue.robotsupervisorycontrollerdsl.typesystem.TypesystemDataType;
@@ -135,6 +136,14 @@ public class TypeCheckRule extends AbstractValidationRule {
 	public void checkAssignmentType(Assignment entity) {
 		ensureTypesEqual(entity.getItem(), entity.getValue(),
 				RobotSupervisoryControllerDSLPackage.Literals.ASSIGNMENT__VALUE);
+	}
+
+	@Check
+	public void checkInitialValueType(Variable entity) {
+		if (entity.getInitial() == null) return;
+		
+		ensureTypesEqual(entity.getType(), entity.getInitial(),
+				RobotSupervisoryControllerDSLPackage.Literals.VARIABLE__INITIAL);
 	}
 
 	private void ensureTypeCorrect(EObject expression, TypesystemDataType<?> expected, EReference reference) {

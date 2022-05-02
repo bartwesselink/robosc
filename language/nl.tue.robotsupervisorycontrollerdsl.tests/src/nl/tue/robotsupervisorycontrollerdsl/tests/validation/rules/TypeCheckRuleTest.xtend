@@ -33,7 +33,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := true or false		
@@ -68,7 +68,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := true or 1
@@ -91,7 +91,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := true and 1
@@ -114,7 +114,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := 5 > true
@@ -137,7 +137,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := 5 < true
@@ -160,7 +160,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := 5 >= true
@@ -183,7 +183,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := 5 <= true
@@ -206,7 +206,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := !5
@@ -229,7 +229,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_integer := 5 * true
@@ -252,7 +252,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_integer := 5 / true
@@ -275,7 +275,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_integer := 5 + true
@@ -298,7 +298,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_integer := 5 - true
@@ -321,7 +321,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							transition if 5
@@ -379,7 +379,7 @@ class TypeCheckRuleTest {
 					incoming message test_message_one with type: integer(0..20)
 
 					behaviour {
-						variable result_boolean: boolean = 0
+						variable result_boolean: boolean = false
 
 						initial state idle {
 							on response from test_message_one do result_boolean := 5
@@ -389,6 +389,24 @@ class TypeCheckRuleTest {
 			}
 		".parse.assertError(
 			RobotSupervisoryControllerDSLPackage.Literals.ASSIGNMENT,
+			TypeCheckRule.INVALID_TYPE
+		)
+	}
+
+	@Test
+	def void checkErrorInitialValue() {
+		"
+			robot UnitTestRobot {
+				component Component {
+					behaviour {
+						variable result_boolean: boolean = 0
+
+						initial state idle {}
+					}
+				}
+			}
+		".parse.assertError(
+			RobotSupervisoryControllerDSLPackage.Literals.VARIABLE,
 			TypeCheckRule.INVALID_TYPE
 		)
 	}

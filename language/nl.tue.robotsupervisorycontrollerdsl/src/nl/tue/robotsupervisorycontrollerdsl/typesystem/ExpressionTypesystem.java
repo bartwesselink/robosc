@@ -26,6 +26,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Greate
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.GreaterThanEqual;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Implies;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.IntegerDataType;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Literal;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.LiteralBoolean;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.LiteralDouble;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.LiteralInt;
@@ -114,6 +115,8 @@ public class ExpressionTypesystem {
 			return dataType(((ObjectProperty) expression).getType());
 		} else if (expression instanceof Variable) {
 			return dataType(((Variable) expression).getType());
+		} else if (expression instanceof Literal) {
+			return simpleType((Literal) expression);
 		}
 		
 		return TypesystemDataType.UNKNOWN;
