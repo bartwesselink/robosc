@@ -27,6 +27,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotS
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Service;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Variable;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.impl.AccessTypeImpl;
 import nl.tue.robotsupervisorycontrollerdsl.scoping.common.AbstractScopeProvider;
 
 public class AccessScopeProvider extends AbstractScopeProvider {
@@ -89,8 +90,10 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 				}
 
 				for (AccessType type : access.getTypes()) {
-					if (type.getItem() != null) {
-						if (type.getItem() instanceof ObjectProperty) {
+					AccessTypeImpl implementation = (AccessTypeImpl) type;
+					
+					if (implementation.basicGetItem() != null) {
+						if (implementation.basicGetItem() instanceof ObjectProperty) {
 							dataType = ((ObjectProperty) type.getItem()).getType();
 						}
 					} else if (type instanceof Array){
