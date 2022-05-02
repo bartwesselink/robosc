@@ -158,7 +158,6 @@ public class ExpressionTypesystem {
 					AccessType type = access.getTypes().get(i);
 					
 					if (type.getItem() != null) {
-						System.err.println("hoihoh -- -- -- ");
 						return typeOf(type.getItem());
 					}
 				}

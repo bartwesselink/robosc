@@ -16,6 +16,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeCheckRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueCommunicationTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueDataTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueTopicNameRule;
 
 @ComposedChecks(validators = {
 		SingleInitialStateRule.class,
@@ -29,6 +30,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule
 		CorrectResultTypeRule.class,
 		CorrectDataProvisioningRule.class,
 		TypeCheckRule.class,
+		UniqueTopicNameRule.class,
 })
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
 }
