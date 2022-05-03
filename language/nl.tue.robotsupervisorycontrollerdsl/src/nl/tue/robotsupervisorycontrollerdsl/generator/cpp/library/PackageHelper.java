@@ -25,7 +25,7 @@ public class PackageHelper {
 		List<CustomTypeSettings> settings = ModelHelper.findWithinRobot(robot, CustomTypeSettings.class);
 		
 		for (CustomTypeSettings setting : settings) {
-			if (result.contains(setting.getPackage())) {
+			if (!result.contains(setting.getPackage())) {
 				result.add(setting.getPackage());
 			}
 		}
