@@ -156,63 +156,86 @@ public class ExpressionTypesystem {
 				} else if (lastAccessibleItem instanceof ObjectProperty) {
 					return typeOf(((ObjectProperty) lastAccessibleItem).getType());
 				}
-			} else if (last != null && last.getItem() == null) {
+			} else if (last != null && last.getItem() == null) {			
+				int unwrap = 0;
+				
 				for (int i = access.getTypes().size() - 1; i >= 0; i--) {
 					AccessType type = access.getTypes().get(i);
 					
 					if (type.getItem() != null) {
-						return typeOf(type.getItem());
+						AccessibleItem currentItem = type.getItem();
+						
+						if (currentItem instanceof ObjectProperty) {
+							ObjectProperty property = (ObjectProperty) currentItem;
+							DataType currentDataType = property.getType();
+							
+							for (int j = 0; j < unwrap; j++) {
+								if (currentDataType instanceof ArrayDataType) {
+									ArrayDataType array = (ArrayDataType) currentDataType;
+									
+									currentDataType = array.getType();
+								}
+							}
+							
+							return typeOf(currentDataType);
+						}
+						
+						return typeOf(currentItem);
+					} else {
+						unwrap += 1;
 					}
 				}
 				
 				if (first != null) {
 					return typeOf(first);
 				} else {
-					ResultTransition parentResultTransition = ModelHelper.findParentOfType(access, ResultTransition.class);
-					DataType dataType = findValueDataType(parentResultTransition);
+					DataType dataType = findValueDataType(access);
 					
 					return typeOf(dataType);
 		
 				}
 			} else if (last == null && access.getValue() != null) {
-				EnumDataType parentEnum = ModelHelper.findParentOfType(access, EnumDataType.class);
-				ResultTransition parentResultTransition = ModelHelper.findParentOfType(access, ResultTransition.class);
+				DataType dataType = findValueDataType(access);
 				
-				if (parentEnum != null) {
-					return typeOf(parentEnum.getType());
-				} else if (parentResultTransition != null) {
-					DataType dataType = findValueDataType(parentResultTransition);
-					
-					return typeOf(dataType);
-				}
+				return typeOf(dataType);
 			}
 		}
 		
 		return TypesystemDataType.UNKNOWN;	
 	}
 
-	private DataType findValueDataType(ResultTransition parentResultTransition) {
-		CommunicationType communicationType = parentResultTransition.getCommunicationType();
-		DataType dataType = null;
+	private DataType findValueDataType(Access access) {
+		EnumDataType parentEnum = ModelHelper.findParentOfType(access, EnumDataType.class);
+		ResultTransition parentResultTransition = ModelHelper.findParentOfType(access, ResultTransition.class);
 		
-		if (communicationType instanceof Message) {
-			if (parentResultTransition.getResultType() instanceof ResponseResultType) {
-				dataType = ((Message) communicationType).getType();
+		if (parentEnum != null) {
+			return parentEnum.getType();
+		} else if (parentResultTransition != null) {
+			CommunicationType communicationType = parentResultTransition.getCommunicationType();
+			DataType dataType = null;
+			
+			if (communicationType instanceof Message) {
+				if (parentResultTransition.getResultType() instanceof ResponseResultType) {
+					dataType = ((Message) communicationType).getType();
+				}
+			} else if (communicationType instanceof Service) {
+				if (parentResultTransition.getResultType() instanceof ResponseResultType) {
+					dataType = ((Service) communicationType).getResponseType();
+				}
+			} else if (communicationType instanceof Action) {
+				if (parentResultTransition.getResultType() instanceof FeedbackResultType) {
+					dataType = ((Action) communicationType).getFeedbackType();
+				}
+	
+				if (parentResultTransition.getResultType() instanceof ResponseResultType) {
+					dataType = ((Action) communicationType).getResponseType();
+				}
 			}
-		} else if (communicationType instanceof Service) {
-			if (parentResultTransition.getResultType() instanceof ResponseResultType) {
-				dataType = ((Service) communicationType).getResponseType();
-			}
-		} else if (communicationType instanceof Action) {
-			if (parentResultTransition.getResultType() instanceof FeedbackResultType) {
-				dataType = ((Action) communicationType).getFeedbackType();
-			}
-
-			if (parentResultTransition.getResultType() instanceof ResponseResultType) {
-				dataType = ((Action) communicationType).getResponseType();
-			}
+	
+			return dataType;
 		}
-		return dataType;
+		
+		return null;
 	}
 	
 	public TypesystemDataType<?> dataType(DataType type) {
@@ -227,7 +250,7 @@ public class ExpressionTypesystem {
 		} else if (type instanceof NoneDataType) {
 			return TypesystemDataType.NONE;
 		} else if (type instanceof ArrayDataType) {
-			return typeOf(((ArrayDataType) type).getType());
+			return new TypesystemDataType<>(ArrayDataType.class, ((ArrayDataType) type).getType().getClass(), "array");
 		} else if (type instanceof ComplexDataTypeReference) {
 			return typeOf(((ComplexDataTypeReference) type).getType());
 		}

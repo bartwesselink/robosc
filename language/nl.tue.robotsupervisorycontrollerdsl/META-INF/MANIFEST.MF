@@ -25,6 +25,7 @@ Export-Package: nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerD
  nl.tue.robotsupervisorycontrollerdsl.services,
  nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.util,
  nl.tue.robotsupervisorycontrollerdsl.validation,
+ nl.tue.robotsupervisorycontrollerdsl.typesystem,
  nl.tue.robotsupervisorycontrollerdsl.scoping,
  nl.tue.robotsupervisorycontrollerdsl.serializer,
  nl.tue.robotsupervisorycontrollerdsl.formatting2

@@ -17,10 +17,10 @@ public class TypesystemDataType<T extends EObject> {
 	public static TypesystemDataType<NoneDataType> UNKNOWN = new TypesystemDataType<>(null, null, "unknown");
 
 	private Class<T> primitive;
-	private EObject referenced = null;
+	private Object referenced = null;
 	private String label = null;
 
-	public TypesystemDataType(Class<T> primitive, EObject referenced, String label) {
+	public TypesystemDataType(Class<T> primitive, Object referenced, String label) {
 		this.primitive = primitive;
 		this.referenced = referenced;
 		this.label = label;
@@ -30,7 +30,7 @@ public class TypesystemDataType<T extends EObject> {
 		return primitive;
 	}
 	
-	public EObject getReferenced() {
+	public Object getReferenced() {
 		return referenced;
 	}
 	
@@ -48,5 +48,10 @@ public class TypesystemDataType<T extends EObject> {
 		
 		return this.primitive == other.getPrimitive()
 				&& this.referenced == other.getReferenced();
+	}
+	
+	@Override
+	public String toString() {
+		return this.label;
 	}
 }
