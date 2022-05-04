@@ -3,7 +3,7 @@
     "displayName": "Robot Supervisory Controller DSL",
     "description": "A domain-specific language (DSL) to accelerate the development of safe, autonomous robots.",
     "publisher": "TUE",
-    "license": "EPL-2.0",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/bartwesselink/robot-supervisory-controller-dsl"

@@ -1,0 +1,17 @@
+library TurtlebotLibrary {
+    datatype object Vector3 {
+        x: double
+        y: double
+        z: double
+    }
+
+    datatype object Twist {
+        linear: Vector3
+        angular: Vector3
+    }
+
+    component TurtlebotPlatform {
+        outgoing message move_forward with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+        outgoing message halt with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+    }
+}

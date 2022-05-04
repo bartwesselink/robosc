@@ -2,3 +2,4 @@
 .metadata
 *.log
 Eclipse.app
+src-gen/
