@@ -1,6 +1,7 @@
 package nl.tue.robotsupervisorycontrollerdsl.scoping.providers;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
@@ -16,13 +17,12 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataTy
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectPropertyValue;
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectValue;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ProvideStatement;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotSupervisoryControllerDSLPackage;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Service;
 import nl.tue.robotsupervisorycontrollerdsl.scoping.common.AbstractScopeProvider;
 
-public class PropertyValueScopeProvider extends AbstractScopeProvider {
+public class PropertyValueScopeProvider extends AbstractScopeProvider {	
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
 		ProvideStatement provideStatement = ModelHelper.findParentOfType(context, ProvideStatement.class);
@@ -33,7 +33,6 @@ public class PropertyValueScopeProvider extends AbstractScopeProvider {
 
 		if (parentPropertyValue != null) {
 			dataType = parentPropertyValue.getProperty().getType();
-			;
 		} else if (provideStatement != null) {
 			CommunicationType communicationType = provideStatement.getCommunicationType();
 
@@ -52,9 +51,10 @@ public class PropertyValueScopeProvider extends AbstractScopeProvider {
 
 		if (dataType instanceof ComplexDataTypeReference) {
 			ComplexDataTypeReference typeReference = (ComplexDataTypeReference) dataType;
+			List<EObject> properties = ModelHelper.findChildren(typeReference.getType(), ObjectProperty.class)
+					.stream().map(it -> (EObject) it).collect(Collectors.toList());
 
-			return Scopes.scopeFor(ModelHelper.findChildren(typeReference.getType(), ObjectProperty.class).stream()
-					.map(it -> (EObject) it).collect(Collectors.toList()));
+			return Scopes.scopeFor(properties);
 		}
 
 		return Scopes.scopeFor(new ArrayList<>());
@@ -62,7 +62,7 @@ public class PropertyValueScopeProvider extends AbstractScopeProvider {
 
 	@Override
 	public boolean supports(EObject entity, EReference reference) {
-		return entity instanceof ObjectValue
+		return entity instanceof ObjectPropertyValue
 				&& reference == RobotSupervisoryControllerDSLPackage.Literals.OBJECT_PROPERTY_VALUE__PROPERTY;
 	}
 
