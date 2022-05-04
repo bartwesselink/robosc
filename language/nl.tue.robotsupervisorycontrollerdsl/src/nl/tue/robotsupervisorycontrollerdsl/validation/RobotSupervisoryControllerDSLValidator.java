@@ -15,6 +15,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleInitialStateR
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeCheckRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeSettingsRequiredRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueCommunicationTypeNameRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueComponentNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueDataTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueTopicNameRule;
@@ -36,6 +37,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueTopicNameRule
 		IntegerRangeRequiredRule.class,
 		TypeSettingsRequiredRule.class,
 		NoArrayAllowedRule.class,
+		UniqueComponentNameRule.class,
 })
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
 }
