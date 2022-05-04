@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access;
@@ -32,7 +34,7 @@ import nl.tue.robotsupervisorycontrollerdsl.scoping.common.AbstractScopeProvider
 
 public class AccessScopeProvider extends AbstractScopeProvider {
 	@Override
-	public List<EObject> determineCandidates(EObject context, EReference reference) {
+	public IScope getScope(EObject context, EReference reference) {
 		if (context instanceof Access && reference == RobotSupervisoryControllerDSLPackage.Literals.ACCESS__FIRST_ITEM) {
 			List<EObject> candidates = new ArrayList<>();
 
@@ -50,7 +52,7 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 			candidates.addAll(ModelHelper.findChildren(robot, EnumValue.class).stream().map(it -> (EObject) it)
 					.collect(Collectors.toList()));
 
-			return candidates;
+			return Scopes.scopeFor(candidates);
 		} else if (context instanceof AccessType && reference == RobotSupervisoryControllerDSLPackage.Literals.ACCESS_TYPE__ITEM) {
 			Access access = ModelHelper.findParentOfType(context, Access.class);
 			List<EObject> candidates = new ArrayList<>();
@@ -59,10 +61,10 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 				AccessibleItem first = access.getFirstItem();
 
 				if (first instanceof Component) {
-					candidates.addAll(ModelHelper.findChildren(first, Variable.class).stream().map(it -> (EObject) it)
+					candidates.addAll(ModelHelper.findInComponent((Component) first, Variable.class).stream().map(it -> (EObject) it)
 							.collect(Collectors.toList()));
 
-					candidates.addAll(ModelHelper.findChildren(first, State.class).stream().map(it -> (EObject) it)
+					candidates.addAll(ModelHelper.findInComponent((Component) first, State.class).stream().map(it -> (EObject) it)
 							.collect(Collectors.toList()));
 				}
 			} else if (access.getValue() != null) {
@@ -109,10 +111,10 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 				}
 			}
 
-			return candidates;
+			return Scopes.scopeFor(candidates);
 		}
 
-		return new ArrayList<>();
+		return Scopes.scopeFor(new ArrayList<>());
 	}
 
 	@Override
