@@ -31,8 +31,10 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	abstract def CharSequence functions(T entity, Robot robot)
 
 	protected def prepareResult(CommunicationType entity, DataType type, Robot robot, String access)'''
-	«IF type.simple && eliminationChecker.communicationTypeInputRequiredInSynthesis(robot, entity)»
+	«IF type.simple»
+	«IF eliminationChecker.communicationTypeInputRequiredInSynthesis(robot, entity)»
 	«entity.inputName('response')» = «type.checkDataAccess(type.dataAccessProperty(access))»;
+	«ENDIF»
 	
 	«FOR assignment : eliminationHelper.findAllCodeOnlyAssignments(robot, entity)»
 	«assignment.assignmentVariable» = «(assignment.value as Expression).compile(type.checkDataAccess(type.dataAccessProperty(access)))»;
