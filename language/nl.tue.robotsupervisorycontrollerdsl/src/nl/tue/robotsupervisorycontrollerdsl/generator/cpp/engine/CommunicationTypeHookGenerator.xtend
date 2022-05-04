@@ -36,7 +36,6 @@ class CommunicationTypeHookGenerator {
 	private def dispatch compileHook(Message entity) '''
 		«IF entity.direction instanceof MessageTo»
 		case «entity.triggerTransitionName»:
-			fprintf(stderr, "[debug] Triggering message «entity.name».\n");
 			node_controller->«entity.callMethod»();
 		break;
 		«ENDIF»
@@ -44,14 +43,12 @@ class CommunicationTypeHookGenerator {
 
 	private def dispatch compileHook(Action entity) '''
 		case «entity.triggerTransitionName»:
-			fprintf(stderr, "[debug] Triggering action «entity.name».\n");
 			node_controller->«entity.callMethod»();
 		break;
 	'''
 
 	private def dispatch compileHook(Service entity) '''
 		case «entity.triggerTransitionName»:
-			fprintf(stderr, "[debug] Triggering service «entity.name».\n");
 			node_controller->«entity.callMethod»();
 		break;
 	'''

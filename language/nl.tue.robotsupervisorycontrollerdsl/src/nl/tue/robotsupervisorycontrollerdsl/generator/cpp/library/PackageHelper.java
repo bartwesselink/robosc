@@ -20,10 +20,17 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Servic
 @Singleton
 public class PackageHelper {
 	public List<String> getRequiredPackages(Robot robot) {
-		return ModelHelper.findWithinRobot(robot, CustomTypeSettings.class)
-				.stream()
-				.map(it -> it.getPackage())
-				.collect(Collectors.toList());
+		List<String> result = new ArrayList<>();
+	
+		List<CustomTypeSettings> settings = ModelHelper.findWithinRobot(robot, CustomTypeSettings.class);
+		
+		for (CustomTypeSettings setting : settings) {
+			if (!result.contains(setting.getPackage())) {
+				result.add(setting.getPackage());
+			}
+		}
+	
+		return result;
 	}
 	
 	public List<CharSequence> getAllImports(Robot robot, AbstractPlatformTypeGenerator typeGenerator) {

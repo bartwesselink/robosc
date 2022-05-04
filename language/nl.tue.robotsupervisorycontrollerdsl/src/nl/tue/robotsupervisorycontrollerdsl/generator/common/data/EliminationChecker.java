@@ -142,8 +142,13 @@ public class EliminationChecker {
 	private boolean listContainsVariableReference(List<EObject> entities, Variable v) {
 		return entities
 				.stream()
+				.filter(entity -> entity != null)
 				.anyMatch(entity -> {
 					List<Access> references = EcoreUtil2.getAllContentsOfType(entity, Access.class);
+					
+					if (references == null) {
+						return false;
+					}
 
 					return references
 							.stream()

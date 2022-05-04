@@ -37,7 +37,9 @@ class DataPlantHelper {
 		«FOR pair : object.flattenProperties('')»
 		«FOR statement : communication.allProvideStatementsWithData(robot) SEPARATOR '\n} else '»
 		if («communication.dataPlantName» == «statement.dataLocationName») {
+			«IF statement.objectValue.valueForProperty(pair.property, pair.identifier) !== null»
 			«dataVariable»«pointer.accessMethod»«pair.identifier.replace('_', '.')» = «statement.objectValue.valueForProperty(pair.property, pair.identifier)?.compile»;
+			«ENDIF»
 		«ENDFOR»
 		«IF !communication.allProvideStatementsWithData(robot).empty»}«ENDIF»
 		«ENDFOR»
@@ -60,10 +62,10 @@ class DataPlantHelper {
 	}
 	
 	private def Expression valueForProperty(ObjectValue value, ObjectProperty property, String path) {
-		val parts = path.split('\\.')
+		val parts = path.split('_')
     	var currentObject = value;
     	var i = 0
-    	
+    	    	
     	for (part : parts) {
     		val last = (i + 1) == parts.length
     		val objectProperty = currentObject.properties.findFirst[it.property.name.equalsIgnoreCase(part)]

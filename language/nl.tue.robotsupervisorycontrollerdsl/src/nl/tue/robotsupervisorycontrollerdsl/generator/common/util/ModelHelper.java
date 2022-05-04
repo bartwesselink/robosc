@@ -40,17 +40,39 @@ public class ModelHelper {
 		result.addAll(EcoreUtil2.getAllContentsOfType(robot, type));
 		
 		List<Component> components = EcoreUtil2.getAllContentsOfType(robot, Component.class); 
-		
+	
 		for (Component c : components) {
-			Component current = c;
+			result.addAll(ModelHelper.findInComponent(c, type, false));
+		}
+		
+		return result;
+	}
+	
+	public static <T extends EObject> List<T> findInComponent(Component component, Class<T> type) {
+		return findInComponent(component, type, true);
+	}
+	
+	public static <T extends EObject> List<T> findInComponent(Component component, Class<T> type, boolean includeDirectComponentChildren) {
+		List<T> result = new ArrayList<>();
+		
+		if (component == null) {
+			return result;
+		}
+		
+		if (includeDirectComponentChildren) {
+			result.addAll(EcoreUtil2.getAllContentsOfType(component, type));
+		}
+		
+		Component current = component;
+		
+		while (current.getType() instanceof ImportedComponent) {
+			LibraryDefinition definition = ((ImportedComponent) current.getType()).getDefinition();
 			
-			while (current.getType() instanceof ImportedComponent) {
-				LibraryDefinition definition = ((ImportedComponent) current.getType()).getDefinition();
-				
-				if (current instanceof Component) {
-					current = (Component) definition;
-					result.addAll(EcoreUtil2.getAllContentsOfType(current, type));
-				}
+			if (definition instanceof Component) {
+				current = (Component) definition;
+				result.addAll(EcoreUtil2.getAllContentsOfType(current, type));
+			} else if (definition == null || definition.eContainer() == null) {
+				break;
 			}
 		}
 		

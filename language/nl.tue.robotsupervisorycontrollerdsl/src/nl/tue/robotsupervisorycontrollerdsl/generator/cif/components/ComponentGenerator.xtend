@@ -40,7 +40,7 @@ class ComponentGenerator {
     		val definition = componentType.definition
     		
     		if (definition instanceof Component) {
-    			return component.behaviour
+    			return definition.behaviour
     		}
     	}
     }
@@ -54,7 +54,7 @@ class ComponentGenerator {
     		val definition = componentType.definition
     		
     		if (definition instanceof Component) {
-    			return component.communicationTypes
+    			return definition.communicationTypes
     		}
     	}
     }
