@@ -10,6 +10,14 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractPlatfor
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Variable
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.VariableNames
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.AutomatonVariable
+import com.google.gson.JsonObject
+import com.google.gson.JsonArray
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComponentBehaviour
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Transition
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Automaton
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResultTransition
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.TauTransition
 
 @Singleton
 class InfoUtilitiesGenerator {
@@ -61,7 +69,12 @@ class InfoUtilitiesGenerator {
 	'''
 
 	def componentsWithBehaviour(Robot robot) {
-		return robot.definitions.filter(Component).filter[it.behaviour !== null]
+		return robot.components.filter[it.behaviour !== null]
+				.toList
+	}
+
+	def components(Robot robot) {
+		return robot.definitions.filter(Component)
 				.toList
 	}
 
@@ -96,5 +109,67 @@ class InfoUtilitiesGenerator {
 		val index = component.componentVariables.indexOf(variable)
 		
 		return index + 1 == component.componentVariables.size
+	}
+	
+	def serialize(Robot robot) {
+		val output = new JsonObject()
+
+		output.addProperty("name", robot.name)
+		
+		val	components = new JsonArray()
+		for (definition : robot.components) {
+			components.add(definition.serialize)
+		}
+		
+		output.add("components", components)
+		
+		return output.toString
+	}
+	
+	def serialize(Component input) {
+		val component = new JsonObject()
+		component.addProperty("name", input.name)
+		
+		val behaviour = input.behaviour
+		if (behaviour !== null) {
+			component.add("behaviour", behaviour.serialize)
+		}
+		
+		return component
+	}
+	
+	def serialize(ComponentBehaviour input) {
+		val states = new JsonArray()
+			
+		for (state : input.automaton.definitions.filter(State)) {
+			val object = new JsonObject()
+			
+			object.addProperty("name", state.name)
+			object.addProperty("initial", state.initial)
+			object.add("transitions", state.serializeTransitions(input.automaton))
+
+			states.add(object)
+		}
+		
+		return states
+	}
+	
+	def serializeTransitions(State input, Automaton automaton) {
+		val transitions = new JsonArray()
+		val all = input.transitions + automaton.definitions.filter(Transition)
+		
+		for (transition : all) {
+			val object = new JsonObject()
+
+			object.addProperty("next", transition.stateChange?.state?.name)
+			
+			if (transition instanceof ResultTransition) {
+				
+			} else if (transition instanceof TauTransition) {
+				object.addProperty("next", transition.stateChange?.state?.name)
+			}
+		}	
+
+		return transitions
 	}
 }

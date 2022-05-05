@@ -1,4 +1,5 @@
 import { fsl_to_svg_string } from 'jssm-viz';
+import './assets/main.scss'
 
 const run = async () => {
     const root = document.getElementById('root');

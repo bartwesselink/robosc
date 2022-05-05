@@ -68,7 +68,7 @@ function getWebviewContent(webview: vscode.Webview, context: vscode.ExtensionCon
     return `<!doctype html>
     <html>
         <head>
-            <meta http-equiv="Content-Security-Policy" content="default-src 'none';  img-src ${webview.cspSource} https:; script-src 'unsafe-eval' ${webview.cspSource}; style-src ${webview.cspSource};">
+            <meta http-equiv="Content-Security-Policy" content="default-src 'none';  img-src ${webview.cspSource} https:; script-src 'unsafe-eval' ${webview.cspSource}; style-src 'unsafe-inline' ${webview.cspSource};">
         </head>
         <body>
             <div id="root"></div>
