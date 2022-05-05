@@ -25,26 +25,26 @@ class InfoUtilitiesGenerator {
 		void emit_current_state() {
 			std::stringstream output;
 			
-			output << "{" << "\n";
+			output << "{";
 			
-			output << "\"components\": {" << "\n";
+			output << "\"components\": {" << "";
 			«FOR component : robot.componentsWithBehaviour»
-				output << "\"«component.name»\": {" << "\n";
-				output << "\"state\": \"" << enum_names[«component.plantName»] << "\"," << "\n";
-				output << "\"variables\": {\n";
+				output << "\"«component.name»\": {";
+				output << "\"state\": \"" << enum_names[«component.plantName»] << "\",";
+				output << "\"variables\": {";
 				
 				«FOR variable : component.componentVariables»
-				output << "\"«variable.name»\": \"" << «variable.variableName(robot)» << "\"«IF variable.lastVariable(component)»,«ENDIF»" << "\n";				
+				output << "\"«variable.name»\": \"" << «variable.variableName(robot)» << "\"«IF !variable.lastVariable(component)»,«ENDIF»";				
 				«ENDFOR»
 				
-				output << "}\n";
-				output << "}«IF component.lastBehaviourComponent(robot)»,«ENDIF»\n";
+				output << "}";
+				output << "}«IF !component.lastBehaviourComponent(robot)»,«ENDIF»";
 			«ENDFOR»
 			output << "},";
 			«FOR field : fields»
-			output << "\"«field»\": " << serialize_json_vector(«field») << "«IF field.lastField»,«ENDIF»\n";
+			output << "\"«field»\": " << serialize_json_vector(«field») << "«IF !field.lastField»,«ENDIF»";
 			«ENDFOR»
-			output << "}" << "\n";
+			output << "}";
 			
 			«platformType.informationPublisher»
 
