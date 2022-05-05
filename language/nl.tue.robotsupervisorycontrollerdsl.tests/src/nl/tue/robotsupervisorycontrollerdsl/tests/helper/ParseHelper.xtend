@@ -10,6 +10,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Expres
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Base
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Variable
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ProvideStatement
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.TauTransition
 
 class ParseHelper {
 	@Inject IParser parser
@@ -42,5 +44,17 @@ class ParseHelper {
 	    val IParseResult result = parser.parse(grammar.accessRule, new StringReader(input.toString))
 	    
 	    return result.rootASTElement as Access
+	}
+
+	def ProvideStatement parseProvideStatement(CharSequence input) {
+	    val IParseResult result = parser.parse(grammar.provideStatementRule, new StringReader(input.toString))
+	    
+	    return result.rootASTElement as ProvideStatement
+	}
+
+	def TauTransition parseTauTransition(CharSequence input) {
+	    val IParseResult result = parser.parse(grammar.tauTransitionRule, new StringReader(input.toString))
+	    
+	    return result.rootASTElement as TauTransition
 	}
 }

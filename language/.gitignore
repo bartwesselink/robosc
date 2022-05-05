@@ -13,3 +13,4 @@ textmate-gen
 .project
 .classpath
 libs/
+*.java_trace

@@ -36,7 +36,13 @@
                 "path": "./syntaxes/rscd.tmLanguage.json"
             }
         ],
-        "commands": [],
+        "commands": [
+            {
+                "command": "rscd.visualizeController",
+                "title": "Visualize current controller execution",
+                "category": "Robot Supervisory Controller"
+            }
+        ],
         "menus": {
             "commandPalette": [],
             "editor/context": [],
@@ -72,7 +78,8 @@
     "scripts": {
         "prepare": "yarn run clean && yarn run build",
         "clean": "rimraf lib pack",
-        "build": "tsc && webpack --mode=development",
+        "build": "tsc && webpack --mode=development && yarn run build:visualization",
+        "build:visualization": "cd visualization && yarn && yarn run build && cd ..",
         "watch": "tsc -w",
         "package": "yarn run build && vsce package",
         "publish": "vsce publish"

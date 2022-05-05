@@ -19,6 +19,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EliminationHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data.PlatformTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.info.InfoUtilitiesGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.SerializationHelperGenerator
 
 @Singleton
 class Ros1Generator implements GeneratorInterface {
@@ -28,7 +30,9 @@ class Ros1Generator implements GeneratorInterface {
 	@Inject extension CMakeGenerator
 	@Inject extension PackageInfoGenerator
 	@Inject extension ImportsGenerator
+	@Inject extension InfoUtilitiesGenerator
 	@Inject ShuffleHelperGenerator shuffleHelperGenerator
+	@Inject SerializationHelperGenerator serializationHelperGenerator
 	@Inject extension CommunicationTypeHookGenerator
 	@Inject extension EliminationHelper
 	@Inject InitializationGenerator initializationGenerator
@@ -52,6 +56,7 @@ class Ros1Generator implements GeneratorInterface {
 	
 		// Utility functions
 		«shuffleHelperGenerator.generateShuffleFunction»
+		«serializationHelperGenerator.generateSerializeVectorFunction»
 		
 		«robot.compileCodeOnlyVariables»
 		
@@ -65,15 +70,19 @@ class Ros1Generator implements GeneratorInterface {
 			«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
 
 			«robot.compileCommunicationFieldDefinitions»
+			ros::Publisher state_information;
 			
 			void start(ros::NodeHandle& node) {
 				«robot.compileCommunicationFieldInitializations»
 
+				state_information = node.advertise<std_msgs::String>("/controller/state", 10);
 				timer = node.createTimer(ros::Duration(0.1), &Controller::tick, this);
 				«CifSynthesisTool.codePrefix»_EngineFirstStep();
 			}
 
 			«robot.compileCommunicationFunctions»
+						
+			«robot.compileInfoFunction(platformTypeGenerator)»
 		private:
 			// Heart of the controller
 			void tick(const ros::TimerEvent &) {
@@ -81,6 +90,7 @@ class Ros1Generator implements GeneratorInterface {
 			}
 			
 			ros::Timer timer;
+			«robot.compileActivationFields»
 		};
 		
 		std::shared_ptr<Controller> node_controller = nullptr;

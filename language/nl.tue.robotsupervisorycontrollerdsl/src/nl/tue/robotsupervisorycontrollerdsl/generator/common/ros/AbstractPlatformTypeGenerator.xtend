@@ -12,4 +12,5 @@ abstract class AbstractPlatformTypeGenerator {
 	abstract def CharSequence actionImport(CustomTypeSettings settings)
 	abstract def CharSequence serviceImport(CustomTypeSettings settings)
 	abstract def String platformType(BasicDataType dataType)
+	abstract def String informationPublisher()
 }

@@ -19,11 +19,13 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesis
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.AccessType
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.AccessHelper
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.PlantNames
 
 @Singleton
 class AccessGenerator {
 	@Inject extension VariableNames
 	@Inject extension ParameterNames
+	@Inject extension PlantNames
 	@Inject extension EnumDataTypeGenerator
 	@Inject extension AccessHelper
 
@@ -53,7 +55,7 @@ class AccessGenerator {
 		val secondItem = access.accessItems.get(1)
 		
 		if (secondItem instanceof State) {
-			return '''(«entity.name»_ == _«CifSynthesisTool.codePrefix»_«secondItem.name»)''';
+			return '''(«entity.plantName» == _«CifSynthesisTool.codePrefix»_«secondItem.name»)''';
 		} else if (secondItem instanceof Variable) {
 			val robot = ModelHelper.findParentOfType(secondItem, Robot)
 			

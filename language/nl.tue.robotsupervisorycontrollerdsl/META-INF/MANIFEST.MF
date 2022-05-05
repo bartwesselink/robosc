@@ -19,6 +19,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.impl,
  nl.tue.robotsupervisorycontrollerdsl,
  nl.tue.robotsupervisorycontrollerdsl.generator,
+ nl.tue.robotsupervisorycontrollerdsl.generator.common.naming,
  nl.tue.robotsupervisorycontrollerdsl.parser.antlr.internal,
  nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL,
  nl.tue.robotsupervisorycontrollerdsl.parser.antlr,

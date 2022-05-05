@@ -60,4 +60,11 @@ class PlatformTypeGenerator extends AbstractPlatformTypeGenerator {
 	private def dispatch String typeName(DoubleDataType type)'''std_msgs::msg::Float32'''
 	private def dispatch String typeName(IntegerDataType type)'''std_msgs::msg::Int16'''
 	private def dispatch String typeName(NoneDataType type)'''std_msgs::msg::Empty'''
+	
+	override informationPublisher()'''
+		auto msg = std_msgs::msg::String();
+		msg.data = output.str();
+		
+		this->state_information->publish(msg);
+	'''
 }

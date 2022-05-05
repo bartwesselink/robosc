@@ -47,6 +47,8 @@ class EventExecutionGenerator {
 					}
 				}
 			«ENDIF»
+			
+			this->emit_current_state();
 		'''
 	}
 

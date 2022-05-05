@@ -26,6 +26,8 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 
 	override functions(Action entity, Robot robot)'''
 	void «entity.responseMethod»(const actionlib::SimpleClientGoalState& state, const «entity.typeSettings.actionType»ResultConstPtr& result) {
+		received_response_actions.push_back("«entity.name»");
+
 		«entity.prepareResult(entity.responseType, robot, 'result.result')»
 
 		fprintf(stderr, "[debug] Received action response\n");
@@ -41,6 +43,8 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	}
 	
 	void «entity.feedbackMethod»(const «entity.typeSettings.actionType»FeedbackConstPtr& feedback) {
+		received_feedback_actions.push_back("«entity.name»");
+
 		«entity.prepareResult(entity.responseType, robot, 'feedback')»
 
 		fprintf(stderr, "[debug] Received action feedback\n");
@@ -50,6 +54,8 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	}
 	
 	void «entity.callMethod»() {
+		activated_actions.push_back("«entity.name»");
+
 		«entity.fieldName».waitForServer();
 		«entity.typeSettings.actionType»Goal goal_msg;
 

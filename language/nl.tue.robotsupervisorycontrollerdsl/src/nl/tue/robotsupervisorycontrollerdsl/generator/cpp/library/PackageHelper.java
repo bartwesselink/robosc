@@ -32,7 +32,7 @@ public class PackageHelper {
 	
 		return result;
 	}
-	
+
 	public List<CharSequence> getAllImports(Robot robot, AbstractPlatformTypeGenerator typeGenerator) {
 		List<CharSequence> result = new ArrayList<>();
 		

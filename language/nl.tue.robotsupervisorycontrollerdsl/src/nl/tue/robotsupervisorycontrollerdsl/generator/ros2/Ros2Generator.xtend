@@ -19,6 +19,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EliminationHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data.PlatformTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.info.InfoUtilitiesGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.SerializationHelperGenerator
 
 @Singleton
 class Ros2Generator implements GeneratorInterface {
@@ -28,7 +30,9 @@ class Ros2Generator implements GeneratorInterface {
 	@Inject extension CMakeGenerator
 	@Inject extension PackageInfoGenerator
 	@Inject extension ImportsGenerator
+	@Inject extension InfoUtilitiesGenerator
 	@Inject ShuffleHelperGenerator shuffleHelperGenerator
+	@Inject SerializationHelperGenerator serializationHelperGenerator
 	@Inject extension CommunicationTypeHookGenerator
 	@Inject extension EliminationHelper
 	@Inject InitializationGenerator initializationGenerator
@@ -52,6 +56,7 @@ class Ros2Generator implements GeneratorInterface {
 	
 		// Utility functions
 		«shuffleHelperGenerator.generateShuffleFunction»
+		«serializationHelperGenerator.generateSerializeVectorFunction»
 		
 		«robot.compileCodeOnlyVariables»
 		
@@ -61,15 +66,19 @@ class Ros2Generator implements GeneratorInterface {
 			«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
 
 			«robot.compileCommunicationFieldDefinitions»
-			
+			rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
+
 			Controller() : Node("controller") {
 				«robot.compileCommunicationFieldInitializations»
 
+				state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
 				timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 				«CifSynthesisTool.codePrefix»_EngineFirstStep();
 			}
 
 			«robot.compileCommunicationFunctions»
+			
+			«robot.compileInfoFunction(platformTypeGenerator)»
 		private:
 			// Heart of the controller
 			void tick() {
@@ -77,6 +86,7 @@ class Ros2Generator implements GeneratorInterface {
 			}
 			
 			rclcpp::TimerBase::SharedPtr timer;
+			«robot.compileActivationFields»
 		};
 		
 		std::shared_ptr<Controller> node_controller = nullptr;
