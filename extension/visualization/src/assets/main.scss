@@ -68,6 +68,16 @@ table {
         stroke: var(--vscode-foreground);
         fill: var(--vscode-foreground);
         stroke-width: 1.5px;
+        transition: all ease-in-out 300ms;
+    }
+
+    .edgeLabel text {
+        transition: all ease-in-out 150ms;
+    }
+
+    .edgePath.taken path, .edgeLabel.taken text {
+        stroke: var(--vscode-focusBorder);
+        fill: var(--vscode-focusBorder);
     }
 }
   

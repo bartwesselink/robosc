@@ -63,7 +63,9 @@ const visualizeBehaviour = (component) => {
             graph.setNode(state.name, { label: state.name });
 
             for (const transition of state.transitions) {
-                graph.setEdge(state.name, transition.next ?? state.name, { label: transitionLabel(transition), curve: d3.curveBasis });
+                transition.className = `${transition.id}_${String(Math.random()).replace('.', '')}`;
+
+                graph.setEdge(state.name, transition.next ?? state.name, { label: transitionLabel(transition), curve: d3.curveBasis, class: transition.className });
             }
         }
 
@@ -123,7 +125,13 @@ export const visualizeComponent = (component) => {
     return wrapper;
 };
 
-export const updateState = (definition, current) => {
+const equalTransition = (one, two) => {
+    if (!one || !two) return false;
+
+    return one.toLowerCase().replace(/\./g, '_') === two.toLowerCase().replace(/\./g, '');
+}
+
+export const updateState = (definition, current, transitions) => {
     const behaviourComponents = Object.keys(current);
 
     for (const name of behaviourComponents) {
@@ -139,7 +147,26 @@ export const updateState = (definition, current) => {
 
         const currentState = component.graph.node(current[name].state).elem;
         currentState.classList.add('active');
-    }
 
-    activateTransitions();
+        // Check all transitions that should be updated
+        // Pick last known state, and match it with all taken transitions
+        if (component.lastKnownState) {
+            const stateObject = component.behaviour?.states?.find(it => it.name === component.lastKnownState);
+            const takenTransitions = stateObject.transitions.filter(it => transitions.some(taken => equalTransition(taken, it.id)));
+
+            takenTransitions.forEach(it => {
+                if (it.timeout) clearTimeout(it.timeout);
+
+                const element = component.svg?.querySelector(`.${it.className}`);
+
+                it.timeout = setTimeout(() => {
+                    element.classList.remove('taken');
+                }, 500);
+
+                element.classList.add('taken');
+            });
+        }
+
+        component.lastKnownState = current[name].state;
+    }
 }
