@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { LanguageClient, LanguageClientOptions, ServerOptions, Trace } from 'vscode-languageclient/node';
+import { startListener } from './ros-listener';
 
 export function activate(context: vscode.ExtensionContext) {
     const executable = process.platform === 'win32' ? 'nl.tue.robotsupervisorycontrollerdsl.ide.bat' : 'nl.tue.robotsupervisorycontrollerdsl.ide';
@@ -31,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Add visualization command
     context.subscriptions.push(
-        vscode.commands.registerCommand('rscd.visualizeController', () => {
+        vscode.commands.registerCommand('rscd.visualizeController', async () => {
             const column = vscode.window.activeTextEditor
                 ? vscode.window.activeTextEditor.viewColumn
                 : undefined;
@@ -54,6 +55,11 @@ export function activate(context: vscode.ExtensionContext) {
             );
 
             currentPanel.webview.html = getWebviewContent(currentPanel.webview, context);
+            
+            startListener(() => currentPanel.webview)
+                .then(ros => context.subscriptions.push(vscode.Disposable.from({
+                    dispose: async () => await ros.shutdown(),
+                })));
         })
     );
 

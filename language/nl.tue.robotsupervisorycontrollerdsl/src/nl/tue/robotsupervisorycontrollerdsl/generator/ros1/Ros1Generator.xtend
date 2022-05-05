@@ -71,6 +71,7 @@ class Ros1Generator implements GeneratorInterface {
 
 			«robot.compileCommunicationFieldDefinitions»
 			ros::Publisher state_information;
+			«robot.compileActivationFields»
 			
 			void start(ros::NodeHandle& node) {
 				«robot.compileCommunicationFieldInitializations»
@@ -90,7 +91,6 @@ class Ros1Generator implements GeneratorInterface {
 			}
 			
 			ros::Timer timer;
-			«robot.compileActivationFields»
 		};
 		
 		std::shared_ptr<Controller> node_controller = nullptr;

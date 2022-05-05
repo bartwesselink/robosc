@@ -21,7 +21,7 @@ class CommunicationTypeHookGenerator {
 	def compileHooks(Robot robot) '''
 		void «CifSynthesisTool.codePrefix»_InfoEvent(«CifSynthesisTool.codePrefix»_Event_ event, BoolType pre) {
 		    if (pre) {
-		    	taken_transitions.push_back(«CifSynthesisTool.codePrefix»_event_names[event]);
+		    	node_controller->taken_transitions.push_back(«CifSynthesisTool.codePrefix»_event_names[event]);
 		    	return;
 		    }
 		    
