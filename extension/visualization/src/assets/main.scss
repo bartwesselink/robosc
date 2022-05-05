@@ -54,13 +54,19 @@ table {
     }
 
     .node rect {
-        stroke: #333;
-        fill: #fff;
+        stroke: transparent;
+        fill: var(--vscode-breadcrumbPicker-background);
+        transition: all ease-in-out 300ms;
+        stroke-width: 2px;
+    }
+
+    .node.active rect {
+        stroke: var(--vscode-focusBorder);
     }
 
     .edgePath path {
-        stroke: #333;
-        fill: #333;
+        stroke: var(--vscode-foreground);
+        fill: var(--vscode-foreground);
         stroke-width: 1.5px;
     }
 }

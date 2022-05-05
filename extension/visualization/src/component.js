@@ -1,12 +1,13 @@
 const dagreD3 = require('dagre-d3');
 const d3 = require('d3');
 
-const visualizeVariables = (variables) => {
-    if (!variables) return '';
+const componentId = (component) => `component-${component.name}`;
+const variableId = (variable, component) => `${componentId(component)}-variable-${variable}`;
 
-    const names = Object.keys(variables);
+const visualizeVariables = (component) => {
+    const names = component.behaviour?.variables;
 
-    if (names.length > 0) {
+    if (names?.length > 0) {
         return `
             <table>
             <thead>
@@ -16,7 +17,7 @@ const visualizeVariables = (variables) => {
                 </tr>
             </thead>
             <tbody>
-                ${names.map(it => `<tr><td>${it}</td><td><pre><code>${variables[it]}</pre></code></td></tr>`).join('\n')}
+                ${names.map(it => `<tr><td>${it}</td><td><pre><code id="${variableId(it, component)}"></pre></code></td></tr>`).join('\n')}
             </tbody>
             </table>
         `
@@ -33,35 +34,36 @@ const transitionLabel = (transition) => {
     }
 
     if (!!transition.guard) {
-        label += ` if ${transition.guard}`
+        label += ` [${transition.guard}]`
     }
 
     if (!!transition.assignment) {
-        label += ` do ${transition.assignment}`
+        label += ` / ${transition.assignment}`
     }
 
     return label.trim();
 };
 
-const visualizeBehaviour = (behaviour, currentState) => {
+const visualizeBehaviour = (component) => {
     const base = document.createElement('div');
+    const behaviour = component.behaviour;
+
     if (!behaviour) return base;
 
-    const id = `${Math.random()}`.replace('.', '');
+    const id = componentId(component);
     const baseSize = 400;
-    
-    base.innerHTML = `<svg width="${baseSize}" height="${baseSize}" id="${id}"><g></g></svg>`;
+
+    base.innerHTML = `<svg width="${baseSize}" height="0" id="${id}"><g></g></svg>`;
 
     const createGraph = (id) => {
         const element = document.getElementById(id);
         const graph = new dagreD3.graphlib.Graph().setGraph({});
 
-        for (const state of behaviour) {
+        for (const state of behaviour.states) {
             graph.setNode(state.name, { label: state.name });
 
             for (const transition of state.transitions) {
-                console.log('label', transitionLabel(transition));
-                graph.setEdge(state.name, transition.next ?? state.name, { label: transitionLabel(transition) });
+                graph.setEdge(state.name, transition.next ?? state.name, { label: transitionLabel(transition), curve: d3.curveBasis });
             }
         }
 
@@ -72,9 +74,6 @@ const visualizeBehaviour = (behaviour, currentState) => {
             node.rx = 10;
             node.ry = 10;
         })
-
-        // Set up the edges
-        // g.setEdge("CLOSED", "LISTEN", { label: "open" });
 
         const svg = d3.select(element),
             inner = svg.select('g');
@@ -94,6 +93,9 @@ const visualizeBehaviour = (behaviour, currentState) => {
         svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr('width') - graph.graph().width * initialScale) / 2, 20).scale(initialScale));
 
         svg.attr('height', graph.graph().height * initialScale + 80);
+
+        component.graph = graph;
+        component.svg = element;
     }
 
     setTimeout(() => createGraph(id));
@@ -103,16 +105,16 @@ const visualizeBehaviour = (behaviour, currentState) => {
     return base;
 }
 
-export const visualizeComponent = (component, currentState) => {
+export const visualizeComponent = (component) => {
     const wrapper = document.createElement('div');
 
     const title = document.createElement('h2');
     title.innerHTML = component.name;
 
-    const behaviour = visualizeBehaviour(component.behaviour, currentState);
+    const behaviour = visualizeBehaviour(component);
 
     const variables = document.createElement('div');
-    variables.innerHTML = visualizeVariables(currentState?.variables);
+    variables.innerHTML = visualizeVariables(component);
 
     wrapper.appendChild(title);
     wrapper.appendChild(behaviour);
@@ -120,3 +122,24 @@ export const visualizeComponent = (component, currentState) => {
 
     return wrapper;
 };
+
+export const updateState = (definition, current) => {
+    const behaviourComponents = Object.keys(current);
+
+    for (const name of behaviourComponents) {
+        const component = definition.components.find(it => it.name === name);
+
+        component.behaviour
+            ?.variables
+            .forEach(variable => document.getElementById(variableId(variable, component)).innerHTML = current[name].variables[variable]);
+
+
+        // Clear current state
+        component.svg?.querySelectorAll('.active').forEach(it => it.classList.remove('active'));
+
+        const currentState = component.graph.node(current[name].state).elem;
+        currentState.classList.add('active');
+    }
+
+    activateTransitions();
+}

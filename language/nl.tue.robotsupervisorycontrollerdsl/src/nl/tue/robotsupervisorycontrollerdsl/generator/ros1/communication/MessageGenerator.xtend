@@ -37,8 +37,6 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 	override functions(Message entity, Robot robot)'''
 	«IF entity.direction instanceof MessageFrom»
 	void «entity.callbackMethod»(const «entity.type.messageType(entity.typeSettings)»::ConstPtr& msg) {
-		received_response_messages.push_back("«entity.name»");
-
 		«entity.prepareResult(entity.type, robot, 'msg')»
 		
 		// Call engine function
@@ -49,8 +47,6 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 	
 	«IF entity.direction instanceof MessageTo»
 	void «entity.callMethod»() {
-		activated_messages.push_back("«entity.name»");
-
 		auto value = «entity.type.messageType(entity.typeSettings)»();
 		
 		«entity.compileDataStates(entity.type, 'value', robot, false)»

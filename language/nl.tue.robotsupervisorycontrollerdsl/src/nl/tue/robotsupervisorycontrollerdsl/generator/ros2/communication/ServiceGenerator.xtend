@@ -26,8 +26,6 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	
 	override functions(Service entity, Robot robot)'''
 	bool «entity.responseMethod»(rclcpp::Client<«entity.typeSettings.serviceType»>::SharedFuture future) {
-		received_response_services.push_back("«entity.name»");
-
 		std::shared_ptr<«entity.typeSettings.serviceType»_Response> result = future.get();
 
 		«entity.prepareResult(entity.responseType, robot, 'result')»
@@ -42,8 +40,6 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	
 	
 	void «entity.callMethod»() {
-		activated_services.push_back("«entity.name»");
-
 		auto request = std::make_shared<«entity.typeSettings.serviceType»::Request>();
 		
 		«entity.compileDataStates(entity.requestType, 'request', robot, true)»

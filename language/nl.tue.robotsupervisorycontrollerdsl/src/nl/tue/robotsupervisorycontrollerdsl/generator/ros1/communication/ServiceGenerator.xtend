@@ -26,16 +26,12 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 
 	override functions(Service entity, Robot robot)'''
 	void «entity.callMethod»() {
-		activated_services.push_back("«entity.name»");
-
 		«entity.typeSettings.serviceType» srv;
 		auto request = std::make_shared<«entity.typeSettings.serviceType»::Request>();
 		
 		«entity.compileDataStates(entity.requestType, 'srv.request', robot, false)»
 		
 		if («entity.fieldName».call(srv)) {		
-			received_response_services.push_back("«entity.name»");
-
 			«entity.prepareResult(entity.responseType, robot, 'srv.response')»
 			
 			fprintf(stderr, "[debug] Received service answer\n");

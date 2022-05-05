@@ -25,8 +25,6 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		
 	override functions(Action entity, Robot robot)'''
 	void «entity.responseMethod»(const rclcpp_action::ClientGoalHandle<«entity.typeSettings.actionType»>::WrappedResult & result) {
-		received_response_actions.push_back("«entity.name»");
-
 		«entity.prepareResult(entity.responseType, robot, 'result')»
 
 		fprintf(stderr, "[debug] Received action response\n");
@@ -36,8 +34,6 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	}
 	
 	void «entity.feedbackMethod»(rclcpp_action::ClientGoalHandle<«entity.typeSettings.actionType»>::SharedPtr, const std::shared_ptr<const «entity.typeSettings.actionType»::Feedback> feedback) {
-		received_feedback_actions.push_back("«entity.name»");
-
 		«entity.prepareResult(entity.responseType, robot, 'feedback')»
 
 		fprintf(stderr, "[debug] Received action feedback\n");
@@ -47,8 +43,6 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	}
 	
 	void «entity.callMethod»() {
-		activated_actions.push_back("«entity.name»");
-
 		if (!this->«entity.fieldName»->wait_for_action_server(1s)) {
 			«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.errorTransitionName»);
 			return;

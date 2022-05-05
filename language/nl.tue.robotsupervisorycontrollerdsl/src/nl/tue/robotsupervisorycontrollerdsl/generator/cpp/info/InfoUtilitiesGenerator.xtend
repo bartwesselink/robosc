@@ -24,6 +24,10 @@ import com.google.gson.JsonElement
 import com.google.common.util.concurrent.Service
 import org.eclipse.xtext.serializer.impl.Serializer
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RequestResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
 
 @Singleton
 class InfoUtilitiesGenerator {
@@ -31,10 +35,7 @@ class InfoUtilitiesGenerator {
 	@Inject extension ComponentGenerator
 	@Inject extension PlantNames
 	@Inject extension VariableNames
-
-	val fields = newArrayList("activated_messages", "activated_services", "activated_actions",
-		"received_response_messages", "received_response_services", "received_response_actions",
-		"received_feedback_actions")
+	@Inject extension TransitionNames
 
 	def compileInfoFunction(Robot robot, AbstractPlatformTypeGenerator platformType) '''
 		void emit_current_state() {
@@ -56,24 +57,18 @@ class InfoUtilitiesGenerator {
 				output << "}«IF !component.lastBehaviourComponent(robot)»,«ENDIF»";
 			«ENDFOR»
 			output << "},";
-			«FOR field : fields»
-			output << "\"«field»\": " << serialize_json_vector(«field») << ",";
-			«ENDFOR»
+			output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
 			output << "\"definition\": " << "«robot.serialize.replace('"', '\\"')»";
 			output << "}";
 			
 			«platformType.informationPublisher»
 
-			«FOR field : fields»
-			«field».clear();
-			«ENDFOR»
+			taken_transitions.clear();
 		}
 	'''
 
 	def compileActivationFields(Robot robot) '''
-		«FOR field : fields»
-		std::vector<std::string> «field»;
-		«ENDFOR»
+		std::vector<std::string> taken_transitions;
 	'''
 
 	def componentsWithBehaviour(Robot robot) {
@@ -99,12 +94,6 @@ class InfoUtilitiesGenerator {
 		}
 		
 		return newArrayList
-	}
-	
-	def lastField(String field) {
-		val index = fields.indexOf(field)
-		
-		return index + 1 == fields.size
 	}
 	
 	def lastBehaviourComponent(Component component, Robot robot) {
@@ -151,6 +140,14 @@ class InfoUtilitiesGenerator {
 	}
 	
 	def serialize(ComponentBehaviour input) {
+		val result = new JsonObject()
+		
+		val variables = new JsonArray()
+		
+		for (item : input.automaton.definitions.filter(AutomatonVariable)) {
+			variables.add(item.variable.name)
+		}
+		
 		val states = new JsonArray()
 			
 		for (state : input.automaton.definitions.filter(State)) {
@@ -163,7 +160,10 @@ class InfoUtilitiesGenerator {
 			states.add(object)
 		}
 		
-		return states
+		result.add("variables", variables)
+		result.add("states", states)
+		
+		return result
 	}
 	
 	def serializeTransitions(State input, Automaton automaton) {
@@ -174,19 +174,20 @@ class InfoUtilitiesGenerator {
 			val object = new JsonObject()
 
 			object.addProperty("next", transition.stateChange?.state?.name)
-			
+			object.addProperty("id", transition.id.toString)
+
 			if (transition instanceof ResultTransition) {
-				object.addProperty("type", serializer.serialize(transition.resultType))
+				object.addProperty("type", serializer.serialize(transition.resultType).trim())
 				object.addProperty("communication", transition.communicationType.name)
 
 				if (transition.assignment?.assignment !== null) {
-					object.addProperty("assignment", serializer.serialize(transition.assignment.assignment))
+					object.addProperty("assignment", serializer.serialize(transition.assignment.assignment).trim())
 				}
 			} else if (transition instanceof TauTransition) {
 				object.addProperty("type", "tau")
 				
 				if (transition.guard?.expression !== null) {
-					object.addProperty("guard", serializer.serialize(transition.guard.expression))
+					object.addProperty("guard", serializer.serialize(transition.guard.expression).trim())
 				}
 			}
 			
@@ -204,5 +205,21 @@ class InfoUtilitiesGenerator {
 		}
 		
 		return output
+	}
+	
+	private def dispatch id(ResultTransition transition) {
+		if (transition.resultType instanceof RequestResultType) {
+			return transition.communicationType.triggerTransitionName
+		} else if (transition.resultType instanceof ResponseResultType) {
+			return transition.communicationType.responseTransitionName
+		} else if (transition.resultType instanceof FeedbackResultType) {
+			return transition.communicationType.feedbackTransitionName
+		}
+		
+		return null
+	}
+	
+	private def dispatch id(TauTransition transition) {
+		return transition.transitionName
 	}
 }
