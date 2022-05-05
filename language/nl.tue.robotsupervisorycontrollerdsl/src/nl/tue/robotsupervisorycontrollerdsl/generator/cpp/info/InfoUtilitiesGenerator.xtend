@@ -18,9 +18,16 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Transi
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Automaton
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResultTransition
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.TauTransition
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
+import com.google.gson.JsonElement
+import com.google.common.util.concurrent.Service
+import org.eclipse.xtext.serializer.impl.Serializer
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message
 
 @Singleton
 class InfoUtilitiesGenerator {
+  	@Inject Serializer serializer
 	@Inject extension ComponentGenerator
 	@Inject extension PlantNames
 	@Inject extension VariableNames
@@ -35,7 +42,7 @@ class InfoUtilitiesGenerator {
 			
 			output << "{";
 			
-			output << "\"components\": {" << "";
+			output << "\"current\": {" << "";
 			«FOR component : robot.componentsWithBehaviour»
 				output << "\"«component.name»\": {";
 				output << "\"state\": \"" << enum_names[«component.plantName»] << "\",";
@@ -50,8 +57,9 @@ class InfoUtilitiesGenerator {
 			«ENDFOR»
 			output << "},";
 			«FOR field : fields»
-			output << "\"«field»\": " << serialize_json_vector(«field») << "«IF !field.lastField»,«ENDIF»";
+			output << "\"«field»\": " << serialize_json_vector(«field») << ",";
 			«ENDFOR»
+			output << "\"definition\": " << "«robot.serialize.replace('"', '\\"')»";
 			output << "}";
 			
 			«platformType.informationPublisher»
@@ -118,7 +126,7 @@ class InfoUtilitiesGenerator {
 		
 		val	components = new JsonArray()
 		for (definition : robot.components) {
-			components.add(definition.serialize)
+			components.add(definition.serialize(robot))
 		}
 		
 		output.add("components", components)
@@ -126,10 +134,14 @@ class InfoUtilitiesGenerator {
 		return output.toString
 	}
 	
-	def serialize(Component input) {
+	def serialize(Component input, Robot robot) {
 		val component = new JsonObject()
-		component.addProperty("name", input.name)
 		
+		component.addProperty("name", input.name)
+		component.add("messages", input.communicationTypes.filter(Message).serializeCommunicationTypes as JsonElement)
+		component.add("services", input.communicationTypes.filter(Service).serializeCommunicationTypes as JsonElement)
+		component.add("actions", input.communicationTypes.filter(Action).serializeCommunicationTypes as JsonElement)
+
 		val behaviour = input.behaviour
 		if (behaviour !== null) {
 			component.add("behaviour", behaviour.serialize)
@@ -164,12 +176,33 @@ class InfoUtilitiesGenerator {
 			object.addProperty("next", transition.stateChange?.state?.name)
 			
 			if (transition instanceof ResultTransition) {
-				
+				object.addProperty("type", serializer.serialize(transition.resultType))
+				object.addProperty("communication", transition.communicationType.name)
+
+				if (transition.assignment?.assignment !== null) {
+					object.addProperty("assignment", serializer.serialize(transition.assignment.assignment))
+				}
 			} else if (transition instanceof TauTransition) {
-				object.addProperty("next", transition.stateChange?.state?.name)
+				object.addProperty("type", "tau")
+				
+				if (transition.guard?.expression !== null) {
+					object.addProperty("guard", serializer.serialize(transition.guard.expression))
+				}
 			}
+			
+			transitions.add(object)
 		}	
 
 		return transitions
+	}
+	
+	def serializeCommunicationTypes(Iterable<?> input) {
+		val output = new JsonArray()
+		
+		for (communication : input) {
+			output.add((communication as CommunicationType).name)
+		}
+		
+		return output
 	}
 }

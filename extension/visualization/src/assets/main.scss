@@ -1,5 +1,67 @@
-$body-color: red;
-
 body {
-  color: $body-color;
+    padding: 0;
+    margin: 0;
 }
+
+#root {
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2rem;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+
+    thead {
+        th {
+            font-weight: bold;
+            text-align: left;
+            border-bottom: 1px solid var(--vscode-editor-foreground);
+            padding: 0.3125rem 0.625rem;
+        }
+    }
+
+    tbody {
+        tr td {
+            border-bottom: 1px solid var(--vscode-editor-foreground);
+            padding: 0.3125rem 0.625rem;
+        }
+
+        tr:last-of-type td {
+            border-bottom: 0;
+        }
+    }
+}
+
+.diagram {
+    width: 100%;
+    display: flex;
+    justify-content: center;;
+    font-size: 14px;
+
+    * {
+        font-family: var(--vscode-font-family);
+    }
+
+    svg {
+        max-width: 100%;
+    }
+
+    .node rect {
+        stroke: #333;
+        fill: #fff;
+    }
+
+    .edgePath path {
+        stroke: #333;
+        fill: #333;
+        stroke-width: 1.5px;
+    }
+}
+  

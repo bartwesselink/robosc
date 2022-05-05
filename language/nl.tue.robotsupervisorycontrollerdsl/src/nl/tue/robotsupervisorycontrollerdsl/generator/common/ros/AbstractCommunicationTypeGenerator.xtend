@@ -14,7 +14,6 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assign
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.EliminationChecker
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.VariableNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EliminationHelper
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Expression
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.expressions.ExpressionGenerator
 
 abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
@@ -37,7 +36,7 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	«ENDIF»
 	
 	«FOR assignment : eliminationHelper.findAllCodeOnlyAssignments(robot, entity)»
-	«assignment.assignmentVariable» = «(assignment.value as Expression).compile(type.checkDataAccess(type.dataAccessProperty(access)))»;
+	«assignment.assignmentVariable» = «assignment.value.compile(type.checkDataAccess(type.dataAccessProperty(access)))»;
 	«ENDFOR»
 	
 	«ELSEIF !type.simple»
@@ -47,7 +46,7 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	«ENDIF»
 	
 	«FOR assignment : eliminationHelper.findAllCodeOnlyAssignments(robot, entity, pair.property)»
-	«assignment.assignmentVariable» = «(assignment.value as Expression).compile(type.checkDataAccess(access + '->' + pair.identifier.replace('_', '.')))»;
+	«assignment.assignmentVariable» = «assignment.value.compile(type.checkDataAccess(access + '->' + pair.identifier.replace('_', '.')))»;
 	«ENDFOR»
 	«ENDFOR»
 	«ENDIF»

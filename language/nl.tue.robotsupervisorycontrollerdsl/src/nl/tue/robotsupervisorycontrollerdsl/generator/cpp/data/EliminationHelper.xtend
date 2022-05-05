@@ -9,7 +9,6 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Result
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Expression
 import java.util.stream.Collectors
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Component
@@ -34,7 +33,7 @@ class EliminationHelper {
 			.filter[it.assignment !== null]
 			.map[it.assignment.assignment as Assignment]
 			.filter[!eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
-			.flatMap[eliminationChecker.findLiteralValues(it.value as Expression).collect(Collectors.toList)]
+			.flatMap[eliminationChecker.findLiteralValues(it.value).collect(Collectors.toList)]
 			.map[ModelHelper.findParentOfType(it, Access)]
 			
 			// Ensure that we are not accessing any properties
@@ -48,7 +47,7 @@ class EliminationHelper {
 			.filter[it.assignment !== null]
 			.map[it.assignment.assignment as Assignment]
 			.filter[!eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
-			.flatMap[eliminationChecker.findLiteralValues(it.value as Expression).collect(Collectors.toList)]
+			.flatMap[eliminationChecker.findLiteralValues(it.value).collect(Collectors.toList)]
 			.map[ModelHelper.findParentOfType(it, Access)]
 			
 			// Ensure that we are not accessing any properties
