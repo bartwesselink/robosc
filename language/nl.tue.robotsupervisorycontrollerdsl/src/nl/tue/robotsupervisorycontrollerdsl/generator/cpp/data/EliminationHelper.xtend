@@ -32,6 +32,7 @@ class EliminationHelper {
 			.filter[it.communicationType == type]
 			.filter[it.assignment !== null]
 			.flatMap[it.assignment.assignments]
+			.map[it as Assignment]
 			.filter[!eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
 			.flatMap[eliminationChecker.findLiteralValues(it.value).collect(Collectors.toList)]
 			.map[ModelHelper.findParentOfType(it, Access)]
