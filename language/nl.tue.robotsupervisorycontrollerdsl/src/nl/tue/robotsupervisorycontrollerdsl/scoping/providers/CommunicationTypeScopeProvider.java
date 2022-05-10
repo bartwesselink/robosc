@@ -11,8 +11,10 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationTypeSet;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationTypeSingle;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Library;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ProvideStatement;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Requirement;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResultTransition;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotSupervisoryControllerDSLPackage;
 import nl.tue.robotsupervisorycontrollerdsl.scoping.common.AbstractScopeProvider;
@@ -20,6 +22,15 @@ import nl.tue.robotsupervisorycontrollerdsl.scoping.common.AbstractScopeProvider
 public class CommunicationTypeScopeProvider extends AbstractScopeProvider {
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
+		Library library = ModelHelper.findParentOfType(context, Library.class);
+		
+		if (library != null) {
+			return Scopes.scopeFor(ModelHelper.findChildren(library, CommunicationType.class)
+					.stream()
+					.map(it -> (EObject) it)
+					.collect(Collectors.toList()));
+		}
+		
 		Robot robot = ModelHelper.findParentOfType(context, Robot.class);
 		
 		return Scopes.scopeFor(ModelHelper.findWithinRobot(robot, CommunicationType.class)
@@ -31,6 +42,7 @@ public class CommunicationTypeScopeProvider extends AbstractScopeProvider {
 	@Override
 	public boolean supports(EObject entity, EReference reference) {
 		return (entity instanceof Requirement && reference == RobotSupervisoryControllerDSLPackage.Literals.REQUIREMENT__COMMUNICATION_TYPE)
+				|| (entity instanceof ResultTransition && reference == RobotSupervisoryControllerDSLPackage.Literals.RESULT_TRANSITION__COMMUNICATION_TYPE)
 				|| (entity instanceof ProvideStatement && reference == RobotSupervisoryControllerDSLPackage.Literals.PROVIDE_STATEMENT__COMMUNICATION_TYPE)
 				|| (entity instanceof CommunicationTypeSet && reference == RobotSupervisoryControllerDSLPackage.Literals.COMMUNICATION_TYPE_SET__COMMUNICATION_TYPES)
 				|| (entity instanceof CommunicationTypeSingle && reference == RobotSupervisoryControllerDSLPackage.Literals.COMMUNICATION_TYPE_SINGLE__COMMUNICATION_TYPE);

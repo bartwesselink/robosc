@@ -23,6 +23,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	override initializeField(Action entity, Robot robot) '''«entity.fieldName» = rclcpp_action::create_client<«entity.typeSettings.actionType»>(this, "«entity.topicName»");'''
 	override declareField(Action entity, Robot robot) '''rclcpp_action::Client<«entity.typeSettings.actionType»>::SharedPtr «entity.fieldName»;'''
 		
+
 	override functions(Action entity, Robot robot)'''
 	void «entity.responseMethod»(const rclcpp_action::ClientGoalHandle<«entity.typeSettings.actionType»>::WrappedResult & result) {
 		«entity.prepareResult(entity.responseType, robot, 'result')»
@@ -55,6 +56,10 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		send_options.result_callback = std::bind(&Controller::«entity.responseMethod», this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::«entity.feedbackMethod», this, std::placeholders::_1, std::placeholders::_2);
 		this->«entity.fieldName»->async_send_goal(goal_msg, send_options);
+	}
+		
+	void «entity.cancelMethod»() {
+		this->«entity.fieldName»->async_cancel_all_goals();
 	}
 	'''
 	

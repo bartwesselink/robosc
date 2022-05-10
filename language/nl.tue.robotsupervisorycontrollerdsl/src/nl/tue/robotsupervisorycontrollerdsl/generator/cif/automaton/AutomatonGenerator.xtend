@@ -28,6 +28,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Respon
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Transition
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
 
 @Singleton
 class AutomatonGenerator {
@@ -68,13 +69,15 @@ class AutomatonGenerator {
 		}
 	}
 
-	private def dispatch String allowUncontrollableEventsEdge(Service service, Automaton automaton, State state) {
-		if (automaton.allResultTransitions(service, state).filter[it.resultType instanceof ResponseResultType].empty) {
-			return '''
-				edge «service.plantName».«responseTransitionName»;
-			'''
-		}
-	}
+	private def dispatch String allowUncontrollableEventsEdge(Service service, Automaton automaton, State state)'''
+		«IF automaton.allResultTransitions(service, state).filter[it.resultType instanceof ResponseResultType].empty»
+		edge «service.plantName».«responseTransitionName»;
+		«ENDIF»
+
+		«IF automaton.allResultTransitions(service, state).filter[it.resultType instanceof ErrorResultType].empty»
+		edge «service.plantName».«errorTransitionName»;
+		«ENDIF»
+	''' 
 
 	private def dispatch String allowUncontrollableEventsEdge(Action action, Automaton automaton, State state)'''
 		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof ResponseResultType].empty»
@@ -83,6 +86,10 @@ class AutomatonGenerator {
 		
 		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof FeedbackResultType].empty»
 		edge «action.plantName».«feedbackTransitionName»;
+		«ENDIF»
+				
+		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof ErrorResultType].empty»
+		edge «action.plantName».«errorTransitionName»;
 		«ENDIF»
 	'''
 
@@ -127,10 +134,13 @@ class AutomatonGenerator {
 	private def compile(TransitionGuard guard) ''' when «guard.expression.compile»'''
 
 	private def compile(TransitionAssignment transitionAssignment, Robot robot) {
-		val expression = transitionAssignment.assignment as Assignment
+		val expressions = transitionAssignment.assignments
+			.map[it  as Assignment]
+			.filter[this.eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
+			.map[it.compile]
 		
-		if (this.eliminationChecker.assignmentRequiredInSynthesis(robot, expression)) {
-			return ''' do «transitionAssignment.assignment.compile»'''
+		if (!expressions.empty) {
+			return ''' do «expressions.join(', ')»'''
 		}
 	}
 

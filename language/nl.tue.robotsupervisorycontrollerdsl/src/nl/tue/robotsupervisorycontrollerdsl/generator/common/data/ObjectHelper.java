@@ -9,8 +9,12 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicD
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Expression;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectPropertyValue;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectPropertyValueContent;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectValue;
 
 @Singleton
 public class ObjectHelper {
@@ -31,6 +35,25 @@ public class ObjectHelper {
 				} else if (referenced instanceof EnumDataType) {
 					result.add(new PropertyIdentifierPair(property, prefix + property.getName()));
 				}
+			}
+		}
+		
+		return result;
+	}
+
+	public List<PropertyIdentifierPair> flattenProperties(ObjectValue type, String prefix) {
+		List<PropertyIdentifierPair> result = new ArrayList<>();
+		
+		for (ObjectPropertyValue propertyValue : type.getProperties()) {
+			ObjectProperty property = propertyValue.getProperty();
+			ObjectPropertyValueContent content = propertyValue.getValue();
+			
+			if (content instanceof Expression) {
+				result.add(new PropertyIdentifierPair(property, prefix + property.getName()));
+			} else if (content instanceof ObjectValue) {
+				result.addAll(
+					flattenProperties((ObjectValue) content, prefix + property.getName() + '_')
+				);
 			}
 		}
 		

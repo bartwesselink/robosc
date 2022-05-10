@@ -48,6 +48,9 @@ class CommunicationTypeHookGenerator {
 		case «entity.triggerTransitionName»:
 			node_controller->«entity.callMethod»();
 		break;
+		case «entity.cancelTransitionName»:
+			node_controller->«entity.cancelMethod»();
+		break;
 	'''
 
 	private def dispatch compileHook(Service entity) '''

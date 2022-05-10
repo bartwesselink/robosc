@@ -21,8 +21,11 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Compon
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumValue;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RequestResultType;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResultTransition;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotSupervisoryControllerDSLPackage;
@@ -78,12 +81,18 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 				} else if (parentResultTransition != null) {
 					CommunicationType communicationType = parentResultTransition.getCommunicationType();
 
-					if (communicationType instanceof Service) {
+					if (communicationType instanceof Service && parentResultTransition.getResultType() instanceof RequestResultType) {
 						dataType = ((Service) communicationType).getRequestType();
+					} else if (communicationType instanceof Service && parentResultTransition.getResultType() instanceof ResponseResultType) {
+						dataType = ((Service) communicationType).getResponseType();
 					}
 
-					if (communicationType instanceof Action) {
+					if (communicationType instanceof Action && parentResultTransition.getResultType() instanceof RequestResultType) {
 						dataType = ((Action) communicationType).getRequestType();
+					} else if (communicationType instanceof Action && parentResultTransition.getResultType() instanceof ResponseResultType) {
+						dataType = ((Action) communicationType).getResponseType();
+					} else if (communicationType instanceof Action && parentResultTransition.getResultType() instanceof FeedbackResultType) {
+						dataType = ((Action) communicationType).getFeedbackType();
 					}
 
 					if (communicationType instanceof Message) {
@@ -93,12 +102,12 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 
 				for (AccessType type : access.getTypes()) {
 					AccessTypeImpl implementation = (AccessTypeImpl) type;
-					
+	
 					if (implementation.basicGetItem() != null) {
 						if (implementation.basicGetItem() instanceof ObjectProperty) {
-							dataType = ((ObjectProperty) type.getItem()).getType();
+							dataType = ((ObjectProperty) implementation.basicGetItem()).getType();
 						}
-					} else if (type instanceof ArrayDataType){
+					} else if (implementation.basicGetItem() == null && type instanceof ArrayDataType){
 						dataType = ((ArrayDataType) type).getType();
 					}
 				}
@@ -110,7 +119,7 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 							.map(it -> (EObject) it).collect(Collectors.toList()));
 				}
 			}
-
+		
 			return Scopes.scopeFor(candidates);
 		}
 

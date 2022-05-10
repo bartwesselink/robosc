@@ -28,6 +28,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RequestResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
 
 @Singleton
 class InfoUtilitiesGenerator {
@@ -179,16 +180,8 @@ class InfoUtilitiesGenerator {
 			if (transition instanceof ResultTransition) {
 				object.addProperty("type", serializer.serialize(transition.resultType).trim())
 				object.addProperty("communication", transition.communicationType.name)
-
-				if (transition.assignment?.assignment !== null) {
-					object.addProperty("assignment", serializer.serialize(transition.assignment.assignment).trim())
-				}
 			} else if (transition instanceof TauTransition) {
 				object.addProperty("type", "tau")
-				
-				if (transition.guard?.expression !== null) {
-					object.addProperty("guard", serializer.serialize(transition.guard.expression).trim())
-				}
 			}
 			
 			transitions.add(object)
@@ -214,6 +207,8 @@ class InfoUtilitiesGenerator {
 			return transition.communicationType.responseTransitionName
 		} else if (transition.resultType instanceof FeedbackResultType) {
 			return transition.communicationType.feedbackTransitionName
+		} else if (transition.resultType instanceof ErrorResultType) {
+			return transition.communicationType.errorTransitionName
 		}
 		
 		return null

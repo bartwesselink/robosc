@@ -18,6 +18,7 @@ class TransitionNames {
 	def transitionName(TauTransition tauTransition)'''«tauTransition.parentPlantName»_«cifTransitionNames.transitionName(tauTransition)»_'''
 	def transitionName(ProvideStatement statement)'''«statement.parentPlantName»_«cifTransitionNames.transitionName(statement)»_'''
 	
+	def cancelTransitionName(CommunicationType communicationType)'''«cifPlantNames.plantName(communicationType)»_«cifTransitionNames.cancelTransitionName(communicationType)»_'''
 	def triggerTransitionName(CommunicationType communicationType)'''«cifPlantNames.plantName(communicationType)»_«cifTransitionNames.triggerTransitionName(communicationType)»_'''
 	def responseTransitionName(CommunicationType communicationType)'''«cifPlantNames.plantName(communicationType)»_«cifTransitionNames.responseTransitionName»_'''
 	def resetTransitionName(CommunicationType communicationType)'''«cifPlantNames.plantName(communicationType)»_«cifTransitionNames.resetTransitionName(communicationType)»_'''

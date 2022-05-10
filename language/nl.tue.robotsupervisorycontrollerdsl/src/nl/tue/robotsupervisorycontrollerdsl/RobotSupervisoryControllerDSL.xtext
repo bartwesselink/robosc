@@ -104,14 +104,17 @@ ResponseResultType:
 FeedbackResultType:
 	{FeedbackResultType} 'feedback';
 
+ErrorResultType:
+	{ErrorResultType} 'error';
+
 ResultType:
-	ResponseResultType | FeedbackResultType | RequestResultType;
+	ResponseResultType | FeedbackResultType | RequestResultType | ErrorResultType;
 
 TransitionGuard:
 	'if' expression=Expression;
 
 TransitionAssignment:
-	'do' assignment=Assignment;
+	'do' assignments+=Assignment (',' assignments+=Assignment)*;
 
 TransitionStateChange:
 	'goto' state=[State];

@@ -31,7 +31,8 @@ class EliminationHelper {
 		return ModelHelper.findWithinRobot(robot, ResultTransition)
 			.filter[it.communicationType == type]
 			.filter[it.assignment !== null]
-			.map[it.assignment.assignment as Assignment]
+			.flatMap[it.assignment.assignments]
+			.map[it as Assignment]
 			.filter[!eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
 			.flatMap[eliminationChecker.findLiteralValues(it.value).collect(Collectors.toList)]
 			.map[ModelHelper.findParentOfType(it, Access)]
@@ -45,7 +46,8 @@ class EliminationHelper {
 		return ModelHelper.findWithinRobot(robot, ResultTransition)
 			.filter[it.communicationType == type]
 			.filter[it.assignment !== null]
-			.map[it.assignment.assignment as Assignment]
+			.flatMap[it.assignment.assignments]
+			.map[it as Assignment]
 			.filter[!eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
 			.flatMap[eliminationChecker.findLiteralValues(it.value).collect(Collectors.toList)]
 			.map[ModelHelper.findParentOfType(it, Access)]

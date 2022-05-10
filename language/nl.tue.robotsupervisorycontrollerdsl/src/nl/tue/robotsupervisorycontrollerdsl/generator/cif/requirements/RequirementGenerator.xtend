@@ -8,6 +8,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Commun
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationTypeSet
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.PlantNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.TransitionNames
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
 
 @Singleton
 class RequirementGenerator {
@@ -26,12 +27,22 @@ class RequirementGenerator {
 	private def compileNeeds(Requirement requirement)'''
 		«FOR communicationType : requirement.communicationTypes»
 		requirement «communicationType.plantName».«communicationType.triggerTransitionName» needs «requirement.needsExpression.compile»;
+		
+		«IF communicationType instanceof Action»
+		// Enable cancel when the action was already started
+		requirement «communicationType.plantName».«communicationType.cancelTransitionName» needs not («requirement.needsExpression.compile»);
+		«ENDIF»		
 		«ENDFOR»
 	'''
 	
 	private def compileDisables(Requirement requirement)'''
 		«FOR communicationType : requirement.communicationTypes»
 		requirement «requirement.disablesExpression.compile» disables «communicationType.plantName».«communicationType.triggerTransitionName»;
+				
+		«IF communicationType instanceof Action»
+		// Enable cancel when the action was already started
+		requirement not («requirement.disablesExpression.compile») disables «communicationType.plantName».«communicationType.cancelTransitionName»;
+		«ENDIF»		
 		«ENDFOR»
 	'''
 	

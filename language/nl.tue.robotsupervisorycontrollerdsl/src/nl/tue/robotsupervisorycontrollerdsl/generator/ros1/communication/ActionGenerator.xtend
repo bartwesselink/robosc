@@ -57,6 +57,10 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		
 		«entity.fieldName».sendGoal(goal_msg, boost::bind(&Controller::«entity.responseMethod», this, _1, _2), actionlib::SimpleActionClient<«entity.typeSettings.actionType»Action>::SimpleActiveCallback(), boost::bind(&Controller::«entity.feedbackMethod», this, _1));
 	}
+			
+	void «entity.cancelMethod»() {
+		this->«entity.fieldName».cancelAllGoals();
+	}
 	'''
 	
 }

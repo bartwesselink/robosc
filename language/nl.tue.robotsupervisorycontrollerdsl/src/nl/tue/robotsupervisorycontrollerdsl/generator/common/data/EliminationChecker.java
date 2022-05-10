@@ -78,7 +78,8 @@ public class EliminationChecker {
 
 		boolean value = eventTransitions.stream().filter(entity -> entity.getCommunicationType() == communication)
 				.filter(entity -> entity.getAssignment() != null)
-				.flatMap(entity -> findLiteralValues(entity.getAssignment().getAssignment()))
+				.flatMap(entity -> entity.getAssignment().getAssignments().stream())
+				.flatMap(entity -> findLiteralValues(entity))
 				.map(entity -> ModelHelper.findParentOfType(entity, Access.class))
 				.filter(entity -> accessHelper.getAccessItems(entity).isEmpty())
 				.anyMatch(entity -> {
@@ -98,7 +99,8 @@ public class EliminationChecker {
 
 		boolean value = eventTransitions.stream().filter(entity -> entity.getCommunicationType() == communication)
 				.filter(entity -> entity.getAssignment() != null)
-				.flatMap(entity -> findLiteralValues(entity.getAssignment().getAssignment()))
+				.flatMap(entity -> entity.getAssignment().getAssignments().stream())
+				.flatMap(entity -> findLiteralValues(entity))
 				.map(entity -> ModelHelper.findParentOfType(entity, Access.class))
 				.filter(entity -> !accessHelper.getAccessItems(entity).isEmpty())
 				.filter(entity -> accessPropertyIsSame(entity, p)).anyMatch(entity -> {
