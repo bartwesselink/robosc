@@ -67,6 +67,7 @@ class Ros2Generator implements GeneratorInterface {
 
 			«robot.compileCommunicationFieldDefinitions»
 			rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
+			«robot.compileActivationFields»
 
 			Controller() : Node("controller") {
 				«robot.compileCommunicationFieldInitializations»
@@ -86,7 +87,6 @@ class Ros2Generator implements GeneratorInterface {
 			}
 			
 			rclcpp::TimerBase::SharedPtr timer;
-			«robot.compileActivationFields»
 		};
 		
 		std::shared_ptr<Controller> node_controller = nullptr;

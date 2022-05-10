@@ -11,6 +11,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Commun
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.DataProvisioningHelper
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.MessageTo
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
 
 @Singleton
 class EventExecutionGenerator {
@@ -19,7 +20,7 @@ class EventExecutionGenerator {
 
 	def compilePerformEventEngine(Robot robot) {
 		val controllableEvents = robot.allTauTransitions + robot.allCommunicationTypeResets +
-			robot.allCommunicationTypeTriggers
+			robot.allCommunicationTypeTriggers + robot.allCommunicationTypeCancels
 		val dataEvents = robot.allDataTransitions
 
 		return '''
@@ -60,6 +61,12 @@ class EventExecutionGenerator {
 		return ModelHelper.findWithinRobot(robot, CommunicationType)
 			.filter[!(it instanceof Message) || (it as Message).direction instanceof MessageTo]
 			.map[it.triggerTransitionName]
+	}
+
+	private def allCommunicationTypeCancels(Robot robot) {
+		return ModelHelper.findWithinRobot(robot, CommunicationType)
+			.filter[it instanceof Action]
+			.map[it.cancelTransitionName]
 	}
 
 	private def allCommunicationTypeResets(Robot robot) {

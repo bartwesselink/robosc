@@ -34,15 +34,15 @@ class DataPlantHelper {
 	}
 	
 	private def compileObjectDataState(CommunicationType communication, ObjectDataType object, String dataVariable, Robot robot, Boolean pointer)'''
-		«FOR pair : object.flattenProperties('')»
 		«FOR statement : communication.allProvideStatementsWithData(robot) SEPARATOR '\n} else '»
 		if («communication.dataPlantName» == «statement.dataLocationName») {
+			«FOR pair : statement.valueProperties»
 			«IF statement.objectValue.valueForProperty(pair.property, pair.identifier) !== null»
 			«dataVariable»«pointer.accessMethod»«pair.identifier.replace('_', '.')» = «statement.objectValue.valueForProperty(pair.property, pair.identifier)?.compile»;
 			«ENDIF»
 		«ENDFOR»
-		«IF !communication.allProvideStatementsWithData(robot).empty»}«ENDIF»
 		«ENDFOR»
+		«IF !communication.allProvideStatementsWithData(robot).empty»}«ENDIF»
 	'''
 	
 	private def compileSimpleDataState(CommunicationType communication, DataType object, String dataVariable, Robot robot, Boolean pointer)'''
@@ -59,6 +59,16 @@ class DataPlantHelper {
 		} else {
 			return '.'
 		}
+	}
+	
+	private def valueProperties(ProvideStatement statement) {
+		val data = statement.data.data
+		
+		if (data instanceof ObjectValue) {
+			return data.flattenProperties('')
+		}
+		
+		return newArrayList
 	}
 	
 	private def Expression valueForProperty(ObjectValue value, ObjectProperty property, String path) {

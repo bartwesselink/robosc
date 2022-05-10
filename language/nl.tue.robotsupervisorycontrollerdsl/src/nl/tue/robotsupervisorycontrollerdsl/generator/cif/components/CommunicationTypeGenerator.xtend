@@ -61,7 +61,7 @@ class CommunicationTypeGenerator {
 	
 	private def dispatch String compilePlant(Action action, Robot robot)'''
 	plant «action.plantName»:
-		controllable c_trigger, c_reset;
+		controllable c_trigger, c_reset, c_cancel;
 		uncontrollable u_feedback, u_response, u_error;
 
 		«action.feedbackType.inputs(robot, action, 'feedback')»
@@ -74,6 +74,7 @@ class CommunicationTypeGenerator {
 			edge u_feedback;
 			edge u_response goto ready;
 			edge u_error goto error;
+			edge c_cancel goto idle;
 		location ready:
 			edge c_reset goto idle;
 		location error:

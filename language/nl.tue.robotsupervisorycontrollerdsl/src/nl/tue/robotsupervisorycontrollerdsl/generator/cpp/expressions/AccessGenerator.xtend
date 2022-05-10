@@ -81,13 +81,16 @@ class AccessGenerator {
 		if (types.empty) return ''
 		
 		var result = ''
+		var first = true
 		
 		for (type : types) {
 			if (type.item !== null && type.item instanceof ObjectProperty) {
-				result += '.' + (type.item as ObjectProperty).name
+				result += (!first ? '.' : '') + (type.item as ObjectProperty).name
 			} else if (type.item === null) {
 				result += '[' + type.index + ']'
 			}
+			
+			first = false
 		}
 
 		return result

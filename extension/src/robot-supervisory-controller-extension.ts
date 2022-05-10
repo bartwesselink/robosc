@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
     languageClient.trace = Trace.Verbose;
     languageClient.start();
 
-    let currentPanel: vscode.WebviewPanel;
+    let currentPanel: vscode.WebviewPanel|undefined;
 
     // Add visualization command
     context.subscriptions.push(
@@ -52,6 +52,14 @@ export function activate(context: vscode.ExtensionContext) {
                     localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'visualization')],
                 }
             );
+
+            currentPanel.onDidDispose(
+                () => {
+                    currentPanel = undefined;
+                },
+                null,
+                context.subscriptions
+              );
 
             currentPanel.webview.html = getWebviewContent(currentPanel.webview, context);
         })
