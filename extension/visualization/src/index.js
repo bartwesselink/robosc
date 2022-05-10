@@ -34,5 +34,9 @@ const handleData = (data) => {
 };
 
 window.addEventListener('message', event => {
-    handleData(event.data);
+    const wrapper = event.data;
+
+    if (wrapper.command !== 'visualize') return;
+
+    handleData(wrapper.data);
 });

@@ -12,8 +12,8 @@ const visualizeVariables = (component) => {
             <table>
             <thead>
                 <tr>
-                    <th>Variable</th>
-                    <th>Value</th>
+                    <th width="50%">Variable</th>
+                    <th width="50%">Value</th>
                 </tr>
             </thead>
             <tbody>
@@ -122,13 +122,20 @@ export const visualizeComponent = (component) => {
     wrapper.appendChild(behaviour);
     wrapper.appendChild(variables);
 
+    if (!component.behaviour && !component.variables) {
+        const empty = document.createElement('div');
+        empty.innerHTML = 'There is no behaviour or variable information available.';
+
+        wrapper.appendChild(empty);
+    }
+
     return wrapper;
 };
 
 const equalTransition = (one, two) => {
     if (!one || !two) return false;
 
-    return one.toLowerCase().replace(/\./g, '_') === two.toLowerCase().replace(/\./g, '');
+    return one.toLowerCase().replace(/\./g, '_').replace(/_$/, '') === two.toLowerCase().replace(/\./g, '_').trim('_', '').replace(/_$/, '');
 }
 
 export const updateState = (definition, current, transitions) => {

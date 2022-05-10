@@ -25,12 +25,12 @@ def generate_launch_description():
         ),
 
         ExecuteProcess(
-            cmd=['ros2', 'param', 'set', '/gazebo', 'use_sim_time', use_sim_time],
+            cmd=['ros2', 'param', 'set', '/gazebo', 'use_sim_time', 'True'],
             output='screen'),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'launch'), '/robot_state_publisher.launch.py']),
-            launch_arguments={'use_sim_time': True}.items(),
+            launch_arguments={'use_sim_time': 'true'}.items(),
         ),
 
         Node(

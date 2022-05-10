@@ -7,6 +7,52 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
+"@foxglove/cdr@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@foxglove/cdr/-/cdr-2.0.0.tgz#12bade26e1525e522fc9f0366830e65e5cb52e27"
+  integrity sha512-Zu00eJyO05bX9js7/E2QfQNjG8p7jNhE/vUuTF2lO+MS89/kLDb/b6fle8krLy7Bnd7ClKv6G4JAmiqy6wKwEA==
+
+"@foxglove/ros2@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@foxglove/ros2/-/ros2-3.3.0.tgz#d0bbc500c2da2293aad3bcbc9c3071249e9ab2ed"
+  integrity sha512-RGZCL3pfAxVn7KC2KzMl7y9tSxEqr0jKj5w40MZZIj6bxF4W8ijNdKUD91EhyhHzVhLcrMng0aq4VBE4sXoPag==
+  dependencies:
+    "@foxglove/rosmsg" "^2.0.0 || ^3.0.0"
+    "@foxglove/rosmsg2-serialization" "^1.0.6"
+    "@foxglove/rtps" "^1.5.1"
+    eventemitter3 "^4.0.7"
+
+"@foxglove/rosmsg2-serialization@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@foxglove/rosmsg2-serialization/-/rosmsg2-serialization-1.0.6.tgz#202cc24e0de01cd94b27673f873da783695db786"
+  integrity sha512-AoHpYWyc1N4BIFNuvX8qBVqr46noU9VBbZJPjskkV8xUyERyL2KcA6GXRE2Pew1nXSoUuY0KfyOdi4rGv6xGHw==
+  dependencies:
+    "@foxglove/cdr" "^2.0.0"
+    "@foxglove/rosmsg" "^2.0.0 || ^3.0.0"
+    "@foxglove/rostime" "^1.1.2"
+
+"@foxglove/rosmsg@^2.0.0 || ^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@foxglove/rosmsg/-/rosmsg-3.0.0.tgz#10ce39e42dab6804977cda297d0d317649184a16"
+  integrity sha512-AAb3DMlLcuntUyEDBioDhbjdbKivC1hj7Gnu7QXX8ce+R50V8xs5sfxccsjE6N0Qs+eQxuzLhT2kW3mNXT/gbg==
+  dependencies:
+    md5-typescript "^1.0.5"
+
+"@foxglove/rostime@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@foxglove/rostime/-/rostime-1.1.2.tgz#f8e1f10bff115c22be8a3e06791c2ac800449ee8"
+  integrity sha512-vWuTJCuGv0xvgwOlrZ1y2MevmNMVxWcUU/HwlmYXi/jUq/kRaACStU18uyuZ3LzdNKaffkti0rTcXWESaQjwQw==
+
+"@foxglove/rtps@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@foxglove/rtps/-/rtps-1.5.1.tgz#06d91d5cd0a3dd47ef9358983851c04cf2c75765"
+  integrity sha512-J0sOSw+gumSTipb4KZn5X1hQVdohhbau0NioIzCKNW++uDOo8rhR96XvuPZK7TUaScO81R5Q7Hi7UQQjR/BtvQ==
+  dependencies:
+    "@foxglove/cdr" "^2.0.0"
+    "@foxglove/rostime" "^1.1.2"
+    avl "^1.5.3"
+    eventemitter3 "^4.0.7"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -269,6 +315,11 @@ argparse@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
+
+avl@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/avl/-/avl-1.5.3.tgz#c1fedf023926fa598f23c9d65481b375af6c328a"
+  integrity sha512-1qcOJeREIosJxIBof2nefabU9+Y3wCxXBb3ElQmNVOHP+Hu2BLWAh8CpU7xFnJNDMVBt2H5UOE2S/B7MEqhTsg==
 
 azure-devops-node-api@^11.0.1:
   version "11.1.1"
@@ -689,6 +740,11 @@ estraverse@^5.2.0:
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-5.3.0.tgz#2eea5290702f26ab8fe5370370ff86c965d21123"
   integrity sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==
 
+eventemitter3@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
+
 events@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
@@ -1062,6 +1118,11 @@ markdown-it@^12.3.2:
     linkify-it "^3.0.1"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
+
+md5-typescript@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/md5-typescript/-/md5-typescript-1.0.5.tgz#68c0b24dff8e5d3162e498fa9893b63be72e038f"
+  integrity sha1-aMCyTf+OXTFi5Jj6mJO2O+cuA48=
 
 mdurl@^1.0.1:
   version "1.0.1"

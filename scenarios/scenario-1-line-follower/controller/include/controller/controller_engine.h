@@ -12,8 +12,8 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting,
-    _controller_data_pAB6YJ4VS2KIS,
-    _controller_data_pXSTXJVU9ZVYH,
+    _controller_data_p4A24AENRE0ZA,
+    _controller_data_pSCSYW0FL3FE3,
     _controller_in_service,
     _controller_line_found,
     _controller_no_line,
@@ -36,9 +36,9 @@ enum controllerEventEnum_ {
     message_stop_u_response_,           /**< Event message_stop.u_response. */
     message_continue_u_response_,       /**< Event message_continue.u_response. */
     message_move_forward_c_trigger_,    /**< Event message_move_forward.c_trigger. */
-    data_move_forward_c_p05XYD94T8HWC_, /**< Event data_move_forward.c_p05XYD94T8HWC. */
+    data_move_forward_c_pVH45ZVZOCRIW_, /**< Event data_move_forward.c_pVH45ZVZOCRIW. */
     message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
-    data_halt_c_p4QGFSEELH5CM_,         /**< Event data_halt.c_p4QGFSEELH5CM. */
+    data_halt_c_pWUJV2CSPI0X2_,         /**< Event data_halt.c_pWUJV2CSPI0X2. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
