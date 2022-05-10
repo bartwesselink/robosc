@@ -130,18 +130,8 @@
 		void call_message_move_forward() {
 			auto value = geometry_msgs::msg::Twist();
 			
-			if (data_move_forward_ == _controller_data_pSCSYW0FL3FE3) {
+			if (data_move_forward_ == _controller_data_pE12IJL1XOLG7) {
 				value.linear.x = 0.6;
-			}
-			if (data_move_forward_ == _controller_data_pSCSYW0FL3FE3) {
-			}
-			if (data_move_forward_ == _controller_data_pSCSYW0FL3FE3) {
-			}
-			if (data_move_forward_ == _controller_data_pSCSYW0FL3FE3) {
-			}
-			if (data_move_forward_ == _controller_data_pSCSYW0FL3FE3) {
-			}
-			if (data_move_forward_ == _controller_data_pSCSYW0FL3FE3) {
 				value.angular.z = (0.0 - code_LineDetector_current_correction) / 100;
 			}
 			
@@ -152,18 +142,8 @@
 		void call_message_halt() {
 			auto value = geometry_msgs::msg::Twist();
 			
-			if (data_halt_ == _controller_data_p4A24AENRE0ZA) {
+			if (data_halt_ == _controller_data_p1POFUPHF3J9D) {
 				value.linear.x = 0.0;
-			}
-			if (data_halt_ == _controller_data_p4A24AENRE0ZA) {
-			}
-			if (data_halt_ == _controller_data_p4A24AENRE0ZA) {
-			}
-			if (data_halt_ == _controller_data_p4A24AENRE0ZA) {
-			}
-			if (data_halt_ == _controller_data_p4A24AENRE0ZA) {
-			}
-			if (data_halt_ == _controller_data_p4A24AENRE0ZA) {
 				value.angular.z = 0.0;
 			}
 			
@@ -193,7 +173,7 @@
 			output << "}";
 			output << "},";
 			output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-			output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"awaiting\",\"initial\":true,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\",\"assignment\":\"current_correction := value\"}]},{\"name\":\"no_line\",\"initial\":false,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move_forward\",\"halt\"],\"services\":[],\"actions\":[]}]}";
+			output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"awaiting\",\"initial\":true,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"no_line\",\"initial\":false,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move_forward\",\"halt\"],\"services\":[],\"actions\":[]}]}";
 			output << "}";
 			
 			auto msg = std_msgs::msg::String();
@@ -207,7 +187,7 @@
 		// Heart of the controller
 		void tick() {
 			int nOfDataEvents = 2;
-			      controller_Event_ data_events[2] = { data_move_forward_c_pVH45ZVZOCRIW_,data_halt_c_pWUJV2CSPI0X2_ };
+			      controller_Event_ data_events[2] = { data_move_forward_c_pIELFJLWO5ADT_,data_halt_c_pUOCHN7MH2YLV_ };
 			
 			// Always execute data transitions that are possible
 			shuffle_events(data_events, nOfDataEvents);

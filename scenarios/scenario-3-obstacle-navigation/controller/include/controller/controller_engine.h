@@ -11,13 +11,17 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_awaiting,
-    _controller_data_p1POFUPHF3J9D,
-    _controller_data_pE12IJL1XOLG7,
+    _controller_awaiting_initial_pose,
+    _controller_awaiting_point,
+    _controller_data_pV3ZAMNWUYPU7,
+    _controller_error,
+    _controller_executing,
+    _controller_has_initial_pose,
+    _controller_has_point,
+    _controller_idle,
     _controller_in_service,
-    _controller_line_found,
-    _controller_no_line,
     _controller_none,
+    _controller_ready,
     _controller_stopped,
 };
 typedef enum Enumcontroller_ controllerEnum;
@@ -28,17 +32,20 @@ extern int EnumTypePrint(controllerEnum value, char *dest, int start, int end);
 
 /* Event declarations. */
 enum controllerEventEnum_ {
-    EVT_INITIAL_,                       /**< Initial step. */
-    EVT_DELAY_,                         /**< Delay step. */
-    EVT_TAU_,                           /**< Tau step. */
-    message_correction_u_response_,     /**< Event message_correction.u_response. */
-    message_no_line_u_response_,        /**< Event message_no_line.u_response. */
-    message_stop_u_response_,           /**< Event message_stop.u_response. */
-    message_continue_u_response_,       /**< Event message_continue.u_response. */
-    message_move_forward_c_trigger_,    /**< Event message_move_forward.c_trigger. */
-    data_move_forward_c_pIELFJLWO5ADT_, /**< Event data_move_forward.c_pIELFJLWO5ADT. */
-    message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
-    data_halt_c_pUOCHN7MH2YLV_,         /**< Event data_halt.c_pUOCHN7MH2YLV. */
+    EVT_INITIAL_,                     /**< Initial step. */
+    EVT_DELAY_,                       /**< Delay step. */
+    EVT_TAU_,                         /**< Tau step. */
+    message_point_u_response_,        /**< Event message_point.u_response. */
+    message_initial_pose_u_response_, /**< Event message_initial_pose.u_response. */
+    action_navigate_c_trigger_,       /**< Event action_navigate.c_trigger. */
+    action_navigate_c_reset_,         /**< Event action_navigate.c_reset. */
+    action_navigate_c_cancel_,        /**< Event action_navigate.c_cancel. */
+    action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
+    action_navigate_u_response_,      /**< Event action_navigate.u_response. */
+    action_navigate_u_error_,         /**< Event action_navigate.u_error. */
+    data_navigate_c_pFOXCZIXMVKY1_,   /**< Event data_navigate.c_pFOXCZIXMVKY1. */
+    message_stop_u_response_,         /**< Event message_stop.u_response. */
+    message_continue_u_response_,     /**< Event message_continue.u_response. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
@@ -58,10 +65,11 @@ extern const char *controller_event_names[];
 
 /* State variables (use for output only). */
 extern RealType model_time; /**< Current model time. */
+extern controllerEnum action_navigate_;         /**< Discrete variable "E action_navigate". */
 extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-extern controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
-extern controllerEnum data_halt_;               /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_forward_;       /**< Discrete variable "E data_move_forward". */
+extern controllerEnum component_Nav2Planner_;   /**< Discrete variable "E component_Nav2Planner". */
+extern controllerEnum component_Rviz_;          /**< Discrete variable "E component_Rviz". */
+extern controllerEnum data_navigate_;           /**< Discrete variable "E data_navigate". */
 
 /* Algebraic and derivative functions (use for output only). */
 
