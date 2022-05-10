@@ -134,10 +134,13 @@ class AutomatonGenerator {
 	private def compile(TransitionGuard guard) ''' when «guard.expression.compile»'''
 
 	private def compile(TransitionAssignment transitionAssignment, Robot robot) {
-		val expression = transitionAssignment.assignment as Assignment
+		val expressions = transitionAssignment.assignments
+			.map[it  as Assignment]
+			.filter[this.eliminationChecker.assignmentRequiredInSynthesis(robot, it)]
+			.map[it.compile]
 		
-		if (this.eliminationChecker.assignmentRequiredInSynthesis(robot, expression)) {
-			return ''' do «transitionAssignment.assignment.compile»'''
+		if (!expressions.empty) {
+			return ''' do «expressions.join(', ')»'''
 		}
 	}
 
