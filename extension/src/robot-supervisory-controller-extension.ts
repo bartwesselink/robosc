@@ -64,7 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             currentPanel.webview.html = getWebviewContent(currentPanel.webview, context);
             
-            startListener(() => currentPanel.webview)
+            startListener(() => currentPanel!!.webview)
                 .then(ros => context.subscriptions.push(vscode.Disposable.from({
                     dispose: async () => await ros.shutdown(),
                 })));
