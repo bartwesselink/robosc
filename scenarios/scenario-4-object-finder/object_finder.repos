@@ -1,0 +1,9 @@
+repositories:
+  darknet_ros:
+    type: git
+    url: https://github.com/leggedrobotics/darknet_ros
+    version: foxy
+  darknet_ros/darknet:
+    type: git
+    url: https://github.com/leggedrobotics/darknet
+    version: 508381b
