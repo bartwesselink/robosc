@@ -67,8 +67,8 @@ class InitializationGenerator {
 				return dataType.basic(robot, communication, prefix)
 			} else if (type instanceof ObjectDataType) {
 				return '''
-					«FOR pair : type.flattenProperties(prefix).filter[eliminationChecker.communicationTypeWithPropertyInputRequiredInSynthesis(robot, communication, it.property)]»
-						«communication.plantName»i_«pair.identifier»_ = «dataType.initialValue»;
+					«FOR pair : type.flattenProperties(prefix + '_').filter[eliminationChecker.communicationTypeWithPropertyInputRequiredInSynthesis(robot, communication, it.property)]»
+						«communication.plantName»_i_«pair.identifier»_ = «pair.property.type.initialValue»;
 					«ENDFOR»
 				'''
 			}

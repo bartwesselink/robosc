@@ -15,6 +15,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
 import java.util.List
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.VariableNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.AccessHelper
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty
 
 @Singleton
 class AccessGenerator {
@@ -69,6 +70,8 @@ class AccessGenerator {
 	}
 
 	private dispatch def accessName(Component component) '''«component.plantName»'''
+
+	private dispatch def accessName(ObjectProperty property) '''«property.name»'''
 
 	private dispatch def accessName(EnumValue value) '''«value.name»'''
 

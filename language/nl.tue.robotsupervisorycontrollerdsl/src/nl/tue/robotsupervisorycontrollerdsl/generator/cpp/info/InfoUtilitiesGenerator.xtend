@@ -29,6 +29,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Reques
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
 
 @Singleton
 class InfoUtilitiesGenerator {
@@ -47,11 +49,11 @@ class InfoUtilitiesGenerator {
 			output << "\"current\": {" << "";
 			«FOR component : robot.componentsWithBehaviour»
 				output << "\"«component.name»\": {";
-				output << "\"state\": \"" << enum_names[«component.plantName»] << "\",";
+				output << "\"state\": \"" << «IF component.singleState !== null»"«component.singleState.name»"""«ELSE»enum_names[«component.plantName»]«ENDIF» << "\",";
 				output << "\"variables\": {";
 				
 				«FOR variable : component.componentVariables»
-				output << "\"«variable.name»\": \"" << «variable.variableName(robot)» << "\"«IF !variable.lastVariable(component)»,«ENDIF»";				
+				output << "\"«variable.name»\": \"" << «variable.variableDefinition(robot)» << "\"«IF !variable.lastVariable(component)»,«ENDIF»";				
 				«ENDFOR»
 				
 				output << "}";
@@ -81,6 +83,22 @@ class InfoUtilitiesGenerator {
 		return robot.definitions.filter(Component)
 				.toList
 	}
+	
+	def variableDefinition(Variable variable, Robot robot) {
+		val type = variable.type
+
+		if (type instanceof ComplexDataTypeReference) {
+			val referenced = type.type
+			
+			if (referenced instanceof EnumDataType) {
+				return '''enum_names[«variable.variableName(robot)»]'''
+			} else {
+				return '''"unknown"'''
+			}
+		} else {
+			return variable.variableName(robot)
+		}
+	}
 
 	def componentVariables(Component component) {
 		val behaviour = component.behaviour
@@ -95,6 +113,16 @@ class InfoUtilitiesGenerator {
 		}
 		
 		return newArrayList
+	}
+	
+	def singleState(Component component) {
+		val behaviour = component.behaviour
+		
+		if (behaviour !== null && behaviour.automaton.definitions.filter(State).size == 1) {
+			return behaviour.automaton.definitions.filter(State).get(0)
+		}
+		
+		return null
 	}
 	
 	def lastBehaviourComponent(Component component, Robot robot) {
