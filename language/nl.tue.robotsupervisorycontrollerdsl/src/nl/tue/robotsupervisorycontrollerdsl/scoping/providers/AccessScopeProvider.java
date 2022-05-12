@@ -99,7 +99,7 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 						dataType = ((Message) communicationType).getType();
 					}
 				}
-
+				
 				for (AccessType type : access.getTypes()) {
 					AccessTypeImpl implementation = (AccessTypeImpl) type;
 	
@@ -107,8 +107,8 @@ public class AccessScopeProvider extends AbstractScopeProvider {
 						if (implementation.basicGetItem() instanceof ObjectProperty) {
 							dataType = ((ObjectProperty) implementation.basicGetItem()).getType();
 						}
-					} else if (implementation.basicGetItem() == null && type instanceof ArrayDataType){
-						dataType = ((ArrayDataType) type).getType();
+					} else if (implementation.basicGetItem() == null && dataType instanceof ArrayDataType) {
+						dataType = ((ArrayDataType) dataType).getType();
 					}
 				}
 

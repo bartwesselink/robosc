@@ -20,6 +20,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataTy
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Divide;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DoubleDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumValue;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Equation;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.GreaterThan;
@@ -141,7 +142,11 @@ public class ExpressionTypesystem {
 	public TypesystemDataType<?> accessType(Access access) {
 		AccessibleItem first = access.getFirstItem();
 		
-		if (first instanceof Variable) {
+		if (first instanceof EnumValue) {
+			EnumDataType parentEnum = ModelHelper.findParentOfType(first, EnumDataType.class);
+			
+			return typeOf(parentEnum);
+		} else if (first instanceof Variable) {
 			return typeOf(((Variable) first).getType());
 		} else if (first instanceof Component || access.getValue() != null) {
 			AccessType last = !access.getTypes().isEmpty() ? access.getTypes().get(access.getTypes().size() - 1) : null;

@@ -43,9 +43,9 @@ class AccessGenerator {
 		val enumDataType = ModelHelper.findParentOfType(entity, EnumDataType)
 
 		if (enumDataType !== null) {
-			return enumDataType.sourceInputName + access.types.createAccessPath
+			return enumDataType.sourceInputName + access.types.createAccessPath('->')
 		} else {
-			return literalValue + access.types.createAccessPath
+			return literalValue + access.types.createAccessPath('')
 		}
 	}
 
@@ -77,10 +77,10 @@ class AccessGenerator {
 		return entity.correspondingEngineType
 	}
 
-	private def createAccessPath(List<AccessType> types) {
+	private def createAccessPath(List<AccessType> types, String start) {
 		if (types.empty) return ''
 		
-		var result = ''
+		var result = start
 		var first = true
 		
 		for (type : types) {

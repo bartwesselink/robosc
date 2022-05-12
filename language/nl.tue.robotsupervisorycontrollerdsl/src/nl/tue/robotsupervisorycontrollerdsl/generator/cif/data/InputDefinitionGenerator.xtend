@@ -29,7 +29,7 @@ class InputDefinitionGenerator {
 				return dataType.basic(robot, communication, prefix)
 			} else if (type instanceof ObjectDataType) {
 				return '''
-					«FOR pair : type.flattenProperties(prefix).filter[eliminationChecker.communicationTypeWithPropertyInputRequiredInSynthesis(robot, communication, it.property)]»
+					«FOR pair : type.flattenProperties(prefix + '_').filter[eliminationChecker.communicationTypeWithPropertyInputRequiredInSynthesis(robot, communication, it.property)]»
 						input «pair.property.type.compile» i_«pair.identifier»;
 					«ENDFOR»
 				'''
