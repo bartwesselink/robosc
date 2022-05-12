@@ -57,7 +57,7 @@ const visualizeBehaviour = (component) => {
 
     const createGraph = (id) => {
         const element = document.getElementById(id);
-        const graph = new dagreD3.graphlib.Graph().setGraph({});
+        const graph = new dagreD3.graphlib.Graph({ multigraph: true }).setGraph({});
 
         for (const state of behaviour.states) {
             graph.setNode(state.name, { label: state.name });
@@ -65,7 +65,7 @@ const visualizeBehaviour = (component) => {
             for (const transition of state.transitions) {
                 transition.className = `${transition.id}_${String(Math.random()).replace('.', '')}`;
 
-                graph.setEdge(state.name, transition.next ?? state.name, { label: transitionLabel(transition), curve: d3.curveBasis, class: transition.className });
+                graph.setEdge(state.name, transition.next ?? state.name, { label: transitionLabel(transition), curve: d3.curveBasis, class: transition.className }, transition.className);
             }
         }
 

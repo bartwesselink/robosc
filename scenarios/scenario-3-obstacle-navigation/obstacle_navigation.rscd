@@ -1,0 +1,84 @@
+robot ObstacleNavigation {
+    datatype object Quaternion {
+        x: double
+        y: double
+        z: double
+        w: double
+    }
+
+    datatype object Point {
+        x: double
+        y: double
+        z: double
+    }
+
+    datatype object Pose {
+        position: Point
+        orientation: Quaternion
+    }
+
+    datatype object PoseStamped {
+        pose: Pose
+    }
+
+    datatype object PointStamped {
+    	point: Point
+    }
+
+    datatype object NavigateToPoseRequest {
+        pose: PoseStamped
+    }
+
+    component Rviz {
+    	incoming message point with identifier: "/clicked_point", type: PointStamped (import PointStamped from geometry_msgs)
+    	
+    	behaviour {
+    		variable current_x: double
+    		variable current_y: double
+    		variable current_z: double
+
+			on response from point do current_x := value.point.x goto has_point
+			on response from point do current_y := value.point.y goto has_point
+			on response from point do current_z := value.point.z goto has_point
+
+    		
+    		initial state awaiting_point {}
+
+    		
+    		state has_point {    			
+    			on response from navigate goto awaiting_point
+    			on response from stop goto awaiting_point
+    		}
+    	}
+    }
+
+    component Nav2Planner {
+        incoming message initial_pose with identifier: "/initialpose", type: Pose (import PoseWithCovarianceStamped from geometry_msgs)
+
+        behaviour {
+            initial state awaiting_initial_pose {
+                on response from initial_pose goto has_initial_pose
+            }
+
+            state has_initial_pose {}
+        }
+    }
+
+    component Nav2Executor {
+        action navigate with identifier: "/navigate_to_pose", request: NavigateToPoseRequest, response: none, feedback: none (import NavigateToPose from nav2_msgs)
+    }
+
+
+    component EmergencyStop from EmergencyStopLibrary import EmergencyStop
+
+    requirement navigate needs Nav2Planner.has_initial_pose and EmergencyStop.in_service and Rviz.has_point
+
+    
+    provide navigate with {
+    	pose: {
+    		pose: { 
+    			position: { x: Rviz.current_x, y: Rviz.current_y, z: Rviz.current_z }
+    		}
+    	}
+    }
+}
