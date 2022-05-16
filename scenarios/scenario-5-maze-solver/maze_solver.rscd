@@ -1,0 +1,96 @@
+robot MazeSolver {
+    datatype object LaserScan {
+        ranges: array(double)
+    }
+
+    datatype object Vector3 {
+        x: double
+        y: double
+        z: double
+    }
+
+    datatype object Twist {
+        linear: Vector3
+        angular: Vector3
+    }
+
+    datatype enum DistanceRight from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[270] < 0.7 or value.ranges[240] < 0.7 -> wall_right
+        default -> no_wall_right
+    }
+
+    datatype enum DistanceFront from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[0] < 0.6 -> wall_front
+        default -> no_wall_front
+    }
+
+    datatype enum DistanceDiagRight from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[225] < 0.9 -> wall_diag_right
+        default -> no_wall_diag_right
+    }
+
+    component Distance {
+        incoming message scan_right with identifier: "/scan", type: DistanceRight (import LaserScan from sensor_msgs)
+        incoming message scan_front with identifier: "/scan", type: DistanceFront (import LaserScan from sensor_msgs)
+        incoming message scan_diag_right with identifier: "/scan", type: DistanceDiagRight (import LaserScan from sensor_msgs)
+
+        behaviour {
+            variable right: DistanceRight = no_wall_right
+            variable front: DistanceFront = no_wall_front
+            variable diag_right: DistanceDiagRight = no_wall_diag_right
+
+            on response from scan_right do right := value
+            on response from scan_front do front := value
+            on response from scan_diag_right do diag_right := value
+
+            initial state sensing {}
+        }
+    }
+
+    component Platform {
+        outgoing message movement with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+        outgoing message halt with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+
+        outgoing message turn_left with identifier: "/rotate_left", type: integer 
+        outgoing message turn_right with identifier: "/rotate_right", type: integer
+
+        incoming message rotate_done with identifier: "/rotate_done", type: none
+
+        behaviour {
+            initial state ready {
+                on request to turn_left goto turning
+                on request to turn_right goto turning
+            }
+
+            state turning {
+                on response from rotate_done goto ready
+                on response from stop goto ready
+            }
+        }
+    }
+
+    component EmergencyStop from EmergencyStopLibrary import EmergencyStop
+
+    // Rules when following left-walls
+    requirement movement needs (Distance.right = wall_right and Distance.front = no_wall_front)
+            or (Distance.front = no_wall_front and Distance.right = no_wall_right and Distance.diag_right = no_wall_diag_right)
+
+    requirement turn_right needs Distance.right = no_wall_right and Distance.diag_right = wall_diag_right
+    requirement turn_left needs Distance.front = wall_front
+
+    requirement {turn_left, turn_right, movement} needs Platform.ready
+
+    requirement EmergencyStop.stopped disables {
+        movement,
+        turn_left,turn_right
+    }
+
+    requirement halt needs EmergencyStop.stopped
+
+    // Provide communication with correct data
+    provide turn_left with 90 // degrees
+    provide turn_right with 90 // degrees
+
+    provide movement with { linear: { x: 0.3 } }
+    provide halt with { linear: { x: 0.0 } }
+}

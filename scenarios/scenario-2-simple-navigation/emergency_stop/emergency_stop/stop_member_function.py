@@ -31,15 +31,16 @@ class EmergencyStop(Node):
 
     def show_window(self):
         top = tkinter.Tk()
+        top.geometry("500x200")
         top.title("Emergency Stop")
 
-        self.stop_button = tkinter.Button(top, text = "Stop", command = self.stop_callback, width = 100, height = 20)
-        self.continue_button = tkinter.Button(top, text = "Continue", command = self.continue_callback, width = 100, height = 20)
+        self.stop_button = tkinter.Button(top, text = "Stop", command = self.stop_callback, height = 20)
+        self.continue_button = tkinter.Button(top, text = "Continue", command = self.continue_callback, height = 20)
 
         self.continue_button["state"] = "disabled"
 
-        self.stop_button.pack()
-        self.continue_button.pack()
+        self.stop_button.pack(side = tkinter.LEFT, expand = True, fill = tkinter.BOTH)
+        self.continue_button.pack(side = tkinter.LEFT, expand = True, fill = tkinter.BOTH)
 
         top.mainloop()
 
