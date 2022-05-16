@@ -1,0 +1,115 @@
+robot ObjectFinder {
+    datatype object LaserScan {
+        ranges: array(double)
+    }
+
+    datatype enum DistanceTop from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[0] >= 0.6 -> safe_top
+        default -> unsafe_top
+    }
+
+    datatype enum DistanceLeft from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[90] >= 0.6 -> safe_left
+        default -> unsafe_left
+    }
+
+    datatype enum DistanceRight from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[270] >= 0.6 -> safe_right
+        default -> unsafe_right
+    }
+
+    datatype object BoundingBoxes {
+        bounding_boxes: array(BoundingBox)
+    }
+
+    datatype object BoundingBox {
+        class_id: string
+    }
+
+    datatype object ObjectCount {
+        count: integer(0..1)
+    }
+
+    datatype enum ScannedObject from BoundingBoxes (import BoundingBoxes from darknet_ros_msgs) to {
+        value.bounding_boxes[0].class_id = "stop sign" -> stop_sign
+        default -> no_object
+    }
+
+    component LidarScanner {
+        incoming message scan_top with identifier: "/scan", type: DistanceTop (import LaserScan from sensor_msgs)
+        incoming message scan_left with identifier: "/scan", type: DistanceLeft (import LaserScan from sensor_msgs)
+        incoming message scan_right with identifier: "/scan", type: DistanceRight (import LaserScan from sensor_msgs)
+
+        behaviour {
+            variable top: DistanceTop
+            variable left: DistanceLeft
+            variable right: DistanceRight
+            variable has_top: boolean = false
+
+            initial state sensing {
+                on response from scan_top do top := value, has_top := true
+                on response from scan_left do left := value
+                on response from scan_right do right := value
+            }
+        }
+    }
+
+    component Platform {
+        outgoing message rotate_left with identifier: "/rotate_left", type: none
+        outgoing message rotate_right with identifier: "/rotate_right", type: none
+        incoming message rotate_done with identifier: "/rotate_done", type: none
+
+        behaviour {
+            initial state awaiting_command {
+                on request to rotate_left goto executing
+                on request to rotate_right goto executing
+            }
+
+            state executing {
+                on response from rotate_done goto awaiting_command
+            }
+        }
+    }
+	
+    component ObjectDetector {
+        incoming message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount (import ObjectCount from darknet_ros_msgs)
+        incoming message object_scan with identifier: "/darknet_ros/bounding_boxes", type: ScannedObject (import BoundingBoxes from darknet_ros_msgs)
+
+        behaviour {
+            variable scanned_object_count: integer(0..1)
+            variable scanned_object: ScannedObject
+
+            on response from object_count do scanned_object_count := value.count
+            on response from object_scan do scanned_object := value
+
+            initial state no_object {
+                transition if scanned_object_count > 0 goto object_found
+            }
+
+            state object_found {
+                transition if scanned_object_count = 0 goto no_object
+            }
+        }
+    }
+	
+    component TurtlebotPlatfrom from TurtlebotLibrary import TurtlebotPlatform
+    component EmergencyStop from EmergencyStopLibrary import EmergencyStop
+
+    requirement move_forward needs LidarScanner.top = safe_top and Platform.awaiting_command
+    requirement halt needs (LidarScanner.left = unsafe_left and LidarScanner.right = unsafe_right and LidarScanner.top = unsafe_top) or ObjectDetector.object_found
+
+    requirement rotate_left needs LidarScanner.left = safe_left and !ObjectDetector.object_found
+    requirement rotate_right needs LidarScanner.right = safe_right and !ObjectDetector.object_found
+    
+    requirement { rotate_left, rotate_right } needs Platform.awaiting_command
+    requirement { rotate_left, rotate_right } needs LidarScanner.top = unsafe_top and LidarScanner.has_top
+    requirement rotate_left needs LidarScanner.left = safe_left
+    requirement rotate_right needs LidarScanner.right = safe_right
+
+    requirement move_forward needs EmergencyStop.in_service
+    requirement halt needs EmergencyStop.stopped
+
+    requirement ObjectDetector.object_found disables move_forward
+	
+    provide move_forward with { linear: { x: 0.5 }, angular: { z: 0.0 } }
+}

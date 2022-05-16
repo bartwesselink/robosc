@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>emergency_stop</name>
+  <version>1.0.0</version>
+  <description>Halt the current execution.</description>
+  <maintainer email="b.b.a.wesselink@student.tue.nl">b.wesselink</maintainer>
+  <license>LGPL-3.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>tkinter</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
