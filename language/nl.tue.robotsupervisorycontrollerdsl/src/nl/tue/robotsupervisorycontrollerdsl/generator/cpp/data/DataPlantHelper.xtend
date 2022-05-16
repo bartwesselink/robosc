@@ -48,7 +48,7 @@ class DataPlantHelper {
 	private def compileSimpleDataState(CommunicationType communication, DataType object, String dataVariable, Robot robot, Boolean pointer)'''
 		«FOR statement : communication.allProvideStatementsWithData(robot) SEPARATOR '\n} else '»
 		if («communication.dataPlantName» == «statement.dataLocationName») {
-			«dataVariable»«pointer.accessMethod»data = «(statement.data as Expression).compile»;
+			«dataVariable»«pointer.accessMethod»data = «(statement.data.data as Expression).compile»;
 		«ENDFOR»
 		«IF !communication.allProvideStatementsWithData(robot).empty»}«ENDIF»
 	'''
