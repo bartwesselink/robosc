@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ArrayDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Expression;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectDataType;
@@ -34,6 +36,20 @@ public class ObjectHelper {
 						);
 				} else if (referenced instanceof EnumDataType) {
 					result.add(new PropertyIdentifierPair(property, prefix + property.getName()));
+				}
+			} else if (property.getType() instanceof ArrayDataType) {
+				ArrayDataType array = (ArrayDataType) property.getType();
+				DataType arrayType = array.getType();
+				
+				if (arrayType instanceof ComplexDataTypeReference) {	
+					ComplexDataTypeReference reference = (ComplexDataTypeReference) arrayType;
+					ComplexDataType referenced = reference.getType();
+					
+					if (referenced instanceof ObjectDataType) {				
+						result.addAll(
+								flattenProperties((ObjectDataType) referenced, "")
+							);
+					}
 				}
 			}
 		}
