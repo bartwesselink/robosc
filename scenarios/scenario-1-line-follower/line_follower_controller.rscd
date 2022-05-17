@@ -13,8 +13,8 @@ robot LineFollowerController {
 
             state line_found {
                 on response from no_line goto no_line
-                 on response from correction do current_correction := value
-           }
+                on response from correction do current_correction := value
+            }
 
             state no_line {
                 on response from correction goto line_found

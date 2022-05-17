@@ -1,0 +1,115 @@
+robot PushBallGoal {
+    datatype object LaserScan {
+        ranges: array(double)
+    }
+
+    datatype enum Distance from LaserScan (import LaserScan from sensor_msgs) to {
+        value.ranges[40] < 1.0 and value.ranges[320] < 1.0 -> obstructed
+        default -> free
+    }
+
+    component Scanner {
+        incoming message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
+
+        behaviour {
+            variable distance: Distance
+
+            initial state sensing {
+                on response from scan do distance := value
+            }
+        }
+    }
+
+    component BallDetector {
+        incoming message ball_correction with identifier: "/ball_correction", type: double
+        incoming message no_ball with identifier: "/no_ball", type: none
+
+        incoming message needs_ajustment with identifier: "/needs_ajustment", type: none
+        incoming message no_adjustment with identifier: "/no_adjustment", type: none
+        incoming message ball_front_check with identifier: "/ball_front_check", type: none
+
+        behaviour {
+            variable current_correction: double = 0.0
+
+            initial state awaiting {
+                on response from no_ball goto no_ball
+                on response from ball_correction do current_correction := value goto ball_found
+            }
+
+            state ball_found {
+                on response from no_ball goto no_ball
+                on response from ball_correction do current_correction := value goto ball_found
+                on response from ball_front_check goto ball_in_front
+            }
+
+            state ball_in_front {
+                on response from needs_ajustment goto adjusting
+            }
+
+            state adjusting {
+                on response from no_adjustment goto ball_in_front
+            }
+
+            state no_ball {
+                on response from no_ball goto no_ball
+                on response from ball_correction goto ball_found
+            }
+        }
+    }
+
+    component GoalDetector {
+        incoming message goal_correction with identifier: "/goal_correction", type: double
+        incoming message no_goal with identifier: "/no_goal", type: none
+
+        behaviour {
+            variable current_correction: double = 0.0
+
+            initial state awaiting {
+                on response from no_goal goto no_goal
+                on response from goal_correction goto goal_found
+            }
+
+            state goal_found {
+                on response from no_goal goto no_goal
+                on response from goal_correction do current_correction := value
+            }
+
+            state no_goal {
+                on response from goal_correction goto goal_found
+            }
+        }
+    }
+    
+    component EmergencyStop from EmergencyStopLibrary import EmergencyStop
+    component TurtlebotPlatform from TurtlebotLibrary import TurtlebotPlatform
+
+    requirement halt needs EmergencyStop.stopped or Scanner.distance = obstructed
+    requirement move_forward needs EmergencyStop.in_service
+
+    requirement move_forward needs Scanner.distance = free
+
+    // Move to ball
+    provide move_forward with {
+        linear: { x: 0.2 },
+        angular: { z: (0.0 - BallDetector.current_correction) / 500 }
+    } if BallDetector.ball_found
+
+    // Move/adjust ball
+    provide move_forward with {
+        linear: { x: 0.2 },
+        angular: { z: (BallDetector.current_correction) / 500 }
+    } if BallDetector.adjusting
+
+    // Move to goal
+    provide move_forward with {
+        linear: { x: 0.2 },
+        angular: { z: (0.0 - GoalDetector.current_correction) / 500 }
+    } if BallDetector.ball_in_front
+
+    // Find ball
+    provide move_forward with {
+        angular: { z: 0.5 }
+    } if BallDetector.no_ball
+
+    provide halt with { linear: { x: 0.0 }, angular: { z: 0.0 }}
+}
