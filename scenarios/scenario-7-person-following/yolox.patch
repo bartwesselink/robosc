@@ -1,0 +1,20 @@
+diff --git a/yolox_ros_py/setup.py b/yolox_ros_py/setup.py
+index 000b167..5d6a4af 100755
+--- a/yolox_ros_py/setup.py
++++ b/yolox_ros_py/setup.py
+@@ -3,6 +3,7 @@ from setuptools import setup
+ import os
+ from glob import glob
+ from urllib.request import urlretrieve
++import sys
+ 
+ package_name = 'yolox_ros_py'
+ 
+@@ -92,6 +93,7 @@ setup(
+         (os.path.join('share', package_name), glob('../weights/tflite/*')),
+         (os.path.join('share', package_name), glob('../weights/tensorrt/*')),
+         (os.path.join('share', package_name), glob('./exps/*.py')),
++        (os.path.join('lib', 'python' + '.'.join(sys.version.split('.')[0:2]), 'site-packages', 'yolox_ros_py', 'yolox_ros_py_utils'), glob('./yolox_ros_py/yolox_ros_py_utils/*.py')),
+     ],
+     install_requires=['setuptools'],
+     zip_safe=True,
