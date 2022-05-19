@@ -1,0 +1,9 @@
+repositories:
+  yolox_ros:
+    type: git
+    url: https://github.com/Ar-Ray-code/yolox_ros.git
+    version: main
+  yolox_ros/bbox_ex_msgs:
+    type: git
+    url: https://github.com/Ar-Ray-code/bbox_ex_msgs.git
+    version: b2219ec
