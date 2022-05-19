@@ -233,6 +233,8 @@
 		void call_message_halt() {
 			auto value = geometry_msgs::msg::Twist();
 			
+			value.linear.x = 0.0;
+			value.angular.z = 0.0;
 			
 			this->publisher_client_halt->publish(value);
 		}

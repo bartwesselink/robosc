@@ -112,4 +112,5 @@ robot ObjectFinder {
     requirement ObjectDetector.object_found disables move_forward
 	
     provide move_forward with { linear: { x: 0.5 }, angular: { z: 0.0 } }
+    provide halt with { linear: { x: 0.0 }, angular: { z: 0.0 }}
 }

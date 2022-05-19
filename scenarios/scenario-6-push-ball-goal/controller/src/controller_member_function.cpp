@@ -216,11 +216,11 @@
 			} else 
 			if (data_move_forward_ == _controller_data_pJ3SFWI5LTZLP) {
 				value.linear.x = 0.2;
-				value.angular.z = (code_BallDetector_current_correction) / 500;
+				value.angular.z = (code_BallDetector_current_correction) / 1000;
 			} else 
 			if (data_move_forward_ == _controller_data_pB2V6S43RB4A4) {
 				value.linear.x = 0.2;
-				value.angular.z = (0.0 - code_GoalDetector_current_correction) / 500;
+				value.angular.z = (0.0 - code_GoalDetector_current_correction) / 1000;
 			} else 
 			if (data_move_forward_ == _controller_data_pEPFB7F9VF53E) {
 				value.angular.z = 0.5;
