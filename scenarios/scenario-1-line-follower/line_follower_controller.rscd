@@ -1,23 +1,18 @@
 robot LineFollowerController {
     component LineDetector {
-        incoming message correction with identifier: "/correction", type: double
-        incoming message no_line with identifier: "/no_line", type: none
+        outgoing message correction with identifier: "/correction", type: double
+        outgoing message no_line with identifier: "/no_line", type: none
 
         behaviour {
             variable current_correction: double = 0.0
 
-            initial state awaiting {
-                on response from no_line goto no_line
+            initial state no_line {
                 on response from correction goto line_found
             }
 
             state line_found {
                 on response from no_line goto no_line
                 on response from correction do current_correction := value
-            }
-
-            state no_line {
-                on response from correction goto line_found
             }
         }
     }

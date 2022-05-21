@@ -30,7 +30,7 @@ robot SimpleNavigation {
     }
 
     component Rviz {
-    	incoming message point with identifier: "/clicked_point", type: PointStamped (import PointStamped from geometry_msgs)
+    	outgoing message point with identifier: "/clicked_point", type: PointStamped (import PointStamped from geometry_msgs)
 
     	
     	behaviour {
@@ -54,7 +54,7 @@ robot SimpleNavigation {
     }
 
     component Nav2Planner {
-        incoming message initial_pose with identifier: "/initialpose", type: Pose (import PoseWithCovarianceStamped from geometry_msgs)
+        outgoing message initial_pose with identifier: "/initialpose", type: Pose (import PoseWithCovarianceStamped from geometry_msgs)
 
         behaviour {
             initial state awaiting_initial_pose {

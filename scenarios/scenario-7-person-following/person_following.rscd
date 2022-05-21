@@ -19,7 +19,7 @@ robot PersonFollowing {
     }
 
     component Scanner {
-        incoming message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
+        outgoing message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
 
         behaviour {
             variable distance: Distance
@@ -31,7 +31,7 @@ robot PersonFollowing {
     }
 
     component YoloxDetection {
-        incoming message bounding_boxes with identifier: "/bounding_boxes", type: BoundingBoxes (import BoundingBoxes from bboxes_ex_msgs)
+        outgoing message bounding_boxes with identifier: "/bounding_boxes", type: BoundingBoxes (import BoundingBoxes from bboxes_ex_msgs)
 
         behaviour {
             variable current_image_size: double = 0.0

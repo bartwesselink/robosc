@@ -54,10 +54,10 @@ CommunicationType:
 	Message | Action | Service;
 
 MessageFrom:
-	{MessageFrom} 'incoming';
+	{MessageFrom} 'outgoing';
 
 MessageTo:
-	{MessageTo} 'outgoing';
+	{MessageTo} 'incoming';
 
 MessageDirection:
 	MessageFrom | MessageTo;

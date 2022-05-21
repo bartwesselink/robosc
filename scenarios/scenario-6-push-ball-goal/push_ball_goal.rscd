@@ -9,7 +9,7 @@ robot PushBallGoal {
     }
 
     component Scanner {
-        incoming message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
+        outgoing message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
 
         behaviour {
             variable distance: Distance
@@ -21,12 +21,12 @@ robot PushBallGoal {
     }
 
     component BallDetector {
-        incoming message ball_correction with identifier: "/ball_correction", type: double
-        incoming message no_ball with identifier: "/no_ball", type: none
+        outgoing message ball_correction with identifier: "/ball_correction", type: double
+        outgoing message no_ball with identifier: "/no_ball", type: none
 
-        incoming message needs_ajustment with identifier: "/needs_ajustment", type: none
-        incoming message no_adjustment with identifier: "/no_adjustment", type: none
-        incoming message ball_front_check with identifier: "/ball_front_check", type: none
+        outgoing message needs_ajustment with identifier: "/needs_ajustment", type: none
+        outgoing message no_adjustment with identifier: "/no_adjustment", type: none
+        outgoing message ball_front_check with identifier: "/ball_front_check", type: none
 
         behaviour {
             variable current_correction: double = 0.0
@@ -58,8 +58,8 @@ robot PushBallGoal {
     }
 
     component GoalDetector {
-        incoming message goal_correction with identifier: "/goal_correction", type: double
-        incoming message no_goal with identifier: "/no_goal", type: none
+        outgoing message goal_correction with identifier: "/goal_correction", type: double
+        outgoing message no_goal with identifier: "/no_goal", type: none
 
         behaviour {
             variable current_correction: double = 0.0

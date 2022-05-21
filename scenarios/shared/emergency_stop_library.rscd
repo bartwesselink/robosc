@@ -1,7 +1,7 @@
 library EmergencyStopLibrary {
     component EmergencyStop {
-        incoming message stop with identifier: "/stop", type: none
-        incoming message continue with identifier: "/continue", type: none
+        outgoing message stop with identifier: "/stop", type: none
+        outgoing message continue with identifier: "/continue", type: none
 
         behaviour {
             initial state in_service {

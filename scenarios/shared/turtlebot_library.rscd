@@ -11,7 +11,7 @@ library TurtlebotLibrary {
     }
 
     component TurtlebotPlatform {
-        outgoing message move_forward with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
-        outgoing message halt with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+        incoming message move_forward with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+        incoming message halt with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
     }
 }

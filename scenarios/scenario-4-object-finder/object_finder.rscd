@@ -36,9 +36,9 @@ robot ObjectFinder {
     }
 
     component LidarScanner {
-        incoming message scan_top with identifier: "/scan", type: DistanceTop (import LaserScan from sensor_msgs)
-        incoming message scan_left with identifier: "/scan", type: DistanceLeft (import LaserScan from sensor_msgs)
-        incoming message scan_right with identifier: "/scan", type: DistanceRight (import LaserScan from sensor_msgs)
+        outgoing message scan_top with identifier: "/scan", type: DistanceTop (import LaserScan from sensor_msgs)
+        outgoing message scan_left with identifier: "/scan", type: DistanceLeft (import LaserScan from sensor_msgs)
+        outgoing message scan_right with identifier: "/scan", type: DistanceRight (import LaserScan from sensor_msgs)
 
         behaviour {
             variable top: DistanceTop
@@ -55,9 +55,9 @@ robot ObjectFinder {
     }
 
     component Platform {
-        outgoing message rotate_left with identifier: "/rotate_left", type: none
-        outgoing message rotate_right with identifier: "/rotate_right", type: none
-        incoming message rotate_done with identifier: "/rotate_done", type: none
+        incoming message rotate_left with identifier: "/rotate_left", type: none
+        incoming message rotate_right with identifier: "/rotate_right", type: none
+        outgoing message rotate_done with identifier: "/rotate_done", type: none
 
         behaviour {
             initial state awaiting_command {
@@ -72,8 +72,8 @@ robot ObjectFinder {
     }
 	
     component ObjectDetector {
-        incoming message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount (import ObjectCount from darknet_ros_msgs)
-        incoming message object_scan with identifier: "/darknet_ros/bounding_boxes", type: ScannedObject (import BoundingBoxes from darknet_ros_msgs)
+        outgoing message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount (import ObjectCount from darknet_ros_msgs)
+        outgoing message object_scan with identifier: "/darknet_ros/bounding_boxes", type: ScannedObject (import BoundingBoxes from darknet_ros_msgs)
 
         behaviour {
             variable scanned_object_count: integer(0..1)
