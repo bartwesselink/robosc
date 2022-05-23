@@ -26,6 +26,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Access
 import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negation
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negative
 
 @Singleton
 class ExpressionGenerator {
@@ -48,13 +49,14 @@ class ExpressionGenerator {
 	private def dispatch String compileValue(Multiply value) '''«value.left.compileValue» * «value.right.compileValue»'''
 	private def dispatch String compileValue(Divide value) '''«value.left.compileValue» / «value.right.compileValue»'''
 	private def dispatch String compileValue(Negation value) '''not «value.value.compileValue»'''
+	private def dispatch String compileValue(Negative value) '''-«value.value.compileValue»'''
 	private def dispatch String compileValue(Parenthesized value) '''(«value.value.compileValue»)'''
 	private def dispatch String compileValue(Atom value) '''«value.value.compileValue»'''
 	private def dispatch String compileValue(Access access) '''«access.compilePath»'''
 	private def dispatch String compileValue(Assignment value) '''«value.item.compilePath» := «value.value.compileValue»'''
 
 	private def dispatch String compileValue(LiteralDouble value) '''«value.one».«value.two»'''
-	private def dispatch String compileValue(LiteralInt value) '''«value.sign»«value.value»'''
+	private def dispatch String compileValue(LiteralInt value) '''«value.value»'''
 	private def dispatch String compileValue(LiteralString value) '''"«value.value»"'''
 	private def dispatch String compileValue(LiteralBoolean value) '''«value.value»'''
 }

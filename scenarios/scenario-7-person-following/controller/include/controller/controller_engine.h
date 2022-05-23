@@ -11,10 +11,10 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_pD87P7RETTQ3A,
-    _controller_data_pG36J71ITNOBN,
-    _controller_data_pH6YGADB3NGHU,
-    _controller_data_pVNXIYZ01NXCL,
+    _controller_data_p5UWM727CD0A2,
+    _controller_data_pTZ4E5EBBGJ1V,
+    _controller_data_pVME0YKQU38ZO,
+    _controller_data_pXX79HQBCDXM0,
     _controller_detected,
     _controller_free,
     _controller_in_service,
@@ -38,12 +38,12 @@ enum controllerEventEnum_ {
     message_bounding_boxes_u_response_, /**< Event message_bounding_boxes.u_response. */
     message_stop_u_response_,           /**< Event message_stop.u_response. */
     message_continue_u_response_,       /**< Event message_continue.u_response. */
-    message_move_c_trigger_,    /**< Event message_move.c_trigger. */
-    data_move_c_pPR7XVQ7Z9QUV_, /**< Event data_move.c_pPR7XVQ7Z9QUV. */
-    data_move_c_pPPIOGABJ1ZUF_, /**< Event data_move.c_pPPIOGABJ1ZUF. */
-    data_move_c_pYZS8TWNRJCQO_, /**< Event data_move.c_pYZS8TWNRJCQO. */
+    message_move_c_trigger_,            /**< Event message_move.c_trigger. */
+    data_move_c_pPLUPMPO2HQIS_,         /**< Event data_move.c_pPLUPMPO2HQIS. */
+    data_move_c_pYKX649XJM2X0_,         /**< Event data_move.c_pYKX649XJM2X0. */
+    data_move_c_pHPT4SCT35KY7_,         /**< Event data_move.c_pHPT4SCT35KY7. */
     message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
-    data_halt_c_p9V7373FIS9TO_,         /**< Event data_halt.c_p9V7373FIS9TO. */
+    data_halt_c_p4KX9066NWEKW_,         /**< Event data_halt.c_p4KX9066NWEKW. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
@@ -67,7 +67,7 @@ extern controllerEnum component_EmergencyStop_;      /**< Discrete variable "E c
 extern controllerEnum component_Scanner_v_distance_; /**< Discrete variable "E component_Scanner.v_distance". */
 extern controllerEnum component_YoloxDetection_;     /**< Discrete variable "E component_YoloxDetection". */
 extern controllerEnum data_halt_;                    /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_;            /**< Discrete variable "E data_move". */
+extern controllerEnum data_move_;                    /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

@@ -12,7 +12,7 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting_point,
-    _controller_data_p8JQF3HQMGN1W,
+    _controller_data_pC7US3MF3CN83,
     _controller_error,
     _controller_executing,
     _controller_has_point,
@@ -42,7 +42,7 @@ enum controllerEventEnum_ {
     action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
     action_navigate_u_response_,      /**< Event action_navigate.u_response. */
     action_navigate_u_error_,         /**< Event action_navigate.u_error. */
-    data_navigate_c_p5DG8BX6BBU73_,   /**< Event data_navigate.c_p5DG8BX6BBU73. */
+    data_navigate_c_pSI57SN66Z65C_,   /**< Event data_navigate.c_pSI57SN66Z65C. */
     message_stop_u_response_,         /**< Event message_stop.u_response. */
     message_continue_u_response_,     /**< Event message_continue.u_response. */
 };
@@ -66,7 +66,7 @@ extern const char *controller_event_names[];
 extern RealType model_time; /**< Current model time. */
 extern controllerEnum action_navigate_;         /**< Discrete variable "E action_navigate". */
 extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-extern controllerEnum component_Rviz_;          /**< Discrete variable "E component_Rviz". */
+extern controllerEnum component_Nav2_;          /**< Discrete variable "E component_Nav2". */
 extern controllerEnum data_navigate_;           /**< Discrete variable "E data_navigate". */
 
 /* Algebraic and derivative functions (use for output only). */

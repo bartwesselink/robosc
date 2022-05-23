@@ -17,6 +17,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Messag
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Minus;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Multiply;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negation;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negative;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectPropertyValue;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Or;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Plus;
@@ -105,6 +106,11 @@ public class TypeCheckRule extends AbstractValidationRule {
 	@Check
 	public void checkNegation(Negation entity) {
 		ensureTypeCorrect(entity.getValue(), TypesystemDataType.BOOLEAN, RobotSupervisoryControllerDSLPackage.Literals.NEGATION__VALUE);
+	}
+
+	@Check
+	public void checkNegative(Negative entity) {
+		ensureNumericTypeCorrect(entity.getValue(), RobotSupervisoryControllerDSLPackage.Literals.NEGATIVE__VALUE);
 	}
 
 	@Check

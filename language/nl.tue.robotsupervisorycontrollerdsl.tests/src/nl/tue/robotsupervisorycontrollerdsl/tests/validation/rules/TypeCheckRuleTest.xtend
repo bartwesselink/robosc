@@ -221,6 +221,29 @@ class TypeCheckRuleTest {
 	}
 
 	@Test
+	def void checkErrorNegative() {
+		"
+			robot UnitTestRobot {
+				component Component {
+					outgoing message test_message_one with type: integer(0..20)
+
+					behaviour {
+						variable result_integer: integer(0..20) = 0
+						variable result_boolean: boolean = false
+
+						initial state idle {
+							on response from test_message_one do result_integer := -true
+						}
+					}
+				}
+			}
+		".parse.assertError(
+			RobotSupervisoryControllerDSLPackage.Literals.NEGATIVE,
+			TypeCheckRule.INVALID_TYPE
+		)
+	}
+
+	@Test
 	def void checkErrorMultiply() {
 		"
 			robot UnitTestRobot {

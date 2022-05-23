@@ -13,7 +13,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Plus
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Minus
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Multiply
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Divide
-import org.eclipse.xtext.Negation
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negation
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negative
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.SmallerThanEqual
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.SmallerThan
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Parenthesized
@@ -51,13 +52,14 @@ class ExpressionGenerator {
 	private def dispatch String compileValue(Multiply value, String literalValue) '''«value.left.compileValue(literalValue)» * «value.right.compileValue(literalValue)»'''
 	private def dispatch String compileValue(Divide value, String literalValue) '''«value.left.compileValue(literalValue)» / «value.right.compileValue(literalValue)»'''
 	private def dispatch String compileValue(Negation value, String literalValue) '''not «value.value.compileValue(literalValue)»'''
+	private def dispatch String compileValue(Negative value, String literalValue) '''-«value.value.compileValue(literalValue)»'''
 	private def dispatch String compileValue(Parenthesized value, String literalValue) '''(«value.value.compileValue(literalValue)»)'''
 	private def dispatch String compileValue(Atom value, String literalValue) '''«value.value.compileValue(literalValue)»'''
 	private def dispatch String compileValue(Access access, String literalValue) '''«access.compilePath(literalValue)»'''
 	private def dispatch String compileValue(Assignment value, String literalValue) '''«value.item.compilePath()» = «value.value.compileValue(literalValue)»'''
 
 	private def dispatch String compileValue(LiteralDouble value, String literalValue) '''«value.one».«value.two»'''
-	private def dispatch String compileValue(LiteralInt value, String literalValue) '''«value.sign»«value.value»'''
+	private def dispatch String compileValue(LiteralInt value, String literalValue) '''«value.value»'''
 	private def dispatch String compileValue(LiteralString value, String literalValue) '''"«value.value»"'''
 	private def dispatch String compileValue(LiteralBoolean value, String literalValue) '''«value.value»'''
 }

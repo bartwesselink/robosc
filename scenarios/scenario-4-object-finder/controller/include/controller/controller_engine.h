@@ -12,7 +12,8 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting_command,
-    _controller_data_pZ0H9U0LV77GA,
+    _controller_data_pC0Q1AEFN5E40,
+    _controller_data_pWBBKMFB3WDV6,
     _controller_executing,
     _controller_in_service,
     _controller_no_object,
@@ -44,13 +45,14 @@ enum controllerEventEnum_ {
     message_rotate_left_c_trigger_,            /**< Event message_rotate_left.c_trigger. */
     message_rotate_right_c_trigger_,           /**< Event message_rotate_right.c_trigger. */
     message_rotate_done_u_response_,           /**< Event message_rotate_done.u_response. */
-    component_ObjectDetector_c_pCY9OPG8O7KCK_, /**< Event component_ObjectDetector.c_pCY9OPG8O7KCK. */
-    component_ObjectDetector_c_pZIDHF63YTIV8_, /**< Event component_ObjectDetector.c_pZIDHF63YTIV8. */
+    component_ObjectDetector_c_pKQ0PQEH85MPT_, /**< Event component_ObjectDetector.c_pKQ0PQEH85MPT. */
+    component_ObjectDetector_c_p8GR35SK4DQWK_, /**< Event component_ObjectDetector.c_p8GR35SK4DQWK. */
     message_object_count_u_response_,          /**< Event message_object_count.u_response. */
     message_object_scan_u_response_,           /**< Event message_object_scan.u_response. */
-    message_move_c_trigger_,           /**< Event message_move.c_trigger. */
-    data_move_c_pW5JDIW8HDBCP_,        /**< Event data_move.c_pW5JDIW8HDBCP. */
+    message_move_c_trigger_,                   /**< Event message_move.c_trigger. */
+    data_move_c_pQM24NN0FCPH8_,                /**< Event data_move.c_pQM24NN0FCPH8. */
     message_halt_c_trigger_,                   /**< Event message_halt.c_trigger. */
+    data_halt_c_p7C0NCVZDRK69_,                /**< Event data_halt.c_p7C0NCVZDRK69. */
     message_stop_u_response_,                  /**< Event message_stop.u_response. */
     message_continue_u_response_,              /**< Event message_continue.u_response. */
 };
@@ -83,7 +85,8 @@ extern BoolType component_LidarScanner_v_has_top_;               /**< Discrete v
 extern IntType component_ObjectDetector_v_scanned_object_count_; /**< Discrete variable "int[0..1] component_ObjectDetector.v_scanned_object_count". */
 extern controllerEnum component_ObjectDetector_;                 /**< Discrete variable "E component_ObjectDetector". */
 extern controllerEnum component_Platform_;                       /**< Discrete variable "E component_Platform". */
-extern controllerEnum data_move_;                        /**< Discrete variable "E data_move". */
+extern controllerEnum data_halt_;                                /**< Discrete variable "E data_halt". */
+extern controllerEnum data_move_;                                /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

@@ -62,9 +62,9 @@ std::string serialize_json_vector(const std::vector<std::string>& list) {
     return output.str();
 }
 
-double code_Rviz_current_x = 0.0;
-double code_Rviz_current_y = 0.0;
-double code_Rviz_current_z = 0.0;
+double code_Nav2_current_x = 0.0;
+double code_Nav2_current_y = 0.0;
+double code_Nav2_current_z = 0.0;
 
 class Controller : public rclcpp::Node {
 public:	
@@ -92,11 +92,11 @@ public:
 
 	void callback_message_point(const geometry_msgs::msg::PointStamped::SharedPtr msg) {
 		
-		code_Rviz_current_x = msg->point.x;
+		code_Nav2_current_x = msg->point.x;
 		
-		code_Rviz_current_y = msg->point.y;
+		code_Nav2_current_y = msg->point.y;
 		
-		code_Rviz_current_z = msg->point.z;
+		code_Nav2_current_z = msg->point.z;
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_point_u_response_);
@@ -144,10 +144,10 @@ public:
 		}
 		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_p8JQF3HQMGN1W) {
-			goal_msg.pose.pose.position.x = code_Rviz_current_x;
-			goal_msg.pose.pose.position.y = code_Rviz_current_y;
-			goal_msg.pose.pose.position.z = code_Rviz_current_z;
+		if (data_navigate_ == _controller_data_pC7US3MF3CN83) {
+			goal_msg.pose.pose.position.x = code_Nav2_current_x;
+			goal_msg.pose.pose.position.y = code_Nav2_current_y;
+			goal_msg.pose.pose.position.z = code_Nav2_current_z;
 		}
 		
 		auto send_options = rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SendGoalOptions();
@@ -184,13 +184,13 @@ public:
 		output << "{";
 		
 		output << "\"current\": {" << "";
-		output << "\"Rviz\": {";
-		output << "\"state\": \"" << enum_names[component_Rviz_] << "\",";
+		output << "\"Nav2\": {";
+		output << "\"state\": \"" << enum_names[component_Nav2_] << "\",";
 		output << "\"variables\": {";
 		
-		output << "\"current_x\": \"" << code_Rviz_current_x << "\",";				
-		output << "\"current_y\": \"" << code_Rviz_current_y << "\",";				
-		output << "\"current_z\": \"" << code_Rviz_current_z << "\"";				
+		output << "\"current_x\": \"" << code_Nav2_current_x << "\",";				
+		output << "\"current_y\": \"" << code_Nav2_current_y << "\",";				
+		output << "\"current_z\": \"" << code_Nav2_current_z << "\"";				
 		
 		output << "}";
 		output << "},";
@@ -203,7 +203,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"SimpleNavigation\",\"components\":[{\"name\":\"Rviz\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"}]}]}},{\"name\":\"Nav2\",\"messages\":[],\"services\":[],\"actions\":[\"navigate\"]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"SimpleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -217,7 +217,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_p5DG8BX6BBU73_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pSI57SN66Z65C_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

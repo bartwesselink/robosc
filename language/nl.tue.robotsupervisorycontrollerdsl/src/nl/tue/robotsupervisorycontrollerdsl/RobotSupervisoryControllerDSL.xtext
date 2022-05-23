@@ -185,7 +185,7 @@ LiteralValue:
 	{LiteralValue} 'value';
 
 LiteralInt:
-	{LiteralInt} sign='-'? value=INT;
+	{LiteralInt} value=INT;
 
 LiteralDouble hidden(WS):
 	{LiteralDouble} one=INT '.' two=INT;
@@ -278,6 +278,10 @@ Divide returns Expression:
 
 Negation returns Expression: {Negation}
 	'!' value=Negation |
+	Negative;
+
+Negative returns Expression: {Negative}
+	'-' value=Negative |
 	Parenthesized;
 
 Parenthesized returns Expression:

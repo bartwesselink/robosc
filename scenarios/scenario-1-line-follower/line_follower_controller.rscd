@@ -25,7 +25,7 @@ robot LineFollowerController {
 
     provide move with {
         linear: { x: 0.6 },
-        angular: { z: (0.0 - LineDetector.current_correction) / 100 }
+        angular: { z: (-LineDetector.current_correction) / 100 }
     }
     provide halt with { linear: { x: 0.0 }, angular: { z: 0.0 }}
 }

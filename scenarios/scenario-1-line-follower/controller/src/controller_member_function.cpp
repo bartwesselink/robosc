@@ -40,6 +40,26 @@ void shuffle_events(controller_Event_ *x, size_t n)
     }
 }
 
+std::string serialize_json_vector(const std::vector<std::string>& list) {
+    std::stringstream output;
+    output << "[";
+    
+    bool first = true;
+
+    for (const auto& value : list) {
+        if (!first) {
+            output << ", ";
+        }
+        
+        first = false;
+
+        output << "\"" << value << "\"";
+    }
+    
+    output << "]";   
+    
+    return output.str();
+}
 
 double code_LineDetector_current_correction = 0.0;
 
@@ -53,6 +73,7 @@ public:
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_halt;
+	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
 	std::vector<std::string> taken_transitions;
 
 	Controller() : Node("controller") {
@@ -63,6 +84,7 @@ public:
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 		publisher_client_halt = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 
+		state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
 	}
@@ -109,7 +131,7 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pZFY5U1THTYHW) {
+		if (data_move_ == _controller_data_pSC2AWXJR8G5U) {
 			value.linear.x = 0.6;
 			value.angular.z = (0.0 - code_LineDetector_current_correction) / 100;
 		}
@@ -121,7 +143,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pH7D9XWGBR3DU) {
+		if (data_halt_ == _controller_data_pCEX5HKVTCVFV) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -129,11 +151,44 @@ public:
 		this->publisher_client_halt->publish(value);
 	}
 	
+	void emit_current_state() {
+		std::stringstream output;
+		
+		output << "{";
+		
+		output << "\"current\": {" << "";
+		output << "\"LineDetector\": {";
+		output << "\"state\": \"" << enum_names[component_LineDetector_] << "\",";
+		output << "\"variables\": {";
+		
+		output << "\"current_correction\": \"" << code_LineDetector_current_correction << "\"";				
+		
+		output << "}";
+		output << "},";
+		output << "\"EmergencyStop\": {";
+		output << "\"state\": \"" << enum_names[component_EmergencyStop_] << "\",";
+		output << "\"variables\": {";
+		
+		
+		output << "}";
+		output << "}";
+		output << "},";
+		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
+		output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
+		output << "}";
+		
+		auto msg = std_msgs::msg::String();
+		msg.data = output.str();
+		
+		this->state_information->publish(msg);
+	
+		taken_transitions.clear();
+	}
 private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 2;
-		      controller_Event_ data_events[2] = { data_move_c_p0E206EF3F8EP_,data_halt_c_pND4IC4DOKS6S_ };
+		      controller_Event_ data_events[2] = { data_move_c_pUTQ7O4SB8L4E_,data_halt_c_p1FP81LM3F430_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -153,6 +208,7 @@ private:
 			}
 		}
 
+		this->emit_current_state();
 	}
 	
 	rclcpp::TimerBase::SharedPtr timer;

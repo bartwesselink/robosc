@@ -43,7 +43,7 @@ const char *controller_event_names[] = {
     "action_navigate.u_feedback",      /**< Event action_navigate.u_feedback. */
     "action_navigate.u_response",      /**< Event action_navigate.u_response. */
     "action_navigate.u_error",         /**< Event action_navigate.u_error. */
-    "data_navigate.c_p5DG8BX6BBU73",   /**< Event data_navigate.c_p5DG8BX6BBU73. */
+    "data_navigate.c_pSI57SN66Z65C",   /**< Event data_navigate.c_pSI57SN66Z65C. */
     "message_stop.u_response",         /**< Event message_stop.u_response. */
     "message_continue.u_response",     /**< Event message_continue.u_response. */
 };
@@ -51,7 +51,7 @@ const char *controller_event_names[] = {
 /** Enumeration names. */
 const char *enum_names[] = {
     "awaiting_point",
-    "data_p8JQF3HQMGN1W",
+    "data_pC7US3MF3CN83",
     "error",
     "executing",
     "has_point",
@@ -75,7 +75,7 @@ const char *enum_names[] = {
 /* State variables. */
 controllerEnum action_navigate_;         /**< Discrete variable "E action_navigate". */
 controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-controllerEnum component_Rviz_;          /**< Discrete variable "E component_Rviz". */
+controllerEnum component_Nav2_;          /**< Discrete variable "E component_Nav2". */
 controllerEnum data_navigate_;           /**< Discrete variable "E data_navigate". */
 
 RealType model_time; /**< Current model time. */
@@ -99,7 +99,7 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((action_navigate_) == (_controller_executing)) && (((component_EmergencyStop_ != _controller_in_service)) && ((component_Rviz_ != _controller_has_point)));
+    BoolType guard = ((((action_navigate_) == (_controller_executing)) && (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped)))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point))))) && (((component_EmergencyStop_ != _controller_in_service)) && ((component_Nav2_ != _controller_has_point)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -107,6 +107,13 @@ static BoolType execEvent0(void) {
     #endif
 
     action_navigate_ = _controller_idle;
+    if ((component_Nav2_) == (_controller_no_initial_pose)) {
+        component_Nav2_ = _controller_no_initial_pose;
+    } else if ((component_Nav2_) == (_controller_awaiting_point)) {
+        component_Nav2_ = _controller_awaiting_point;
+    } else if ((component_Nav2_) == (_controller_has_point)) {
+        component_Nav2_ = _controller_awaiting_point;
+    }
 
     #if EVENT_OUTPUT
         controller_InfoEvent(action_navigate_c_cancel_, FALSE);
@@ -145,7 +152,7 @@ static BoolType execEvent1(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((action_navigate_) == (_controller_idle)) && (((component_EmergencyStop_) == (_controller_in_service)) && ((component_Rviz_) == (_controller_has_point)));
+    BoolType guard = ((action_navigate_) == (_controller_idle)) && (((component_EmergencyStop_) == (_controller_in_service)) && ((component_Nav2_) == (_controller_has_point)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -166,7 +173,7 @@ static BoolType execEvent2(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent3(void) {
-    BoolType guard = ((action_navigate_) == (_controller_executing)) && ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point)))));
+    BoolType guard = ((action_navigate_) == (_controller_executing)) && ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -187,7 +194,7 @@ static BoolType execEvent3(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent4(void) {
-    BoolType guard = ((action_navigate_) == (_controller_executing)) && ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point)))));
+    BoolType guard = ((action_navigate_) == (_controller_executing)) && ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -206,7 +213,7 @@ static BoolType execEvent4(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent5(void) {
-    BoolType guard = ((action_navigate_) == (_controller_executing)) && ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point)))));
+    BoolType guard = ((action_navigate_) == (_controller_executing)) && ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -214,14 +221,12 @@ static BoolType execEvent5(void) {
     #endif
 
     action_navigate_ = _controller_ready;
-    if ((component_Rviz_) == (_controller_no_initial_pose)) {
-        component_Rviz_ = _controller_no_initial_pose;
-    } else if ((component_Rviz_) == (_controller_awaiting_point)) {
-        component_Rviz_ = _controller_awaiting_point;
-    } else if ((component_Rviz_) == (_controller_has_point)) {
-        component_Rviz_ = _controller_awaiting_point;
-    } else if ((component_Rviz_) == (_controller_has_point)) {
-        component_Rviz_ = _controller_awaiting_point;
+    if ((component_Nav2_) == (_controller_no_initial_pose)) {
+        component_Nav2_ = _controller_no_initial_pose;
+    } else if ((component_Nav2_) == (_controller_awaiting_point)) {
+        component_Nav2_ = _controller_awaiting_point;
+    } else if ((component_Nav2_) == (_controller_has_point)) {
+        component_Nav2_ = _controller_awaiting_point;
     }
 
     #if EVENT_OUTPUT
@@ -231,26 +236,26 @@ static BoolType execEvent5(void) {
 }
 
 /**
- * Execute code for event "data_navigate.c_p5DG8BX6BBU73".
+ * Execute code for event "data_navigate.c_pSI57SN66Z65C".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent6(void) {
-    BoolType guard = ((data_navigate_) == (_controller_none)) || ((data_navigate_) == (_controller_data_p8JQF3HQMGN1W));
+    BoolType guard = ((data_navigate_) == (_controller_none)) || ((data_navigate_) == (_controller_data_pC7US3MF3CN83));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_navigate_c_p5DG8BX6BBU73_, TRUE);
+        controller_InfoEvent(data_navigate_c_pSI57SN66Z65C_, TRUE);
     #endif
 
     if ((data_navigate_) == (_controller_none)) {
-        data_navigate_ = _controller_data_p8JQF3HQMGN1W;
-    } else if ((data_navigate_) == (_controller_data_p8JQF3HQMGN1W)) {
-        data_navigate_ = _controller_data_p8JQF3HQMGN1W;
+        data_navigate_ = _controller_data_pC7US3MF3CN83;
+    } else if ((data_navigate_) == (_controller_data_pC7US3MF3CN83)) {
+        data_navigate_ = _controller_data_pC7US3MF3CN83;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_navigate_c_p5DG8BX6BBU73_, FALSE);
+        controller_InfoEvent(data_navigate_c_pSI57SN66Z65C_, FALSE);
     #endif
     return TRUE;
 }
@@ -261,7 +266,7 @@ static BoolType execEvent6(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent7(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -286,19 +291,19 @@ static BoolType execEvent7(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent8(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_initial_pose_u_response_, TRUE);
     #endif
 
-    if ((component_Rviz_) == (_controller_no_initial_pose)) {
-        component_Rviz_ = _controller_awaiting_point;
-    } else if ((component_Rviz_) == (_controller_awaiting_point)) {
-        component_Rviz_ = _controller_awaiting_point;
-    } else if ((component_Rviz_) == (_controller_has_point)) {
-        component_Rviz_ = _controller_has_point;
+    if ((component_Nav2_) == (_controller_no_initial_pose)) {
+        component_Nav2_ = _controller_awaiting_point;
+    } else if ((component_Nav2_) == (_controller_awaiting_point)) {
+        component_Nav2_ = _controller_awaiting_point;
+    } else if ((component_Nav2_) == (_controller_has_point)) {
+        component_Nav2_ = _controller_has_point;
     }
 
     #if EVENT_OUTPUT
@@ -313,19 +318,19 @@ static BoolType execEvent8(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent9(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_point_u_response_, TRUE);
     #endif
 
-    if ((component_Rviz_) == (_controller_no_initial_pose)) {
-        component_Rviz_ = _controller_no_initial_pose;
-    } else if ((component_Rviz_) == (_controller_awaiting_point)) {
-        component_Rviz_ = _controller_has_point;
-    } else if ((component_Rviz_) == (_controller_has_point)) {
-        component_Rviz_ = _controller_has_point;
+    if ((component_Nav2_) == (_controller_no_initial_pose)) {
+        component_Nav2_ = _controller_no_initial_pose;
+    } else if ((component_Nav2_) == (_controller_awaiting_point)) {
+        component_Nav2_ = _controller_has_point;
+    } else if ((component_Nav2_) == (_controller_has_point)) {
+        component_Nav2_ = _controller_has_point;
     }
 
     #if EVENT_OUTPUT
@@ -340,7 +345,7 @@ static BoolType execEvent9(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent10(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Rviz_) == (_controller_no_initial_pose)) || (((component_Rviz_) == (_controller_awaiting_point)) || ((component_Rviz_) == (_controller_has_point))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_Nav2_) == (_controller_no_initial_pose)) || (((component_Nav2_) == (_controller_awaiting_point)) || ((component_Nav2_) == (_controller_has_point))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -400,7 +405,7 @@ static void PerformEvents(void) {
         if (execEvent0()) continue;  /* (Try to) perform event "action_navigate.c_cancel". */
         if (execEvent1()) continue;  /* (Try to) perform event "action_navigate.c_reset". */
         if (execEvent2()) continue;  /* (Try to) perform event "action_navigate.c_trigger". */
-        if (execEvent6()) continue;  /* (Try to) perform event "data_navigate.c_p5DG8BX6BBU73". */
+        if (execEvent6()) continue;  /* (Try to) perform event "data_navigate.c_pSI57SN66Z65C". */
         break; /* No event fired, done with discrete steps. */
     }
 }
@@ -413,7 +418,7 @@ void controller_EngineFirstStep(void) {
 
     action_navigate_ = _controller_idle;
     component_EmergencyStop_ = _controller_in_service;
-    component_Rviz_ = _controller_no_initial_pose;
+    component_Nav2_ = _controller_no_initial_pose;
     data_navigate_ = _controller_none;
 
     #if PRINT_OUTPUT
@@ -475,7 +480,7 @@ BoolType controller_EnginePerformEvent(controller_Event_ event) {
             return execEvent4();
         case action_navigate_u_response_:
             return execEvent5();
-        case data_navigate_c_p5DG8BX6BBU73_:
+        case data_navigate_c_pSI57SN66Z65C_:
             return execEvent6();
         case message_continue_u_response_:
             return execEvent7();

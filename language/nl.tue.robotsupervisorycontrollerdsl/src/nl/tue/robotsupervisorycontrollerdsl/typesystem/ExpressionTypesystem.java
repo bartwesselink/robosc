@@ -36,6 +36,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Messag
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Minus;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Multiply;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negation;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Negative;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.NoneDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectDataType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ObjectProperty;
@@ -62,6 +63,8 @@ public class ExpressionTypesystem {
 			return TypesystemDataType.BOOLEAN;
 		} else if (expression instanceof Negation) {
 			return typeOf(((Negation) expression).getValue());
+		} else if (expression instanceof Negative) {
+			return typeOf(((Negative) expression).getValue());
 		} else if (expression instanceof Parenthesized) {
 			return typeOf(((Parenthesized) expression).getValue());
 		} else if (expression instanceof Atom) {
