@@ -24,25 +24,23 @@ public class ConfigService {
 	public Config getConfig(Resource resource, IFileSystemAccess2 fsa) {
 		URI location = resource.getURI();
 		
-		if (location.isPlatform()) {
-			String fileName = FileHelper.findAbsolutePath(location, resource.getResourceSet());
+		String fileName = FileHelper.findAbsolutePath(location, resource.getResourceSet());
 
-			File directory = new File(fileName).getParentFile();
-			File config = findConfig(directory);
+		File directory = new File(fileName).getParentFile();
+		File config = findConfig(directory);
 
-			if (config != null) {
-				Gson gson = new Gson();
-				
-				try {
-					Reader reader = Files.newBufferedReader(config.toPath());
-					Config result = gson.fromJson(reader, new TypeToken<Config>(){}.getType());
+		if (config != null) {
+			Gson gson = new Gson();
+			
+			try {
+				Reader reader = Files.newBufferedReader(config.toPath());
+				Config result = gson.fromJson(reader, new TypeToken<Config>(){}.getType());
 
-					return result;
-				} catch (IOException e) {
-					throw new ConfigParseException();
-				}
-
+				return result;
+			} catch (IOException e) {
+				throw new ConfigParseException();
 			}
+
 		}
 
 		return new Config();
