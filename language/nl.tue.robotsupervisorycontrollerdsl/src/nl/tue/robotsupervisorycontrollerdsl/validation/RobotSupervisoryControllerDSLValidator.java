@@ -13,7 +13,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleComponentBeha
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleDefaultEnumRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleInitialStateRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeCheckRule;
-import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeSettingsRequiredRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.InterfaceLinkRequiredRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueCommunicationTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueComponentNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueDataTypeNameRule;
@@ -35,7 +35,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueTopicNameRule
 		UniqueTopicNameRule.class,
 		NoObjectVariableTypeRule.class,
 		IntegerRangeRequiredRule.class,
-		TypeSettingsRequiredRule.class,
+		InterfaceLinkRequiredRule.class,
 		NoArrayAllowedRule.class,
 		UniqueComponentNameRule.class,
 })

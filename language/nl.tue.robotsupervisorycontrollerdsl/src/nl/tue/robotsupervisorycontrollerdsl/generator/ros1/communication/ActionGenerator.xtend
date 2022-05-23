@@ -21,11 +21,11 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	@Inject extension DataPlantHelper
 
 	override initializeField(Action entity, Robot robot) ''''''
-	override declareField(Action entity, Robot robot) '''actionlib::SimpleActionClient<«entity.typeSettings.actionType»Action>«entity.fieldName»;'''
+	override declareField(Action entity, Robot robot) '''actionlib::SimpleActionClient<«entity.links.actionType»Action>«entity.fieldName»;'''
 	def constructorInvocation(Action entity, Robot robot) '''«entity.fieldName»("«entity.topicName»", false)'''
 
 	override functions(Action entity, Robot robot)'''
-	void «entity.responseMethod»(const actionlib::SimpleClientGoalState& state, const «entity.typeSettings.actionType»ResultConstPtr& result) {
+	void «entity.responseMethod»(const actionlib::SimpleClientGoalState& state, const «entity.links.actionType»ResultConstPtr& result) {
 		«entity.prepareResult(entity.responseType, robot, 'result.result')»
 
 		fprintf(stderr, "[debug] Received action response\n");
@@ -40,7 +40,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		}
 	}
 	
-	void «entity.feedbackMethod»(const «entity.typeSettings.actionType»FeedbackConstPtr& feedback) {
+	void «entity.feedbackMethod»(const «entity.links.actionType»FeedbackConstPtr& feedback) {
 		«entity.prepareResult(entity.responseType, robot, 'feedback')»
 
 		fprintf(stderr, "[debug] Received action feedback\n");
@@ -51,11 +51,11 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	
 	void «entity.callMethod»() {
 		«entity.fieldName».waitForServer();
-		«entity.typeSettings.actionType»Goal goal_msg;
+		«entity.links.actionType»Goal goal_msg;
 
 		«entity.compileDataStates(entity.requestType, 'goal_msg', robot, false)»
 		
-		«entity.fieldName».sendGoal(goal_msg, boost::bind(&Controller::«entity.responseMethod», this, _1, _2), actionlib::SimpleActionClient<«entity.typeSettings.actionType»Action>::SimpleActiveCallback(), boost::bind(&Controller::«entity.feedbackMethod», this, _1));
+		«entity.fieldName».sendGoal(goal_msg, boost::bind(&Controller::«entity.responseMethod», this, _1, _2), actionlib::SimpleActionClient<«entity.links.actionType»Action>::SimpleActiveCallback(), boost::bind(&Controller::«entity.feedbackMethod», this, _1));
 	}
 			
 	void «entity.cancelMethod»() {

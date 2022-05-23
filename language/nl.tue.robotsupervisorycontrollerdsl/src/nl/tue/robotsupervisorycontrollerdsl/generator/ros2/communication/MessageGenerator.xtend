@@ -24,19 +24,19 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 
 	override initializeField(Message entity, Robot robot) {
 		if (entity.direction instanceof MessageFrom) {
-			return '''«entity.fieldName» = this->create_subscription<«entity.type.messageType(entity.typeSettings)»>("«entity.topicName»", 10, std::bind(&Controller::«entity.callbackMethod», this, std::placeholders::_1));'''
+			return '''«entity.fieldName» = this->create_subscription<«entity.type.messageType(entity.links)»>("«entity.topicName»", 10, std::bind(&Controller::«entity.callbackMethod», this, std::placeholders::_1));'''
 		} else if (entity.direction instanceof MessageTo) {
-			return '''«entity.fieldName» = this->create_publisher<«entity.type.messageType(entity.typeSettings)»>("«entity.topicName»", 10);'''
+			return '''«entity.fieldName» = this->create_publisher<«entity.type.messageType(entity.links)»>("«entity.topicName»", 10);'''
 		}
 	}
 	
 	override declareField(Message entity, Robot robot) {
-		return '''rclcpp::«IF entity.direction instanceof MessageFrom»Subscription«ELSE»Publisher«ENDIF»<«entity.type.messageType(entity.typeSettings)»>::SharedPtr «entity.fieldName»;'''
+		return '''rclcpp::«IF entity.direction instanceof MessageFrom»Subscription«ELSE»Publisher«ENDIF»<«entity.type.messageType(entity.links)»>::SharedPtr «entity.fieldName»;'''
 	}
 	
 	override functions(Message entity, Robot robot)'''
 	«IF entity.direction instanceof MessageFrom»
-	void «entity.callbackMethod»(const «entity.type.messageType(entity.typeSettings)»::SharedPtr msg) {
+	void «entity.callbackMethod»(const «entity.type.messageType(entity.links)»::SharedPtr msg) {
 		«entity.prepareResult(entity.type, robot, 'msg')»
 		
 		// Call engine function
@@ -47,7 +47,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 	
 	«IF entity.direction instanceof MessageTo»
 	void «entity.callMethod»() {
-		auto value = «entity.type.messageType(entity.typeSettings)»();
+		auto value = «entity.type.messageType(entity.links)»();
 		
 		«entity.compileDataStates(entity.type, 'value', robot, false)»
 		

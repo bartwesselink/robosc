@@ -1,19 +1,22 @@
 robot ObjectFinder {
+    interface laser use LaserScan from sensor_msgs
+    interface boxes use BoundingBoxes from darknet_ros_msgs
+
     datatype object LaserScan {
         ranges: array(double)
     }
 
-    datatype enum DistanceTop from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum DistanceTop from LaserScan to {
         value.ranges[0] >= 0.6 -> safe_top
         default -> unsafe_top
     }
 
-    datatype enum DistanceLeft from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum DistanceLeft from LaserScan to {
         value.ranges[90] >= 0.6 -> safe_left
         default -> unsafe_left
     }
 
-    datatype enum DistanceRight from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum DistanceRight from LaserScan to {
         value.ranges[270] >= 0.6 -> safe_right
         default -> unsafe_right
     }
@@ -30,15 +33,15 @@ robot ObjectFinder {
         count: integer(0..1)
     }
 
-    datatype enum ScannedObject from BoundingBoxes (import BoundingBoxes from darknet_ros_msgs) to {
+    datatype enum ScannedObject from BoundingBoxes to {
         value.bounding_boxes[0].class_id = "stop sign" -> stop_sign
         default -> no_object
     }
 
     component LidarScanner {
-        outgoing message scan_top with identifier: "/scan", type: DistanceTop (import LaserScan from sensor_msgs)
-        outgoing message scan_left with identifier: "/scan", type: DistanceLeft (import LaserScan from sensor_msgs)
-        outgoing message scan_right with identifier: "/scan", type: DistanceRight (import LaserScan from sensor_msgs)
+        outgoing message scan_top with identifier: "/scan", type: DistanceTop links laser
+        outgoing message scan_left with identifier: "/scan", type: DistanceLeft links laser
+        outgoing message scan_right with identifier: "/scan", type: DistanceRight links laser
 
         behaviour {
             variable top: DistanceTop
@@ -72,8 +75,8 @@ robot ObjectFinder {
     }
 	
     component ObjectDetector {
-        outgoing message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount (import ObjectCount from darknet_ros_msgs)
-        outgoing message object_scan with identifier: "/darknet_ros/bounding_boxes", type: ScannedObject (import BoundingBoxes from darknet_ros_msgs)
+        outgoing message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount links boxes
+        outgoing message object_scan with identifier: "/darknet_ros/bounding_boxes", type: ScannedObject links boxes
 
         behaviour {
             variable scanned_object_count: integer(0..1)

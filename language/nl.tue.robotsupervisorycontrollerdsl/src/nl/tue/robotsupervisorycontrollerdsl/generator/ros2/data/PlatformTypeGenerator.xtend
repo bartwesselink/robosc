@@ -2,7 +2,7 @@ package nl.tue.robotsupervisorycontrollerdsl.generator.ros2.data
 
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataType
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CustomTypeSettings
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Interface
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicDataType
@@ -16,38 +16,44 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.NoneDa
 
 @Singleton
 class PlatformTypeGenerator extends AbstractPlatformTypeGenerator {	
-	override String messageType(DataType data, CustomTypeSettings settings) {
+	override String messageType(DataType data, Interface  ^interface) {
 		if (data instanceof ComplexDataTypeReference) {
 			val referenced = data.type
 			
 			if (referenced instanceof EnumDataType) {
-				return referenced.type.messageType(referenced.typeSettings)
+				val enumDataType = referenced.type
+
+				if (enumDataType instanceof BasicDataType) {
+					return enumDataType.platformType
+				}
+	
+				return '''«^interface.interfacePackage»::msg::«^interface.interfaceName»'''
 			} else {
-				return '''«settings.package»::msg::«settings.name»'''
+				return '''«^interface.interfacePackage»::msg::«^interface.interfaceName»'''
 			}
 		} else if (data instanceof BasicDataType) {
 			return data.platformType
 		}
 	}
 	
-	override actionType(CustomTypeSettings settings) {
-		return  '''«settings.package»::action::«settings.name»'''
+	override actionType(Interface ^interface) {
+		return  '''«^interface.interfacePackage»::action::« ^interface.interfaceName»'''
 	}
 	
-	override serviceType(CustomTypeSettings settings) {
-		return  '''«settings.package»::srv::«settings.name»'''
+	override serviceType(Interface ^interface) {
+		return  '''«^interface.interfacePackage»::srv::«^interface.interfaceName»'''
 	}
 	
-	override String messageImport(CustomTypeSettings settings) {
-		return '''«settings.package»/msg/«settings.name.snakeCase»'''
+	override String messageImport(Interface ^interface) {
+		return '''«^interface.interfacePackage»/msg/«^interface.interfaceName.snakeCase»'''
 	}
 	
-	override actionImport(CustomTypeSettings settings) {
-		return  '''«settings.package»/action/«settings.name.snakeCase»'''
+	override actionImport(Interface ^interface) {
+		return  '''«^interface.interfacePackage»/action/«^interface.interfaceName.snakeCase»'''
 	}
 	
-	override serviceImport(CustomTypeSettings settings) {
-		return  '''«settings.package»/srv/«settings.name.snakeCase»'''
+	override serviceImport(Interface ^interface) {
+		return  '''«^interface.interfacePackage»/srv/«^interface.interfaceName.snakeCase»'''
 	}
 
 	protected def snakeCase(String input) {

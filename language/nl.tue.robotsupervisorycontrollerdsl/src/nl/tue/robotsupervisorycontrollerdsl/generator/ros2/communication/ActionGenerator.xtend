@@ -20,12 +20,12 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	@Inject extension TransitionNames
 	@Inject extension DataPlantHelper
 
-	override initializeField(Action entity, Robot robot) '''«entity.fieldName» = rclcpp_action::create_client<«entity.typeSettings.actionType»>(this, "«entity.topicName»");'''
-	override declareField(Action entity, Robot robot) '''rclcpp_action::Client<«entity.typeSettings.actionType»>::SharedPtr «entity.fieldName»;'''
+	override initializeField(Action entity, Robot robot) '''«entity.fieldName» = rclcpp_action::create_client<«entity.links.actionType»>(this, "«entity.topicName»");'''
+	override declareField(Action entity, Robot robot) '''rclcpp_action::Client<«entity.links.actionType»>::SharedPtr «entity.fieldName»;'''
 		
 
 	override functions(Action entity, Robot robot)'''
-	void «entity.responseMethod»(const rclcpp_action::ClientGoalHandle<«entity.typeSettings.actionType»>::WrappedResult & result) {
+	void «entity.responseMethod»(const rclcpp_action::ClientGoalHandle<«entity.links.actionType»>::WrappedResult & result) {
 		«entity.prepareResult(entity.responseType, robot, 'result')»
 
 		fprintf(stderr, "[debug] Received action response\n");
@@ -34,7 +34,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.responseTransitionName»);
 	}
 	
-	void «entity.feedbackMethod»(rclcpp_action::ClientGoalHandle<«entity.typeSettings.actionType»>::SharedPtr, const std::shared_ptr<const «entity.typeSettings.actionType»::Feedback> feedback) {
+	void «entity.feedbackMethod»(rclcpp_action::ClientGoalHandle<«entity.links.actionType»>::SharedPtr, const std::shared_ptr<const «entity.links.actionType»::Feedback> feedback) {
 		«entity.prepareResult(entity.responseType, robot, 'feedback')»
 
 		fprintf(stderr, "[debug] Received action feedback\n");
@@ -48,11 +48,11 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 			«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.errorTransitionName»);
 			return;
 		}
-		auto goal_msg = «entity.typeSettings.actionType»::Goal();
+		auto goal_msg = «entity.links.actionType»::Goal();
 
 		«entity.compileDataStates(entity.requestType, 'goal_msg', robot, false)»
 		
-		auto send_options = rclcpp_action::Client<«entity.typeSettings.actionType»>::SendGoalOptions();
+		auto send_options = rclcpp_action::Client<«entity.links.actionType»>::SendGoalOptions();
 		send_options.result_callback = std::bind(&Controller::«entity.responseMethod», this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::«entity.feedbackMethod», this, std::placeholders::_1, std::placeholders::_2);
 		this->«entity.fieldName»->async_send_goal(goal_msg, send_options);

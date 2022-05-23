@@ -1,4 +1,7 @@
 robot MazeSolver {
+    interface laser use LaserScan from sensor_msgs
+    interface movement use Twist from geometry_msgs
+
     datatype object LaserScan {
         ranges: array(double)
     }
@@ -14,25 +17,25 @@ robot MazeSolver {
         angular: Vector3
     }
 
-    datatype enum DistanceRight from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum DistanceRight from LaserScan to {
         value.ranges[270] < 0.7 or value.ranges[240] < 0.7 -> wall_right
         default -> no_wall_right
     }
 
-    datatype enum DistanceFront from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum DistanceFront from LaserScan to {
         value.ranges[0] < 0.6 -> wall_front
         default -> no_wall_front
     }
 
-    datatype enum DistanceDiagRight from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum DistanceDiagRight from LaserScan to {
         value.ranges[225] < 0.9 -> wall_diag_right
         default -> no_wall_diag_right
     }
 
     component Distance {
-        outgoing message scan_right with identifier: "/scan", type: DistanceRight (import LaserScan from sensor_msgs)
-        outgoing message scan_front with identifier: "/scan", type: DistanceFront (import LaserScan from sensor_msgs)
-        outgoing message scan_diag_right with identifier: "/scan", type: DistanceDiagRight (import LaserScan from sensor_msgs)
+        outgoing message scan_right with identifier: "/scan", type: DistanceRight links laser
+        outgoing message scan_front with identifier: "/scan", type: DistanceFront links laser
+        outgoing message scan_diag_right with identifier: "/scan", type: DistanceDiagRight links laser
 
         behaviour {
             variable right: DistanceRight = no_wall_right
@@ -48,8 +51,8 @@ robot MazeSolver {
     }
 
     component Platform {
-        incoming message movement with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
-        incoming message halt with identifier: "/cmd_vel", type: Twist (import Twist from geometry_msgs)
+        incoming message movement with identifier: "/cmd_vel", type: Twist links movement
+        incoming message halt with identifier: "/cmd_vel", type: Twist links movement
 
         incoming message turn_left with identifier: "/rotate_left", type: integer 
         incoming message turn_right with identifier: "/rotate_right", type: integer

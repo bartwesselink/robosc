@@ -19,10 +19,10 @@ Library:
 	'}';
 
 RobotDefinition:
-	Component | Requirement | ProvideStatement | ComplexDataType;
+	Component | Requirement | ProvideStatement | ComplexDataType | Interface;
 
 LibraryDefinition:
-	Component | ComplexDataType;
+	Component | ComplexDataType | Interface;
 
 /////////////////////////////
 // COMPONENTS              //
@@ -62,20 +62,17 @@ MessageTo:
 MessageDirection:
 	MessageFrom | MessageTo;
 
-CustomTypeSettings:
-	'(' 'import' name=ID 'from' package=ID ')';
-
 Message:
 	(direction=MessageDirection) 'message' name=ID 'with' ('identifier:' identifier=STRING ',')? 'type:' (type=DataType)
-	(typeSettings=CustomTypeSettings)?;
+	('links' links=[Interface])?;
 
 Action:
 	'action' name=ID 'with' ('identifier:' identifier=STRING ',')? 'request:' (requestType=DataType) ',' 'response:'
-	(responseType=DataType) ',' 'feedback:' (feedbackType=DataType) (typeSettings=CustomTypeSettings)?;
+	(responseType=DataType) ',' 'feedback:' (feedbackType=DataType) ('links' links=[Interface])?;
 
 Service:
 	'service' name=ID 'with' ('identifier:' identifier=STRING ',')? 'request:' (requestType=DataType) ',' 'response:'
-	(responseType=DataType) (typeSettings=CustomTypeSettings)?;
+	(responseType=DataType) ('links' links=[Interface])?;
 
 /////////////////////////////
 // VARIABLES               //
@@ -142,8 +139,9 @@ State:
 /////////////////////////////
 AccessibleItem:
 	ObjectProperty | Component | State | Variable | LiteralValue | EnumValue;
-	
-AccessType: ('[' index=INT ']') | ('.' item=[AccessibleItem]);
+
+AccessType:
+	('[' index=INT ']') | ('.' item=[AccessibleItem]);
 
 Access:
 	{Access} (firstItem=[AccessibleItem] | value=LiteralValue) (types+=AccessType)*;
@@ -215,7 +213,7 @@ ObjectValue:
 	{ObjectValue} '{' (properties+=ObjectPropertyValue (',' properties+=ObjectPropertyValue)*)? '}';
 
 EnumDataType:
-	'enum' (name=ID) 'from' type=DataType (typeSettings=CustomTypeSettings)? 'to' '{'
+	'enum' (name=ID) 'from' type=DataType 'to' '{'
 	(rules+=EnumRule)*
 	'}';
 
@@ -276,11 +274,13 @@ Multiply returns Expression:
 Divide returns Expression:
 	Negation ({Divide.left=current} '/' right=Negation)*;
 
-Negation returns Expression: {Negation}
+Negation returns Expression:
+	{Negation}
 	'!' value=Negation |
 	Negative;
 
-Negative returns Expression: {Negative}
+Negative returns Expression:
+	{Negative}
 	'-' value=Negative |
 	Parenthesized;
 
@@ -326,3 +326,9 @@ WithData:
 
 ProvideStatement:
 	'provide' communicationType=[CommunicationType] data=WithData ('if' expression=Expression)?;
+
+/////////////////////////////
+// Interfaces              //
+/////////////////////////////
+Interface:
+	{Interface} 'interface' name=ID 'use' interfaceName=ID 'from' interfacePackage=ID;

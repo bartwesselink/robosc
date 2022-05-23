@@ -29,6 +29,7 @@ class EnumDataTypeGenerator {
 	@Inject extension ParameterNames
 	
 	def compile(EnumDataType ^enum, AbstractPlatformTypeGenerator generator)'''
+	«IF enum.parameterInputType(generator) !== null»
 	«enumTypeName» «^enum.convertMethod»(const «enum.parameterInputType(generator)» «enum.sourceInputName») {
 		«FOR rule : enum.rules.filter(EnumTransformationRule) SEPARATOR '\n} else '»if («rule.expression.compile») {
 			return «rule.value.correspondingEngineType»;«ENDFOR»
@@ -36,6 +37,7 @@ class EnumDataTypeGenerator {
 	
 		return «enum.defaultRule.value.correspondingEngineType»;
 	}
+	«ENDIF»
 	'''
 
 	def correspondingEngineType(EnumValue value) {
@@ -50,26 +52,26 @@ class EnumDataTypeGenerator {
 			val robot = ModelHelper.findParentOfType(enum, Robot)
 			
 			if (robot !== null) {
-				val resultTransitionsWithEnum = ModelHelper.findWithinRobot(robot, CommunicationType)
+				val communicationsWithEnum = ModelHelper.findWithinRobot(robot, CommunicationType)
 					.filter[!ModelHelper.findChildren(it, ComplexDataTypeReference)
 						.filter[it.type == enum]
 						.empty
 					]
 					
-				if (!resultTransitionsWithEnum.empty) {
-					val communicationType = resultTransitionsWithEnum.get(0)
+				if (!communicationsWithEnum.empty) {
+					val communicationType = communicationsWithEnum.get(0)
 					
 					if (communicationType instanceof Message) {
-						return '''«generator.messageType(communicationType.type, communicationType.typeSettings)»::SharedPtr'''
+						return '''«generator.messageType(communicationType.type, communicationType.links)»::SharedPtr'''
 					} else if (communicationType instanceof Service) {
-						return '''«generator.serviceType(communicationType.typeSettings)»::SharedPtr'''
+						return '''«generator.serviceType(communicationType.links)»::SharedPtr'''
 					} else if (communicationType instanceof Action) {
-						return '''«generator.actionType(communicationType.typeSettings)»::SharedPtr'''
+						return '''«generator.actionType(communicationType.links)»::SharedPtr'''
 					}
 				}
 			}
 			
-			return '''«enum.typeSettings?.name»::SharedPtr'''
+			return null
 		} else if (type instanceof BasicDataType) {
 			return type.compile(generator)
 		}

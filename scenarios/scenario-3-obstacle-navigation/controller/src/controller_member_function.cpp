@@ -144,7 +144,7 @@ public:
 		}
 		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_pHIIFOYP88MXG) {
+		if (data_navigate_ == _controller_data_pKQHE1M29OBCA) {
 			goal_msg.pose.pose.position.x = code_Rviz_current_x;
 			goal_msg.pose.pose.position.y = code_Rviz_current_y;
 			goal_msg.pose.pose.position.z = code_Rviz_current_z;
@@ -224,7 +224,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_pV4745L1UH5YZ_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pNY21Y6YEG5FJ_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

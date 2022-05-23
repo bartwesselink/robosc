@@ -26,7 +26,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 		if (entity.direction instanceof MessageFrom) {
 			return '''«entity.fieldName» = node.subscribe("«entity.topicName»", 10, &Controller::«entity.callbackMethod», this);'''
 		} else if (entity.direction instanceof MessageTo) {
-			return '''«entity.fieldName» = node.advertise<«entity.type.messageType(entity.typeSettings)»>("«entity.topicName»", 10);'''
+			return '''«entity.fieldName» = node.advertise<«entity.type.messageType(entity.links)»>("«entity.topicName»", 10);'''
 		}
 	}
 	
@@ -36,7 +36,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 	
 	override functions(Message entity, Robot robot)'''
 	«IF entity.direction instanceof MessageFrom»
-	void «entity.callbackMethod»(const «entity.type.messageType(entity.typeSettings)»::ConstPtr& msg) {
+	void «entity.callbackMethod»(const «entity.type.messageType(entity.links)»::ConstPtr& msg) {
 		«entity.prepareResult(entity.type, robot, 'msg')»
 		
 		// Call engine function
@@ -47,7 +47,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 	
 	«IF entity.direction instanceof MessageTo»
 	void «entity.callMethod»() {
-		auto value = «entity.type.messageType(entity.typeSettings)»();
+		auto value = «entity.type.messageType(entity.links)»();
 		
 		«entity.compileDataStates(entity.type, 'value', robot, false)»
 		

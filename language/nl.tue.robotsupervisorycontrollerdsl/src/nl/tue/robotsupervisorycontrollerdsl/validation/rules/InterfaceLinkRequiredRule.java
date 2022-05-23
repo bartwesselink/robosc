@@ -13,13 +13,13 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotS
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Service;
 import nl.tue.robotsupervisorycontrollerdsl.validation.common.AbstractValidationRule;
 
-public class TypeSettingsRequiredRule extends AbstractValidationRule {
+public class InterfaceLinkRequiredRule extends AbstractValidationRule {
 	public static final String TYPE_SETTINGS_REQUIRED = "typeSettingsRequired";
 
 	@Check
-	public void checkCommunicationTypeSettingsRequired(CommunicationType entity) {
-		if (entity.getTypeSettings() != null) return;
-
+	public void checkCommunicationTypeInterfaceLinkRequired(CommunicationType entity) {
+		if (entity.getLinks() != null) return;
+		
 		boolean required = false;
 		
 		if (entity instanceof Message) {
@@ -35,27 +35,24 @@ public class TypeSettingsRequiredRule extends AbstractValidationRule {
 		
 		if (required) {
 			error("This communication type requires type settings.",
-					RobotSupervisoryControllerDSLPackage.Literals.COMMUNICATION_TYPE__TYPE_SETTINGS,
+					RobotSupervisoryControllerDSLPackage.Literals.COMMUNICATION_TYPE__LINKS,
 					TYPE_SETTINGS_REQUIRED);
 		}
 	}
 
-	@Check
-	public void checkEnumTypeSettingsRequired(EnumDataType entity) {
-		if (entity.getTypeSettings() != null) return;
-		
-		if (referencesObjectDataType(entity.getType())) {
-			error("This enum data type requires type settings.",
-					RobotSupervisoryControllerDSLPackage.Literals.ENUM_DATA_TYPE__TYPE_SETTINGS,
-					TYPE_SETTINGS_REQUIRED);
-		}
-	}
-	
 	private boolean referencesObjectDataType(DataType entity) {
 		if (entity instanceof ComplexDataTypeReference) {
 			ComplexDataTypeReference reference = (ComplexDataTypeReference) entity;
 			
-			return reference.getType() instanceof ObjectDataType;
+			if (reference.getType() instanceof ObjectDataType) {
+				return true;
+			} else if (reference.getType() instanceof EnumDataType) {
+				EnumDataType enumType = (EnumDataType) reference.getType();
+				
+				return enumType.getType() instanceof ComplexDataTypeReference;
+			}
+			
+			return false;
 		}
 		
 		return false;

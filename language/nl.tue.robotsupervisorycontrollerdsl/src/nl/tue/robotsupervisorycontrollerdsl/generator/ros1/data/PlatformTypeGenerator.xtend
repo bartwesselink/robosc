@@ -2,7 +2,7 @@ package nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data
 
 import javax.inject.Singleton
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.DataType
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CustomTypeSettings
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Interface
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.BasicDataType
@@ -15,38 +15,44 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.NoneDa
 
 @Singleton
 class PlatformTypeGenerator extends AbstractPlatformTypeGenerator {	
-	override String messageType(DataType data, CustomTypeSettings settings) {
+	override String messageType(DataType data, Interface ^interface) {
 		if (data instanceof ComplexDataTypeReference) {
 			val referenced = data.type
 			
 			if (referenced instanceof EnumDataType) {
-				return referenced.type.messageType(referenced.typeSettings)
+				val enumDataType = referenced.type
+
+				if (enumDataType instanceof BasicDataType) {
+					return enumDataType.platformType
+				}
+	
+				return '''«^interface.interfacePackage»::«^interface.interfaceName»'''
 			} else {
-				return '''«settings.package»::«settings.name»'''
+				return '''«^interface.interfacePackage»::«^interface.interfaceName»'''
 			}
 		} else if (data instanceof BasicDataType) {
 			return data.platformType
 		}
 	}
 	
-	override actionType(CustomTypeSettings settings) {
-		return  '''«settings.package»::«settings.name»'''
+	override actionType(Interface ^interface) {
+		return  '''«^interface.interfacePackage»::«^interface.interfaceName»'''
 	}
 	
-	override serviceType(CustomTypeSettings settings) {
-		return  '''«settings.package»::«settings.name»Action'''
+	override serviceType(Interface ^interface) {
+		return  '''«^interface.interfacePackage»::«^interface.interfaceName»Action'''
 	}
 	
-	override String messageImport(CustomTypeSettings settings) {
-		return '''«settings.package»/«settings.name»'''
+	override String messageImport(Interface ^interface) {
+		return '''«^interface.interfacePackage»/«^interface.interfaceName»'''
 	}
 	
-	override actionImport(CustomTypeSettings settings) {
-		return  '''«settings.package»/«settings.name»Action'''
+	override actionImport(Interface ^interface) {
+		return  '''«^interface.interfacePackage»/«^interface.interfaceName»Action'''
 	}
 	
-	override serviceImport(CustomTypeSettings settings) {
-		return  '''«settings.package»/«settings.name»'''
+	override serviceImport(Interface ^interface) {
+		return  '''«^interface.interfacePackage»/«^interface.interfaceName»'''
 	}
 	
 	override platformType(BasicDataType type)'''«type.typeName»'''

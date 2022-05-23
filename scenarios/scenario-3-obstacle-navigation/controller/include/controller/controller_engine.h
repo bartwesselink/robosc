@@ -13,7 +13,7 @@
 enum Enumcontroller_ {
     _controller_awaiting_initial_pose,
     _controller_awaiting_point,
-    _controller_data_pHIIFOYP88MXG,
+    _controller_data_pKQHE1M29OBCA,
     _controller_error,
     _controller_executing,
     _controller_has_initial_pose,
@@ -43,7 +43,7 @@ enum controllerEventEnum_ {
     action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
     action_navigate_u_response_,      /**< Event action_navigate.u_response. */
     action_navigate_u_error_,         /**< Event action_navigate.u_error. */
-    data_navigate_c_pV4745L1UH5YZ_,   /**< Event data_navigate.c_pV4745L1UH5YZ. */
+    data_navigate_c_pNY21Y6YEG5FJ_,   /**< Event data_navigate.c_pNY21Y6YEG5FJ. */
     message_stop_u_response_,         /**< Event message_stop.u_response. */
     message_continue_u_response_,     /**< Event message_continue.u_response. */
 };

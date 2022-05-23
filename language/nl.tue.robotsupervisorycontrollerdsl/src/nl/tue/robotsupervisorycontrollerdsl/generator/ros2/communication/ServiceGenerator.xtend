@@ -20,13 +20,13 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	@Inject extension DataPlantHelper
 	@Inject extension TransitionNames
 
-	override initializeField(Service entity, Robot robot) '''«entity.fieldName» = this->create_client<«entity.typeSettings.serviceType»>("«entity.topicName»");'''
+	override initializeField(Service entity, Robot robot) '''«entity.fieldName» = this->create_client<«entity.links.serviceType»>("«entity.topicName»");'''
 
-	override declareField(Service entity, Robot robot) '''rclcpp_action::Client<«entity.typeSettings.actionType»>::SharedPtr «entity.fieldName»;'''
+	override declareField(Service entity, Robot robot) '''rclcpp_action::Client<«entity.links.actionType»>::SharedPtr «entity.fieldName»;'''
 	
 	override functions(Service entity, Robot robot)'''
-	bool «entity.responseMethod»(rclcpp::Client<«entity.typeSettings.serviceType»>::SharedFuture future) {
-		std::shared_ptr<«entity.typeSettings.serviceType»_Response> result = future.get();
+	bool «entity.responseMethod»(rclcpp::Client<«entity.links.serviceType»>::SharedFuture future) {
+		std::shared_ptr<«entity.links.serviceType»_Response> result = future.get();
 
 		«entity.prepareResult(entity.responseType, robot, 'result')»
 
@@ -40,11 +40,11 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	
 	
 	void «entity.callMethod»() {
-		auto request = std::make_shared<«entity.typeSettings.serviceType»::Request>();
+		auto request = std::make_shared<«entity.links.serviceType»::Request>();
 		
 		«entity.compileDataStates(entity.requestType, 'request', robot, true)»
 		
-		using ServiceResponseFuture = rclcpp::Client<«entity.typeSettings.serviceType»>::SharedFutureWithRequest;
+		using ServiceResponseFuture = rclcpp::Client<«entity.links.serviceType»>::SharedFutureWithRequest;
 		auto result = «entity.fieldName»->async_send_request(request, std::bind(&Controller::«entity.responseMethod», this, std::placeholders::_1));
 	}
 	'''

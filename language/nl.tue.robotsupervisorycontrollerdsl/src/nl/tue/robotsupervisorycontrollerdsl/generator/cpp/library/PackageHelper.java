@@ -11,8 +11,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference;
-import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CustomTypeSettings;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Interface;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Service;
@@ -22,11 +22,15 @@ public class PackageHelper {
 	public List<String> getRequiredPackages(Robot robot) {
 		List<String> result = new ArrayList<>();
 	
-		List<CustomTypeSettings> settings = ModelHelper.findWithinRobot(robot, CustomTypeSettings.class);
+		List<Interface> settings = ModelHelper.findWithinRobot(robot, CommunicationType.class)
+				.stream()
+				.map(it -> it.getLinks())
+				.filter(it -> it != null)
+				.collect(Collectors.toList());
 		
-		for (CustomTypeSettings setting : settings) {
-			if (!result.contains(setting.getPackage())) {
-				result.add(setting.getPackage());
+		for (Interface setting : settings) {
+			if (!result.contains(setting.getInterfacePackage())) {
+				result.add(setting.getInterfacePackage());
 			}
 		}
 	
@@ -68,16 +72,16 @@ public class PackageHelper {
 	}
 	
 	private CharSequence getImportForCommunicationType(CommunicationType input, AbstractPlatformTypeGenerator typeGenerator) {		
-		if (input == null || input.getTypeSettings() == null) {
+		if (input == null || input.getLinks() == null) {
 			return null;
 		}
 		
 		if (input instanceof Message) {
-			return typeGenerator.messageImport(input.getTypeSettings());
+			return typeGenerator.messageImport(input.getLinks());
 		} else if (input instanceof Action) {
-			return typeGenerator.actionImport(input.getTypeSettings());
+			return typeGenerator.actionImport(input.getLinks());
 		} else if (input instanceof Service) {
-			return typeGenerator.serviceImport(input.getTypeSettings());
+			return typeGenerator.serviceImport(input.getLinks());
 		}
 		
 		return null;

@@ -43,7 +43,7 @@ const char *controller_event_names[] = {
     "action_navigate.u_feedback",      /**< Event action_navigate.u_feedback. */
     "action_navigate.u_response",      /**< Event action_navigate.u_response. */
     "action_navigate.u_error",         /**< Event action_navigate.u_error. */
-    "data_navigate.c_pV4745L1UH5YZ",   /**< Event data_navigate.c_pV4745L1UH5YZ. */
+    "data_navigate.c_pNY21Y6YEG5FJ",   /**< Event data_navigate.c_pNY21Y6YEG5FJ. */
     "message_stop.u_response",         /**< Event message_stop.u_response. */
     "message_continue.u_response",     /**< Event message_continue.u_response. */
 };
@@ -52,7 +52,7 @@ const char *controller_event_names[] = {
 const char *enum_names[] = {
     "awaiting_initial_pose",
     "awaiting_point",
-    "data_pHIIFOYP88MXG",
+    "data_pKQHE1M29OBCA",
     "error",
     "executing",
     "has_initial_pose",
@@ -229,26 +229,26 @@ static BoolType execEvent5(void) {
 }
 
 /**
- * Execute code for event "data_navigate.c_pV4745L1UH5YZ".
+ * Execute code for event "data_navigate.c_pNY21Y6YEG5FJ".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent6(void) {
-    BoolType guard = ((data_navigate_) == (_controller_none)) || ((data_navigate_) == (_controller_data_pHIIFOYP88MXG));
+    BoolType guard = ((data_navigate_) == (_controller_none)) || ((data_navigate_) == (_controller_data_pKQHE1M29OBCA));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_navigate_c_pV4745L1UH5YZ_, TRUE);
+        controller_InfoEvent(data_navigate_c_pNY21Y6YEG5FJ_, TRUE);
     #endif
 
     if ((data_navigate_) == (_controller_none)) {
-        data_navigate_ = _controller_data_pHIIFOYP88MXG;
-    } else if ((data_navigate_) == (_controller_data_pHIIFOYP88MXG)) {
-        data_navigate_ = _controller_data_pHIIFOYP88MXG;
+        data_navigate_ = _controller_data_pKQHE1M29OBCA;
+    } else if ((data_navigate_) == (_controller_data_pKQHE1M29OBCA)) {
+        data_navigate_ = _controller_data_pKQHE1M29OBCA;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_navigate_c_pV4745L1UH5YZ_, FALSE);
+        controller_InfoEvent(data_navigate_c_pNY21Y6YEG5FJ_, FALSE);
     #endif
     return TRUE;
 }
@@ -407,7 +407,7 @@ static void PerformEvents(void) {
         if (execEvent0()) continue;  /* (Try to) perform event "action_navigate.c_cancel". */
         if (execEvent1()) continue;  /* (Try to) perform event "action_navigate.c_reset". */
         if (execEvent2()) continue;  /* (Try to) perform event "action_navigate.c_trigger". */
-        if (execEvent6()) continue;  /* (Try to) perform event "data_navigate.c_pV4745L1UH5YZ". */
+        if (execEvent6()) continue;  /* (Try to) perform event "data_navigate.c_pNY21Y6YEG5FJ". */
         break; /* No event fired, done with discrete steps. */
     }
 }
@@ -483,7 +483,7 @@ BoolType controller_EnginePerformEvent(controller_Event_ event) {
             return execEvent4();
         case action_navigate_u_response_:
             return execEvent5();
-        case data_navigate_c_pV4745L1UH5YZ_:
+        case data_navigate_c_pNY21Y6YEG5FJ_:
             return execEvent6();
         case message_continue_u_response_:
             return execEvent7();

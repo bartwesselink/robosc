@@ -1,15 +1,17 @@
 robot PushBallGoal {
+    interface laser use LaserScan from sensor_msgs
+
     datatype object LaserScan {
         ranges: array(double)
     }
 
-    datatype enum Distance from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum Distance from LaserScan to {
         value.ranges[40] < 1.0 and value.ranges[320] < 1.0 -> obstructed
         default -> free
     }
 
     component Scanner {
-        outgoing message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
+        outgoing message scan with identifier: "/scan", type: Distance links laser
 
         behaviour {
             variable distance: Distance

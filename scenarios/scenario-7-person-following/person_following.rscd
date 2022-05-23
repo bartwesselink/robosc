@@ -1,4 +1,7 @@
 robot PersonFollowing {
+    interface laser use LaserScan from sensor_msgs
+    interface boxes use BoundingBoxes from darknet_ros_msgs
+
     datatype object BoundingBoxes {
         bounding_boxes: array(BoundingBox)
     }
@@ -13,13 +16,13 @@ robot PersonFollowing {
         ranges: array(double)
     }
 
-    datatype enum Distance from LaserScan (import LaserScan from sensor_msgs) to {
+    datatype enum Distance from LaserScan to {
         value.ranges[0] > 5.0 and value.ranges[350] > 5.0 and value.ranges[10] > 5.0 -> free
         default -> person
     }
 
     component Scanner {
-        outgoing message scan with identifier: "/scan", type: Distance (import LaserScan from sensor_msgs)
+        outgoing message scan with identifier: "/scan", type: Distance links laser
 
         behaviour {
             variable distance: Distance
@@ -31,7 +34,7 @@ robot PersonFollowing {
     }
 
     component YoloxDetection {
-        outgoing message bounding_boxes with identifier: "/bounding_boxes", type: BoundingBoxes (import BoundingBoxes from bboxes_ex_msgs)
+        outgoing message bounding_boxes with identifier: "/bounding_boxes", type: BoundingBoxes links boxes
 
         behaviour {
             variable current_image_size: double = 0.0

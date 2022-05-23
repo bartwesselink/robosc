@@ -20,14 +20,14 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	@Inject extension DataPlantHelper
 	@Inject extension TransitionNames
 
-	override initializeField(Service entity, Robot robot) '''«entity.fieldName» = node.serviceClient<«entity.typeSettings.serviceType»>("«entity.topicName»");'''
+	override initializeField(Service entity, Robot robot) '''«entity.fieldName» = node.serviceClient<«entity.links.serviceType»>("«entity.topicName»");'''
 
 	override declareField(Service entity, Robot robot) '''ros::ServiceClient «entity.fieldName»;'''
 
 	override functions(Service entity, Robot robot)'''
 	void «entity.callMethod»() {
-		«entity.typeSettings.serviceType» srv;
-		auto request = std::make_shared<«entity.typeSettings.serviceType»::Request>();
+		«entity.links.serviceType» srv;
+		auto request = std::make_shared<«entity.links.serviceType»::Request>();
 		
 		«entity.compileDataStates(entity.requestType, 'srv.request', robot, false)»
 		

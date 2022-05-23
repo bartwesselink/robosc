@@ -1,4 +1,8 @@
 robot SimpleNavigation {
+    interface point use PointStamped from geometry_msgs
+    interface pose use PoseWithCovarianceStamped from geometry_msgs
+    interface navigate use NavigateToPose from nav2_msg
+
     datatype object Quaternion {
         x: double
         y: double
@@ -30,9 +34,9 @@ robot SimpleNavigation {
     }
 
     component Nav2 {
-    	outgoing message point with identifier: "/clicked_point", type: PointStamped (import PointStamped from geometry_msgs)
-        outgoing message initial_pose with identifier: "/initialpose", type: Pose (import PoseWithCovarianceStamped from geometry_msgs)
-        action navigate with identifier: "/navigate_to_pose", request: NavigateToPoseRequest, response: none, feedback: none (import NavigateToPose from nav2_msgs)
+    	outgoing message point with identifier: "/clicked_point", type: PointStamped links point
+        outgoing message initial_pose with identifier: "/initialpose", type: Pose links pose
+        action navigate with identifier: "/navigate_to_pose", request: NavigateToPoseRequest, response: none, feedback: none links navigate
 
     	behaviour {
     		variable current_x: double

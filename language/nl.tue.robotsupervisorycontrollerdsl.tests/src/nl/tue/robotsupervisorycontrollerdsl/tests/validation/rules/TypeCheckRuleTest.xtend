@@ -22,13 +22,15 @@ class TypeCheckRuleTest {
 	def void checkValid() {
 		"
 			robot UnitTestRobot {
+				interface test use name from package
+
 				datatype object TestObject {
 					result: integer(0..20)
 				}
 
 				component Component {
 					outgoing message test_message_one with type: integer(0..20)
-					incoming message test_message_two with type: TestObject  (import name from package)
+					incoming message test_message_two with type: TestObject links test
 					incoming message test_message_three with type: integer(0..20)
 
 					behaviour {
@@ -44,6 +46,7 @@ class TypeCheckRuleTest {
 							on response from test_message_one do result_boolean := 5 <= 0
 							on response from test_message_one do result_boolean := 5 <= 0
 							on response from test_message_one do result_boolean := !true
+							on response from test_message_one do result_integer := -5
 							on response from test_message_one do result_integer := 5 * 0
 							on response from test_message_one do result_integer := 0 / 5
 							on response from test_message_one do result_integer := 1 + 2
@@ -378,12 +381,14 @@ class TypeCheckRuleTest {
 	def void checkErrorObjectPropertyValue() {
 		"
 			robot UnitTestRobot {
+				interface test use name from package
+
 				datatype object TestObject {
 					result: integer(0..20)
 				}
 
 				component Component {
-					incoming message test_message_two with type: TestObject (import name from package)
+					incoming message test_message_two with type: TestObject links test
 				}
 
 				provide test_message_two with { result: true }
