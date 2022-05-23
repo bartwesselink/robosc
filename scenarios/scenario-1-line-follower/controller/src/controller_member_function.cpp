@@ -70,7 +70,7 @@
 		rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_no_line;
 		rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 		rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
-		rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move_forward;
+		rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
 		rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_halt;
 		rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
 		std::vector<std::string> taken_transitions;
@@ -80,7 +80,7 @@
 			subscriber_client_no_line = this->create_subscription<std_msgs::msg::Empty>("/no_line", 10, std::bind(&Controller::callback_message_no_line, this, std::placeholders::_1));
 			subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 			subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
-			publisher_client_move_forward = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+			publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 			publisher_client_halt = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 
 			state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
@@ -127,15 +127,15 @@
 		
 		
 		
-		void call_message_move_forward() {
+		void call_message_move() {
 			auto value = geometry_msgs::msg::Twist();
 			
-			if (data_move_forward_ == _controller_data_pE12IJL1XOLG7) {
+			if (data_move_ == _controller_data_pE12IJL1XOLG7) {
 				value.linear.x = 0.6;
 				value.angular.z = (0.0 - code_LineDetector_current_correction) / 100;
 			}
 			
-			this->publisher_client_move_forward->publish(value);
+			this->publisher_client_move->publish(value);
 		}
 		
 		
@@ -173,7 +173,7 @@
 			output << "}";
 			output << "},";
 			output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-			output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"awaiting\",\"initial\":true,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"no_line\",\"initial\":false,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move_forward\",\"halt\"],\"services\":[],\"actions\":[]}]}";
+			output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"awaiting\",\"initial\":true,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"no_line\",\"initial\":false,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
 			output << "}";
 			
 			auto msg = std_msgs::msg::String();
@@ -187,7 +187,7 @@
 		// Heart of the controller
 		void tick() {
 			int nOfDataEvents = 2;
-			      controller_Event_ data_events[2] = { data_move_forward_c_pIELFJLWO5ADT_,data_halt_c_pUOCHN7MH2YLV_ };
+			      controller_Event_ data_events[2] = { data_move_c_pIELFJLWO5ADT_,data_halt_c_pUOCHN7MH2YLV_ };
 			
 			// Always execute data transitions that are possible
 			shuffle_events(data_events, nOfDataEvents);
@@ -197,7 +197,7 @@
 			}
 			
 			int nOfControllableEvents = 2;
-			      controller_Event_ controllable_events[2] = { message_move_forward_c_trigger_,message_halt_c_trigger_ };
+			      controller_Event_ controllable_events[2] = { message_move_c_trigger_,message_halt_c_trigger_ };
 			
 			shuffle_events(controllable_events, nOfControllableEvents);
 			
@@ -231,8 +231,8 @@
 	    }
 	    
 	    switch (event) {
-	case message_move_forward_c_trigger_:
-		node_controller->call_message_move_forward();
+	case message_move_c_trigger_:
+		node_controller->call_message_move();
 	break;
 	case message_halt_c_trigger_:
 		node_controller->call_message_halt();

@@ -95,7 +95,7 @@ class ExpressionTypesystemTest {
 		"
 			robot UnitTest {
 				component One {
-					incoming message test_message with type: integer
+					outgoing message test_message with type: integer
 
 					behaviour {
 						variable current: integer
@@ -116,7 +116,7 @@ class ExpressionTypesystemTest {
 				}
 
 				component One {
-					incoming message test_message with type: Complex
+					outgoing message test_message with type: Complex
 
 					behaviour {
 						variable current: boolean
@@ -135,7 +135,7 @@ class ExpressionTypesystemTest {
 		"
 			robot UnitTest {
 				component One {
-					outgoing message test_message with type: integer
+					incoming message test_message with type: integer
 
 					behaviour {
 						initial state idle {}

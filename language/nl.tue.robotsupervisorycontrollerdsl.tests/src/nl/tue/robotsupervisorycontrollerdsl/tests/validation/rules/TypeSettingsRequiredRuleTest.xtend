@@ -31,7 +31,7 @@ class TypeSettingsRequiredRuleTest {
 				}
 
 				component Component {
-					incoming message distance with type: Complex (import name from package)
+					outgoing message distance with type: Complex (import name from package)
 
 					behaviour {
 						initial state idle {}
@@ -50,7 +50,7 @@ class TypeSettingsRequiredRuleTest {
 				}
 
 				component Component {
-					incoming message distance with type: Complex
+					outgoing message distance with type: Complex
 
 					behaviour {
 						initial state idle {}
@@ -76,7 +76,7 @@ class TypeSettingsRequiredRuleTest {
 				}
 
 				component Component {
-					incoming message distance with type: Complex (import name from package)
+					outgoing message distance with type: Complex (import name from package)
 
 					behaviour {
 						initial state idle {}

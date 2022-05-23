@@ -23,7 +23,7 @@ class CorrectDataProvisioningRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					outgoing message test with type: boolean
+					incoming message test with type: boolean
 				}
 
 				provide test with true
@@ -36,7 +36,7 @@ class CorrectDataProvisioningRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test with type: boolean
+					outgoing message test with type: boolean
 				}
 
 				provide test with true

@@ -53,22 +53,22 @@ robot PersonFollowing {
 
     // Base requirements
     requirement halt needs EmergencyStop.stopped or Scanner.distance = person
-    requirement move_forward needs EmergencyStop.in_service
+    requirement move needs EmergencyStop.in_service
 
-    requirement move_forward needs YoloxDetection.detected
+    requirement move needs YoloxDetection.detected
 
     // Data for movement
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.0 },
         angular: { z: ((YoloxDetection.current_image_size / 2) - ((YoloxDetection.current_xmin + YoloxDetection.current_xmax) / 2)) / 1000 }
     } if YoloxDetection.detected and Scanner.distance = person
 
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.2 },
         angular: { z: ((YoloxDetection.current_image_size / 2) - ((YoloxDetection.current_xmin + YoloxDetection.current_xmax) / 2)) / 1000 }
     } if YoloxDetection.detected and Scanner.distance = free
 
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.0 },
         angular: { z: 0.3 }
     } if YoloxDetection.initializing

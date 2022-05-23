@@ -23,7 +23,7 @@ class NoAssignmentOnMessagesToNodeRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message with type: boolean
+					outgoing message test_message with type: boolean
 
 					behaviour {
 						variable result: boolean = false
@@ -42,7 +42,7 @@ class NoAssignmentOnMessagesToNodeRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					outgoing message test_message with type: boolean
+					incoming message test_message with type: boolean
 
 					behaviour {
 						variable result: boolean = false

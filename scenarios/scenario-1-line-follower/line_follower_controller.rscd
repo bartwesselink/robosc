@@ -21,9 +21,9 @@ robot LineFollowerController {
     component TurtlebotPlatform from TurtlebotLibrary import TurtlebotPlatform
 
     requirement halt needs EmergencyStop.stopped or LineDetector.no_line
-    requirement move_forward needs EmergencyStop.in_service and LineDetector.line_found
+    requirement move needs EmergencyStop.in_service and LineDetector.line_found
 
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.6 },
         angular: { z: (0.0 - LineDetector.current_correction) / 100 }
     }

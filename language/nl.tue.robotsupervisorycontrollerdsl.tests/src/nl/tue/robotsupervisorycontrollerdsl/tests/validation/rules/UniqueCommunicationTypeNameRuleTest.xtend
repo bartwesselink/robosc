@@ -23,8 +23,8 @@ class UniqueCommunicationTypeNameRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component1 {
-					incoming message test_message_one with type: boolean
-					incoming message test_message_two with type: boolean
+					outgoing message test_message_one with type: boolean
+					outgoing message test_message_two with type: boolean
 				}
 			}
 		".parse.assertNoErrors
@@ -35,8 +35,8 @@ class UniqueCommunicationTypeNameRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component1 {
-					incoming message test_message with type: boolean
-					incoming message test_message with type: boolean
+					outgoing message test_message with type: boolean
+					outgoing message test_message with type: boolean
 				}
 			}
 		".parse.assertError(

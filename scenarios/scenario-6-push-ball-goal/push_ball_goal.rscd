@@ -84,30 +84,30 @@ robot PushBallGoal {
     component TurtlebotPlatform from TurtlebotLibrary import TurtlebotPlatform
 
     requirement halt needs EmergencyStop.stopped or Scanner.distance = obstructed
-    requirement move_forward needs EmergencyStop.in_service
+    requirement move needs EmergencyStop.in_service
 
-    requirement move_forward needs Scanner.distance = free
+    requirement move needs Scanner.distance = free
 
     // Move to ball
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.2 },
         angular: { z: (0.0 - BallDetector.current_correction) / 500 }
     } if BallDetector.ball_found
 
     // Move/adjust ball
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.2 },
         angular: { z: (BallDetector.current_correction) / 1000 }
     } if BallDetector.adjusting
 
     // Move to goal
-    provide move_forward with {
+    provide move with {
         linear: { x: 0.2 },
         angular: { z: (0.0 - GoalDetector.current_correction) / 1000 }
     } if BallDetector.ball_in_front
 
     // Find ball
-    provide move_forward with {
+    provide move with {
         angular: { z: 0.5 }
     } if BallDetector.no_ball
 

@@ -23,7 +23,7 @@ class NoAssignmentOutsideScopeRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component1 {
-					incoming message test_message_one with type: boolean
+					outgoing message test_message_one with type: boolean
 
 					behaviour {
 						variable result: boolean = false
@@ -35,7 +35,7 @@ class NoAssignmentOutsideScopeRuleTest {
 				}
 
 				component Component2 {
-					incoming message test_message_two with type: boolean
+					outgoing message test_message_two with type: boolean
 
 					behaviour {
 						variable result: boolean = false
@@ -54,7 +54,7 @@ class NoAssignmentOutsideScopeRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component1 {
-					incoming message test_message_one with type: boolean
+					outgoing message test_message_one with type: boolean
 
 					behaviour {
 						variable result: boolean = false
@@ -66,7 +66,7 @@ class NoAssignmentOutsideScopeRuleTest {
 				}
 
 				component Component2 {
-					incoming message test_message_two with type: boolean
+					outgoing message test_message_two with type: boolean
 
 					behaviour {
 						variable result: boolean = false

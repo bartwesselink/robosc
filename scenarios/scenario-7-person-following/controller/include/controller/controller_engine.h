@@ -38,10 +38,10 @@ enum controllerEventEnum_ {
     message_bounding_boxes_u_response_, /**< Event message_bounding_boxes.u_response. */
     message_stop_u_response_,           /**< Event message_stop.u_response. */
     message_continue_u_response_,       /**< Event message_continue.u_response. */
-    message_move_forward_c_trigger_,    /**< Event message_move_forward.c_trigger. */
-    data_move_forward_c_pPR7XVQ7Z9QUV_, /**< Event data_move_forward.c_pPR7XVQ7Z9QUV. */
-    data_move_forward_c_pPPIOGABJ1ZUF_, /**< Event data_move_forward.c_pPPIOGABJ1ZUF. */
-    data_move_forward_c_pYZS8TWNRJCQO_, /**< Event data_move_forward.c_pYZS8TWNRJCQO. */
+    message_move_c_trigger_,    /**< Event message_move.c_trigger. */
+    data_move_c_pPR7XVQ7Z9QUV_, /**< Event data_move.c_pPR7XVQ7Z9QUV. */
+    data_move_c_pPPIOGABJ1ZUF_, /**< Event data_move.c_pPPIOGABJ1ZUF. */
+    data_move_c_pYZS8TWNRJCQO_, /**< Event data_move.c_pYZS8TWNRJCQO. */
     message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
     data_halt_c_p9V7373FIS9TO_,         /**< Event data_halt.c_p9V7373FIS9TO. */
 };
@@ -67,7 +67,7 @@ extern controllerEnum component_EmergencyStop_;      /**< Discrete variable "E c
 extern controllerEnum component_Scanner_v_distance_; /**< Discrete variable "E component_Scanner.v_distance". */
 extern controllerEnum component_YoloxDetection_;     /**< Discrete variable "E component_YoloxDetection". */
 extern controllerEnum data_halt_;                    /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_forward_;            /**< Discrete variable "E data_move_forward". */
+extern controllerEnum data_move_;            /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

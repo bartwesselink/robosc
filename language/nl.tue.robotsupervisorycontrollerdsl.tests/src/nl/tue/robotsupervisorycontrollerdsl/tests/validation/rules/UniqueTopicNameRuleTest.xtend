@@ -23,11 +23,11 @@ class UniqueTopicNameRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component1 {
-					incoming message test_message_one with identifier: \"topic_one\", type: boolean
+					outgoing message test_message_one with identifier: \"topic_one\", type: boolean
 				}
 
 				component Component2 {
-					incoming message test_message_two with identifier: \"topic_two\", type: boolean
+					outgoing message test_message_two with identifier: \"topic_two\", type: boolean
 				}
 			}
 		".parse.assertNoErrors
@@ -38,11 +38,11 @@ class UniqueTopicNameRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component1 {
-					incoming message test_message_one with identifier: \"topic\", type: boolean
+					outgoing message test_message_one with identifier: \"topic\", type: boolean
 				}
 
 				component Component2 {
-					incoming message test_message_two with identifier: \"topic\", type: boolean
+					outgoing message test_message_two with identifier: \"topic\", type: boolean
 				}
 			}
 		".parse.assertWarning(

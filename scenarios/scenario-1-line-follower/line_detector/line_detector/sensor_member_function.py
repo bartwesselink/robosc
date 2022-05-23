@@ -10,7 +10,7 @@ import cv2, cv_bridge
 import numpy
 
 class LineDetector(Node):
-    lower_yellow = numpy.array([ 10, 10, 10])
+    lower_yellow = numpy.array([10, 10, 10])
     upper_yellow = numpy.array([255, 255, 250])
     
     def __init__(self):

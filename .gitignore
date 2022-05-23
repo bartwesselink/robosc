@@ -3,3 +3,4 @@
 *.log
 Eclipse.app
 src-gen/
+.vscode/settings.json

@@ -50,11 +50,11 @@ enum controllerEventEnum_ {
     message_no_goal_u_response_,          /**< Event message_no_goal.u_response. */
     message_stop_u_response_,             /**< Event message_stop.u_response. */
     message_continue_u_response_,         /**< Event message_continue.u_response. */
-    message_move_forward_c_trigger_,      /**< Event message_move_forward.c_trigger. */
-    data_move_forward_c_pYYTYBX6IYT0C_,   /**< Event data_move_forward.c_pYYTYBX6IYT0C. */
-    data_move_forward_c_pQZAS5U6DXUKN_,   /**< Event data_move_forward.c_pQZAS5U6DXUKN. */
-    data_move_forward_c_p7V114S5U6K7O_,   /**< Event data_move_forward.c_p7V114S5U6K7O. */
-    data_move_forward_c_pQH3YZ1QP30AZ_,   /**< Event data_move_forward.c_pQH3YZ1QP30AZ. */
+    message_move_c_trigger_,      /**< Event message_move.c_trigger. */
+    data_move_c_pYYTYBX6IYT0C_,   /**< Event data_move.c_pYYTYBX6IYT0C. */
+    data_move_c_pQZAS5U6DXUKN_,   /**< Event data_move.c_pQZAS5U6DXUKN. */
+    data_move_c_p7V114S5U6K7O_,   /**< Event data_move.c_p7V114S5U6K7O. */
+    data_move_c_pQH3YZ1QP30AZ_,   /**< Event data_move.c_pQH3YZ1QP30AZ. */
     message_halt_c_trigger_,              /**< Event message_halt.c_trigger. */
     data_halt_c_pUCEHVH1PWJ4N_,           /**< Event data_halt.c_pUCEHVH1PWJ4N. */
 };
@@ -81,7 +81,7 @@ extern controllerEnum component_EmergencyStop_;      /**< Discrete variable "E c
 extern controllerEnum component_GoalDetector_;       /**< Discrete variable "E component_GoalDetector". */
 extern controllerEnum component_Scanner_v_distance_; /**< Discrete variable "E component_Scanner.v_distance". */
 extern controllerEnum data_halt_;                    /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_forward_;            /**< Discrete variable "E data_move_forward". */
+extern controllerEnum data_move_;            /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

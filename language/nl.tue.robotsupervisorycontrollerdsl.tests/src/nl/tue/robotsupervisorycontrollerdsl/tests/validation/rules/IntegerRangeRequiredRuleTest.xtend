@@ -23,8 +23,8 @@ class IntegerRangeRequiredRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: integer(0..20)
-					outgoing message move with type: none
+					outgoing message distance with type: integer(0..20)
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: integer(0..20) = 0
@@ -44,8 +44,8 @@ class IntegerRangeRequiredRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: integer(0..20)
-					outgoing message move with type: none
+					outgoing message distance with type: integer(0..20)
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: integer = 0
@@ -68,8 +68,8 @@ class IntegerRangeRequiredRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: integer
-					outgoing message move with type: none
+					outgoing message distance with type: integer
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: integer(0..20) = 0
@@ -96,8 +96,8 @@ class IntegerRangeRequiredRuleTest {
 				}
 
 				component Component {
-					incoming message distance with type: Complex (import test from test)
-					outgoing message move with type: none
+					outgoing message distance with type: Complex (import test from test)
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: integer(0..20) = 0

@@ -21,3 +21,4 @@ ros2 launch scenario simulate.launch.py
 * Topic validation can be added to check whether topics follow a valid format.
 * Data provisioning was not working properly with complex object.
 * Library references yielded errors.
+* Allow libraries to provide data

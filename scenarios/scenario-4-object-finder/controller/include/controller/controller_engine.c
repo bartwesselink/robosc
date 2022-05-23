@@ -45,8 +45,8 @@ const char *controller_event_names[] = {
     "component_ObjectDetector.c_pZIDHF63YTIV8", /**< Event component_ObjectDetector.c_pZIDHF63YTIV8. */
     "message_object_count.u_response",          /**< Event message_object_count.u_response. */
     "message_object_scan.u_response",           /**< Event message_object_scan.u_response. */
-    "message_move_forward.c_trigger",           /**< Event message_move_forward.c_trigger. */
-    "data_move_forward.c_pW5JDIW8HDBCP",        /**< Event data_move_forward.c_pW5JDIW8HDBCP. */
+    "message_move.c_trigger",           /**< Event message_move.c_trigger. */
+    "data_move.c_pW5JDIW8HDBCP",        /**< Event data_move.c_pW5JDIW8HDBCP. */
     "message_halt.c_trigger",                   /**< Event message_halt.c_trigger. */
     "message_stop.u_response",                  /**< Event message_stop.u_response. */
     "message_continue.u_response",              /**< Event message_continue.u_response. */
@@ -92,7 +92,7 @@ BoolType component_LidarScanner_v_has_top_;               /**< Discrete variable
 IntType component_ObjectDetector_v_scanned_object_count_; /**< Discrete variable "int[0..1] component_ObjectDetector.v_scanned_object_count". */
 controllerEnum component_ObjectDetector_;                 /**< Discrete variable "E component_ObjectDetector". */
 controllerEnum component_Platform_;                       /**< Discrete variable "E component_Platform". */
-controllerEnum data_move_forward_;                        /**< Discrete variable "E data_move_forward". */
+controllerEnum data_move_;                        /**< Discrete variable "E data_move". */
 
 RealType model_time; /**< Current model time. */
 
@@ -152,26 +152,26 @@ static BoolType execEvent1(void) {
 }
 
 /**
- * Execute code for event "data_move_forward.c_pW5JDIW8HDBCP".
+ * Execute code for event "data_move.c_pW5JDIW8HDBCP".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((data_move_forward_) == (_controller_none)) || ((data_move_forward_) == (_controller_data_pZ0H9U0LV77GA));
+    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pZ0H9U0LV77GA));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_forward_c_pW5JDIW8HDBCP_, TRUE);
+        controller_InfoEvent(data_move_c_pW5JDIW8HDBCP_, TRUE);
     #endif
 
-    if ((data_move_forward_) == (_controller_none)) {
-        data_move_forward_ = _controller_data_pZ0H9U0LV77GA;
-    } else if ((data_move_forward_) == (_controller_data_pZ0H9U0LV77GA)) {
-        data_move_forward_ = _controller_data_pZ0H9U0LV77GA;
+    if ((data_move_) == (_controller_none)) {
+        data_move_ = _controller_data_pZ0H9U0LV77GA;
+    } else if ((data_move_) == (_controller_data_pZ0H9U0LV77GA)) {
+        data_move_ = _controller_data_pZ0H9U0LV77GA;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_forward_c_pW5JDIW8HDBCP_, FALSE);
+        controller_InfoEvent(data_move_c_pW5JDIW8HDBCP_, FALSE);
     #endif
     return TRUE;
 }
@@ -221,7 +221,7 @@ static BoolType execEvent4(void) {
 }
 
 /**
- * Execute code for event "message_move_forward.c_trigger".
+ * Execute code for event "message_move.c_trigger".
  *
  * @return Whether the event was performed.
  */
@@ -230,11 +230,11 @@ static BoolType execEvent5(void) {
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(message_move_forward_c_trigger_, TRUE);
+        controller_InfoEvent(message_move_c_trigger_, TRUE);
     #endif
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(message_move_forward_c_trigger_, FALSE);
+        controller_InfoEvent(message_move_c_trigger_, FALSE);
     #endif
     return TRUE;
 }
@@ -479,9 +479,9 @@ static void PerformEvents(void) {
 
         if (execEvent0()) continue;  /* (Try to) perform event "component_ObjectDetector.c_pCY9OPG8O7KCK". */
         if (execEvent1()) continue;  /* (Try to) perform event "component_ObjectDetector.c_pZIDHF63YTIV8". */
-        if (execEvent2()) continue;  /* (Try to) perform event "data_move_forward.c_pW5JDIW8HDBCP". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_move.c_pW5JDIW8HDBCP". */
         if (execEvent4()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
-        if (execEvent5()) continue;  /* (Try to) perform event "message_move_forward.c_trigger". */
+        if (execEvent5()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         if (execEvent9()) continue;  /* (Try to) perform event "message_rotate_left.c_trigger". */
         if (execEvent10()) continue;  /* (Try to) perform event "message_rotate_right.c_trigger". */
         break; /* No event fired, done with discrete steps. */
@@ -502,7 +502,7 @@ void controller_EngineFirstStep(void) {
     component_ObjectDetector_v_scanned_object_count_ = 0;
     component_ObjectDetector_ = _controller_no_object;
     component_Platform_ = _controller_awaiting_command;
-    data_move_forward_ = _controller_none;
+    data_move_ = _controller_none;
 
     #if PRINT_OUTPUT
         /* pre-initial and post-initial prints. */
@@ -555,13 +555,13 @@ BoolType controller_EnginePerformEvent(controller_Event_ event) {
             return execEvent0();
         case component_ObjectDetector_c_pZIDHF63YTIV8_:
             return execEvent1();
-        case data_move_forward_c_pW5JDIW8HDBCP_:
+        case data_move_c_pW5JDIW8HDBCP_:
             return execEvent2();
         case message_continue_u_response_:
             return execEvent3();
         case message_halt_c_trigger_:
             return execEvent4();
-        case message_move_forward_c_trigger_:
+        case message_move_c_trigger_:
             return execEvent5();
         case message_object_count_u_response_:
             return execEvent6();

@@ -27,9 +27,9 @@ class TypeCheckRuleTest {
 				}
 
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
-					outgoing message test_message_two with type: TestObject  (import name from package)
-					outgoing message test_message_three with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
+					incoming message test_message_two with type: TestObject  (import name from package)
+					incoming message test_message_three with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -64,7 +64,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -87,7 +87,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -110,7 +110,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -133,7 +133,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -156,7 +156,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -179,7 +179,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -202,7 +202,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -225,7 +225,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -248,7 +248,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -271,7 +271,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -294,7 +294,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -317,7 +317,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
@@ -340,7 +340,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					outgoing message test_message_three with type: integer(0..20)
+					incoming message test_message_three with type: integer(0..20)
 				}
 
 				provide test_message_three with false
@@ -360,7 +360,7 @@ class TypeCheckRuleTest {
 				}
 
 				component Component {
-					outgoing message test_message_two with type: TestObject (import name from package)
+					incoming message test_message_two with type: TestObject (import name from package)
 				}
 
 				provide test_message_two with { result: true }
@@ -376,7 +376,7 @@ class TypeCheckRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message test_message_one with type: integer(0..20)
+					outgoing message test_message_one with type: integer(0..20)
 
 					behaviour {
 						variable result_boolean: boolean = false

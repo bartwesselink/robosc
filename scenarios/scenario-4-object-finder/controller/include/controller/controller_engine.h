@@ -48,8 +48,8 @@ enum controllerEventEnum_ {
     component_ObjectDetector_c_pZIDHF63YTIV8_, /**< Event component_ObjectDetector.c_pZIDHF63YTIV8. */
     message_object_count_u_response_,          /**< Event message_object_count.u_response. */
     message_object_scan_u_response_,           /**< Event message_object_scan.u_response. */
-    message_move_forward_c_trigger_,           /**< Event message_move_forward.c_trigger. */
-    data_move_forward_c_pW5JDIW8HDBCP_,        /**< Event data_move_forward.c_pW5JDIW8HDBCP. */
+    message_move_c_trigger_,           /**< Event message_move.c_trigger. */
+    data_move_c_pW5JDIW8HDBCP_,        /**< Event data_move.c_pW5JDIW8HDBCP. */
     message_halt_c_trigger_,                   /**< Event message_halt.c_trigger. */
     message_stop_u_response_,                  /**< Event message_stop.u_response. */
     message_continue_u_response_,              /**< Event message_continue.u_response. */
@@ -83,7 +83,7 @@ extern BoolType component_LidarScanner_v_has_top_;               /**< Discrete v
 extern IntType component_ObjectDetector_v_scanned_object_count_; /**< Discrete variable "int[0..1] component_ObjectDetector.v_scanned_object_count". */
 extern controllerEnum component_ObjectDetector_;                 /**< Discrete variable "E component_ObjectDetector". */
 extern controllerEnum component_Platform_;                       /**< Discrete variable "E component_Platform". */
-extern controllerEnum data_move_forward_;                        /**< Discrete variable "E data_move_forward". */
+extern controllerEnum data_move_;                        /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

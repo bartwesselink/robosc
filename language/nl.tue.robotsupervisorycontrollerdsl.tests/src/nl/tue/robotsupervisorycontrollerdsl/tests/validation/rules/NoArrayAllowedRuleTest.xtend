@@ -23,7 +23,7 @@ class NoArrayAllowedRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: array(integer)
+					outgoing message distance with type: array(integer)
 
 					behaviour {
 						variable current_distance: array(integer)
@@ -41,8 +41,8 @@ class NoArrayAllowedRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: array(integer)
-					outgoing message move with type: none
+					outgoing message distance with type: array(integer)
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: array(integer)
@@ -65,8 +65,8 @@ class NoArrayAllowedRuleTest {
 		"
 			robot UnitTestRobot {
 				component Component {
-					incoming message distance with type: array(integer)
-					outgoing message move with type: none
+					outgoing message distance with type: array(integer)
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: array(integer)
@@ -93,8 +93,8 @@ class NoArrayAllowedRuleTest {
 				}
 
 				component Component {
-					incoming message distance with type: Complex (import test from test)
-					outgoing message move with type: none
+					outgoing message distance with type: Complex (import test from test)
+					incoming message move with type: none
 
 					behaviour {
 						variable current_distance: array(integer) = 0

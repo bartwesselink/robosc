@@ -35,8 +35,8 @@ enum controllerEventEnum_ {
     message_no_line_u_response_,        /**< Event message_no_line.u_response. */
     message_stop_u_response_,           /**< Event message_stop.u_response. */
     message_continue_u_response_,       /**< Event message_continue.u_response. */
-    message_move_forward_c_trigger_,    /**< Event message_move_forward.c_trigger. */
-    data_move_forward_c_pIELFJLWO5ADT_, /**< Event data_move_forward.c_pIELFJLWO5ADT. */
+    message_move_c_trigger_,    /**< Event message_move.c_trigger. */
+    data_move_c_pIELFJLWO5ADT_, /**< Event data_move.c_pIELFJLWO5ADT. */
     message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
     data_halt_c_pUOCHN7MH2YLV_,         /**< Event data_halt.c_pUOCHN7MH2YLV. */
 };
@@ -61,7 +61,7 @@ extern RealType model_time; /**< Current model time. */
 extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
 extern controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
 extern controllerEnum data_halt_;               /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_forward_;       /**< Discrete variable "E data_move_forward". */
+extern controllerEnum data_move_;       /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 
