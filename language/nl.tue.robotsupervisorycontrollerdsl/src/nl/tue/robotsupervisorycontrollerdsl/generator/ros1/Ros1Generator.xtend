@@ -21,6 +21,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.data.PlatformTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.info.InfoUtilitiesGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.SerializationHelperGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.output.OutputCopyUtil
 
 @Singleton
 class Ros1Generator implements GeneratorInterface {
@@ -38,77 +40,92 @@ class Ros1Generator implements GeneratorInterface {
 	@Inject InitializationGenerator initializationGenerator
 	@Inject CifSynthesisTool cifSynthesisTool
 	@Inject PlatformTypeGenerator platformTypeGenerator
+	@Inject OutputCopyUtil outputCopyUtil
 
-	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess) {
+	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess, Config config) {
 		val base = '''«robot.name»/ros1/controller'''
 		val fileName = '''«base»/src/controller.cpp'''
 
-		fileSystemAccess.generateFile(fileName, robot.controller)
+		fileSystemAccess.generateFile(fileName, robot.controller(config))
 		fileSystemAccess.generateFile(base + '/package.xml', robot.compilePackageFile)
 		fileSystemAccess.generateFile(base + '/CMakeLists.txt', robot.compileCMakeFile)
 		
 		val absolutePath = FileHelper.findAbsolutePath(robot.name, fileSystemAccess, robot.eResource.resourceSet)
 		cifSynthesisTool.copyOutputFiles(fileSystemAccess, absolutePath, '''«base»/include/controller/''')
+		
+		if (config.output.ros1NodeLocation !== null) {
+			outputCopyUtil.copyDirectory(robot, base, config.output.ros1NodeLocation, fileSystemAccess)
+		}
 	}
 
-	def controller(Robot robot) '''
-		«robot.determineRequiredImports»
+	def controller(Robot robot, Config config) '''
+	«robot.determineRequiredImports»
+
+	// Utility functions
+	«shuffleHelperGenerator.generateShuffleFunction»
+	«serializationHelperGenerator.generateSerializeVectorFunction»
 	
-		// Utility functions
-		«shuffleHelperGenerator.generateShuffleFunction»
-		«serializationHelperGenerator.generateSerializeVectorFunction»
-		
-		«robot.compileCodeOnlyVariables»
-		
-		class Controller {
-		public:	
-			Controller() «IF !robot.constructorInvocations.empty»: «robot.constructorInvocations.join(', ')»«ENDIF» {
-				
-			}
-		
-			// Enum conversions
-			«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
-
-			«robot.compileCommunicationFieldDefinitions»
-			ros::Publisher state_information;
-			«robot.compileActivationFields»
+	«robot.compileCodeOnlyVariables»
+	
+	class Controller {
+	public:	
+		Controller() «IF !robot.constructorInvocations.empty»: «robot.constructorInvocations.join(', ')»«ENDIF» {
 			
-			void start(ros::NodeHandle& node) {
-				«robot.compileCommunicationFieldInitializations»
-
-				state_information = node.advertise<std_msgs::String>("/controller/state", 10);
-				timer = node.createTimer(ros::Duration(0.1), &Controller::tick, this);
-				«CifSynthesisTool.codePrefix»_EngineFirstStep();
-			}
-
-			«robot.compileCommunicationFunctions»
-						
-			«robot.compileInfoFunction(platformTypeGenerator)»
-		private:
-			// Heart of the controller
-			void tick(const ros::TimerEvent &) {
-				«robot.compilePerformEventEngine»
-			}
-			
-			ros::Timer timer;
-		};
-		
-		std::shared_ptr<Controller> node_controller = nullptr;
-		
-		// Control synthesis engine
-		«initializationGenerator.initializeEngineVariables(robot)»
-		«robot.compileHooks»
-		
-		int main(int argc, char *argv[]) {
-		    ros::init(argc, argv, "talker");
-		        
-	        ros::NodeHandle n;
-	    
-	        node_controller = std::make_shared<Controller>();
-	        node_controller->start(n);
-	        ros::spin();
-		
-		    return 0;
 		}
+	
+		// Enum conversions
+		«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
+
+		«robot.compileCommunicationFieldDefinitions»
+		«IF config.publishStateInformation»
+		ros::Publisher state_information;
+		«ENDIF»
+		«robot.compileActivationFields»
+		
+		void start(ros::NodeHandle& node) {
+			«robot.compileCommunicationFieldInitializations»
+
+			«IF config.publishStateInformation»
+			state_information = node.advertise<std_msgs::String>("/controller/state", 10);
+			«ENDIF»
+			timer = node.createTimer(ros::Duration(0.1), &Controller::tick, this);
+			«CifSynthesisTool.codePrefix»_EngineFirstStep();
+		}
+
+		«robot.compileCommunicationFunctions»
+		
+		«IF config.publishStateInformation»
+		«robot.compileInfoFunction(platformTypeGenerator)»
+		«ENDIF»
+	private:
+		// Heart of the controller
+		void tick(const ros::TimerEvent &) {
+			«robot.compilePerformEventEngine»
+			
+			«IF config.publishStateInformation»
+			this->emit_current_state();
+			«ENDIF»
+		}
+		
+		ros::Timer timer;
+	};
+	
+	std::shared_ptr<Controller> node_controller = nullptr;
+	
+	// Control synthesis engine
+	«initializationGenerator.initializeEngineVariables(robot)»
+	«robot.compileHooks»
+	
+	int main(int argc, char *argv[]) {
+	    ros::init(argc, argv, "talker");
+
+		ros::NodeHandle n;
+
+		node_controller = std::make_shared<Controller>();
+		node_controller->start(n);
+		ros::spin();
+	
+	    return 0;
+	}
 	'''
 }

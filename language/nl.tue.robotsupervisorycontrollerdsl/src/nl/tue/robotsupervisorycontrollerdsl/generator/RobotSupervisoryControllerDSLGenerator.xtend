@@ -12,6 +12,7 @@ import javax.inject.Inject
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.Ros2Generator
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.Ros1Generator
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.ConfigService
 
 /**
  * Generates code from your model files on save.
@@ -22,12 +23,16 @@ class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
 	@Inject CifGenerator cifGenerator
 	@Inject Ros2Generator ros2Generator
 	@Inject Ros1Generator ros1Generator
+	@Inject ConfigService configService
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		resource.findInstancesOfRobot.forEach[
-			cifGenerator.generate(it, fsa)
-			ros2Generator.generate(it, fsa)
-			ros1Generator.generate(it, fsa)
+			val robotResource = it.eResource
+			val config = configService.getConfig(robotResource, fsa)
+			
+			cifGenerator.generate(it, fsa, config)
+			ros2Generator.generate(it, fsa, config)
+			ros1Generator.generate(it, fsa, config)
 		]
 	}
 	

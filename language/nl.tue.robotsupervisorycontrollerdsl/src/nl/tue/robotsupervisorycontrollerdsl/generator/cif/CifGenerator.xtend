@@ -13,6 +13,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.requirements.Requireme
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Requirement
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
 
 @Singleton
 class CifGenerator implements GeneratorInterface {
@@ -21,7 +22,7 @@ class CifGenerator implements GeneratorInterface {
 	@Inject extension RequirementGenerator
 	@Inject CifSynthesisTool cifSynthesisTool 
 
-	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess) {
+	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess, Config config) {
 		val fileName = '''«robot.name»/controller.cif'''
 
 		fileSystemAccess.generateFile(fileName, robot.controller)
@@ -31,15 +32,15 @@ class CifGenerator implements GeneratorInterface {
 	}
 
 	def controller(Robot robot) '''
-		// Component definitions
-		«FOR component : robot.definitions.filter(Component)»«component.compile(robot)»«ENDFOR»
-		
-		// Data type definitions
-		«FOR dataType : robot.definitions.filter(EnumDataType)»
-		«dataType.compile»
-		«ENDFOR»
-				
-		// Requirements
-		«FOR requirement : robot.definitions.filter(Requirement)»«requirement.compile»«ENDFOR»
+	// Component definitions
+	«FOR component : robot.definitions.filter(Component)»«component.compile(robot)»«ENDFOR»
+	
+	// Data type definitions
+	«FOR dataType : robot.definitions.filter(EnumDataType)»
+	«dataType.compile»
+	«ENDFOR»
+			
+	// Requirements
+	«FOR requirement : robot.definitions.filter(Requirement)»«requirement.compile»«ENDFOR»
 	'''
 }
