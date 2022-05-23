@@ -1,0 +1,6 @@
+{
+    "publishStateInformation": true,
+    "output": {
+        "ros2NodeLocation": "./controller/"
+    }
+}

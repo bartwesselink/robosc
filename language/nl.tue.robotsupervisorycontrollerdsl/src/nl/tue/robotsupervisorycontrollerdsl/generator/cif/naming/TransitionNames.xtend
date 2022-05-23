@@ -14,6 +14,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Feedba
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ResponseResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RequestResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CancelResultType
 
 @Singleton
 class TransitionNames {
@@ -46,10 +47,12 @@ class TransitionNames {
 	
 	def dispatch uncontrollableTransitionName(RequestResultType type)'''«triggerTransitionName»'''
 	def dispatch uncontrollableTransitionName(FeedbackResultType type)'''«feedbackTransitionName»'''
+	def dispatch uncontrollableTransitionName(CancelResultType type)'''«cancelTransitionName»'''
 	def dispatch uncontrollableTransitionName(ResponseResultType type)'''«responseTransitionName»'''
 	def dispatch uncontrollableTransitionName(ErrorResultType type)'''«errorTransitionName»'''
 	
 	def triggerTransitionName()'''c_trigger'''
+	def cancelTransitionName()'''c_cancel'''
 	def feedbackTransitionName()'''u_feedback'''
 	def responseTransitionName()'''u_response'''
 	def errorTransitionName()'''u_error'''

@@ -31,6 +31,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Feedba
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComplexDataTypeReference
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.EnumDataType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CancelResultType
 
 @Singleton
 class InfoUtilitiesGenerator {
@@ -235,6 +236,8 @@ class InfoUtilitiesGenerator {
 			return transition.communicationType.responseTransitionName
 		} else if (transition.resultType instanceof FeedbackResultType) {
 			return transition.communicationType.feedbackTransitionName
+		} else if (transition.resultType instanceof CancelResultType) {
+			return transition.communicationType.cancelTransitionName
 		} else if (transition.resultType instanceof ErrorResultType) {
 			return transition.communicationType.errorTransitionName
 		}

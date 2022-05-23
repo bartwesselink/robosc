@@ -11,15 +11,14 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_awaiting_initial_pose,
     _controller_awaiting_point,
-    _controller_data_pT4NY0XMH1T6O,
+    _controller_data_p8JQF3HQMGN1W,
     _controller_error,
     _controller_executing,
-    _controller_has_initial_pose,
     _controller_has_point,
     _controller_idle,
     _controller_in_service,
+    _controller_no_initial_pose,
     _controller_none,
     _controller_ready,
     _controller_stopped,
@@ -43,7 +42,7 @@ enum controllerEventEnum_ {
     action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
     action_navigate_u_response_,      /**< Event action_navigate.u_response. */
     action_navigate_u_error_,         /**< Event action_navigate.u_error. */
-    data_navigate_c_pXUMOI80JMDUU_,   /**< Event data_navigate.c_pXUMOI80JMDUU. */
+    data_navigate_c_p5DG8BX6BBU73_,   /**< Event data_navigate.c_p5DG8BX6BBU73. */
     message_stop_u_response_,         /**< Event message_stop.u_response. */
     message_continue_u_response_,     /**< Event message_continue.u_response. */
 };
@@ -67,7 +66,6 @@ extern const char *controller_event_names[];
 extern RealType model_time; /**< Current model time. */
 extern controllerEnum action_navigate_;         /**< Discrete variable "E action_navigate". */
 extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-extern controllerEnum component_Nav2Planner_;   /**< Discrete variable "E component_Nav2Planner". */
 extern controllerEnum component_Rviz_;          /**< Discrete variable "E component_Rviz". */
 extern controllerEnum data_navigate_;           /**< Discrete variable "E data_navigate". */
 

@@ -11,9 +11,8 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_awaiting,
-    _controller_data_p1POFUPHF3J9D,
-    _controller_data_pE12IJL1XOLG7,
+    _controller_data_pH7D9XWGBR3DU,
+    _controller_data_pZFY5U1THTYHW,
     _controller_in_service,
     _controller_line_found,
     _controller_no_line,
@@ -28,17 +27,17 @@ extern int EnumTypePrint(controllerEnum value, char *dest, int start, int end);
 
 /* Event declarations. */
 enum controllerEventEnum_ {
-    EVT_INITIAL_,                       /**< Initial step. */
-    EVT_DELAY_,                         /**< Delay step. */
-    EVT_TAU_,                           /**< Tau step. */
-    message_correction_u_response_,     /**< Event message_correction.u_response. */
-    message_no_line_u_response_,        /**< Event message_no_line.u_response. */
-    message_stop_u_response_,           /**< Event message_stop.u_response. */
-    message_continue_u_response_,       /**< Event message_continue.u_response. */
-    message_move_c_trigger_,    /**< Event message_move.c_trigger. */
-    data_move_c_pIELFJLWO5ADT_, /**< Event data_move.c_pIELFJLWO5ADT. */
-    message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
-    data_halt_c_pUOCHN7MH2YLV_,         /**< Event data_halt.c_pUOCHN7MH2YLV. */
+    EVT_INITIAL_,                   /**< Initial step. */
+    EVT_DELAY_,                     /**< Delay step. */
+    EVT_TAU_,                       /**< Tau step. */
+    message_correction_u_response_, /**< Event message_correction.u_response. */
+    message_no_line_u_response_,    /**< Event message_no_line.u_response. */
+    message_stop_u_response_,       /**< Event message_stop.u_response. */
+    message_continue_u_response_,   /**< Event message_continue.u_response. */
+    message_move_c_trigger_,        /**< Event message_move.c_trigger. */
+    data_move_c_p0E206EF3F8EP_,     /**< Event data_move.c_p0E206EF3F8EP. */
+    message_halt_c_trigger_,        /**< Event message_halt.c_trigger. */
+    data_halt_c_pND4IC4DOKS6S_,     /**< Event data_halt.c_pND4IC4DOKS6S. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
@@ -61,7 +60,7 @@ extern RealType model_time; /**< Current model time. */
 extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
 extern controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
 extern controllerEnum data_halt_;               /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_;       /**< Discrete variable "E data_move". */
+extern controllerEnum data_move_;               /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

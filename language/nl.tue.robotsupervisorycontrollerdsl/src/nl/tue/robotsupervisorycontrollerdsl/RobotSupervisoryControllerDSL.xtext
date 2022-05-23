@@ -107,8 +107,11 @@ FeedbackResultType:
 ErrorResultType:
 	{ErrorResultType} 'error';
 
+CancelResultType:
+	{CancelResultType} 'cancel';
+
 ResultType:
-	ResponseResultType | FeedbackResultType | RequestResultType | ErrorResultType;
+	ResponseResultType | FeedbackResultType | RequestResultType | ErrorResultType | CancelResultType;
 
 TransitionGuard:
 	'if' expression=Expression;

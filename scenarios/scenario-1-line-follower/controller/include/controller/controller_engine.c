@@ -32,24 +32,23 @@ int EnumTypePrint(controllerEnum value, char *dest, int start, int end) {
 
 /** Event names. */
 const char *controller_event_names[] = {
-    "initial-step",                      /**< Initial step. */
-    "delay-step",                        /**< Delay step. */
-    "tau",                               /**< Tau step. */
-    "message_correction.u_response",     /**< Event message_correction.u_response. */
-    "message_no_line.u_response",        /**< Event message_no_line.u_response. */
-    "message_stop.u_response",           /**< Event message_stop.u_response. */
-    "message_continue.u_response",       /**< Event message_continue.u_response. */
-    "message_move.c_trigger",    /**< Event message_move.c_trigger. */
-    "data_move.c_pIELFJLWO5ADT", /**< Event data_move.c_pIELFJLWO5ADT. */
-    "message_halt.c_trigger",            /**< Event message_halt.c_trigger. */
-    "data_halt.c_pUOCHN7MH2YLV",         /**< Event data_halt.c_pUOCHN7MH2YLV. */
+    "initial-step",                  /**< Initial step. */
+    "delay-step",                    /**< Delay step. */
+    "tau",                           /**< Tau step. */
+    "message_correction.u_response", /**< Event message_correction.u_response. */
+    "message_no_line.u_response",    /**< Event message_no_line.u_response. */
+    "message_stop.u_response",       /**< Event message_stop.u_response. */
+    "message_continue.u_response",   /**< Event message_continue.u_response. */
+    "message_move.c_trigger",        /**< Event message_move.c_trigger. */
+    "data_move.c_p0E206EF3F8EP",     /**< Event data_move.c_p0E206EF3F8EP. */
+    "message_halt.c_trigger",        /**< Event message_halt.c_trigger. */
+    "data_halt.c_pND4IC4DOKS6S",     /**< Event data_halt.c_pND4IC4DOKS6S. */
 };
 
 /** Enumeration names. */
 const char *enum_names[] = {
-    "awaiting",
-    "data_p1POFUPHF3J9D",
-    "data_pE12IJL1XOLG7",
+    "data_pH7D9XWGBR3DU",
+    "data_pZFY5U1THTYHW",
     "in_service",
     "line_found",
     "no_line",
@@ -70,7 +69,7 @@ const char *enum_names[] = {
 controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
 controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
 controllerEnum data_halt_;               /**< Discrete variable "E data_halt". */
-controllerEnum data_move_;       /**< Discrete variable "E data_move". */
+controllerEnum data_move_;               /**< Discrete variable "E data_move". */
 
 RealType model_time; /**< Current model time. */
 
@@ -88,51 +87,51 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "data_halt.c_pUOCHN7MH2YLV".
+ * Execute code for event "data_halt.c_pND4IC4DOKS6S".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p1POFUPHF3J9D));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_pH7D9XWGBR3DU));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_pUOCHN7MH2YLV_, TRUE);
+        controller_InfoEvent(data_halt_c_pND4IC4DOKS6S_, TRUE);
     #endif
 
     if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_p1POFUPHF3J9D;
-    } else if ((data_halt_) == (_controller_data_p1POFUPHF3J9D)) {
-        data_halt_ = _controller_data_p1POFUPHF3J9D;
+        data_halt_ = _controller_data_pH7D9XWGBR3DU;
+    } else if ((data_halt_) == (_controller_data_pH7D9XWGBR3DU)) {
+        data_halt_ = _controller_data_pH7D9XWGBR3DU;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_pUOCHN7MH2YLV_, FALSE);
+        controller_InfoEvent(data_halt_c_pND4IC4DOKS6S_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pIELFJLWO5ADT".
+ * Execute code for event "data_move.c_p0E206EF3F8EP".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent1(void) {
-    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pE12IJL1XOLG7));
+    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pZFY5U1THTYHW));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pIELFJLWO5ADT_, TRUE);
+        controller_InfoEvent(data_move_c_p0E206EF3F8EP_, TRUE);
     #endif
 
     if ((data_move_) == (_controller_none)) {
-        data_move_ = _controller_data_pE12IJL1XOLG7;
-    } else if ((data_move_) == (_controller_data_pE12IJL1XOLG7)) {
-        data_move_ = _controller_data_pE12IJL1XOLG7;
+        data_move_ = _controller_data_pZFY5U1THTYHW;
+    } else if ((data_move_) == (_controller_data_pZFY5U1THTYHW)) {
+        data_move_ = _controller_data_pZFY5U1THTYHW;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pIELFJLWO5ADT_, FALSE);
+        controller_InfoEvent(data_move_c_p0E206EF3F8EP_, FALSE);
     #endif
     return TRUE;
 }
@@ -143,7 +142,7 @@ static BoolType execEvent1(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_awaiting)) || (((component_LineDetector_) == (_controller_line_found)) || ((component_LineDetector_) == (_controller_no_line))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -168,18 +167,16 @@ static BoolType execEvent2(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent3(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_awaiting)) || (((component_LineDetector_) == (_controller_line_found)) || ((component_LineDetector_) == (_controller_no_line))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_correction_u_response_, TRUE);
     #endif
 
-    if ((component_LineDetector_) == (_controller_awaiting)) {
+    if ((component_LineDetector_) == (_controller_no_line)) {
         component_LineDetector_ = _controller_line_found;
     } else if ((component_LineDetector_) == (_controller_line_found)) {
-        component_LineDetector_ = _controller_line_found;
-    } else if ((component_LineDetector_) == (_controller_no_line)) {
         component_LineDetector_ = _controller_line_found;
     }
 
@@ -233,18 +230,16 @@ static BoolType execEvent5(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent6(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_awaiting)) || (((component_LineDetector_) == (_controller_line_found)) || ((component_LineDetector_) == (_controller_no_line))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_no_line_u_response_, TRUE);
     #endif
 
-    if ((component_LineDetector_) == (_controller_awaiting)) {
+    if ((component_LineDetector_) == (_controller_no_line)) {
         component_LineDetector_ = _controller_no_line;
     } else if ((component_LineDetector_) == (_controller_line_found)) {
-        component_LineDetector_ = _controller_no_line;
-    } else if ((component_LineDetector_) == (_controller_no_line)) {
         component_LineDetector_ = _controller_no_line;
     }
 
@@ -260,7 +255,7 @@ static BoolType execEvent6(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent7(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_awaiting)) || (((component_LineDetector_) == (_controller_line_found)) || ((component_LineDetector_) == (_controller_no_line))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -317,8 +312,8 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_pUOCHN7MH2YLV". */
-        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_pIELFJLWO5ADT". */
+        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_pND4IC4DOKS6S". */
+        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_p0E206EF3F8EP". */
         if (execEvent4()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
         if (execEvent5()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         break; /* No event fired, done with discrete steps. */
@@ -332,7 +327,7 @@ void controller_EngineFirstStep(void) {
     model_time = 0.0;
 
     component_EmergencyStop_ = _controller_in_service;
-    component_LineDetector_ = _controller_awaiting;
+    component_LineDetector_ = _controller_no_line;
     data_halt_ = _controller_none;
     data_move_ = _controller_none;
 
@@ -383,9 +378,9 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case data_halt_c_pUOCHN7MH2YLV_:
+        case data_halt_c_pND4IC4DOKS6S_:
             return execEvent0();
-        case data_move_c_pIELFJLWO5ADT_:
+        case data_move_c_p0E206EF3F8EP_:
             return execEvent1();
         case message_continue_u_response_:
             return execEvent2();

@@ -29,6 +29,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Feedba
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Transition
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CancelResultType
 
 @Singleton
 class AutomatonGenerator {
@@ -86,6 +87,10 @@ class AutomatonGenerator {
 		
 		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof FeedbackResultType].empty»
 		edge «action.plantName».«feedbackTransitionName»;
+		«ENDIF»
+				
+		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof CancelResultType].empty»
+		edge «action.plantName».«cancelTransitionName»;
 		«ENDIF»
 				
 		«IF automaton.allResultTransitions(action, state).filter[it.resultType instanceof ErrorResultType].empty»

@@ -2,6 +2,7 @@ package nl.tue.robotsupervisorycontrollerdsl.validation.rules;
 
 import org.eclipse.xtext.validation.Check;
 
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CancelResultType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message;
@@ -24,7 +25,7 @@ public class CorrectResultTypeRule extends AbstractValidationRule {
 		CommunicationType communication = entity.getCommunicationType();
 		
 		if (communication instanceof Service) {
-			if (entity.getResultType() instanceof FeedbackResultType) {
+			if (entity.getResultType() instanceof FeedbackResultType || entity.getResultType() instanceof CancelResultType) {
 				error("A service does not provide feedback.",
 						RobotSupervisoryControllerDSLPackage.Literals.RESULT_TRANSITION__RESULT_TYPE,
 						NO_SERVICE_FEEDBACK);
