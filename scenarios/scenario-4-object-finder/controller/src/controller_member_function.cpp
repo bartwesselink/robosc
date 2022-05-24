@@ -222,7 +222,7 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pODHJH7Z6WVS1) {
+		if (data_move_ == _controller_data_pUJQOQ9QOBU6G) {
 			value.linear.x = 0.5;
 			value.angular.z = 0.0;
 		}
@@ -234,7 +234,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pPIU09469XNY1) {
+		if (data_halt_ == _controller_data_p317CUD3L9Y4W) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -302,7 +302,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"ObjectFinder\",\"components\":[{\"name\":\"LidarScanner\",\"messages\":[\"scan_front\",\"scan_left\",\"scan_right\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"front\",\"left\",\"right\",\"has_front\"],\"states\":[{\"name\":\"sensing\",\"initial\":true,\"transitions\":[{\"next\":null,\"id\":\"message_scan_front_u_response_\",\"type\":\"response\",\"communication\":\"scan_front\"},{\"next\":null,\"id\":\"message_scan_left_u_response_\",\"type\":\"response\",\"communication\":\"scan_left\"},{\"next\":null,\"id\":\"message_scan_right_u_response_\",\"type\":\"response\",\"communication\":\"scan_right\"}]}]}},{\"name\":\"Rotator\",\"messages\":[\"rotate_left\",\"rotate_right\",\"rotate_done\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"awaiting_command\",\"initial\":true,\"transitions\":[{\"next\":\"executing\",\"id\":\"message_rotate_left_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_left\"},{\"next\":\"executing\",\"id\":\"message_rotate_right_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_right\"}]},{\"name\":\"executing\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_command\",\"id\":\"message_rotate_done_u_response_\",\"type\":\"response\",\"communication\":\"rotate_done\"}]}]}},{\"name\":\"ObjectDetector\",\"messages\":[\"object_count\",\"object_scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"scanned_object_count\",\"scanned_object\"],\"states\":[{\"name\":\"no_object\",\"initial\":true,\"transitions\":[{\"next\":\"object_found\",\"id\":\"component_ObjectDetector_c_pD52VTEK25Q3M_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]},{\"name\":\"object_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_object\",\"id\":\"component_ObjectDetector_c_pK94D46DMOT5H_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]}]}},{\"name\":\"TurtlebotPlatfrom\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"ObjectFinder\",\"components\":[{\"name\":\"LidarScanner\",\"messages\":[\"scan_front\",\"scan_left\",\"scan_right\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"front\",\"left\",\"right\",\"has_front\"],\"states\":[{\"name\":\"sensing\",\"initial\":true,\"transitions\":[{\"next\":null,\"id\":\"message_scan_front_u_response_\",\"type\":\"response\",\"communication\":\"scan_front\"},{\"next\":null,\"id\":\"message_scan_left_u_response_\",\"type\":\"response\",\"communication\":\"scan_left\"},{\"next\":null,\"id\":\"message_scan_right_u_response_\",\"type\":\"response\",\"communication\":\"scan_right\"}]}]}},{\"name\":\"Rotator\",\"messages\":[\"rotate_left\",\"rotate_right\",\"rotate_done\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"awaiting_command\",\"initial\":true,\"transitions\":[{\"next\":\"executing\",\"id\":\"message_rotate_left_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_left\"},{\"next\":\"executing\",\"id\":\"message_rotate_right_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_right\"}]},{\"name\":\"executing\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_command\",\"id\":\"message_rotate_done_u_response_\",\"type\":\"response\",\"communication\":\"rotate_done\"}]}]}},{\"name\":\"ObjectDetector\",\"messages\":[\"object_count\",\"object_scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"scanned_object_count\",\"scanned_object\"],\"states\":[{\"name\":\"no_object\",\"initial\":true,\"transitions\":[{\"next\":\"object_found\",\"id\":\"component_ObjectDetector_c_pWNNS4XL6SCRO_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]},{\"name\":\"object_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_object\",\"id\":\"component_ObjectDetector_c_p5QCU74C84GVQ_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]}]}},{\"name\":\"TurtlebotPlatfrom\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -316,7 +316,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 2;
-		      controller_Event_ data_events[2] = { data_move_c_p59SZ5U58D38D_,data_halt_c_pV3GQFTFPKFK6_ };
+		      controller_Event_ data_events[2] = { data_move_c_pTA66N6WOYVPF_,data_halt_c_pILNS40K98OUM_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -326,7 +326,7 @@ private:
 		}
 		
 		int nOfControllableEvents = 6;
-		      controller_Event_ controllable_events[6] = { component_ObjectDetector_c_pD52VTEK25Q3M_,component_ObjectDetector_c_pK94D46DMOT5H_,message_rotate_left_c_trigger_,message_rotate_right_c_trigger_,message_move_c_trigger_,message_halt_c_trigger_ };
+		      controller_Event_ controllable_events[6] = { component_ObjectDetector_c_pWNNS4XL6SCRO_,component_ObjectDetector_c_p5QCU74C84GVQ_,message_rotate_left_c_trigger_,message_rotate_right_c_trigger_,message_move_c_trigger_,message_halt_c_trigger_ };
 		
 		shuffle_events(controllable_events, nOfControllableEvents);
 		

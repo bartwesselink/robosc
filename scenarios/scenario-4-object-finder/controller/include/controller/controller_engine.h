@@ -12,8 +12,8 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting_command,
-    _controller_data_pODHJH7Z6WVS1,
-    _controller_data_pPIU09469XNY1,
+    _controller_data_p317CUD3L9Y4W,
+    _controller_data_pUJQOQ9QOBU6G,
     _controller_executing,
     _controller_in_service,
     _controller_no_object,
@@ -45,14 +45,14 @@ enum controllerEventEnum_ {
     message_rotate_left_c_trigger_,            /**< Event message_rotate_left.c_trigger. */
     message_rotate_right_c_trigger_,           /**< Event message_rotate_right.c_trigger. */
     message_rotate_done_u_response_,           /**< Event message_rotate_done.u_response. */
-    component_ObjectDetector_c_pD52VTEK25Q3M_, /**< Event component_ObjectDetector.c_pD52VTEK25Q3M. */
-    component_ObjectDetector_c_pK94D46DMOT5H_, /**< Event component_ObjectDetector.c_pK94D46DMOT5H. */
+    component_ObjectDetector_c_pWNNS4XL6SCRO_, /**< Event component_ObjectDetector.c_pWNNS4XL6SCRO. */
+    component_ObjectDetector_c_p5QCU74C84GVQ_, /**< Event component_ObjectDetector.c_p5QCU74C84GVQ. */
     message_object_count_u_response_,          /**< Event message_object_count.u_response. */
     message_object_scan_u_response_,           /**< Event message_object_scan.u_response. */
     message_move_c_trigger_,                   /**< Event message_move.c_trigger. */
-    data_move_c_p59SZ5U58D38D_,                /**< Event data_move.c_p59SZ5U58D38D. */
+    data_move_c_pTA66N6WOYVPF_,                /**< Event data_move.c_pTA66N6WOYVPF. */
     message_halt_c_trigger_,                   /**< Event message_halt.c_trigger. */
-    data_halt_c_pV3GQFTFPKFK6_,                /**< Event data_halt.c_pV3GQFTFPKFK6. */
+    data_halt_c_pILNS40K98OUM_,                /**< Event data_halt.c_pILNS40K98OUM. */
     message_stop_u_response_,                  /**< Event message_stop.u_response. */
     message_continue_u_response_,              /**< Event message_continue.u_response. */
 };
