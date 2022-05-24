@@ -41,14 +41,14 @@ const char *controller_event_names[] = {
     "message_rotate_left.c_trigger",            /**< Event message_rotate_left.c_trigger. */
     "message_rotate_right.c_trigger",           /**< Event message_rotate_right.c_trigger. */
     "message_rotate_done.u_response",           /**< Event message_rotate_done.u_response. */
-    "component_ObjectDetector.c_pMEKAB26VXH88", /**< Event component_ObjectDetector.c_pMEKAB26VXH88. */
-    "component_ObjectDetector.c_pJ9CPLLXSQPIV", /**< Event component_ObjectDetector.c_pJ9CPLLXSQPIV. */
+    "component_ObjectDetector.c_pYIWV3UN6RHUI", /**< Event component_ObjectDetector.c_pYIWV3UN6RHUI. */
+    "component_ObjectDetector.c_p4Q01G5U5RFMH", /**< Event component_ObjectDetector.c_p4Q01G5U5RFMH. */
     "message_object_count.u_response",          /**< Event message_object_count.u_response. */
     "message_object_scan.u_response",           /**< Event message_object_scan.u_response. */
     "message_move.c_trigger",                   /**< Event message_move.c_trigger. */
-    "data_move.c_pLV758PACQED7",                /**< Event data_move.c_pLV758PACQED7. */
+    "data_move.c_pARVPFJX71T8F",                /**< Event data_move.c_pARVPFJX71T8F. */
     "message_halt.c_trigger",                   /**< Event message_halt.c_trigger. */
-    "data_halt.c_p9UQ3P0N25U0W",                /**< Event data_halt.c_p9UQ3P0N25U0W. */
+    "data_halt.c_pPUTKW2QNOKNG",                /**< Event data_halt.c_pPUTKW2QNOKNG. */
     "message_stop.u_response",                  /**< Event message_stop.u_response. */
     "message_continue.u_response",              /**< Event message_continue.u_response. */
 };
@@ -56,8 +56,8 @@ const char *controller_event_names[] = {
 /** Enumeration names. */
 const char *enum_names[] = {
     "awaiting_command",
-    "data_p5PE6EDBUJ08I",
-    "data_pY9MH4XJAVWFY",
+    "data_p4FSKP6XP4WWE",
+    "data_pNESD2PVBHPLB",
     "executing",
     "in_service",
     "no_object",
@@ -115,7 +115,7 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "component_ObjectDetector.c_pJ9CPLLXSQPIV".
+ * Execute code for event "component_ObjectDetector.c_p4Q01G5U5RFMH".
  *
  * @return Whether the event was performed.
  */
@@ -124,19 +124,19 @@ static BoolType execEvent0(void) {
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_pJ9CPLLXSQPIV_, TRUE);
+        controller_InfoEvent(component_ObjectDetector_c_p4Q01G5U5RFMH_, TRUE);
     #endif
 
     component_ObjectDetector_ = _controller_no_object;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_pJ9CPLLXSQPIV_, FALSE);
+        controller_InfoEvent(component_ObjectDetector_c_p4Q01G5U5RFMH_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "component_ObjectDetector.c_pMEKAB26VXH88".
+ * Execute code for event "component_ObjectDetector.c_pYIWV3UN6RHUI".
  *
  * @return Whether the event was performed.
  */
@@ -145,63 +145,63 @@ static BoolType execEvent1(void) {
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_pMEKAB26VXH88_, TRUE);
+        controller_InfoEvent(component_ObjectDetector_c_pYIWV3UN6RHUI_, TRUE);
     #endif
 
     component_ObjectDetector_ = _controller_object_found;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_pMEKAB26VXH88_, FALSE);
+        controller_InfoEvent(component_ObjectDetector_c_pYIWV3UN6RHUI_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_halt.c_p9UQ3P0N25U0W".
+ * Execute code for event "data_halt.c_pPUTKW2QNOKNG".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p5PE6EDBUJ08I));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p4FSKP6XP4WWE));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p9UQ3P0N25U0W_, TRUE);
+        controller_InfoEvent(data_halt_c_pPUTKW2QNOKNG_, TRUE);
     #endif
 
     if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_p5PE6EDBUJ08I;
-    } else if ((data_halt_) == (_controller_data_p5PE6EDBUJ08I)) {
-        data_halt_ = _controller_data_p5PE6EDBUJ08I;
+        data_halt_ = _controller_data_p4FSKP6XP4WWE;
+    } else if ((data_halt_) == (_controller_data_p4FSKP6XP4WWE)) {
+        data_halt_ = _controller_data_p4FSKP6XP4WWE;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p9UQ3P0N25U0W_, FALSE);
+        controller_InfoEvent(data_halt_c_pPUTKW2QNOKNG_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pLV758PACQED7".
+ * Execute code for event "data_move.c_pARVPFJX71T8F".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent3(void) {
-    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pY9MH4XJAVWFY));
+    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pNESD2PVBHPLB));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pLV758PACQED7_, TRUE);
+        controller_InfoEvent(data_move_c_pARVPFJX71T8F_, TRUE);
     #endif
 
     if ((data_move_) == (_controller_none)) {
-        data_move_ = _controller_data_pY9MH4XJAVWFY;
-    } else if ((data_move_) == (_controller_data_pY9MH4XJAVWFY)) {
-        data_move_ = _controller_data_pY9MH4XJAVWFY;
+        data_move_ = _controller_data_pNESD2PVBHPLB;
+    } else if ((data_move_) == (_controller_data_pNESD2PVBHPLB)) {
+        data_move_ = _controller_data_pNESD2PVBHPLB;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pLV758PACQED7_, FALSE);
+        controller_InfoEvent(data_move_c_pARVPFJX71T8F_, FALSE);
     #endif
     return TRUE;
 }
@@ -237,7 +237,7 @@ static BoolType execEvent4(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent5(void) {
-    BoolType guard = (((((component_LidarScanner_v_left_) == (_controller_unsafe_left)) && ((component_LidarScanner_v_right_) == (_controller_unsafe_right))) && ((component_LidarScanner_v_front_) == (_controller_unsafe_front))) || ((component_ObjectDetector_) == (_controller_object_found))) && ((component_EmergencyStop_) == (_controller_stopped));
+    BoolType guard = ((((component_LidarScanner_v_left_) == (_controller_unsafe_left)) && ((component_LidarScanner_v_right_) == (_controller_unsafe_right))) && ((component_LidarScanner_v_front_) == (_controller_unsafe_front))) || (((component_ObjectDetector_) == (_controller_object_found)) || ((component_EmergencyStop_) == (_controller_stopped)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -513,10 +513,10 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "component_ObjectDetector.c_pJ9CPLLXSQPIV". */
-        if (execEvent1()) continue;  /* (Try to) perform event "component_ObjectDetector.c_pMEKAB26VXH88". */
-        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_p9UQ3P0N25U0W". */
-        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pLV758PACQED7". */
+        if (execEvent0()) continue;  /* (Try to) perform event "component_ObjectDetector.c_p4Q01G5U5RFMH". */
+        if (execEvent1()) continue;  /* (Try to) perform event "component_ObjectDetector.c_pYIWV3UN6RHUI". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_pPUTKW2QNOKNG". */
+        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pARVPFJX71T8F". */
         if (execEvent5()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
         if (execEvent6()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         if (execEvent10()) continue;  /* (Try to) perform event "message_rotate_left.c_trigger". */
@@ -533,11 +533,11 @@ void controller_EngineFirstStep(void) {
     controller_AssignInputVariables();
     component_EmergencyStop_ = _controller_in_service;
     component_LidarScanner_v_front_ = _controller_safe_front;
-    component_LidarScanner_v_left_ = _controller_safe_left;
-    component_LidarScanner_v_right_ = _controller_unsafe_right;
+    component_LidarScanner_v_left_ = _controller_unsafe_left;
+    component_LidarScanner_v_right_ = _controller_safe_right;
     component_LidarScanner_v_has_front_ = FALSE;
     component_ObjectDetector_v_scanned_object_count_ = 0;
-    component_ObjectDetector_v_scanned_object_ = _controller_sfront_sign;
+    component_ObjectDetector_v_scanned_object_ = _controller_no_object;
     component_ObjectDetector_ = _controller_no_object;
     component_Rotator_ = _controller_awaiting_command;
     data_halt_ = _controller_none;
@@ -590,13 +590,13 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case component_ObjectDetector_c_pJ9CPLLXSQPIV_:
+        case component_ObjectDetector_c_p4Q01G5U5RFMH_:
             return execEvent0();
-        case component_ObjectDetector_c_pMEKAB26VXH88_:
+        case component_ObjectDetector_c_pYIWV3UN6RHUI_:
             return execEvent1();
-        case data_halt_c_p9UQ3P0N25U0W_:
+        case data_halt_c_pPUTKW2QNOKNG_:
             return execEvent2();
-        case data_move_c_pLV758PACQED7_:
+        case data_move_c_pARVPFJX71T8F_:
             return execEvent3();
         case message_continue_u_response_:
             return execEvent4();

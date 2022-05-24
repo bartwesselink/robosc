@@ -98,8 +98,8 @@ robot ObjectFinder {
     component TurtlebotPlatfrom from TurtlebotLibrary import TurtlebotPlatform
     component EmergencyStop from EmergencyStopLibrary import EmergencyStop
 
-    requirement move needs LidarScanner.front = safe_front and Rotator.awaiting_command
-    requirement halt needs (LidarScanner.left = unsafe_left and LidarScanner.right = unsafe_right and LidarScanner.front = unsafe_front) or ObjectDetector.object_found
+    requirement move needs LidarScanner.front = safe_front and Rotator.awaiting_command and EmergencyStop.in_service
+    requirement halt needs (LidarScanner.left = unsafe_left and LidarScanner.right = unsafe_right and LidarScanner.front = unsafe_front) or ObjectDetector.object_found or EmergencyStop.stopped
 
     requirement rotate_left needs LidarScanner.left = safe_left and !ObjectDetector.object_found
     requirement rotate_right needs LidarScanner.right = safe_right and !ObjectDetector.object_found
@@ -108,9 +108,6 @@ robot ObjectFinder {
     requirement { rotate_left, rotate_right } needs LidarScanner.front = unsafe_front and LidarScanner.has_front
     requirement rotate_left needs LidarScanner.left = safe_left
     requirement rotate_right needs LidarScanner.right = safe_right
-
-    requirement move needs EmergencyStop.in_service
-    requirement halt needs EmergencyStop.stopped
 
     requirement ObjectDetector.object_found disables move
 	
