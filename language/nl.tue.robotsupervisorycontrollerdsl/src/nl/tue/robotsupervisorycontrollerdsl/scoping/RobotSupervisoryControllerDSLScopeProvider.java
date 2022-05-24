@@ -17,6 +17,7 @@ import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.DefaultScopeProvid
 import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.LibraryDefinitionScopeProvider;
 import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.LibraryScopeProvider;
 import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.PropertyValueScopeProvider;
+import nl.tue.robotsupervisorycontrollerdsl.scoping.providers.StateScopeProvider;
 
 public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSupervisoryControllerDSLScopeProvider {
 	@Inject DefaultScopeProvider defaultScopeProvider;
@@ -25,6 +26,7 @@ public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSup
 	@Inject LibraryDefinitionScopeProvider libraryDefinitionScopeProvider;
 	@Inject AccessScopeProvider accessScopeProvider;
 	@Inject LibraryScopeProvider libraryScopeProvider;
+	@Inject StateScopeProvider stateScopeProvider;
 
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
@@ -34,6 +36,7 @@ public class RobotSupervisoryControllerDSLScopeProvider extends AbstractRobotSup
 		all.add(communicationTypeScopeProvider);
 		all.add(libraryDefinitionScopeProvider);
 		all.add(accessScopeProvider);
+		all.add(stateScopeProvider);
 		all.add(defaultScopeProvider);
 		
 		for (AbstractScopeProvider provider : all) {
