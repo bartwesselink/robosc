@@ -101,8 +101,8 @@ robot ObjectFinder {
     requirement move needs LidarScanner.front = safe_front and Rotator.awaiting_command and EmergencyStop.in_service
     requirement halt needs (LidarScanner.left = unsafe_left and LidarScanner.right = unsafe_right and LidarScanner.front = unsafe_front) or ObjectDetector.object_found or EmergencyStop.stopped
 
-    requirement rotate_left needs LidarScanner.left = safe_left and !ObjectDetector.object_found
-    requirement rotate_right needs LidarScanner.right = safe_right and !ObjectDetector.object_found
+    requirement rotate_left needs LidarScanner.left = safe_left and !ObjectDetector.object_found and EmergencyStop.in_service
+    requirement rotate_right needs LidarScanner.right = safe_right and !ObjectDetector.object_found and EmergencyStop.in_service
     
     requirement { rotate_left, rotate_right } needs Rotator.awaiting_command
     requirement { rotate_left, rotate_right } needs LidarScanner.front = unsafe_front and LidarScanner.has_front
