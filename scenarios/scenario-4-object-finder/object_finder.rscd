@@ -6,9 +6,9 @@ robot ObjectFinder {
         ranges: array(double)
     }
 
-    datatype enum DistanceTop from LaserScan to {
-        value.ranges[0] >= 0.6 -> safe_top
-        default -> unsafe_top
+    datatype enum DistanceFront from LaserScan to {
+        value.ranges[0] >= 0.6 -> safe_front
+        default -> unsafe_front
     }
 
     datatype enum DistanceLeft from LaserScan to {
@@ -34,23 +34,23 @@ robot ObjectFinder {
     }
 
     datatype enum ScannedObject from BoundingBoxes to {
-        value.bounding_boxes[0].class_id = "stop sign" -> stop_sign
+        value.bounding_boxes[0].class_id = "sfront sign" -> sfront_sign
         default -> no_object
     }
 
     component LidarScanner {
-        outgoing message scan_top with identifier: "/scan", type: DistanceTop links laser
+        outgoing message scan_front with identifier: "/scan", type: DistanceFront links laser
         outgoing message scan_left with identifier: "/scan", type: DistanceLeft links laser
         outgoing message scan_right with identifier: "/scan", type: DistanceRight links laser
 
         behaviour {
-            variable top: DistanceTop
+            variable front: DistanceFront
             variable left: DistanceLeft
             variable right: DistanceRight
-            variable has_top: boolean = false
+            variable has_front: boolean = false
 
             initial state sensing {
-                on response from scan_top do top := value, has_top := true
+                on response from scan_front do front := value, has_front := true
                 on response from scan_left do left := value
                 on response from scan_right do right := value
             }
@@ -86,7 +86,7 @@ robot ObjectFinder {
             on response from object_scan do scanned_object := value
 
             initial state no_object {
-                transition if scanned_object_count > 0 and scanned_object = stop_sign goto object_found
+                transition if scanned_object_count > 0 and scanned_object = sfront_sign goto object_found
             }
 
             state object_found {
@@ -98,14 +98,14 @@ robot ObjectFinder {
     component TurtlebotPlatfrom from TurtlebotLibrary import TurtlebotPlatform
     component EmergencyStop from EmergencyStopLibrary import EmergencyStop
 
-    requirement move needs LidarScanner.top = safe_top and Rotator.awaiting_command
-    requirement halt needs (LidarScanner.left = unsafe_left and LidarScanner.right = unsafe_right and LidarScanner.top = unsafe_top) or ObjectDetector.object_found
+    requirement move needs LidarScanner.front = safe_front and Rotator.awaiting_command
+    requirement halt needs (LidarScanner.left = unsafe_left and LidarScanner.right = unsafe_right and LidarScanner.front = unsafe_front) or ObjectDetector.object_found
 
     requirement rotate_left needs LidarScanner.left = safe_left and !ObjectDetector.object_found
     requirement rotate_right needs LidarScanner.right = safe_right and !ObjectDetector.object_found
     
     requirement { rotate_left, rotate_right } needs Rotator.awaiting_command
-    requirement { rotate_left, rotate_right } needs LidarScanner.top = unsafe_top and LidarScanner.has_top
+    requirement { rotate_left, rotate_right } needs LidarScanner.front = unsafe_front and LidarScanner.has_front
     requirement rotate_left needs LidarScanner.left = safe_left
     requirement rotate_right needs LidarScanner.right = safe_right
 
