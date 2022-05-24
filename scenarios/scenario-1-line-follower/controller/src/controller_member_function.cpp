@@ -131,9 +131,9 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pSC2AWXJR8G5U) {
+		if (data_move_ == _controller_data_pEULYI0N12387) {
 			value.linear.x = 0.6;
-			value.angular.z = (0.0 - code_LineDetector_current_correction) / 100;
+			value.angular.z = (-code_LineDetector_current_correction) / 100;
 		}
 		
 		this->publisher_client_move->publish(value);
@@ -143,7 +143,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pCEX5HKVTCVFV) {
+		if (data_halt_ == _controller_data_pJE29P24UZXSK) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -188,7 +188,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 2;
-		      controller_Event_ data_events[2] = { data_move_c_pUTQ7O4SB8L4E_,data_halt_c_p1FP81LM3F430_ };
+		      controller_Event_ data_events[2] = { data_move_c_pY4AIEBFAZG2Q_,data_halt_c_pEW6PB78NIP3P_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

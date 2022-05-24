@@ -41,14 +41,14 @@ const char *controller_event_names[] = {
     "message_rotate_left.c_trigger",            /**< Event message_rotate_left.c_trigger. */
     "message_rotate_right.c_trigger",           /**< Event message_rotate_right.c_trigger. */
     "message_rotate_done.u_response",           /**< Event message_rotate_done.u_response. */
-    "component_ObjectDetector.c_p2JOGUBQRBXLQ", /**< Event component_ObjectDetector.c_p2JOGUBQRBXLQ. */
-    "component_ObjectDetector.c_p7AB3L9LF8U3N", /**< Event component_ObjectDetector.c_p7AB3L9LF8U3N. */
+    "component_ObjectDetector.c_pQ6ZW96L98L2D", /**< Event component_ObjectDetector.c_pQ6ZW96L98L2D. */
+    "component_ObjectDetector.c_p1BHHXMRG49VK", /**< Event component_ObjectDetector.c_p1BHHXMRG49VK. */
     "message_object_count.u_response",          /**< Event message_object_count.u_response. */
     "message_object_scan.u_response",           /**< Event message_object_scan.u_response. */
     "message_move.c_trigger",                   /**< Event message_move.c_trigger. */
-    "data_move.c_pTJ115VAZ7GQK",                /**< Event data_move.c_pTJ115VAZ7GQK. */
+    "data_move.c_pS4X2J5SH2DDL",                /**< Event data_move.c_pS4X2J5SH2DDL. */
     "message_halt.c_trigger",                   /**< Event message_halt.c_trigger. */
-    "data_halt.c_p3AFIGS2CH22L",                /**< Event data_halt.c_p3AFIGS2CH22L. */
+    "data_halt.c_pZODSGAWUMUUZ",                /**< Event data_halt.c_pZODSGAWUMUUZ. */
     "message_stop.u_response",                  /**< Event message_stop.u_response. */
     "message_continue.u_response",              /**< Event message_continue.u_response. */
 };
@@ -56,8 +56,8 @@ const char *controller_event_names[] = {
 /** Enumeration names. */
 const char *enum_names[] = {
     "awaiting_command",
-    "data_p81GHL0QL79EF",
-    "data_pLN3NI7SQGEAA",
+    "data_p1G62E79C2MSL",
+    "data_pR3VVYO9VQPT1",
     "executing",
     "in_service",
     "no_object",
@@ -84,18 +84,20 @@ controllerEnum message_scan_top_i_response_;    /**< Input variable "E message_s
 controllerEnum message_scan_left_i_response_;   /**< Input variable "E message_scan_left.i_response". */
 controllerEnum message_scan_right_i_response_;  /**< Input variable "E message_scan_right.i_response". */
 IntType message_object_count_i_response_count_; /**< Input variable "int[0..1] message_object_count.i_response_count". */
+controllerEnum message_object_scan_i_response_; /**< Input variable "E message_object_scan.i_response". */
 
 /* State variables. */
-controllerEnum component_EmergencyStop_;                  /**< Discrete variable "E component_EmergencyStop". */
-controllerEnum component_LidarScanner_v_top_;             /**< Discrete variable "E component_LidarScanner.v_top". */
-controllerEnum component_LidarScanner_v_left_;            /**< Discrete variable "E component_LidarScanner.v_left". */
-controllerEnum component_LidarScanner_v_right_;           /**< Discrete variable "E component_LidarScanner.v_right". */
-BoolType component_LidarScanner_v_has_top_;               /**< Discrete variable "bool component_LidarScanner.v_has_top". */
-IntType component_ObjectDetector_v_scanned_object_count_; /**< Discrete variable "int[0..1] component_ObjectDetector.v_scanned_object_count". */
-controllerEnum component_ObjectDetector_;                 /**< Discrete variable "E component_ObjectDetector". */
-controllerEnum component_Platform_;                       /**< Discrete variable "E component_Platform". */
-controllerEnum data_halt_;                                /**< Discrete variable "E data_halt". */
-controllerEnum data_move_;                                /**< Discrete variable "E data_move". */
+controllerEnum component_EmergencyStop_;                   /**< Discrete variable "E component_EmergencyStop". */
+controllerEnum component_LidarScanner_v_top_;              /**< Discrete variable "E component_LidarScanner.v_top". */
+controllerEnum component_LidarScanner_v_left_;             /**< Discrete variable "E component_LidarScanner.v_left". */
+controllerEnum component_LidarScanner_v_right_;            /**< Discrete variable "E component_LidarScanner.v_right". */
+BoolType component_LidarScanner_v_has_top_;                /**< Discrete variable "bool component_LidarScanner.v_has_top". */
+IntType component_ObjectDetector_v_scanned_object_count_;  /**< Discrete variable "int[0..1] component_ObjectDetector.v_scanned_object_count". */
+controllerEnum component_ObjectDetector_v_scanned_object_; /**< Discrete variable "E component_ObjectDetector.v_scanned_object". */
+controllerEnum component_ObjectDetector_;                  /**< Discrete variable "E component_ObjectDetector". */
+controllerEnum component_Rotator_;                         /**< Discrete variable "E component_Rotator". */
+controllerEnum data_halt_;                                 /**< Discrete variable "E data_halt". */
+controllerEnum data_move_;                                 /**< Discrete variable "E data_move". */
 
 RealType model_time; /**< Current model time. */
 
@@ -113,93 +115,93 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "component_ObjectDetector.c_p2JOGUBQRBXLQ".
+ * Execute code for event "component_ObjectDetector.c_p1BHHXMRG49VK".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((component_ObjectDetector_) == (_controller_no_object)) && ((component_ObjectDetector_v_scanned_object_count_) > (0));
-    if (!guard) return FALSE;
-
-    #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_p2JOGUBQRBXLQ_, TRUE);
-    #endif
-
-    component_ObjectDetector_ = _controller_object_found;
-
-    #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_p2JOGUBQRBXLQ_, FALSE);
-    #endif
-    return TRUE;
-}
-
-/**
- * Execute code for event "component_ObjectDetector.c_p7AB3L9LF8U3N".
- *
- * @return Whether the event was performed.
- */
-static BoolType execEvent1(void) {
     BoolType guard = ((component_ObjectDetector_) == (_controller_object_found)) && ((component_ObjectDetector_v_scanned_object_count_) == (0));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_p7AB3L9LF8U3N_, TRUE);
+        controller_InfoEvent(component_ObjectDetector_c_p1BHHXMRG49VK_, TRUE);
     #endif
 
     component_ObjectDetector_ = _controller_no_object;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(component_ObjectDetector_c_p7AB3L9LF8U3N_, FALSE);
+        controller_InfoEvent(component_ObjectDetector_c_p1BHHXMRG49VK_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_halt.c_p3AFIGS2CH22L".
+ * Execute code for event "component_ObjectDetector.c_pQ6ZW96L98L2D".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent1(void) {
+    BoolType guard = ((component_ObjectDetector_) == (_controller_no_object)) && (((component_ObjectDetector_v_scanned_object_count_) > (0)) && ((component_ObjectDetector_v_scanned_object_) == (_controller_stop_sign)));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(component_ObjectDetector_c_pQ6ZW96L98L2D_, TRUE);
+    #endif
+
+    component_ObjectDetector_ = _controller_object_found;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(component_ObjectDetector_c_pQ6ZW96L98L2D_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_halt.c_pZODSGAWUMUUZ".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p81GHL0QL79EF));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_pR3VVYO9VQPT1));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p3AFIGS2CH22L_, TRUE);
+        controller_InfoEvent(data_halt_c_pZODSGAWUMUUZ_, TRUE);
     #endif
 
     if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_p81GHL0QL79EF;
-    } else if ((data_halt_) == (_controller_data_p81GHL0QL79EF)) {
-        data_halt_ = _controller_data_p81GHL0QL79EF;
+        data_halt_ = _controller_data_pR3VVYO9VQPT1;
+    } else if ((data_halt_) == (_controller_data_pR3VVYO9VQPT1)) {
+        data_halt_ = _controller_data_pR3VVYO9VQPT1;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p3AFIGS2CH22L_, FALSE);
+        controller_InfoEvent(data_halt_c_pZODSGAWUMUUZ_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pTJ115VAZ7GQK".
+ * Execute code for event "data_move.c_pS4X2J5SH2DDL".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent3(void) {
-    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pLN3NI7SQGEAA));
+    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_p1G62E79C2MSL));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pTJ115VAZ7GQK_, TRUE);
+        controller_InfoEvent(data_move_c_pS4X2J5SH2DDL_, TRUE);
     #endif
 
     if ((data_move_) == (_controller_none)) {
-        data_move_ = _controller_data_pLN3NI7SQGEAA;
-    } else if ((data_move_) == (_controller_data_pLN3NI7SQGEAA)) {
-        data_move_ = _controller_data_pLN3NI7SQGEAA;
+        data_move_ = _controller_data_p1G62E79C2MSL;
+    } else if ((data_move_) == (_controller_data_p1G62E79C2MSL)) {
+        data_move_ = _controller_data_p1G62E79C2MSL;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pTJ115VAZ7GQK_, FALSE);
+        controller_InfoEvent(data_move_c_pS4X2J5SH2DDL_, FALSE);
     #endif
     return TRUE;
 }
@@ -210,7 +212,7 @@ static BoolType execEvent3(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent4(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -254,7 +256,7 @@ static BoolType execEvent5(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent6(void) {
-    BoolType guard = ((component_LidarScanner_v_top_) == (_controller_safe_top)) && (((component_Platform_) == (_controller_awaiting_command)) && (((component_EmergencyStop_) == (_controller_in_service)) && ((component_ObjectDetector_ != _controller_object_found))));
+    BoolType guard = ((component_LidarScanner_v_top_) == (_controller_safe_top)) && (((component_Rotator_) == (_controller_awaiting_command)) && (((component_EmergencyStop_) == (_controller_in_service)) && ((component_ObjectDetector_ != _controller_object_found))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -273,7 +275,7 @@ static BoolType execEvent6(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent7(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -298,12 +300,18 @@ static BoolType execEvent7(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent8(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_object_scan_u_response_, TRUE);
     #endif
+
+    if ((component_ObjectDetector_) == (_controller_no_object)) {
+        component_ObjectDetector_v_scanned_object_ = message_object_scan_i_response_;
+    } else if ((component_ObjectDetector_) == (_controller_object_found)) {
+        component_ObjectDetector_v_scanned_object_ = message_object_scan_i_response_;
+    }
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_object_scan_u_response_, FALSE);
@@ -317,17 +325,17 @@ static BoolType execEvent8(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent9(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_rotate_done_u_response_, TRUE);
     #endif
 
-    if ((component_Platform_) == (_controller_awaiting_command)) {
-        component_Platform_ = _controller_awaiting_command;
-    } else if ((component_Platform_) == (_controller_executing)) {
-        component_Platform_ = _controller_awaiting_command;
+    if ((component_Rotator_) == (_controller_awaiting_command)) {
+        component_Rotator_ = _controller_awaiting_command;
+    } else if ((component_Rotator_) == (_controller_executing)) {
+        component_Rotator_ = _controller_awaiting_command;
     }
 
     #if EVENT_OUTPUT
@@ -342,14 +350,14 @@ static BoolType execEvent9(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent10(void) {
-    BoolType guard = ((component_Platform_) == (_controller_awaiting_command)) && ((((component_LidarScanner_v_left_) == (_controller_safe_left)) && (((component_ObjectDetector_ != _controller_object_found)) && ((component_Platform_) == (_controller_awaiting_command)))) && (((component_LidarScanner_v_top_) == (_controller_unsafe_top)) && ((component_LidarScanner_v_has_top_) && ((component_LidarScanner_v_left_) == (_controller_safe_left)))));
+    BoolType guard = ((component_Rotator_) == (_controller_awaiting_command)) && ((((component_LidarScanner_v_left_) == (_controller_safe_left)) && (((component_ObjectDetector_ != _controller_object_found)) && ((component_Rotator_) == (_controller_awaiting_command)))) && (((component_LidarScanner_v_top_) == (_controller_unsafe_top)) && ((component_LidarScanner_v_has_top_) && ((component_LidarScanner_v_left_) == (_controller_safe_left)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_rotate_left_c_trigger_, TRUE);
     #endif
 
-    component_Platform_ = _controller_executing;
+    component_Rotator_ = _controller_executing;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_rotate_left_c_trigger_, FALSE);
@@ -363,14 +371,14 @@ static BoolType execEvent10(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent11(void) {
-    BoolType guard = ((component_Platform_) == (_controller_awaiting_command)) && ((((component_LidarScanner_v_right_) == (_controller_safe_right)) && (((component_ObjectDetector_ != _controller_object_found)) && ((component_Platform_) == (_controller_awaiting_command)))) && (((component_LidarScanner_v_top_) == (_controller_unsafe_top)) && ((component_LidarScanner_v_has_top_) && ((component_LidarScanner_v_right_) == (_controller_safe_right)))));
+    BoolType guard = ((component_Rotator_) == (_controller_awaiting_command)) && ((((component_LidarScanner_v_right_) == (_controller_safe_right)) && (((component_ObjectDetector_ != _controller_object_found)) && ((component_Rotator_) == (_controller_awaiting_command)))) && (((component_LidarScanner_v_top_) == (_controller_unsafe_top)) && ((component_LidarScanner_v_has_top_) && ((component_LidarScanner_v_right_) == (_controller_safe_right)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_rotate_right_c_trigger_, TRUE);
     #endif
 
-    component_Platform_ = _controller_executing;
+    component_Rotator_ = _controller_executing;
 
     #if EVENT_OUTPUT
         controller_InfoEvent(message_rotate_right_c_trigger_, FALSE);
@@ -384,7 +392,7 @@ static BoolType execEvent11(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent12(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -405,7 +413,7 @@ static BoolType execEvent12(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent13(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -426,7 +434,7 @@ static BoolType execEvent13(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent14(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -448,7 +456,7 @@ static BoolType execEvent14(void) {
  * @return Whether the event was performed.
  */
 static BoolType execEvent15(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Platform_) == (_controller_awaiting_command)) || ((component_Platform_) == (_controller_executing))));
+    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && ((((component_ObjectDetector_) == (_controller_no_object)) || ((component_ObjectDetector_) == (_controller_object_found))) && (((component_Rotator_) == (_controller_awaiting_command)) || ((component_Rotator_) == (_controller_executing))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -505,10 +513,10 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "component_ObjectDetector.c_p2JOGUBQRBXLQ". */
-        if (execEvent1()) continue;  /* (Try to) perform event "component_ObjectDetector.c_p7AB3L9LF8U3N". */
-        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_p3AFIGS2CH22L". */
-        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pTJ115VAZ7GQK". */
+        if (execEvent0()) continue;  /* (Try to) perform event "component_ObjectDetector.c_p1BHHXMRG49VK". */
+        if (execEvent1()) continue;  /* (Try to) perform event "component_ObjectDetector.c_pQ6ZW96L98L2D". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_pZODSGAWUMUUZ". */
+        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pS4X2J5SH2DDL". */
         if (execEvent5()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
         if (execEvent6()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         if (execEvent10()) continue;  /* (Try to) perform event "message_rotate_left.c_trigger". */
@@ -525,12 +533,13 @@ void controller_EngineFirstStep(void) {
     controller_AssignInputVariables();
     component_EmergencyStop_ = _controller_in_service;
     component_LidarScanner_v_top_ = _controller_unsafe_top;
-    component_LidarScanner_v_left_ = _controller_safe_left;
-    component_LidarScanner_v_right_ = _controller_unsafe_right;
+    component_LidarScanner_v_left_ = _controller_unsafe_left;
+    component_LidarScanner_v_right_ = _controller_safe_right;
     component_LidarScanner_v_has_top_ = FALSE;
     component_ObjectDetector_v_scanned_object_count_ = 0;
+    component_ObjectDetector_v_scanned_object_ = _controller_stop_sign;
     component_ObjectDetector_ = _controller_no_object;
-    component_Platform_ = _controller_awaiting_command;
+    component_Rotator_ = _controller_awaiting_command;
     data_halt_ = _controller_none;
     data_move_ = _controller_none;
 
@@ -581,13 +590,13 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case component_ObjectDetector_c_p2JOGUBQRBXLQ_:
+        case component_ObjectDetector_c_p1BHHXMRG49VK_:
             return execEvent0();
-        case component_ObjectDetector_c_p7AB3L9LF8U3N_:
+        case component_ObjectDetector_c_pQ6ZW96L98L2D_:
             return execEvent1();
-        case data_halt_c_p3AFIGS2CH22L_:
+        case data_halt_c_pZODSGAWUMUUZ_:
             return execEvent2();
-        case data_move_c_pTJ115VAZ7GQK_:
+        case data_move_c_pS4X2J5SH2DDL_:
             return execEvent3();
         case message_continue_u_response_:
             return execEvent4();

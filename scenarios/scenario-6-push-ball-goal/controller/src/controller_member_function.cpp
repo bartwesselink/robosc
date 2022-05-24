@@ -211,19 +211,19 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pSR16YMT9BX2N) {
+		if (data_move_ == _controller_data_p1WHDXIRJ8SE6) {
 			value.linear.x = 0.2;
 			value.angular.z = (0.0 - code_BallDetector_current_correction) / 500;
 		} else 
-		if (data_move_ == _controller_data_pYFFF2A527KHW) {
+		if (data_move_ == _controller_data_p54IRQOBLUVEH) {
 			value.linear.x = 0.2;
 			value.angular.z = (code_BallDetector_current_correction) / 1000;
 		} else 
-		if (data_move_ == _controller_data_p6CC3FGSSE2VU) {
+		if (data_move_ == _controller_data_p0JQOSJ3LB8XD) {
 			value.linear.x = 0.2;
 			value.angular.z = (0.0 - code_GoalDetector_current_correction) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pJ2L2N8UADND7) {
+		if (data_move_ == _controller_data_pBDSE6ECWZU73) {
 			value.angular.z = 0.5;
 		}
 		
@@ -234,7 +234,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pR90E9PD1D273) {
+		if (data_halt_ == _controller_data_pPTFDYONOLXFH) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -295,7 +295,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 5;
-		      controller_Event_ data_events[5] = { data_move_c_pGVOGWDMQFMAS_,data_move_c_p86VVV15QVYJY_,data_move_c_p8K2W0L7NI49N_,data_move_c_pRGH2RV7NI6O8_,data_halt_c_p2W57UN5KK5LD_ };
+		      controller_Event_ data_events[5] = { data_move_c_p840O4KBFVWH4_,data_move_c_pO652CWP9EE8K_,data_move_c_pMHOBSICJ2ZLX_,data_move_c_p7P2T293D3935_,data_halt_c_p139788L2KR99_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

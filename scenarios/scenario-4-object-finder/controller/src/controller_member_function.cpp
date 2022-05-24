@@ -17,7 +17,7 @@
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
-#include "darknet_ros_msgs/msg/object_count.hpp"
+#include "darknet_ros_msgs/msg/bounding_boxes.hpp"
 #include "darknet_ros_msgs/msg/bounding_boxes.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/twist.hpp"
@@ -115,7 +115,7 @@ public:
 	rclcpp::Publisher<std_msgs::msg::Empty>::SharedPtr publisher_client_rotate_left;
 	rclcpp::Publisher<std_msgs::msg::Empty>::SharedPtr publisher_client_rotate_right;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_rotate_done;
-	rclcpp::Subscription<darknet_ros_msgs::msg::ObjectCount>::SharedPtr subscriber_client_object_count;
+	rclcpp::Subscription<darknet_ros_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_object_count;
 	rclcpp::Subscription<darknet_ros_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_object_scan;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_halt;
@@ -131,7 +131,7 @@ public:
 		publisher_client_rotate_left = this->create_publisher<std_msgs::msg::Empty>("/rotate_left", 10);
 		publisher_client_rotate_right = this->create_publisher<std_msgs::msg::Empty>("/rotate_right", 10);
 		subscriber_client_rotate_done = this->create_subscription<std_msgs::msg::Empty>("/rotate_done", 10, std::bind(&Controller::callback_message_rotate_done, this, std::placeholders::_1));
-		subscriber_client_object_count = this->create_subscription<darknet_ros_msgs::msg::ObjectCount>("/darknet_ros/found_object", 10, std::bind(&Controller::callback_message_object_count, this, std::placeholders::_1));
+		subscriber_client_object_count = this->create_subscription<darknet_ros_msgs::msg::BoundingBoxes>("/darknet_ros/found_object", 10, std::bind(&Controller::callback_message_object_count, this, std::placeholders::_1));
 		subscriber_client_object_scan = this->create_subscription<darknet_ros_msgs::msg::BoundingBoxes>("/darknet_ros/bounding_boxes", 10, std::bind(&Controller::callback_message_object_scan, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 		publisher_client_halt = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
@@ -198,7 +198,7 @@ public:
 	}
 	
 	
-	void callback_message_object_count(const darknet_ros_msgs::msg::ObjectCount::SharedPtr msg) {
+	void callback_message_object_count(const darknet_ros_msgs::msg::BoundingBoxes::SharedPtr msg) {
 		message_object_count_i_response_count_ = msg->;
 		
 		
@@ -208,8 +208,8 @@ public:
 	
 	
 	void callback_message_object_scan(const darknet_ros_msgs::msg::BoundingBoxes::SharedPtr msg) {
+		message_object_scan_i_response_ = convert_enum_ScannedObject(msg);
 		
-		code_ObjectDetector_scanned_object = convert_enum_ScannedObject(msg);
 		
 		
 		// Call engine function
@@ -222,7 +222,7 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pLN3NI7SQGEAA) {
+		if (data_move_ == _controller_data_p1G62E79C2MSL) {
 			value.linear.x = 0.5;
 			value.angular.z = 0.0;
 		}
@@ -234,7 +234,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_p81GHL0QL79EF) {
+		if (data_halt_ == _controller_data_pR3VVYO9VQPT1) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -277,8 +277,8 @@ public:
 		
 		output << "}";
 		output << "},";
-		output << "\"Platform\": {";
-		output << "\"state\": \"" << enum_names[component_Platform_] << "\",";
+		output << "\"Rotator\": {";
+		output << "\"state\": \"" << enum_names[component_Rotator_] << "\",";
 		output << "\"variables\": {";
 		
 		
@@ -289,7 +289,7 @@ public:
 		output << "\"variables\": {";
 		
 		output << "\"scanned_object_count\": \"" << component_ObjectDetector_v_scanned_object_count_ << "\",";				
-		output << "\"scanned_object\": \"" << enum_names[code_ObjectDetector_scanned_object] << "\"";				
+		output << "\"scanned_object\": \"" << enum_names[component_ObjectDetector_v_scanned_object_] << "\"";				
 		
 		output << "}";
 		output << "},";
@@ -302,7 +302,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"ObjectFinder\",\"components\":[{\"name\":\"LidarScanner\",\"messages\":[\"scan_top\",\"scan_left\",\"scan_right\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"top\",\"left\",\"right\",\"has_top\"],\"states\":[{\"name\":\"sensing\",\"initial\":true,\"transitions\":[{\"next\":null,\"id\":\"message_scan_top_u_response_\",\"type\":\"response\",\"communication\":\"scan_top\"},{\"next\":null,\"id\":\"message_scan_left_u_response_\",\"type\":\"response\",\"communication\":\"scan_left\"},{\"next\":null,\"id\":\"message_scan_right_u_response_\",\"type\":\"response\",\"communication\":\"scan_right\"}]}]}},{\"name\":\"Platform\",\"messages\":[\"rotate_left\",\"rotate_right\",\"rotate_done\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"awaiting_command\",\"initial\":true,\"transitions\":[{\"next\":\"executing\",\"id\":\"message_rotate_left_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_left\"},{\"next\":\"executing\",\"id\":\"message_rotate_right_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_right\"}]},{\"name\":\"executing\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_command\",\"id\":\"message_rotate_done_u_response_\",\"type\":\"response\",\"communication\":\"rotate_done\"}]}]}},{\"name\":\"ObjectDetector\",\"messages\":[\"object_count\",\"object_scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"scanned_object_count\",\"scanned_object\"],\"states\":[{\"name\":\"no_object\",\"initial\":true,\"transitions\":[{\"next\":\"object_found\",\"id\":\"component_ObjectDetector_c_p2JOGUBQRBXLQ_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]},{\"name\":\"object_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_object\",\"id\":\"component_ObjectDetector_c_p7AB3L9LF8U3N_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]}]}},{\"name\":\"TurtlebotPlatfrom\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"ObjectFinder\",\"components\":[{\"name\":\"LidarScanner\",\"messages\":[\"scan_top\",\"scan_left\",\"scan_right\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"top\",\"left\",\"right\",\"has_top\"],\"states\":[{\"name\":\"sensing\",\"initial\":true,\"transitions\":[{\"next\":null,\"id\":\"message_scan_top_u_response_\",\"type\":\"response\",\"communication\":\"scan_top\"},{\"next\":null,\"id\":\"message_scan_left_u_response_\",\"type\":\"response\",\"communication\":\"scan_left\"},{\"next\":null,\"id\":\"message_scan_right_u_response_\",\"type\":\"response\",\"communication\":\"scan_right\"}]}]}},{\"name\":\"Rotator\",\"messages\":[\"rotate_left\",\"rotate_right\",\"rotate_done\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"awaiting_command\",\"initial\":true,\"transitions\":[{\"next\":\"executing\",\"id\":\"message_rotate_left_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_left\"},{\"next\":\"executing\",\"id\":\"message_rotate_right_c_trigger_\",\"type\":\"request\",\"communication\":\"rotate_right\"}]},{\"name\":\"executing\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_command\",\"id\":\"message_rotate_done_u_response_\",\"type\":\"response\",\"communication\":\"rotate_done\"}]}]}},{\"name\":\"ObjectDetector\",\"messages\":[\"object_count\",\"object_scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"scanned_object_count\",\"scanned_object\"],\"states\":[{\"name\":\"no_object\",\"initial\":true,\"transitions\":[{\"next\":\"object_found\",\"id\":\"component_ObjectDetector_c_pQ6ZW96L98L2D_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]},{\"name\":\"object_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_object\",\"id\":\"component_ObjectDetector_c_p1BHHXMRG49VK_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_object_count_u_response_\",\"type\":\"response\",\"communication\":\"object_count\"},{\"next\":null,\"id\":\"message_object_scan_u_response_\",\"type\":\"response\",\"communication\":\"object_scan\"}]}]}},{\"name\":\"TurtlebotPlatfrom\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -316,7 +316,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 2;
-		      controller_Event_ data_events[2] = { data_move_c_pTJ115VAZ7GQK_,data_halt_c_p3AFIGS2CH22L_ };
+		      controller_Event_ data_events[2] = { data_move_c_pS4X2J5SH2DDL_,data_halt_c_pZODSGAWUMUUZ_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -326,7 +326,7 @@ private:
 		}
 		
 		int nOfControllableEvents = 6;
-		      controller_Event_ controllable_events[6] = { component_ObjectDetector_c_p2JOGUBQRBXLQ_,component_ObjectDetector_c_p7AB3L9LF8U3N_,message_rotate_left_c_trigger_,message_rotate_right_c_trigger_,message_move_c_trigger_,message_halt_c_trigger_ };
+		      controller_Event_ controllable_events[6] = { component_ObjectDetector_c_pQ6ZW96L98L2D_,component_ObjectDetector_c_p1BHHXMRG49VK_,message_rotate_left_c_trigger_,message_rotate_right_c_trigger_,message_move_c_trigger_,message_halt_c_trigger_ };
 		
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
@@ -354,6 +354,7 @@ void controller_AssignInputVariables() {
 	message_scan_left_i_response_ = _controller_unsafe_left;
 	message_scan_right_i_response_ = _controller_unsafe_right;
 	message_object_count_i_response_count_ = 0;
+	message_object_scan_i_response_ = _controller_no_object;
 	
 	assigned = true;
 }
