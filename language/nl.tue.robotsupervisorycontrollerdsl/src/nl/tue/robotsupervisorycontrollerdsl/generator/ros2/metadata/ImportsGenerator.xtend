@@ -21,6 +21,8 @@ class ImportsGenerator {
 	#include <future>
 	#include <memory>
 	#include <sstream>
+	#include <mutex>
+	#include <condition_variable>
 	
 	#include "rclcpp/rclcpp.hpp"
 	#include "rclcpp_action/rclcpp_action.hpp"

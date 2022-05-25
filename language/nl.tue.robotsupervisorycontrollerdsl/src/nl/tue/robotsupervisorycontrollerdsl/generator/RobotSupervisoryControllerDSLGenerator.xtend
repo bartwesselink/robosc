@@ -13,6 +13,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.Ros2Generator
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.Ros1Generator
 import nl.tue.robotsupervisorycontrollerdsl.generator.config.ConfigService
+import nl.tue.robotsupervisorycontrollerdsl.generator.supervisor.ros2.Ros2SupervisorGenerator
 
 /**
  * Generates code from your model files on save.
@@ -23,6 +24,7 @@ class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
 	@Inject CifGenerator cifGenerator
 	@Inject Ros2Generator ros2Generator
 	@Inject Ros1Generator ros1Generator
+	@Inject Ros2SupervisorGenerator ros2SupervisorGenerator
 	@Inject ConfigService configService
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -33,6 +35,7 @@ class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
 			cifGenerator.generate(it, fsa, config)
 			ros2Generator.generate(it, fsa, config)
 			ros1Generator.generate(it, fsa, config)
+			ros2SupervisorGenerator.generate(it, fsa, config)
 		]
 	}
 	

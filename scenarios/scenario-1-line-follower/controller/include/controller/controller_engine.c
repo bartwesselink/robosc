@@ -40,15 +40,15 @@ const char *controller_event_names[] = {
     "message_stop.u_response",       /**< Event message_stop.u_response. */
     "message_continue.u_response",   /**< Event message_continue.u_response. */
     "message_move.c_trigger",        /**< Event message_move.c_trigger. */
-    "data_move.c_pY4AIEBFAZG2Q",     /**< Event data_move.c_pY4AIEBFAZG2Q. */
+    "data_move.c_pXOLOEM1A7KDQ",     /**< Event data_move.c_pXOLOEM1A7KDQ. */
     "message_halt.c_trigger",        /**< Event message_halt.c_trigger. */
-    "data_halt.c_pEW6PB78NIP3P",     /**< Event data_halt.c_pEW6PB78NIP3P. */
+    "data_halt.c_pWGTQ52MPQVVV",     /**< Event data_halt.c_pWGTQ52MPQVVV. */
 };
 
 /** Enumeration names. */
 const char *enum_names[] = {
-    "data_pEULYI0N12387",
-    "data_pJE29P24UZXSK",
+    "data_p80REON4PU6Y0",
+    "data_pFD9KY90QW7OF",
     "in_service",
     "line_found",
     "no_line",
@@ -87,51 +87,51 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "data_halt.c_pEW6PB78NIP3P".
+ * Execute code for event "data_halt.c_pWGTQ52MPQVVV".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_pJE29P24UZXSK));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_pFD9KY90QW7OF));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_pEW6PB78NIP3P_, TRUE);
+        controller_InfoEvent(data_halt_c_pWGTQ52MPQVVV_, TRUE);
     #endif
 
     if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_pJE29P24UZXSK;
-    } else if ((data_halt_) == (_controller_data_pJE29P24UZXSK)) {
-        data_halt_ = _controller_data_pJE29P24UZXSK;
+        data_halt_ = _controller_data_pFD9KY90QW7OF;
+    } else if ((data_halt_) == (_controller_data_pFD9KY90QW7OF)) {
+        data_halt_ = _controller_data_pFD9KY90QW7OF;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_pEW6PB78NIP3P_, FALSE);
+        controller_InfoEvent(data_halt_c_pWGTQ52MPQVVV_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pY4AIEBFAZG2Q".
+ * Execute code for event "data_move.c_pXOLOEM1A7KDQ".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent1(void) {
-    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pEULYI0N12387));
+    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_p80REON4PU6Y0));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pY4AIEBFAZG2Q_, TRUE);
+        controller_InfoEvent(data_move_c_pXOLOEM1A7KDQ_, TRUE);
     #endif
 
     if ((data_move_) == (_controller_none)) {
-        data_move_ = _controller_data_pEULYI0N12387;
-    } else if ((data_move_) == (_controller_data_pEULYI0N12387)) {
-        data_move_ = _controller_data_pEULYI0N12387;
+        data_move_ = _controller_data_p80REON4PU6Y0;
+    } else if ((data_move_) == (_controller_data_p80REON4PU6Y0)) {
+        data_move_ = _controller_data_p80REON4PU6Y0;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pY4AIEBFAZG2Q_, FALSE);
+        controller_InfoEvent(data_move_c_pXOLOEM1A7KDQ_, FALSE);
     #endif
     return TRUE;
 }
@@ -312,8 +312,8 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_pEW6PB78NIP3P". */
-        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_pY4AIEBFAZG2Q". */
+        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_pWGTQ52MPQVVV". */
+        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_pXOLOEM1A7KDQ". */
         if (execEvent4()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
         if (execEvent5()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         break; /* No event fired, done with discrete steps. */
@@ -378,9 +378,9 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case data_halt_c_pEW6PB78NIP3P_:
+        case data_halt_c_pWGTQ52MPQVVV_:
             return execEvent0();
-        case data_move_c_pY4AIEBFAZG2Q_:
+        case data_move_c_pXOLOEM1A7KDQ_:
             return execEvent1();
         case message_continue_u_response_:
             return execEvent2();

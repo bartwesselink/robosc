@@ -50,6 +50,24 @@ class EventExecutionGenerator {
 			«ENDIF»
 		'''
 	}
+	
+	def compileSilentEventEngine(Robot robot) {
+		val controllableEvents = robot.allTauTransitions + robot.allCommunicationTypeResets 
+			+ robot.allCommunicationTypeCancels
+
+		return '''
+			«IF !controllableEvents.empty»
+				int nOfControllableEvents = «controllableEvents.size»;
+				      «CifSynthesisTool.codePrefix»_Event_ controllable_events[«controllableEvents.size»] = { «controllableEvents.join(",")» };
+				
+				shuffle_events(controllable_events, nOfControllableEvents);
+				
+				for (int i = 0; i < nOfControllableEvents; i++) {
+					«CifSynthesisTool.codePrefix»_EnginePerformEvent(controllable_events[i]);
+				}
+			«ENDIF»
+		'''
+	}
 
 	private def allTauTransitions(Robot robot) {
 		return ModelHelper.findWithinRobot(robot, TauTransition).map[it.transitionName]

@@ -144,7 +144,7 @@ public:
 		}
 		auto goal_msg = nav2_msg::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_pBFUU6GBMSVGP) {
+		if (data_navigate_ == _controller_data_pAZSNM9FT2GVI) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
@@ -203,7 +203,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"SimpleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"ObstacleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -217,7 +217,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_p36UE88TBHOXD_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pU4E1Z2AILZWF_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

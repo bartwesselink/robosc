@@ -14,6 +14,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Requir
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.FileHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper
 
 @Singleton
 class CifGenerator implements GeneratorInterface {
@@ -42,5 +44,8 @@ class CifGenerator implements GeneratorInterface {
 			
 	// Requirements
 	«FOR requirement : robot.definitions.filter(Requirement)»«requirement.compile»«ENDFOR»
+	
+	// Cancel requirements
+	«FOR action : ModelHelper.findWithinRobot(robot, Action)»«action.compileCancelActionInverse(robot)»«ENDFOR»
 	'''
 }

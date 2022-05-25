@@ -6,12 +6,10 @@ import java.util.Random;
 
 import javax.inject.Singleton;
 
-import org.eclipse.emf.ecore.EObject;
-
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.RandomHelper;
 
 @Singleton
-abstract class AbstractUniqueModelNamer<T extends EObject> {
+public abstract class AbstractUniqueModelNamer<T extends Object> {
 	private Map<T, String> cache = new HashMap<>();
 	protected String prefix = "p";
 	protected int length = 12;

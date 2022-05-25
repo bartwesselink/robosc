@@ -11,10 +11,10 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_p4FU6SX65ZR9M,
-    _controller_data_pFZQK15F8LARC,
-    _controller_data_pPV0DKVREVW92,
-    _controller_data_pXE7OJ3EH59VS,
+    _controller_data_p4H2RH2TIYUZ9,
+    _controller_data_p4KJ6HVA4Q0YP,
+    _controller_data_pA4O09WXVP7AB,
+    _controller_data_pQGR0AVOG6OB6,
     _controller_detected,
     _controller_free,
     _controller_in_service,
@@ -39,11 +39,11 @@ enum controllerEventEnum_ {
     message_stop_u_response_,           /**< Event message_stop.u_response. */
     message_continue_u_response_,       /**< Event message_continue.u_response. */
     message_move_c_trigger_,            /**< Event message_move.c_trigger. */
-    data_move_c_pU3UYBO3HLCVK_,         /**< Event data_move.c_pU3UYBO3HLCVK. */
-    data_move_c_pHO1S5D3TK4JU_,         /**< Event data_move.c_pHO1S5D3TK4JU. */
-    data_move_c_pL0EDBWQF0I64_,         /**< Event data_move.c_pL0EDBWQF0I64. */
+    data_move_c_pO2AWCPXGKRVW_,         /**< Event data_move.c_pO2AWCPXGKRVW. */
+    data_move_c_pITXLO4VBYPB4_,         /**< Event data_move.c_pITXLO4VBYPB4. */
+    data_move_c_pZL5B0YQW0BQR_,         /**< Event data_move.c_pZL5B0YQW0BQR. */
     message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
-    data_halt_c_pY737X2KOJRYZ_,         /**< Event data_halt.c_pY737X2KOJRYZ. */
+    data_halt_c_pTL5XEH53QVD4_,         /**< Event data_halt.c_pTL5XEH53QVD4. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

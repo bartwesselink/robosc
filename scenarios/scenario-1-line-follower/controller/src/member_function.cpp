@@ -14,11 +14,8 @@
 #include "std_msgs/msg/empty.hpp"
 #include "std_msgs/msg/int16.hpp"
 #include "std_msgs/msg/float32.hpp"
-#include "sensor_msgs/msg/laser_scan.hpp"
-#include "darknet_ros_msgs/msg/bounding_boxes.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/twist.hpp"
-#include "sensor_msgs/msg/laser_scan.hpp"
 #include <cinttypes>
 
 extern "C" {
@@ -64,24 +61,14 @@ std::string serialize_json_vector(const std::vector<std::string>& list) {
     return output.str();
 }
 
-controllerEnum code_Scanner_distance = _controller_person;
-double code_YoloxDetection_current_image_size = 0.0;
-double code_YoloxDetection_current_xmax = 0.0;
-double code_YoloxDetection_current_xmin = 0.0;
+double code_LineDetector_current_correction = 0.0;
 
 class Controller : public rclcpp::Node {
 public:	
 	// Enum conversions
-	controllerEnum convert_enum_Distance(const sensor_msgs::msg::LaserScan::SharedPtr input) {
-		if (input->ranges[0] > 5.0 && input->ranges[350] > 5.0 && input->ranges[10] > 5.0) {
-			return _controller_free;
-		}
-	
-		return _controller_person;
-	}
 
-	rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_client_scan;
-	rclcpp::Subscription<darknet_ros_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_bounding_boxes;
+	rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr subscriber_client_correction;
+	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_no_line;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
@@ -90,8 +77,8 @@ public:
 	std::vector<std::string> taken_transitions;
 
 	Controller() : Node("controller") {
-		subscriber_client_scan = this->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, std::bind(&Controller::callback_message_scan, this, std::placeholders::_1));
-		subscriber_client_bounding_boxes = this->create_subscription<darknet_ros_msgs::msg::BoundingBoxes>("/bounding_boxes", 10, std::bind(&Controller::callback_message_bounding_boxes, this, std::placeholders::_1));
+		subscriber_client_correction = this->create_subscription<std_msgs::msg::Float32>("/correction", 10, std::bind(&Controller::callback_message_correction, this, std::placeholders::_1));
+		subscriber_client_no_line = this->create_subscription<std_msgs::msg::Empty>("/no_line", 10, std::bind(&Controller::callback_message_no_line, this, std::placeholders::_1));
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
@@ -102,26 +89,22 @@ public:
 		controller_EngineFirstStep();
 	}
 
-	void callback_message_scan(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
-		message_scan_i_response_ = convert_enum_Distance(msg);
+	void callback_message_correction(const std_msgs::msg::Float32::SharedPtr msg) {
 		
+		code_LineDetector_current_correction = msg->data;
 		
 		
 		// Call engine function
-		controller_EnginePerformEvent(message_scan_u_response_);
+		controller_EnginePerformEvent(message_correction_u_response_);
 	}
 	
 	
-	void callback_message_bounding_boxes(const darknet_ros_msgs::msg::BoundingBoxes::SharedPtr msg) {
+	void callback_message_no_line(const std_msgs::msg::Empty::SharedPtr msg) {
 		
-		code_YoloxDetection_current_xmax = msg->bounding_boxes[0].xmax;
 		
-		code_YoloxDetection_current_xmin = msg->bounding_boxes[0].xmin;
-		
-		code_YoloxDetection_current_image_size = msg->bounding_boxes[0].img_width;
 		
 		// Call engine function
-		controller_EnginePerformEvent(message_bounding_boxes_u_response_);
+		controller_EnginePerformEvent(message_no_line_u_response_);
 	}
 	
 	
@@ -148,17 +131,9 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pFZQK15F8LARC) {
-			value.linear.x = 0.0;
-			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
-		} else 
-		if (data_move_ == _controller_data_p4FU6SX65ZR9M) {
-			value.linear.x = 0.2;
-			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
-		} else 
-		if (data_move_ == _controller_data_pPV0DKVREVW92) {
-			value.linear.x = 0.0;
-			value.angular.z = 0.3;
+		if (data_move_ == _controller_data_p80REON4PU6Y0) {
+			value.linear.x = 0.6;
+			value.angular.z = (-code_LineDetector_current_correction) / 100;
 		}
 		
 		this->publisher_client_move->publish(value);
@@ -168,7 +143,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pXE7OJ3EH59VS) {
+		if (data_halt_ == _controller_data_pFD9KY90QW7OF) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -182,21 +157,11 @@ public:
 		output << "{";
 		
 		output << "\"current\": {" << "";
-		output << "\"Scanner\": {";
-		output << "\"state\": \"" << "sensing""" << "\",";
+		output << "\"LineDetector\": {";
+		output << "\"state\": \"" << enum_names[component_LineDetector_] << "\",";
 		output << "\"variables\": {";
 		
-		output << "\"distance\": \"" << enum_names[component_Scanner_v_distance_] << "\"";				
-		
-		output << "}";
-		output << "},";
-		output << "\"YoloxDetection\": {";
-		output << "\"state\": \"" << enum_names[component_YoloxDetection_] << "\",";
-		output << "\"variables\": {";
-		
-		output << "\"current_image_size\": \"" << code_YoloxDetection_current_image_size << "\",";				
-		output << "\"current_xmax\": \"" << code_YoloxDetection_current_xmax << "\",";				
-		output << "\"current_xmin\": \"" << code_YoloxDetection_current_xmin << "\"";				
+		output << "\"current_correction\": \"" << code_LineDetector_current_correction << "\"";				
 		
 		output << "}";
 		output << "},";
@@ -209,7 +174,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"PersonFollowing\",\"components\":[{\"name\":\"Scanner\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"distance\"],\"states\":[{\"name\":\"sensing\",\"initial\":true,\"transitions\":[{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"YoloxDetection\",\"messages\":[\"bounding_boxes\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_image_size\",\"current_xmax\",\"current_xmin\"],\"states\":[{\"name\":\"initializing\",\"initial\":true,\"transitions\":[{\"next\":\"detected\",\"id\":\"message_bounding_boxes_u_response_\",\"type\":\"response\",\"communication\":\"bounding_boxes\"}]},{\"name\":\"detected\",\"initial\":false,\"transitions\":[{\"next\":\"detected\",\"id\":\"message_bounding_boxes_u_response_\",\"type\":\"response\",\"communication\":\"bounding_boxes\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
+		output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -222,8 +187,8 @@ public:
 private:
 	// Heart of the controller
 	void tick() {
-		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_move_c_pU3UYBO3HLCVK_,data_move_c_pHO1S5D3TK4JU_,data_move_c_pL0EDBWQF0I64_,data_halt_c_pY737X2KOJRYZ_ };
+		int nOfDataEvents = 2;
+		      controller_Event_ data_events[2] = { data_move_c_pXOLOEM1A7KDQ_,data_halt_c_pWGTQ52MPQVVV_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -257,7 +222,6 @@ bool assigned = false;
 void controller_AssignInputVariables() {
 	if (assigned) return;
 	
-	message_scan_i_response_ = _controller_person;
 	
 	assigned = true;
 }

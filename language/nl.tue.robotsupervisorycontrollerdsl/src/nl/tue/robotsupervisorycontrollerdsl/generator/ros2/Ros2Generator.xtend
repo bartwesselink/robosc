@@ -44,17 +44,19 @@ class Ros2Generator implements GeneratorInterface {
 
 	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess, Config config) {
 		val base = '''«robot.name»/ros2/controller'''
-		val fileName = '''«base»/src/controller_member_function.cpp'''
+		val fileName = '''«base»/src/member_function.cpp'''
+		
+		val type = 'controller'
 
 		fileSystemAccess.generateFile(fileName, robot.controller(config))
-		fileSystemAccess.generateFile(base + '/package.xml', robot.compilePackageFile)
-		fileSystemAccess.generateFile(base + '/CMakeLists.txt', robot.compileCMakeFile)
+		fileSystemAccess.generateFile(base + '/package.xml', robot.compilePackageFile(type))
+		fileSystemAccess.generateFile(base + '/CMakeLists.txt', robot.compileCMakeFile(type, false))
 		
 		val absolutePath = FileHelper.findAbsolutePath(robot.name, fileSystemAccess, robot.eResource.resourceSet)
 		cifSynthesisTool.copyOutputFiles(fileSystemAccess, absolutePath, '''«base»/include/controller/''')
 		
-		if (config.output.ros2NodeLocation !== null) {
-			outputCopyUtil.copyDirectory(robot, base, config.output.ros2NodeLocation, fileSystemAccess)
+		if (config.output.ros2ControllerNodeLocation !== null) {
+			outputCopyUtil.copyDirectory(robot, base, config.output.ros2ControllerNodeLocation, fileSystemAccess)
 		}
 	}
 
@@ -85,7 +87,7 @@ class Ros2Generator implements GeneratorInterface {
 			«robot.compileCommunicationFieldInitializations»
 
 			«IF config.publishStateInformation»
-			state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
+			state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
 			«ENDIF»
 			timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 			«CifSynthesisTool.codePrefix»_EngineFirstStep();
@@ -109,7 +111,7 @@ class Ros2Generator implements GeneratorInterface {
 		rclcpp::TimerBase::SharedPtr timer;
 	};
 	
-	std::shared_ptr<Controller> node_controller = nullptr;
+	std::shared_ptr<Controller> node = nullptr;
 	
 	// Control synthesis engine
 	«initializationGenerator.initializeEngineVariables(robot)»
@@ -118,9 +120,9 @@ class Ros2Generator implements GeneratorInterface {
 	int main(int argc, char *argv[]) {
 	    rclcpp::init(argc, argv);
 	
-	    node_controller = std::make_shared<Controller>();
+	    node = std::make_shared<Controller>();
 	
-	    rclcpp::spin(node_controller);
+	    rclcpp::spin(node);
 	    rclcpp::shutdown();
 	
 	    return 0;

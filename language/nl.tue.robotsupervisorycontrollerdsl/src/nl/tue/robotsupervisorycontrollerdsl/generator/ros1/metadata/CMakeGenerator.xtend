@@ -9,9 +9,9 @@ import javax.inject.Inject
 class CMakeGenerator {
 	@Inject extension PackageHelper
 	
-	def compileCMakeFile(Robot robot)'''
+	def compileCMakeFile(Robot robot, String name)'''
 	cmake_minimum_required(VERSION 3.0.2)
-	project(controller)
+	project(«name»)
 	
 	# Default to C++14
 	if(NOT CMAKE_CXX_STANDARD)
@@ -31,7 +31,7 @@ class CMakeGenerator {
 	
 	add_library(controller_engine include/controller/controller_engine.c)
 	
-	add_executable(interface src/controller.cpp)
+	add_executable(interface src/node.cpp)
 	add_dependencies(interface controller_engine)
 	add_dependencies(interface ${catkin_EXPORTED_TARGETS})
 	

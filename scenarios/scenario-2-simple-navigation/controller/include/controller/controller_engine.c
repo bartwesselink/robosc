@@ -43,7 +43,7 @@ const char *controller_event_names[] = {
     "action_navigate.u_feedback",      /**< Event action_navigate.u_feedback. */
     "action_navigate.u_response",      /**< Event action_navigate.u_response. */
     "action_navigate.u_error",         /**< Event action_navigate.u_error. */
-    "data_navigate.c_p36UE88TBHOXD",   /**< Event data_navigate.c_p36UE88TBHOXD. */
+    "data_navigate.c_pN10WO8XMDG1V",   /**< Event data_navigate.c_pN10WO8XMDG1V. */
     "message_stop.u_response",         /**< Event message_stop.u_response. */
     "message_continue.u_response",     /**< Event message_continue.u_response. */
 };
@@ -51,7 +51,7 @@ const char *controller_event_names[] = {
 /** Enumeration names. */
 const char *enum_names[] = {
     "awaiting_point",
-    "data_pBFUU6GBMSVGP",
+    "data_pYIWEQI4LCSU7",
     "error",
     "executing",
     "has_point",
@@ -236,26 +236,26 @@ static BoolType execEvent5(void) {
 }
 
 /**
- * Execute code for event "data_navigate.c_p36UE88TBHOXD".
+ * Execute code for event "data_navigate.c_pN10WO8XMDG1V".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent6(void) {
-    BoolType guard = ((data_navigate_) == (_controller_none)) || ((data_navigate_) == (_controller_data_pBFUU6GBMSVGP));
+    BoolType guard = ((data_navigate_) == (_controller_none)) || ((data_navigate_) == (_controller_data_pYIWEQI4LCSU7));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_navigate_c_p36UE88TBHOXD_, TRUE);
+        controller_InfoEvent(data_navigate_c_pN10WO8XMDG1V_, TRUE);
     #endif
 
     if ((data_navigate_) == (_controller_none)) {
-        data_navigate_ = _controller_data_pBFUU6GBMSVGP;
-    } else if ((data_navigate_) == (_controller_data_pBFUU6GBMSVGP)) {
-        data_navigate_ = _controller_data_pBFUU6GBMSVGP;
+        data_navigate_ = _controller_data_pYIWEQI4LCSU7;
+    } else if ((data_navigate_) == (_controller_data_pYIWEQI4LCSU7)) {
+        data_navigate_ = _controller_data_pYIWEQI4LCSU7;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_navigate_c_p36UE88TBHOXD_, FALSE);
+        controller_InfoEvent(data_navigate_c_pN10WO8XMDG1V_, FALSE);
     #endif
     return TRUE;
 }
@@ -405,7 +405,7 @@ static void PerformEvents(void) {
         if (execEvent0()) continue;  /* (Try to) perform event "action_navigate.c_cancel". */
         if (execEvent1()) continue;  /* (Try to) perform event "action_navigate.c_reset". */
         if (execEvent2()) continue;  /* (Try to) perform event "action_navigate.c_trigger". */
-        if (execEvent6()) continue;  /* (Try to) perform event "data_navigate.c_p36UE88TBHOXD". */
+        if (execEvent6()) continue;  /* (Try to) perform event "data_navigate.c_pN10WO8XMDG1V". */
         break; /* No event fired, done with discrete steps. */
     }
 }
@@ -480,7 +480,7 @@ BoolType controller_EnginePerformEvent(controller_Event_ event) {
             return execEvent4();
         case action_navigate_u_response_:
             return execEvent5();
-        case data_navigate_c_p36UE88TBHOXD_:
+        case data_navigate_c_pN10WO8XMDG1V_:
             return execEvent6();
         case message_continue_u_response_:
             return execEvent7();
