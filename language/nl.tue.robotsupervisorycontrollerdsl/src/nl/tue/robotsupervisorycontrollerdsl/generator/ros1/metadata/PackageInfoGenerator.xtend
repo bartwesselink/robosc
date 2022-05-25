@@ -9,13 +9,13 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.library.PackageHelper
 class PackageInfoGenerator {
 	@Inject extension PackageHelper
 	
-	def compilePackageFile(Robot robot)'''
+	def compilePackageFile(Robot robot, String name)'''
 	<?xml version="1.0"?>
 	<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 	<package format="3">
-	  <name>controller</name>
+	  <name>«name»</name>
 	  <version>1.0.0</version>
-	  <description>Simple controller.</description>
+	  <description>Simple «name».</description>
 	  <maintainer email="b.b.a.wesselink@student.tue.nl">b.wesselink</maintainer>
 	  <license>TODO: License declaration</license>
 	

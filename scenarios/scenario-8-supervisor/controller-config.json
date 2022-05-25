@@ -1,5 +1,16 @@
 {
     "publishStateInformation": true,
     "output": {
+        "ros2SupervisorNodeLocation": "./supervisor"
+    },
+    "supervisor": {
+        "controller": {
+            "run": {
+                "packageName": "controller",
+                "namespace": "controller",
+                "executable": "interface",
+                "name": "controller"
+            }
+        }
     }
 }

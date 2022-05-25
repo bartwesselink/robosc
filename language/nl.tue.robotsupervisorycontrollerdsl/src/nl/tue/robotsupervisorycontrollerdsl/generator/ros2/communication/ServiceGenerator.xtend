@@ -22,7 +22,7 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 
 	override initializeField(Service entity, Robot robot) '''«entity.fieldName» = this->create_client<«entity.links.serviceType»>("«entity.topicName»");'''
 
-	override declareField(Service entity, Robot robot) '''rclcpp_action::Client<«entity.links.actionType»>::SharedPtr «entity.fieldName»;'''
+	override declareField(Service entity, Robot robot) '''rclcpp::Client<«entity.links.actionType»>::SharedPtr «entity.fieldName»;'''
 	
 	override functions(Service entity, Robot robot)'''
 	bool «entity.responseMethod»(rclcpp::Client<«entity.links.serviceType»>::SharedFuture future) {

@@ -11,8 +11,8 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_p8DGXVWTF6UP1,
-    _controller_data_p9NDRAV26REKK,
+    _controller_data_pEBC0592619PE,
+    _controller_data_pV1EC6KK9AQRW,
     _controller_in_service,
     _controller_line_found,
     _controller_no_line,
@@ -35,9 +35,9 @@ enum controllerEventEnum_ {
     message_stop_u_response_,       /**< Event message_stop.u_response. */
     message_continue_u_response_,   /**< Event message_continue.u_response. */
     message_move_c_trigger_,        /**< Event message_move.c_trigger. */
-    data_move_c_pCABIR4RMOC11_,     /**< Event data_move.c_pCABIR4RMOC11. */
+    data_move_c_pTBWF9RGW9PFY_,     /**< Event data_move.c_pTBWF9RGW9PFY. */
     message_halt_c_trigger_,        /**< Event message_halt.c_trigger. */
-    data_halt_c_pHPHPM8SBX46X_,     /**< Event data_halt.c_pHPHPM8SBX46X. */
+    data_halt_c_pTY2Q70SBGZTW_,     /**< Event data_halt.c_pTY2Q70SBGZTW. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

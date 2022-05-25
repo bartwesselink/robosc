@@ -12,14 +12,16 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting_point,
-    _controller_data_pY0YEQ1PILEQI,
+    _controller_data_p869FHWIPUNVS,
     _controller_error,
     _controller_executing,
     _controller_has_point,
     _controller_idle,
+    _controller_in_service,
     _controller_no_initial_pose,
     _controller_none,
     _controller_ready,
+    _controller_stopped,
 };
 typedef enum Enumcontroller_ controllerEnum;
 
@@ -40,7 +42,9 @@ enum controllerEventEnum_ {
     action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
     action_navigate_u_response_,      /**< Event action_navigate.u_response. */
     action_navigate_u_error_,         /**< Event action_navigate.u_error. */
-    data_navigate_c_pC2WKQ7VGT4EN_,   /**< Event data_navigate.c_pC2WKQ7VGT4EN. */
+    data_navigate_c_pZJAGG9WY8RUT_,   /**< Event data_navigate.c_pZJAGG9WY8RUT. */
+    message_stop_u_response_,         /**< Event message_stop.u_response. */
+    message_continue_u_response_,     /**< Event message_continue.u_response. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
@@ -60,9 +64,10 @@ extern const char *controller_event_names[];
 
 /* State variables (use for output only). */
 extern RealType model_time; /**< Current model time. */
-extern controllerEnum action_navigate_; /**< Discrete variable "E action_navigate". */
-extern controllerEnum component_Nav2_;  /**< Discrete variable "E component_Nav2". */
-extern controllerEnum data_navigate_;   /**< Discrete variable "E data_navigate". */
+extern controllerEnum action_navigate_;         /**< Discrete variable "E action_navigate". */
+extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
+extern controllerEnum component_Nav2_;          /**< Discrete variable "E component_Nav2". */
+extern controllerEnum data_navigate_;           /**< Discrete variable "E data_navigate". */
 
 /* Algebraic and derivative functions (use for output only). */
 

@@ -9,6 +9,8 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Commun
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.PlantNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 
 @Singleton
 class RequirementGenerator {
@@ -27,13 +29,30 @@ class RequirementGenerator {
 	private def compileNeeds(Requirement requirement)'''
 		«FOR communicationType : requirement.communicationTypes»
 		requirement «communicationType.plantName».«communicationType.triggerTransitionName» needs «requirement.needsExpression.compile»;
-		
-		«IF communicationType instanceof Action»
-		// Enable cancel when the action was already started
-		requirement «communicationType.plantName».«communicationType.cancelTransitionName» needs not («requirement.needsExpression.compile»);
-		«ENDIF»		
 		«ENDFOR»
 	'''
+	
+	def compileCancelActionInverse(Action action, Robot robot) {
+		// Enable cancel if any of the conditions do not holds anymore when the action was already started
+		val disjunction = newArrayList()
+		
+		val actionRequirements = ModelHelper.findWithinRobot(robot, Requirement)
+			.filter[(it.communicationType instanceof CommunicationTypeSingle && (it.communicationType as CommunicationTypeSingle).communicationType == action)
+				|| (it.communicationType instanceof CommunicationTypeSet && (it.communicationType as CommunicationTypeSet).communicationTypes.contains(action))
+			]
+			
+		for (requirement : actionRequirements) {
+			if (requirement.needsExpression !== null) {
+				disjunction.add('''(not («requirement.needsExpression.compile»))''')
+			} else if (requirement.disablesExpression !== null) {
+				disjunction.add('''(«requirement.needsExpression.compile»)''')
+			}
+		}
+		
+		if (!disjunction.empty) {
+			return '''requirement «action.plantName».«action.cancelTransitionName» needs «disjunction.join(' or ')»;'''
+		}
+	}
 	
 	private def compileDisables(Requirement requirement)'''
 		«FOR communicationType : requirement.communicationTypes»

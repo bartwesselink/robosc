@@ -7,7 +7,6 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.TauTra
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.MessageFrom
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
-import com.google.common.util.concurrent.Service
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.naming.ProvideStatementNamer
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ProvideStatement
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.FeedbackResultType
@@ -15,6 +14,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Respon
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RequestResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ErrorResultType
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CancelResultType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Service
 
 @Singleton
 class TransitionNames {

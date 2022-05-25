@@ -73,13 +73,17 @@ public:
 	rclcpp::Subscription<geometry_msgs::msg::PointStamped>::SharedPtr subscriber_client_point;
 	rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr subscriber_client_initial_pose;
 	rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr action_client_navigate;
+	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
+	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
 	std::vector<std::string> taken_transitions;
 
 	Controller() : Node("controller") {
 		subscriber_client_point = this->create_subscription<geometry_msgs::msg::PointStamped>("/clicked_point", 10, std::bind(&Controller::callback_message_point, this, std::placeholders::_1));
 		subscriber_client_initial_pose = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("/initialpose", 10, std::bind(&Controller::callback_message_initial_pose, this, std::placeholders::_1));
-		action_client_navigate = rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(this, "/navigate_to_pose_pZQ6KSO70PFQJ");
+		action_client_navigate = rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(this, "/navigate_to_pose");
+		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
+		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 
 		state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
@@ -115,11 +119,19 @@ public:
 	
 	void response_action_navigate(const rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::WrappedResult & result) {
 		
+		
+	
+		fprintf(stderr, "[debug] Received action response\n");
+		
 		// Call engine function
 		controller_EnginePerformEvent(action_navigate_u_response_);
 	}
 	
 	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msgs::action::NavigateToPose::Feedback> feedback) {
+		
+		
+	
+		fprintf(stderr, "[debug] Received action feedback\n");
 		
 		// Call engine function
 		controller_EnginePerformEvent(action_navigate_u_feedback_);
@@ -132,7 +144,7 @@ public:
 		}
 		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_pY0YEQ1PILEQI) {
+		if (data_navigate_ == _controller_data_p869FHWIPUNVS) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
@@ -147,6 +159,24 @@ public:
 	void cancel_action_navigate() {
 		this->action_client_navigate->async_cancel_all_goals();
 	}
+	void callback_message_stop(const std_msgs::msg::Empty::SharedPtr msg) {
+		
+		
+		
+		// Call engine function
+		controller_EnginePerformEvent(message_stop_u_response_);
+	}
+	
+	
+	void callback_message_continue(const std_msgs::msg::Empty::SharedPtr msg) {
+		
+		
+		
+		// Call engine function
+		controller_EnginePerformEvent(message_continue_u_response_);
+	}
+	
+	
 	
 	void emit_current_state() {
 		std::stringstream output;
@@ -163,10 +193,17 @@ public:
 		output << "\"current_z\": \"" << code_Nav2_current_z << "\"";				
 		
 		output << "}";
+		output << "},";
+		output << "\"EmergencyStop\": {";
+		output << "\"state\": \"" << enum_names[component_EmergencyStop_] << "\",";
+		output << "\"variables\": {";
+		
+		
+		output << "}";
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"ObstacleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"ObstacleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -180,7 +217,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_pC2WKQ7VGT4EN_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pZJAGG9WY8RUT_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

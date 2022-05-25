@@ -15,6 +15,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.common.data.EliminationChe
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.VariableNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EliminationHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.expressions.ExpressionGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.naming.IdentifierNamerInterface
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.naming.DefaultIdentifierNamer
 
 abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	@Inject extension MethodNames
@@ -23,8 +25,9 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	@Inject extension VariableNames
 	@Inject EliminationHelper eliminationHelper
 	@Inject EliminationChecker eliminationChecker
+	@Inject DefaultIdentifierNamer defaultIdentifierNamer
 	@Inject extension ExpressionGenerator
-	
+
 	abstract def CharSequence initializeField(T entity, Robot robot)
 	abstract def CharSequence declareField(T entity, Robot robot)
 	abstract def CharSequence functions(T entity, Robot robot)
@@ -53,10 +56,14 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	'''
 		
 	protected def topicName(CommunicationType type) {
-		if (type.identifier === null) {
-			return type.name
+		return this.topicName(type, null)
+	}
+		
+	protected def topicName(CommunicationType type, IdentifierNamerInterface namer) {
+		if (namer !== null) {
+			return namer.name(type)
 		} else {
-			return type.identifier
+			return this.defaultIdentifierNamer.name(type)
 		}
 	}
 	

@@ -106,8 +106,6 @@ robot ObjectFinder {
     
     requirement { rotate_left, rotate_right } needs Rotator.awaiting_command
     requirement { rotate_left, rotate_right } needs LidarScanner.front = unsafe_front and LidarScanner.has_front
-    requirement rotate_left needs LidarScanner.left = safe_left
-    requirement rotate_right needs LidarScanner.right = safe_right
 
     requirement ObjectDetector.object_found disables move
 	

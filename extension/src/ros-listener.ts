@@ -15,7 +15,7 @@ export const startListener = async (fetchWebview: () => vscode.Webview) => {
     const msgDefinition = parseMsgDef('string data', { ros2: true });
 
     const subscription = ros.subscribe({
-        topic: '/controller/state',
+        topic: '/state',
         dataType: 'std_msgs/msg/String',
         msgDefinition,
     });

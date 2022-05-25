@@ -9,9 +9,9 @@ import javax.inject.Inject
 class CMakeGenerator {
 	@Inject extension PackageHelper
 	
-	def compileCMakeFile(Robot robot)'''
+	def compileCMakeFile(Robot robot, String name, boolean hasLaunchFile)'''
 	cmake_minimum_required(VERSION 3.5)
-	project(controller)
+	project(«name»)
 	
 	# Default to C++14
 	if(NOT CMAKE_CXX_STANDARD)
@@ -30,8 +30,15 @@ class CMakeGenerator {
 	find_package(«packageName» REQUIRED)
 	«ENDFOR»
 	
+	«IF hasLaunchFile»
+	install(DIRECTORY
+	  launch
+	  DESTINATION share/${PROJECT_NAME}
+	)
+	«ENDIF»
+	
 	add_library(controller_engine include/controller/controller_engine.c)
-	add_executable(interface src/controller_member_function.cpp)
+	add_executable(interface src/member_function.cpp)
 	
 	add_definitions(-DMAX_NUM_EVENTS=0 -DEVENT_OUTPUT=1)
 	

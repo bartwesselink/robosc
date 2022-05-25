@@ -9,7 +9,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Messag
 @Singleton
 class FieldNames {
 	def dispatch fieldName(Message entity) '''«IF entity.direction instanceof MessageFrom»subscriber«ELSE»publisher«ENDIF»_client_«entity.name»'''
-	def dispatch fieldName(Service entity) '''action_client_«entity.name»'''
+	def dispatch fieldName(Service entity) '''service_client_«entity.name»'''
 	def dispatch fieldName(Action entity) '''action_client_«entity.name»'''
 }
 

@@ -44,17 +44,19 @@ class Ros1Generator implements GeneratorInterface {
 
 	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess, Config config) {
 		val base = '''«robot.name»/ros1/controller'''
-		val fileName = '''«base»/src/controller.cpp'''
+		val fileName = '''«base»/src/node.cpp'''
+		
+		val type = 'controller'
 
 		fileSystemAccess.generateFile(fileName, robot.controller(config))
-		fileSystemAccess.generateFile(base + '/package.xml', robot.compilePackageFile)
-		fileSystemAccess.generateFile(base + '/CMakeLists.txt', robot.compileCMakeFile)
+		fileSystemAccess.generateFile(base + '/package.xml', robot.compilePackageFile(type))
+		fileSystemAccess.generateFile(base + '/CMakeLists.txt', robot.compileCMakeFile(type))
 		
 		val absolutePath = FileHelper.findAbsolutePath(robot.name, fileSystemAccess, robot.eResource.resourceSet)
 		cifSynthesisTool.copyOutputFiles(fileSystemAccess, absolutePath, '''«base»/include/controller/''')
 		
-		if (config.output.ros1NodeLocation !== null) {
-			outputCopyUtil.copyDirectory(robot, base, config.output.ros1NodeLocation, fileSystemAccess)
+		if (config.output.ros1ControllerNodeLocation !== null) {
+			outputCopyUtil.copyDirectory(robot, base, config.output.ros1ControllerNodeLocation, fileSystemAccess)
 		}
 	}
 
@@ -86,7 +88,7 @@ class Ros1Generator implements GeneratorInterface {
 			«robot.compileCommunicationFieldInitializations»
 
 			«IF config.publishStateInformation»
-			state_information = node.advertise<std_msgs::String>("/controller/state", 10);
+			state_information = node.advertise<std_msgs::String>("/state", 10);
 			«ENDIF»
 			timer = node.createTimer(ros::Duration(0.1), &Controller::tick, this);
 			«CifSynthesisTool.codePrefix»_EngineFirstStep();
@@ -110,7 +112,7 @@ class Ros1Generator implements GeneratorInterface {
 		ros::Timer timer;
 	};
 	
-	std::shared_ptr<Controller> node_controller = nullptr;
+	std::shared_ptr<Controller> node = nullptr;
 	
 	// Control synthesis engine
 	«initializationGenerator.initializeEngineVariables(robot)»
@@ -121,8 +123,8 @@ class Ros1Generator implements GeneratorInterface {
 
 		ros::NodeHandle n;
 
-		node_controller = std::make_shared<Controller>();
-		node_controller->start(n);
+		node = std::make_shared<Controller>();
+		node->start(n);
 		ros::spin();
 	
 	    return 0;
