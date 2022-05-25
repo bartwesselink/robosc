@@ -161,7 +161,7 @@ public:
 	void call_message_movement() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_movement_ == _controller_data_pWIUI30FAK9NC) {
+		if (data_movement_ == _controller_data_pC0TDEVVLA4VS) {
 			value.linear.x = 0.3;
 		}
 		
@@ -172,7 +172,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_p0HO458J0GF7R) {
+		if (data_halt_ == _controller_data_pOBUC5DFA1FFJ) {
 			value.linear.x = 0.0;
 		}
 		
@@ -183,7 +183,7 @@ public:
 	void call_message_turn_left() {
 		auto value = std_msgs::msg::Int16();
 		
-		if (data_turn_left_ == _controller_data_pXRJU2Q620EN1) {
+		if (data_turn_left_ == _controller_data_pX083593ORFQR) {
 			value.data = 90;
 		}
 		
@@ -194,7 +194,7 @@ public:
 	void call_message_turn_right() {
 		auto value = std_msgs::msg::Int16();
 		
-		if (data_turn_right_ == _controller_data_pTRN2FIC8X6LY) {
+		if (data_turn_right_ == _controller_data_pRL15OATUSIAH) {
 			value.data = 90;
 		}
 		
@@ -274,7 +274,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_movement_c_pDMBQ1Z3V0D7U_,data_halt_c_pYTRPAY1DIO5O_,data_turn_left_c_pBNDD3E1DBF59_,data_turn_right_c_p9MM05JJ1R4JF_ };
+		      controller_Event_ data_events[4] = { data_movement_c_p3FZZ0S7YTEHF_,data_halt_c_pIXKB40G28539_,data_turn_left_c_pV2IBHVHE4FX4_,data_turn_right_c_pM1DXJLYADZII_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

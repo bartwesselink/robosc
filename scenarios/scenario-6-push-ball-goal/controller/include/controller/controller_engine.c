@@ -46,12 +46,12 @@ const char *controller_event_names[] = {
     "message_stop.u_response",             /**< Event message_stop.u_response. */
     "message_continue.u_response",         /**< Event message_continue.u_response. */
     "message_move.c_trigger",              /**< Event message_move.c_trigger. */
-    "data_move.c_p840O4KBFVWH4",           /**< Event data_move.c_p840O4KBFVWH4. */
-    "data_move.c_pO652CWP9EE8K",           /**< Event data_move.c_pO652CWP9EE8K. */
-    "data_move.c_pMHOBSICJ2ZLX",           /**< Event data_move.c_pMHOBSICJ2ZLX. */
-    "data_move.c_p7P2T293D3935",           /**< Event data_move.c_p7P2T293D3935. */
+    "data_move.c_pJQTZSLDY04TR",           /**< Event data_move.c_pJQTZSLDY04TR. */
+    "data_move.c_pD8KDQ72WD4TI",           /**< Event data_move.c_pD8KDQ72WD4TI. */
+    "data_move.c_pQOGYYZHVARWC",           /**< Event data_move.c_pQOGYYZHVARWC. */
+    "data_move.c_p2D4JIJRDNIKI",           /**< Event data_move.c_p2D4JIJRDNIKI. */
     "message_halt.c_trigger",              /**< Event message_halt.c_trigger. */
-    "data_halt.c_p139788L2KR99",           /**< Event data_halt.c_p139788L2KR99. */
+    "data_halt.c_p2EEXFLIVFLD4",           /**< Event data_halt.c_p2EEXFLIVFLD4. */
 };
 
 /** Enumeration names. */
@@ -60,11 +60,11 @@ const char *enum_names[] = {
     "awaiting",
     "ball_found",
     "ball_in_front",
-    "data_p0JQOSJ3LB8XD",
-    "data_p1WHDXIRJ8SE6",
-    "data_p54IRQOBLUVEH",
-    "data_pBDSE6ECWZU73",
-    "data_pPTFDYONOLXFH",
+    "data_p34GLL65QBLB4",
+    "data_p65FVJX7K1YU5",
+    "data_pA71GEMOMRUZU",
+    "data_pS0KFT9UHLLZ7",
+    "data_pX26PR8IGMGU5",
     "free",
     "goal_found",
     "in_service",
@@ -108,150 +108,150 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "data_halt.c_p139788L2KR99".
+ * Execute code for event "data_halt.c_p2EEXFLIVFLD4".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_pPTFDYONOLXFH));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p65FVJX7K1YU5));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p139788L2KR99_, TRUE);
+        controller_InfoEvent(data_halt_c_p2EEXFLIVFLD4_, TRUE);
     #endif
 
     if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_pPTFDYONOLXFH;
-    } else if ((data_halt_) == (_controller_data_pPTFDYONOLXFH)) {
-        data_halt_ = _controller_data_pPTFDYONOLXFH;
+        data_halt_ = _controller_data_p65FVJX7K1YU5;
+    } else if ((data_halt_) == (_controller_data_p65FVJX7K1YU5)) {
+        data_halt_ = _controller_data_p65FVJX7K1YU5;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p139788L2KR99_, FALSE);
+        controller_InfoEvent(data_halt_c_p2EEXFLIVFLD4_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_p7P2T293D3935".
+ * Execute code for event "data_move.c_p2D4JIJRDNIKI".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent1(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_no_ball))) || (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_no_ball)))) || ((((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_no_ball))) || ((((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_no_ball))) || (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_no_ball)))));
+    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_no_ball))) || (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_no_ball)))) || ((((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_no_ball))) || ((((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_no_ball))) || (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_no_ball)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p7P2T293D3935_, TRUE);
+        controller_InfoEvent(data_move_c_p2D4JIJRDNIKI_, TRUE);
     #endif
 
     if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_no_ball))) {
-        data_move_ = _controller_data_pBDSE6ECWZU73;
-    } else if (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_no_ball))) {
-        data_move_ = _controller_data_pBDSE6ECWZU73;
-    } else if (((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_no_ball))) {
-        data_move_ = _controller_data_pBDSE6ECWZU73;
-    } else if (((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_no_ball))) {
-        data_move_ = _controller_data_pBDSE6ECWZU73;
-    } else if (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_no_ball))) {
-        data_move_ = _controller_data_pBDSE6ECWZU73;
+        data_move_ = _controller_data_pA71GEMOMRUZU;
+    } else if (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_no_ball))) {
+        data_move_ = _controller_data_pA71GEMOMRUZU;
+    } else if (((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_no_ball))) {
+        data_move_ = _controller_data_pA71GEMOMRUZU;
+    } else if (((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_no_ball))) {
+        data_move_ = _controller_data_pA71GEMOMRUZU;
+    } else if (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_no_ball))) {
+        data_move_ = _controller_data_pA71GEMOMRUZU;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p7P2T293D3935_, FALSE);
+        controller_InfoEvent(data_move_c_p2D4JIJRDNIKI_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_p840O4KBFVWH4".
+ * Execute code for event "data_move.c_pD8KDQ72WD4TI".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_found))) || (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_ball_found)))) || ((((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_ball_found))) || ((((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_ball_found))) || (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_ball_found)))));
+    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_adjusting))) || (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_adjusting)))) || ((((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_adjusting))) || ((((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_adjusting))) || (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_adjusting)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p840O4KBFVWH4_, TRUE);
+        controller_InfoEvent(data_move_c_pD8KDQ72WD4TI_, TRUE);
     #endif
 
-    if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_found))) {
-        data_move_ = _controller_data_p1WHDXIRJ8SE6;
-    } else if (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_ball_found))) {
-        data_move_ = _controller_data_p1WHDXIRJ8SE6;
-    } else if (((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_ball_found))) {
-        data_move_ = _controller_data_p1WHDXIRJ8SE6;
-    } else if (((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_ball_found))) {
-        data_move_ = _controller_data_p1WHDXIRJ8SE6;
-    } else if (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_ball_found))) {
-        data_move_ = _controller_data_p1WHDXIRJ8SE6;
+    if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_adjusting))) {
+        data_move_ = _controller_data_pS0KFT9UHLLZ7;
+    } else if (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_adjusting))) {
+        data_move_ = _controller_data_pS0KFT9UHLLZ7;
+    } else if (((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_adjusting))) {
+        data_move_ = _controller_data_pS0KFT9UHLLZ7;
+    } else if (((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_adjusting))) {
+        data_move_ = _controller_data_pS0KFT9UHLLZ7;
+    } else if (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_adjusting))) {
+        data_move_ = _controller_data_pS0KFT9UHLLZ7;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p840O4KBFVWH4_, FALSE);
+        controller_InfoEvent(data_move_c_pD8KDQ72WD4TI_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pMHOBSICJ2ZLX".
+ * Execute code for event "data_move.c_pJQTZSLDY04TR".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent3(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_in_front))) || (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_ball_in_front)))) || ((((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_ball_in_front))) || ((((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_ball_in_front))) || (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_ball_in_front)))));
+    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_found))) || (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_ball_found)))) || ((((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_ball_found))) || ((((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_ball_found))) || (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_ball_found)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pMHOBSICJ2ZLX_, TRUE);
+        controller_InfoEvent(data_move_c_pJQTZSLDY04TR_, TRUE);
     #endif
 
-    if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
-        data_move_ = _controller_data_p0JQOSJ3LB8XD;
-    } else if (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
-        data_move_ = _controller_data_p0JQOSJ3LB8XD;
-    } else if (((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
-        data_move_ = _controller_data_p0JQOSJ3LB8XD;
-    } else if (((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
-        data_move_ = _controller_data_p0JQOSJ3LB8XD;
-    } else if (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
-        data_move_ = _controller_data_p0JQOSJ3LB8XD;
+    if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_found))) {
+        data_move_ = _controller_data_pX26PR8IGMGU5;
+    } else if (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_ball_found))) {
+        data_move_ = _controller_data_pX26PR8IGMGU5;
+    } else if (((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_ball_found))) {
+        data_move_ = _controller_data_pX26PR8IGMGU5;
+    } else if (((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_ball_found))) {
+        data_move_ = _controller_data_pX26PR8IGMGU5;
+    } else if (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_ball_found))) {
+        data_move_ = _controller_data_pX26PR8IGMGU5;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pMHOBSICJ2ZLX_, FALSE);
+        controller_InfoEvent(data_move_c_pJQTZSLDY04TR_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pO652CWP9EE8K".
+ * Execute code for event "data_move.c_pQOGYYZHVARWC".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent4(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_adjusting))) || (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_adjusting)))) || ((((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_adjusting))) || ((((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_adjusting))) || (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_adjusting)))));
+    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_in_front))) || (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_ball_in_front)))) || ((((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_ball_in_front))) || ((((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_ball_in_front))) || (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_ball_in_front)))));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pO652CWP9EE8K_, TRUE);
+        controller_InfoEvent(data_move_c_pQOGYYZHVARWC_, TRUE);
     #endif
 
-    if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_adjusting))) {
-        data_move_ = _controller_data_p54IRQOBLUVEH;
-    } else if (((data_move_) == (_controller_data_p1WHDXIRJ8SE6)) && ((component_BallDetector_) == (_controller_adjusting))) {
-        data_move_ = _controller_data_p54IRQOBLUVEH;
-    } else if (((data_move_) == (_controller_data_p54IRQOBLUVEH)) && ((component_BallDetector_) == (_controller_adjusting))) {
-        data_move_ = _controller_data_p54IRQOBLUVEH;
-    } else if (((data_move_) == (_controller_data_p0JQOSJ3LB8XD)) && ((component_BallDetector_) == (_controller_adjusting))) {
-        data_move_ = _controller_data_p54IRQOBLUVEH;
-    } else if (((data_move_) == (_controller_data_pBDSE6ECWZU73)) && ((component_BallDetector_) == (_controller_adjusting))) {
-        data_move_ = _controller_data_p54IRQOBLUVEH;
+    if (((data_move_) == (_controller_none)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
+        data_move_ = _controller_data_p34GLL65QBLB4;
+    } else if (((data_move_) == (_controller_data_pX26PR8IGMGU5)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
+        data_move_ = _controller_data_p34GLL65QBLB4;
+    } else if (((data_move_) == (_controller_data_pS0KFT9UHLLZ7)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
+        data_move_ = _controller_data_p34GLL65QBLB4;
+    } else if (((data_move_) == (_controller_data_p34GLL65QBLB4)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
+        data_move_ = _controller_data_p34GLL65QBLB4;
+    } else if (((data_move_) == (_controller_data_pA71GEMOMRUZU)) && ((component_BallDetector_) == (_controller_ball_in_front))) {
+        data_move_ = _controller_data_p34GLL65QBLB4;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pO652CWP9EE8K_, FALSE);
+        controller_InfoEvent(data_move_c_pQOGYYZHVARWC_, FALSE);
     #endif
     return TRUE;
 }
@@ -612,11 +612,11 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_p139788L2KR99". */
-        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_p7P2T293D3935". */
-        if (execEvent2()) continue;  /* (Try to) perform event "data_move.c_p840O4KBFVWH4". */
-        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pMHOBSICJ2ZLX". */
-        if (execEvent4()) continue;  /* (Try to) perform event "data_move.c_pO652CWP9EE8K". */
+        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_p2EEXFLIVFLD4". */
+        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_p2D4JIJRDNIKI". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_move.c_pD8KDQ72WD4TI". */
+        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pJQTZSLDY04TR". */
+        if (execEvent4()) continue;  /* (Try to) perform event "data_move.c_pQOGYYZHVARWC". */
         if (execEvent9()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
         if (execEvent10()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         break; /* No event fired, done with discrete steps. */
@@ -683,15 +683,15 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case data_halt_c_p139788L2KR99_:
+        case data_halt_c_p2EEXFLIVFLD4_:
             return execEvent0();
-        case data_move_c_p7P2T293D3935_:
+        case data_move_c_p2D4JIJRDNIKI_:
             return execEvent1();
-        case data_move_c_p840O4KBFVWH4_:
+        case data_move_c_pD8KDQ72WD4TI_:
             return execEvent2();
-        case data_move_c_pMHOBSICJ2ZLX_:
+        case data_move_c_pJQTZSLDY04TR_:
             return execEvent3();
-        case data_move_c_pO652CWP9EE8K_:
+        case data_move_c_pQOGYYZHVARWC_:
             return execEvent4();
         case message_ball_correction_u_response_:
             return execEvent5();

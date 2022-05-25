@@ -15,7 +15,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(nav2_msg REQUIRED)
+find_package(nav2_msgs REQUIRED)
 
 add_library(controller_engine include/controller/controller_engine.c)
 add_executable(interface src/controller_member_function.cpp)
@@ -24,7 +24,7 @@ add_definitions(-DMAX_NUM_EVENTS=0 -DEVENT_OUTPUT=1)
 
 target_link_libraries(interface controller_engine)
 
-ament_target_dependencies(interface rclcpp std_msgs rclcpp_action geometry_msgs nav2_msg)
+ament_target_dependencies(interface rclcpp std_msgs rclcpp_action geometry_msgs nav2_msgs)
 
 install(TARGETS
         interface

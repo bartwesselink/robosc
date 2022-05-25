@@ -1,7 +1,7 @@
 robot SimpleNavigation {
     interface point use PointStamped from geometry_msgs
     interface pose use PoseWithCovarianceStamped from geometry_msgs
-    interface navigate use NavigateToPose from nav2_msg
+    interface navigate use NavigateToPose from nav2_msgs
 
     datatype object Quaternion {
         x: double

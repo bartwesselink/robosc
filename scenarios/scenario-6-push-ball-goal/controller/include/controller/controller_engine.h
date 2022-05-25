@@ -15,11 +15,11 @@ enum Enumcontroller_ {
     _controller_awaiting,
     _controller_ball_found,
     _controller_ball_in_front,
-    _controller_data_p0JQOSJ3LB8XD,
-    _controller_data_p1WHDXIRJ8SE6,
-    _controller_data_p54IRQOBLUVEH,
-    _controller_data_pBDSE6ECWZU73,
-    _controller_data_pPTFDYONOLXFH,
+    _controller_data_p34GLL65QBLB4,
+    _controller_data_p65FVJX7K1YU5,
+    _controller_data_pA71GEMOMRUZU,
+    _controller_data_pS0KFT9UHLLZ7,
+    _controller_data_pX26PR8IGMGU5,
     _controller_free,
     _controller_goal_found,
     _controller_in_service,
@@ -51,12 +51,12 @@ enum controllerEventEnum_ {
     message_stop_u_response_,             /**< Event message_stop.u_response. */
     message_continue_u_response_,         /**< Event message_continue.u_response. */
     message_move_c_trigger_,              /**< Event message_move.c_trigger. */
-    data_move_c_p840O4KBFVWH4_,           /**< Event data_move.c_p840O4KBFVWH4. */
-    data_move_c_pO652CWP9EE8K_,           /**< Event data_move.c_pO652CWP9EE8K. */
-    data_move_c_pMHOBSICJ2ZLX_,           /**< Event data_move.c_pMHOBSICJ2ZLX. */
-    data_move_c_p7P2T293D3935_,           /**< Event data_move.c_p7P2T293D3935. */
+    data_move_c_pJQTZSLDY04TR_,           /**< Event data_move.c_pJQTZSLDY04TR. */
+    data_move_c_pD8KDQ72WD4TI_,           /**< Event data_move.c_pD8KDQ72WD4TI. */
+    data_move_c_pQOGYYZHVARWC_,           /**< Event data_move.c_pQOGYYZHVARWC. */
+    data_move_c_p2D4JIJRDNIKI_,           /**< Event data_move.c_p2D4JIJRDNIKI. */
     message_halt_c_trigger_,              /**< Event message_halt.c_trigger. */
-    data_halt_c_p139788L2KR99_,           /**< Event data_halt.c_p139788L2KR99. */
+    data_halt_c_p2EEXFLIVFLD4_,           /**< Event data_halt.c_p2EEXFLIVFLD4. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

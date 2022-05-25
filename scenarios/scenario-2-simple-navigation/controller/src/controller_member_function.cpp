@@ -16,7 +16,7 @@
 #include "std_msgs/msg/float32.hpp"
 #include "geometry_msgs/msg/point_stamped.hpp"
 #include "geometry_msgs/msg/pose_with_covariance_stamped.hpp"
-#include "nav2_msg/action/navigate_to_pose.hpp"
+#include "nav2_msgs/action/navigate_to_pose.hpp"
 #include <cinttypes>
 
 extern "C" {
@@ -72,7 +72,7 @@ public:
 
 	rclcpp::Subscription<geometry_msgs::msg::PointStamped>::SharedPtr subscriber_client_point;
 	rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr subscriber_client_initial_pose;
-	rclcpp_action::Client<nav2_msg::action::NavigateToPose>::SharedPtr action_client_navigate;
+	rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr action_client_navigate;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
@@ -81,7 +81,7 @@ public:
 	Controller() : Node("controller") {
 		subscriber_client_point = this->create_subscription<geometry_msgs::msg::PointStamped>("/clicked_point", 10, std::bind(&Controller::callback_message_point, this, std::placeholders::_1));
 		subscriber_client_initial_pose = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("/initialpose", 10, std::bind(&Controller::callback_message_initial_pose, this, std::placeholders::_1));
-		action_client_navigate = rclcpp_action::create_client<nav2_msg::action::NavigateToPose>(this, "/navigate_to_pose");
+		action_client_navigate = rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(this, "/navigate_to_pose");
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 
@@ -117,7 +117,7 @@ public:
 	}
 	
 	
-	void response_action_navigate(const rclcpp_action::ClientGoalHandle<nav2_msg::action::NavigateToPose>::WrappedResult & result) {
+	void response_action_navigate(const rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::WrappedResult & result) {
 		
 		
 	
@@ -127,7 +127,7 @@ public:
 		controller_EnginePerformEvent(action_navigate_u_response_);
 	}
 	
-	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msg::action::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msg::action::NavigateToPose::Feedback> feedback) {
+	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msgs::action::NavigateToPose::Feedback> feedback) {
 		
 		
 	
@@ -142,15 +142,15 @@ public:
 			controller_EnginePerformEvent(action_navigate_u_error_);
 			return;
 		}
-		auto goal_msg = nav2_msg::action::NavigateToPose::Goal();
+		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_pBFUU6GBMSVGP) {
+		if (data_navigate_ == _controller_data_pQWNL92YSD3BC) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
 		}
 		
-		auto send_options = rclcpp_action::Client<nav2_msg::action::NavigateToPose>::SendGoalOptions();
+		auto send_options = rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SendGoalOptions();
 		send_options.result_callback = std::bind(&Controller::response_action_navigate, this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::feedback_action_navigate, this, std::placeholders::_1, std::placeholders::_2);
 		this->action_client_navigate->async_send_goal(goal_msg, send_options);
@@ -217,7 +217,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_p36UE88TBHOXD_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pJ2NGB46ZD8A8_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
