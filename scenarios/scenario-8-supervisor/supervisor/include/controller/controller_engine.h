@@ -11,14 +11,11 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_awaiting_point,
-    _controller_error,
-    _controller_executing,
-    _controller_has_point,
-    _controller_idle,
+    _controller_data_p0DDETV4SQSKY,
     _controller_in_service,
-    _controller_no_initial_pose,
-    _controller_ready,
+    _controller_line_found,
+    _controller_no_line,
+    _controller_none,
     _controller_stopped,
 };
 typedef enum Enumcontroller_ controllerEnum;
@@ -29,19 +26,15 @@ extern int EnumTypePrint(controllerEnum value, char *dest, int start, int end);
 
 /* Event declarations. */
 enum controllerEventEnum_ {
-    EVT_INITIAL_,                     /**< Initial step. */
-    EVT_DELAY_,                       /**< Delay step. */
-    EVT_TAU_,                         /**< Tau step. */
-    message_point_u_response_,        /**< Event message_point.u_response. */
-    message_initial_pose_u_response_, /**< Event message_initial_pose.u_response. */
-    action_navigate_c_trigger_,       /**< Event action_navigate.c_trigger. */
-    action_navigate_c_reset_,         /**< Event action_navigate.c_reset. */
-    action_navigate_c_cancel_,        /**< Event action_navigate.c_cancel. */
-    action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
-    action_navigate_u_response_,      /**< Event action_navigate.u_response. */
-    action_navigate_u_error_,         /**< Event action_navigate.u_error. */
-    message_stop_u_response_,         /**< Event message_stop.u_response. */
-    message_continue_u_response_,     /**< Event message_continue.u_response. */
+    EVT_INITIAL_,                   /**< Initial step. */
+    EVT_DELAY_,                     /**< Delay step. */
+    EVT_TAU_,                       /**< Tau step. */
+    message_correction_u_response_, /**< Event message_correction.u_response. */
+    message_no_line_u_response_,    /**< Event message_no_line.u_response. */
+    message_move_c_trigger_,        /**< Event message_move.c_trigger. */
+    data_move_c_pV24H53N28SSH_,     /**< Event data_move.c_pV24H53N28SSH. */
+    message_stop_u_response_,       /**< Event message_stop.u_response. */
+    message_continue_u_response_,   /**< Event message_continue.u_response. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
@@ -61,9 +54,9 @@ extern const char *controller_event_names[];
 
 /* State variables (use for output only). */
 extern RealType model_time; /**< Current model time. */
-extern controllerEnum action_navigate_;         /**< Discrete variable "E action_navigate". */
 extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-extern controllerEnum component_Nav2_;          /**< Discrete variable "E component_Nav2". */
+extern controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
+extern controllerEnum data_move_;               /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

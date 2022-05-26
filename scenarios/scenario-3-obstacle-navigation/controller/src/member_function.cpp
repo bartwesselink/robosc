@@ -6,6 +6,8 @@
 #include <future>
 #include <memory>
 #include <sstream>
+#include <mutex>
+#include <condition_variable>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
@@ -72,7 +74,7 @@ public:
 
 	rclcpp::Subscription<geometry_msgs::msg::PointStamped>::SharedPtr subscriber_client_point;
 	rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr subscriber_client_initial_pose;
-	rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr action_client_navigate;
+	rclcpp_action::Client<nav2_msgs::srv::NavigateToPose>::SharedPtr action_client_navigate;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
@@ -81,11 +83,11 @@ public:
 	Controller() : Node("controller") {
 		subscriber_client_point = this->create_subscription<geometry_msgs::msg::PointStamped>("/clicked_point", 10, std::bind(&Controller::callback_message_point, this, std::placeholders::_1));
 		subscriber_client_initial_pose = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("/initialpose", 10, std::bind(&Controller::callback_message_initial_pose, this, std::placeholders::_1));
-		action_client_navigate = rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(this, "/navigate_to_pose");
+		action_client_navigate = rclcpp_action::create_client<nav2_msgs::srv::NavigateToPose>(this, "/navigate_to_pose");
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 
-		state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
+		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
 	}
@@ -117,7 +119,7 @@ public:
 	}
 	
 	
-	void response_action_navigate(const rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::WrappedResult & result) {
+	void response_action_navigate(const rclcpp_action::ClientGoalHandle<nav2_msgs::srv::NavigateToPose>::WrappedResult & result) {
 		
 		
 	
@@ -127,7 +129,7 @@ public:
 		controller_EnginePerformEvent(action_navigate_u_response_);
 	}
 	
-	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msgs::action::NavigateToPose::Feedback> feedback) {
+	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msgs::srv::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msgs::srv::NavigateToPose::Feedback> feedback) {
 		
 		
 	
@@ -142,15 +144,15 @@ public:
 			controller_EnginePerformEvent(action_navigate_u_error_);
 			return;
 		}
-		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
+		auto goal_msg = nav2_msgs::srv::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_p869FHWIPUNVS) {
+		if (data_navigate_ == _controller_data_pFQ0DS05QD572) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
 		}
 		
-		auto send_options = rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SendGoalOptions();
+		auto send_options = rclcpp_action::Client<nav2_msgs::srv::NavigateToPose>::SendGoalOptions();
 		send_options.result_callback = std::bind(&Controller::response_action_navigate, this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::feedback_action_navigate, this, std::placeholders::_1, std::placeholders::_2);
 		this->action_client_navigate->async_send_goal(goal_msg, send_options);
@@ -217,7 +219,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_pZJAGG9WY8RUT_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pM5PF259U4OMK_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -243,7 +245,7 @@ private:
 	rclcpp::TimerBase::SharedPtr timer;
 };
 
-std::shared_ptr<Controller> node_controller = nullptr;
+std::shared_ptr<Controller> node = nullptr;
 
 // Control synthesis engine
 bool assigned = false;
@@ -256,16 +258,16 @@ void controller_AssignInputVariables() {
 }
 void controller_InfoEvent(controller_Event_ event, BoolType pre) {
     if (pre) {
-    	node_controller->taken_transitions.push_back(controller_event_names[event]);
+    	node->taken_transitions.push_back(controller_event_names[event]);
     	return;
     }
     
     switch (event) {
 case action_navigate_c_trigger_:
-	node_controller->call_action_navigate();
+	node->call_action_navigate();
 break;
 case action_navigate_c_cancel_:
-	node_controller->cancel_action_navigate();
+	node->cancel_action_navigate();
 break;
 
     default:
@@ -276,9 +278,9 @@ break;
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
 
-    node_controller = std::make_shared<Controller>();
+    node = std::make_shared<Controller>();
 
-    rclcpp::spin(node_controller);
+    rclcpp::spin(node);
     rclcpp::shutdown();
 
     return 0;

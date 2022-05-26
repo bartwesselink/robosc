@@ -11,10 +11,10 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_p8NP848592ZZB,
-    _controller_data_p9MYV0KJCY7DV,
-    _controller_data_pB28B6CTQR6BH,
-    _controller_data_pJ7MYOWEK0TTH,
+    _controller_data_pDDB21I3VMY48,
+    _controller_data_pO8WK0L2AL9IA,
+    _controller_data_pPPAODT8F5XY0,
+    _controller_data_pX0B2B93HB72Z,
     _controller_in_service,
     _controller_no_wall_diag_right,
     _controller_no_wall_front,
@@ -42,13 +42,13 @@ enum controllerEventEnum_ {
     message_scan_front_u_response_,      /**< Event message_scan_front.u_response. */
     message_scan_diag_right_u_response_, /**< Event message_scan_diag_right.u_response. */
     message_movement_c_trigger_,         /**< Event message_movement.c_trigger. */
-    data_movement_c_pOCIBTJQ8M70S_,      /**< Event data_movement.c_pOCIBTJQ8M70S. */
+    data_movement_c_pN424YLRMTPEQ_,      /**< Event data_movement.c_pN424YLRMTPEQ. */
     message_halt_c_trigger_,             /**< Event message_halt.c_trigger. */
-    data_halt_c_pJ99YAW3R4N65_,          /**< Event data_halt.c_pJ99YAW3R4N65. */
+    data_halt_c_pIPOENAZQC01P_,          /**< Event data_halt.c_pIPOENAZQC01P. */
     message_turn_left_c_trigger_,        /**< Event message_turn_left.c_trigger. */
-    data_turn_left_c_pA0OOP5C1NI10_,     /**< Event data_turn_left.c_pA0OOP5C1NI10. */
+    data_turn_left_c_pIJEI4VE120XV_,     /**< Event data_turn_left.c_pIJEI4VE120XV. */
     message_turn_right_c_trigger_,       /**< Event message_turn_right.c_trigger. */
-    data_turn_right_c_pZBQB4T9BV79M_,    /**< Event data_turn_right.c_pZBQB4T9BV79M. */
+    data_turn_right_c_pDO33MZTFRCFQ_,    /**< Event data_turn_right.c_pDO33MZTFRCFQ. */
     message_rotate_done_u_response_,     /**< Event message_rotate_done.u_response. */
     message_stop_u_response_,            /**< Event message_stop.u_response. */
     message_continue_u_response_,        /**< Event message_continue.u_response. */

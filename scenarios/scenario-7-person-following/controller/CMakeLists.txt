@@ -18,8 +18,9 @@ find_package(sensor_msgs REQUIRED)
 find_package(darknet_ros_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
+
 add_library(controller_engine include/controller/controller_engine.c)
-add_executable(interface src/controller_member_function.cpp)
+add_executable(interface src/member_function.cpp)
 
 add_definitions(-DMAX_NUM_EVENTS=0 -DEVENT_OUTPUT=1)
 

@@ -12,9 +12,24 @@ def generate_launch_description():
     return LaunchDescription([
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'tb3_simulation_launch.py')
+                os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gzserver.launch.py')
             ),
-            launch_arguments={'rviz_config_file': os.path.join(get_package_share_directory('scenario'), 'rviz', 'config.rviz')}.items(),
+            launch_arguments={'world': os.path.join(get_package_share_directory('scenario'), 'worlds', 'lines.world')}.items(),
+        ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gzclient.launch.py')
+            ),
+        ),
+
+        ExecuteProcess(
+            cmd=['ros2', 'param', 'set', '/gazebo', 'use_sim_time', 'True'],
+            output='screen'),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'launch'), '/robot_state_publisher.launch.py']),
+            launch_arguments={'use_sim_time': 'true'}.items(),
         ),
 
         Node(
@@ -22,6 +37,20 @@ def generate_launch_description():
             namespace='emergency_stop',
             executable='interface',
             name='emergency_stop'
+        ),
+
+        Node(
+            package='line_detector',
+            namespace='line_detector',
+            executable='interface',
+            name='line_detector'
+        ),
+
+        Node(
+            package='simple_movement',
+            namespace='simple_movement',
+            executable='interface',
+            name='simple_movement'
         ),
 
         IncludeLaunchDescription(

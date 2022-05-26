@@ -148,15 +148,15 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pIGGZFZSZR4F9) {
+		if (data_move_ == _controller_data_pUP5ML8JMWW4T) {
 			value.linear.x = 0.0;
 			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
 		} else 
-		if (data_move_ == _controller_data_p5J0MYKIFPJAO) {
+		if (data_move_ == _controller_data_pS7U2UXZ9YXWR) {
 			value.linear.x = 0.2;
 			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pC7OJ0RYRXLPS) {
+		if (data_move_ == _controller_data_p4031IU0R40HC) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.3;
 		}
@@ -168,7 +168,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pSMSKNS3BMH48) {
+		if (data_halt_ == _controller_data_pZKSUMSQ690TU) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -223,7 +223,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_move_c_p0LY3EZ9AGQNL_,data_move_c_pUAQU3XG1WYHR_,data_move_c_pUSGSRSK1JLC3_,data_halt_c_pWJL900TG040Y_ };
+		      controller_Event_ data_events[4] = { data_move_c_pY9JIS4IKG45G_,data_move_c_pZI0DWYK8T3Y0_,data_move_c_pX4CT3G20G9PI_,data_halt_c_p4UYOSVYGG7AG_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
