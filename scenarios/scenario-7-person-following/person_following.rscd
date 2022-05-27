@@ -56,9 +56,10 @@ robot PersonFollowing {
 
     // Base requirements
     requirement halt needs EmergencyStop.stopped or Scanner.distance = person
-    requirement move needs EmergencyStop.in_service
 
+    requirement move needs EmergencyStop.in_service
     requirement move needs YoloxDetection.detected
+    requirement move needs Scanner.distance = free
 
     // Data for movement
     provide move with {
