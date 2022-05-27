@@ -44,17 +44,17 @@ robot PushBallGoal {
                 on response from ball_front_check goto ball_in_front
             }
 
+            state no_ball {
+                on response from no_ball goto no_ball
+                on response from ball_correction goto ball_found
+            }
+
             state ball_in_front {
                 on response from needs_ajustment goto adjusting
             }
 
             state adjusting {
                 on response from no_adjustment goto ball_in_front
-            }
-
-            state no_ball {
-                on response from no_ball goto no_ball
-                on response from ball_correction goto ball_found
             }
         }
     }
