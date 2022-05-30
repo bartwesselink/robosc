@@ -25,7 +25,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		
 
 	override functions(Action entity, Robot robot)'''
-	void «entity.responseMethod»(const rclcpp_action::ClientGoalHandle<«entity.links.serviceType»>::WrappedResult & result) {
+	void «entity.responseMethod»(const rclcpp_action::ClientGoalHandle<«entity.links.actionType»>::WrappedResult & result) {
 		«entity.prepareResult(entity.responseType, robot, 'result')»
 
 		fprintf(stderr, "[debug] Received action response\n");
@@ -34,7 +34,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.responseTransitionName»);
 	}
 	
-	void «entity.feedbackMethod»(rclcpp_action::ClientGoalHandle<«entity.links.serviceType»>::SharedPtr, const std::shared_ptr<const «entity.links.serviceType»::Feedback> feedback) {
+	void «entity.feedbackMethod»(rclcpp_action::ClientGoalHandle<«entity.links.actionType»>::SharedPtr, const std::shared_ptr<const «entity.links.actionType»::Feedback> feedback) {
 		«entity.prepareResult(entity.responseType, robot, 'feedback')»
 
 		fprintf(stderr, "[debug] Received action feedback\n");
@@ -48,11 +48,11 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 			«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.errorTransitionName»);
 			return;
 		}
-		auto goal_msg = «entity.links.serviceType»::Goal();
+		auto goal_msg = «entity.links.actionType»::Goal();
 
 		«entity.compileDataStates(entity.requestType, 'goal_msg', robot, false)»
 		
-		auto send_options = rclcpp_action::Client<«entity.links.serviceType»>::SendGoalOptions();
+		auto send_options = rclcpp_action::Client<«entity.links.actionType»>::SendGoalOptions();
 		send_options.result_callback = std::bind(&Controller::«entity.responseMethod», this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::«entity.feedbackMethod», this, std::placeholders::_1, std::placeholders::_2);
 		this->«entity.fieldName»->async_send_goal(goal_msg, send_options);
