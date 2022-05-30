@@ -62,11 +62,11 @@ class EnumDataTypeGenerator {
 					val communicationType = communicationsWithEnum.get(0)
 					
 					if (communicationType instanceof Message) {
-						return '''«generator.messageType(communicationType.type, communicationType.links)»::SharedPtr'''
+						return '''«generator.messageType(communicationType.type, communicationType.links)»::«generator.enumPointerType»'''
 					} else if (communicationType instanceof Service) {
-						return '''«generator.serviceType(communicationType.links)»::SharedPtr'''
+						return '''«generator.serviceType(communicationType.links)»::«generator.enumPointerType»'''
 					} else if (communicationType instanceof Action) {
-						return '''«generator.actionType(communicationType.links)»::SharedPtr'''
+						return '''«generator.actionType(communicationType.links)»::«generator.enumPointerType»'''
 					}
 				}
 			}
