@@ -20,8 +20,8 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	@Inject extension TransitionNames
 	@Inject extension DataPlantHelper
 
-	override initializeField(Action entity, Robot robot) '''«entity.fieldName» = rclcpp_action::create_client<«entity.links.serviceType»>(this, "«entity.topicName»");'''
-	override declareField(Action entity, Robot robot) '''rclcpp_action::Client<«entity.links.serviceType»>::SharedPtr «entity.fieldName»;'''
+	override initializeField(Action entity, Robot robot) '''«entity.fieldName» = rclcpp_action::create_client<«entity.links.actionType»>(this, "«entity.topicName»");'''
+	override declareField(Action entity, Robot robot) '''rclcpp_action::Client<«entity.links.actionType»>::SharedPtr «entity.fieldName»;'''
 		
 
 	override functions(Action entity, Robot robot)'''
