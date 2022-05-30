@@ -45,11 +45,11 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	«ELSEIF !type.simple»
 	«FOR pair : type.allProperties»
 	«IF eliminationChecker.communicationTypeWithPropertyInputRequiredInSynthesis(robot, entity, pair.property)»
-	«entity.inputName('response_' + pair.identifier)» = «type.checkDataAccess(access + '->' + (!type.simple ? '' : pair.identifier))»;
+	«entity.inputName('response_' + pair.identifier)» = «type.checkDataAccess(access + '->' + pair.identifier)»;
 	«ENDIF»
 	
 	«FOR assignment : eliminationHelper.findAllCodeOnlyAssignments(robot, entity, pair.property)»
-	«assignment.assignmentVariable» = «assignment.value.compile(type.checkDataAccess(access + '->' + (!type.simple ? '' : pair.identifier)))»;
+	«assignment.assignmentVariable» = «assignment.value.compile(type.checkDataAccess(access + '->'))»;
 	«ENDFOR»
 	«ENDFOR»
 	«ENDIF»
