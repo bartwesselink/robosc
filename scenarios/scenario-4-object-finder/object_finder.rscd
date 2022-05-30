@@ -1,5 +1,6 @@
 robot ObjectFinder {
     interface laser use LaserScan from sensor_msgs
+    interface count use ObjectCount from darknet_ros_msgs
     interface boxes use BoundingBoxes from darknet_ros_msgs
 
     datatype object LaserScan {
@@ -34,7 +35,7 @@ robot ObjectFinder {
     }
 
     datatype enum ScannedObject from BoundingBoxes to {
-        value.bounding_boxes[0].class_id = "sfront sign" -> sfront_sign
+        value.bounding_boxes[0].class_id = "stop sign" -> stop_sign
         default -> no_object
     }
 
@@ -75,7 +76,7 @@ robot ObjectFinder {
     }
 	
     component ObjectDetector {
-        outgoing message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount links boxes
+        outgoing message object_count with identifier: "/darknet_ros/found_object", type: ObjectCount links count
         outgoing message object_scan with identifier: "/darknet_ros/bounding_boxes", type: ScannedObject links boxes
 
         behaviour {
@@ -86,7 +87,7 @@ robot ObjectFinder {
             on response from object_scan do scanned_object := value
 
             initial state no_object {
-                transition if scanned_object_count > 0 and scanned_object = sfront_sign goto object_found
+                transition if scanned_object_count > 0 and scanned_object = stop_sign goto object_found
             }
 
             state object_found {
