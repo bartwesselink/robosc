@@ -20,9 +20,7 @@ class DataPlantGenerator {
 
 	def compileDataplant(CommunicationType communicationType, Robot robot)'''
 	plant «communicationType.dataPlantName»:
-		«IF !communicationType.provideStatements(robot).empty»
-		controllable «communicationType.provideStatements(robot).map[it.transitionName].join(', ')»;
-		«ENDIF»
+		controllable c_none«IF !communicationType.provideStatements(robot).empty», «communicationType.provideStatements(robot).map[it.transitionName].join(', ')»«ENDIF»;
 	
 		location none:
 			initial; marked;
@@ -36,8 +34,15 @@ class DataPlantGenerator {
 	'''
 	
 	private def transitions(CommunicationType communicationType, Robot robot)'''
+	edge c_none «IF !communicationType.guards(robot).empty»when «communicationType.guards(robot).join(' and ')» «ENDIF»goto none;
 	«FOR statement : communicationType.provideStatements(robot)»
 	edge «statement.transitionName» «IF statement.expression !== null»when «statement.expression?.compile»«ENDIF» goto «statement.dataLocationName»;
 	«ENDFOR»
 	'''
+	
+	private def guards(CommunicationType communicationType, Robot robot) {
+		return communicationType.provideStatements(robot)
+			.map[it.expression ?: 'true']
+			.map['''not («it»)''']
+	}
 }
