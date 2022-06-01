@@ -11,6 +11,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.And;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Assignment;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Divide;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Equation;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.GreaterThan;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.GreaterThanEqual;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message;
@@ -150,6 +151,12 @@ public class TypeCheckRule extends AbstractValidationRule {
 		
 		ensureTypesEqual(entity.getType(), entity.getInitial(),
 				RobotSupervisoryControllerDSLPackage.Literals.VARIABLE__INITIAL);
+	}
+
+	@Check
+	public void checkEquationType(Equation entity) {		
+		ensureTypesEqual(entity.getLeft(), entity.getRight(),
+				RobotSupervisoryControllerDSLPackage.Literals.EQUATION__RIGHT);
 	}
 
 	private void ensureTypeCorrect(EObject expression, TypesystemDataType<?> expected, EReference reference) {
