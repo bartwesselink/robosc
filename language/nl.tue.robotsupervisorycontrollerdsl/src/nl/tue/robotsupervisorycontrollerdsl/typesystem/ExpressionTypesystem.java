@@ -82,13 +82,7 @@ public class ExpressionTypesystem {
 				return TypesystemDataType.INT;
 			}
 		} else if (expression instanceof Divide) {
-			Divide entity = (Divide) expression;
-			
-			if (typeOf(entity.getLeft()) == TypesystemDataType.DOUBLE || typeOf(entity.getRight()) == TypesystemDataType.DOUBLE) {
-				return TypesystemDataType.DOUBLE;
-			} else {
-				return TypesystemDataType.INT;
-			}
+			return TypesystemDataType.DOUBLE;
 		} else if (expression instanceof Plus) {
 			Plus entity = (Plus) expression;
 			
