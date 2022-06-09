@@ -43,9 +43,7 @@ class EventExecutionGenerator {
 				shuffle_events(controllable_events, nOfControllableEvents);
 				
 				for (int i = 0; i < nOfControllableEvents; i++) {
-					if («CifSynthesisTool.codePrefix»_EnginePerformEvent(controllable_events[i])) {
-						break;
-					}
+					«CifSynthesisTool.codePrefix»_EnginePerformEvent(controllable_events[i]));
 				}
 			«ENDIF»
 		'''
