@@ -42,7 +42,7 @@ class DataPlantGenerator {
 	
 	private def guards(CommunicationType communicationType, Robot robot) {
 		return communicationType.provideStatements(robot)
-			.map[it.expression ?: 'true']
+			.map[it.expression?.compile ?: 'true']
 			.map['''not («it»)''']
 	}
 }
