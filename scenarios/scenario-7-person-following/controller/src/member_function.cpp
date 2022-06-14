@@ -17,7 +17,7 @@
 #include "std_msgs/msg/int16.hpp"
 #include "std_msgs/msg/float32.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
-#include "darknet_ros_msgs/msg/bounding_boxes.hpp"
+#include "bboxes_ex_msgs/msg/bounding_boxes.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
@@ -83,7 +83,7 @@ public:
 	}
 
 	rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_client_scan;
-	rclcpp::Subscription<darknet_ros_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_bounding_boxes;
+	rclcpp::Subscription<bboxes_ex_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_bounding_boxes;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
@@ -93,7 +93,7 @@ public:
 
 	Controller() : Node("controller") {
 		subscriber_client_scan = this->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, std::bind(&Controller::callback_message_scan, this, std::placeholders::_1));
-		subscriber_client_bounding_boxes = this->create_subscription<darknet_ros_msgs::msg::BoundingBoxes>("/bounding_boxes", 10, std::bind(&Controller::callback_message_bounding_boxes, this, std::placeholders::_1));
+		subscriber_client_bounding_boxes = this->create_subscription<bboxes_ex_msgs::msg::BoundingBoxes>("/bounding_boxes", 10, std::bind(&Controller::callback_message_bounding_boxes, this, std::placeholders::_1));
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
@@ -114,7 +114,7 @@ public:
 	}
 	
 	
-	void callback_message_bounding_boxes(const darknet_ros_msgs::msg::BoundingBoxes::SharedPtr msg) {
+	void callback_message_bounding_boxes(const bboxes_ex_msgs::msg::BoundingBoxes::SharedPtr msg) {
 		
 		code_YoloxDetection_current_xmax = msg->bounding_boxes[0].xmax;
 		
@@ -150,15 +150,15 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pKB2ZJKABDFR4) {
+		if (data_move_ == _controller_data_pEDUCNQKV6YPI) {
 			value.linear.x = 0.0;
 			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pI18XDM9FKO82) {
+		if (data_move_ == _controller_data_p2SMRKMDSC4IE) {
 			value.linear.x = 0.2;
 			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pV55OO11RRPD9) {
+		if (data_move_ == _controller_data_pN48MUF2IMRC9) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.3;
 		}
@@ -170,7 +170,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_p88ETHQ737C4V) {
+		if (data_halt_ == _controller_data_pMK6CL8LNMET3) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -225,7 +225,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_move_c_pAW6SND3CDD7U_,data_move_c_p6LEEHU8C2ML5_,data_move_c_p9H7QCPCAOSPZ_,data_halt_c_pDYX3P39GULHB_ };
+		      controller_Event_ data_events[4] = { data_move_c_pZ5V5QEAW64JL_,data_move_c_pYGU09SQQL1OQ_,data_move_c_pIIIA1GTQHQ1J_,data_halt_c_p6WZCO3K0ZNNX_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -240,9 +240,7 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			if (controller_EnginePerformEvent(controllable_events[i])) {
-				break;
-			}
+			controller_EnginePerformEvent(controllable_events[i]));
 		}
 
 		this->emit_current_state();

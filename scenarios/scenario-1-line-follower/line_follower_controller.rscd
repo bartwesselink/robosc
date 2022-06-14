@@ -1,4 +1,6 @@
 robot LineFollowerController {
+    interface laser use LaserScan from sensor_msgs
+
     component LineDetector {
         outgoing message correction with identifier: "/correction", type: double
         outgoing message no_line with identifier: "/no_line", type: none
@@ -17,15 +19,43 @@ robot LineFollowerController {
         }
     }
 
+    datatype object LaserScan {
+        ranges: array(double)
+    }
+
+    datatype enum DistanceSafety from LaserScan to {
+        value.ranges[0] > 1.0 and value.ranges[270] > 0.5 and value.ranges[90] > 0.5 and value.ranges[45] > 0.7 and value.ranges[305] > 0.7-> safe
+        default -> unsafe
+    }
+
+    component LidarSensor {
+        outgoing message scan with identifier: "/scan", type: DistanceSafety links laser
+
+        behaviour {
+            variable current_distance: DistanceSafety = unsafe
+
+            on response from scan do current_distance := value            
+
+            initial state unsafe_distance {
+                transition if current_distance = safe goto safe_distance
+            }
+
+            state safe_distance {
+                transition if current_distance = unsafe goto unsafe_distance
+            }
+        }
+    }
+
     component EmergencyStop from EmergencyStopLibrary import EmergencyStop
     component TurtlebotPlatform from TurtlebotLibrary import TurtlebotPlatform
 
-    requirement halt needs EmergencyStop.stopped or LineDetector.no_line
-    requirement move needs EmergencyStop.in_service and LineDetector.line_found
+    requirement halt needs EmergencyStop.stopped or LineDetector.no_line or LidarSensor.unsafe_distance
+    requirement move needs EmergencyStop.in_service and LineDetector.line_found and LidarSensor.safe_distance
 
     provide move with {
         linear: { x: 0.6 },
         angular: { z: (-LineDetector.current_correction) / 100 }
     }
+
     provide halt with { linear: { x: 0.0 }, angular: { z: 0.0 }}
 }

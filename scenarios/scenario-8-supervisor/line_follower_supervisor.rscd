@@ -1,4 +1,5 @@
 robot LineFollowerSupervised {
+    interface laser use LaserScan from sensor_msgs
     interface movement use Twist from geometry_msgs
 
     datatype object Vector3 {
@@ -30,6 +31,33 @@ robot LineFollowerSupervised {
         }
     }
 
+    datatype object LaserScan {
+        ranges: array(double)
+    }
+
+    datatype enum DistanceSafety from LaserScan to {
+        value.ranges[0] > 1.0 and value.ranges[270] > 0.5 and value.ranges[90] > 0.5 and value.ranges[45] > 0.7 and value.ranges[305] > 0.7-> safe
+        default -> unsafe
+    }
+
+    component LidarSensor {
+        outgoing message scan with identifier: "/scan", type: DistanceSafety links laser
+
+        behaviour {
+            variable current_distance: DistanceSafety = unsafe
+
+            on response from scan do current_distance := value            
+
+            initial state unsafe_distance {
+                transition if current_distance = safe goto safe_distance
+            }
+
+            state safe_distance {
+                transition if current_distance = unsafe goto unsafe_distance
+            }
+        }
+    }
+
     component SimpleMovement {
         incoming message move with identifier: "/simple_movement", type: Twist links movement
     }
@@ -38,6 +66,7 @@ robot LineFollowerSupervised {
 
     requirement move needs LineDetector.line_found
     requirement move needs EmergencyStop.in_service
+    requirement move needs LidarSensor.safe_distance
 
     provide move with {
         linear: { x: 0.6 },

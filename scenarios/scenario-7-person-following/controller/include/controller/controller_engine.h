@@ -11,10 +11,10 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_p88ETHQ737C4V,
-    _controller_data_pI18XDM9FKO82,
-    _controller_data_pKB2ZJKABDFR4,
-    _controller_data_pV55OO11RRPD9,
+    _controller_data_p2SMRKMDSC4IE,
+    _controller_data_pEDUCNQKV6YPI,
+    _controller_data_pMK6CL8LNMET3,
+    _controller_data_pN48MUF2IMRC9,
     _controller_detected,
     _controller_free,
     _controller_in_service,
@@ -35,15 +35,21 @@ enum controllerEventEnum_ {
     EVT_DELAY_,                         /**< Delay step. */
     EVT_TAU_,                           /**< Tau step. */
     message_scan_u_response_,           /**< Event message_scan.u_response. */
+    data_scan_c_none_,                  /**< Event data_scan.c_none. */
     message_bounding_boxes_u_response_, /**< Event message_bounding_boxes.u_response. */
+    data_bounding_boxes_c_none_,        /**< Event data_bounding_boxes.c_none. */
     message_stop_u_response_,           /**< Event message_stop.u_response. */
+    data_stop_c_none_,                  /**< Event data_stop.c_none. */
     message_continue_u_response_,       /**< Event message_continue.u_response. */
+    data_continue_c_none_,              /**< Event data_continue.c_none. */
     message_move_c_trigger_,            /**< Event message_move.c_trigger. */
-    data_move_c_pAW6SND3CDD7U_,         /**< Event data_move.c_pAW6SND3CDD7U. */
-    data_move_c_p6LEEHU8C2ML5_,         /**< Event data_move.c_p6LEEHU8C2ML5. */
-    data_move_c_p9H7QCPCAOSPZ_,         /**< Event data_move.c_p9H7QCPCAOSPZ. */
+    data_move_c_none_,                  /**< Event data_move.c_none. */
+    data_move_c_pZ5V5QEAW64JL_,         /**< Event data_move.c_pZ5V5QEAW64JL. */
+    data_move_c_pYGU09SQQL1OQ_,         /**< Event data_move.c_pYGU09SQQL1OQ. */
+    data_move_c_pIIIA1GTQHQ1J_,         /**< Event data_move.c_pIIIA1GTQHQ1J. */
     message_halt_c_trigger_,            /**< Event message_halt.c_trigger. */
-    data_halt_c_pDYX3P39GULHB_,         /**< Event data_halt.c_pDYX3P39GULHB. */
+    data_halt_c_none_,                  /**< Event data_halt.c_none. */
+    data_halt_c_p6WZCO3K0ZNNX_,         /**< Event data_halt.c_p6WZCO3K0ZNNX. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

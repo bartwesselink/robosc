@@ -16,12 +16,12 @@ def generate_launch_description():
             launch_arguments={'rviz_config_file': os.path.join(get_package_share_directory('scenario'), 'rviz', 'config.rviz')}.items(),
         ),
 
-        Node(
-            package='controller',
-            namespace='controller',
-            executable='interface',
-            name='controller'
-        ),
+        # Node(
+        #     package='controller',
+        #     namespace='controller',
+        #     executable='interface',
+        #     name='controller'
+        # ),
 
         Node(
             package='emergency_stop',

@@ -36,23 +36,29 @@ const char *controller_event_names[] = {
     "delay-step",                        /**< Delay step. */
     "tau",                               /**< Tau step. */
     "message_scan.u_response",           /**< Event message_scan.u_response. */
+    "data_scan.c_none",                  /**< Event data_scan.c_none. */
     "message_bounding_boxes.u_response", /**< Event message_bounding_boxes.u_response. */
+    "data_bounding_boxes.c_none",        /**< Event data_bounding_boxes.c_none. */
     "message_stop.u_response",           /**< Event message_stop.u_response. */
+    "data_stop.c_none",                  /**< Event data_stop.c_none. */
     "message_continue.u_response",       /**< Event message_continue.u_response. */
+    "data_continue.c_none",              /**< Event data_continue.c_none. */
     "message_move.c_trigger",            /**< Event message_move.c_trigger. */
-    "data_move.c_pAW6SND3CDD7U",         /**< Event data_move.c_pAW6SND3CDD7U. */
-    "data_move.c_p6LEEHU8C2ML5",         /**< Event data_move.c_p6LEEHU8C2ML5. */
-    "data_move.c_p9H7QCPCAOSPZ",         /**< Event data_move.c_p9H7QCPCAOSPZ. */
+    "data_move.c_none",                  /**< Event data_move.c_none. */
+    "data_move.c_pZ5V5QEAW64JL",         /**< Event data_move.c_pZ5V5QEAW64JL. */
+    "data_move.c_pYGU09SQQL1OQ",         /**< Event data_move.c_pYGU09SQQL1OQ. */
+    "data_move.c_pIIIA1GTQHQ1J",         /**< Event data_move.c_pIIIA1GTQHQ1J. */
     "message_halt.c_trigger",            /**< Event message_halt.c_trigger. */
-    "data_halt.c_pDYX3P39GULHB",         /**< Event data_halt.c_pDYX3P39GULHB. */
+    "data_halt.c_none",                  /**< Event data_halt.c_none. */
+    "data_halt.c_p6WZCO3K0ZNNX",         /**< Event data_halt.c_p6WZCO3K0ZNNX. */
 };
 
 /** Enumeration names. */
 const char *enum_names[] = {
-    "data_p88ETHQ737C4V",
-    "data_pI18XDM9FKO82",
-    "data_pKB2ZJKABDFR4",
-    "data_pV55OO11RRPD9",
+    "data_p2SMRKMDSC4IE",
+    "data_pEDUCNQKV6YPI",
+    "data_pMK6CL8LNMET3",
+    "data_pN48MUF2IMRC9",
     "detected",
     "free",
     "in_service",
@@ -94,113 +100,231 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "data_halt.c_pDYX3P39GULHB".
+ * Execute code for event "data_bounding_boxes.c_none".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p88ETHQ737C4V));
-    if (!guard) return FALSE;
-
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_pDYX3P39GULHB_, TRUE);
+        controller_InfoEvent(data_bounding_boxes_c_none_, TRUE);
     #endif
 
-    if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_p88ETHQ737C4V;
-    } else if ((data_halt_) == (_controller_data_p88ETHQ737C4V)) {
-        data_halt_ = _controller_data_p88ETHQ737C4V;
-    }
-
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_pDYX3P39GULHB_, FALSE);
+        controller_InfoEvent(data_bounding_boxes_c_none_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_p6LEEHU8C2ML5".
+ * Execute code for event "data_continue.c_none".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent1(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) || (((data_move_) == (_controller_data_pKB2ZJKABDFR4)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free))))) || ((((data_move_) == (_controller_data_pI18XDM9FKO82)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) || (((data_move_) == (_controller_data_pV55OO11RRPD9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))));
-    if (!guard) return FALSE;
-
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p6LEEHU8C2ML5_, TRUE);
+        controller_InfoEvent(data_continue_c_none_, TRUE);
     #endif
 
-    if (((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
-        data_move_ = _controller_data_pI18XDM9FKO82;
-    } else if (((data_move_) == (_controller_data_pKB2ZJKABDFR4)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
-        data_move_ = _controller_data_pI18XDM9FKO82;
-    } else if (((data_move_) == (_controller_data_pI18XDM9FKO82)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
-        data_move_ = _controller_data_pI18XDM9FKO82;
-    } else if (((data_move_) == (_controller_data_pV55OO11RRPD9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
-        data_move_ = _controller_data_pI18XDM9FKO82;
-    }
-
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p6LEEHU8C2ML5_, FALSE);
+        controller_InfoEvent(data_continue_c_none_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_p9H7QCPCAOSPZ".
+ * Execute code for event "data_halt.c_none".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_YoloxDetection_) == (_controller_initializing))) || (((data_move_) == (_controller_data_pKB2ZJKABDFR4)) && ((component_YoloxDetection_) == (_controller_initializing)))) || ((((data_move_) == (_controller_data_pI18XDM9FKO82)) && ((component_YoloxDetection_) == (_controller_initializing))) || (((data_move_) == (_controller_data_pV55OO11RRPD9)) && ((component_YoloxDetection_) == (_controller_initializing))));
+    BoolType guard = FALSE;
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p9H7QCPCAOSPZ_, TRUE);
+        controller_InfoEvent(data_halt_c_none_, TRUE);
     #endif
 
-    if (((data_move_) == (_controller_none)) && ((component_YoloxDetection_) == (_controller_initializing))) {
-        data_move_ = _controller_data_pV55OO11RRPD9;
-    } else if (((data_move_) == (_controller_data_pKB2ZJKABDFR4)) && ((component_YoloxDetection_) == (_controller_initializing))) {
-        data_move_ = _controller_data_pV55OO11RRPD9;
-    } else if (((data_move_) == (_controller_data_pI18XDM9FKO82)) && ((component_YoloxDetection_) == (_controller_initializing))) {
-        data_move_ = _controller_data_pV55OO11RRPD9;
-    } else if (((data_move_) == (_controller_data_pV55OO11RRPD9)) && ((component_YoloxDetection_) == (_controller_initializing))) {
-        data_move_ = _controller_data_pV55OO11RRPD9;
+    if (FALSE) {
+        data_halt_ = _controller_none;
+    } else if (FALSE) {
+        data_halt_ = _controller_none;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_p9H7QCPCAOSPZ_, FALSE);
+        controller_InfoEvent(data_halt_c_none_, FALSE);
     #endif
     return TRUE;
 }
 
 /**
- * Execute code for event "data_move.c_pAW6SND3CDD7U".
+ * Execute code for event "data_halt.c_p6WZCO3K0ZNNX".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent3(void) {
-    BoolType guard = ((((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) || (((data_move_) == (_controller_data_pKB2ZJKABDFR4)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) || ((((data_move_) == (_controller_data_pI18XDM9FKO82)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) || (((data_move_) == (_controller_data_pV55OO11RRPD9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_pMK6CL8LNMET3));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pAW6SND3CDD7U_, TRUE);
+        controller_InfoEvent(data_halt_c_p6WZCO3K0ZNNX_, TRUE);
     #endif
 
-    if (((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
-        data_move_ = _controller_data_pKB2ZJKABDFR4;
-    } else if (((data_move_) == (_controller_data_pKB2ZJKABDFR4)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
-        data_move_ = _controller_data_pKB2ZJKABDFR4;
-    } else if (((data_move_) == (_controller_data_pI18XDM9FKO82)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
-        data_move_ = _controller_data_pKB2ZJKABDFR4;
-    } else if (((data_move_) == (_controller_data_pV55OO11RRPD9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
-        data_move_ = _controller_data_pKB2ZJKABDFR4;
+    if ((data_halt_) == (_controller_none)) {
+        data_halt_ = _controller_data_pMK6CL8LNMET3;
+    } else if ((data_halt_) == (_controller_data_pMK6CL8LNMET3)) {
+        data_halt_ = _controller_data_pMK6CL8LNMET3;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pAW6SND3CDD7U_, FALSE);
+        controller_InfoEvent(data_halt_c_p6WZCO3K0ZNNX_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_move.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent4(void) {
+    BoolType guard = (((((data_move_) == (_controller_none)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))) || ((((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing))))) || (((((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))) || ((((data_move_) == (_controller_data_pN48MUF2IMRC9)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_none_, TRUE);
+    #endif
+
+    if ((((data_move_) == (_controller_none)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))) {
+        data_move_ = _controller_none;
+    } else if ((((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))) {
+        data_move_ = _controller_none;
+    } else if ((((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))) {
+        data_move_ = _controller_none;
+    } else if ((((data_move_) == (_controller_data_pN48MUF2IMRC9)) && (!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) && ((!(((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) && ((component_YoloxDetection_ != _controller_initializing)))) {
+        data_move_ = _controller_none;
+    }
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_move.c_pIIIA1GTQHQ1J".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent5(void) {
+    BoolType guard = ((((data_move_) == (_controller_none)) && ((component_YoloxDetection_) == (_controller_initializing))) || (((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && ((component_YoloxDetection_) == (_controller_initializing)))) || ((((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && ((component_YoloxDetection_) == (_controller_initializing))) || (((data_move_) == (_controller_data_pN48MUF2IMRC9)) && ((component_YoloxDetection_) == (_controller_initializing))));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pIIIA1GTQHQ1J_, TRUE);
+    #endif
+
+    if (((data_move_) == (_controller_none)) && ((component_YoloxDetection_) == (_controller_initializing))) {
+        data_move_ = _controller_data_pN48MUF2IMRC9;
+    } else if (((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && ((component_YoloxDetection_) == (_controller_initializing))) {
+        data_move_ = _controller_data_pN48MUF2IMRC9;
+    } else if (((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && ((component_YoloxDetection_) == (_controller_initializing))) {
+        data_move_ = _controller_data_pN48MUF2IMRC9;
+    } else if (((data_move_) == (_controller_data_pN48MUF2IMRC9)) && ((component_YoloxDetection_) == (_controller_initializing))) {
+        data_move_ = _controller_data_pN48MUF2IMRC9;
+    }
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pIIIA1GTQHQ1J_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_move.c_pYGU09SQQL1OQ".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent6(void) {
+    BoolType guard = ((((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) || (((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free))))) || ((((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) || (((data_move_) == (_controller_data_pN48MUF2IMRC9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pYGU09SQQL1OQ_, TRUE);
+    #endif
+
+    if (((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
+        data_move_ = _controller_data_p2SMRKMDSC4IE;
+    } else if (((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
+        data_move_ = _controller_data_p2SMRKMDSC4IE;
+    } else if (((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
+        data_move_ = _controller_data_p2SMRKMDSC4IE;
+    } else if (((data_move_) == (_controller_data_pN48MUF2IMRC9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_free)))) {
+        data_move_ = _controller_data_p2SMRKMDSC4IE;
+    }
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pYGU09SQQL1OQ_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_move.c_pZ5V5QEAW64JL".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent7(void) {
+    BoolType guard = ((((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) || (((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person))))) || ((((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) || (((data_move_) == (_controller_data_pN48MUF2IMRC9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pZ5V5QEAW64JL_, TRUE);
+    #endif
+
+    if (((data_move_) == (_controller_none)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
+        data_move_ = _controller_data_pEDUCNQKV6YPI;
+    } else if (((data_move_) == (_controller_data_pEDUCNQKV6YPI)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
+        data_move_ = _controller_data_pEDUCNQKV6YPI;
+    } else if (((data_move_) == (_controller_data_p2SMRKMDSC4IE)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
+        data_move_ = _controller_data_pEDUCNQKV6YPI;
+    } else if (((data_move_) == (_controller_data_pN48MUF2IMRC9)) && (((component_YoloxDetection_) == (_controller_detected)) && ((component_Scanner_v_distance_) == (_controller_person)))) {
+        data_move_ = _controller_data_pEDUCNQKV6YPI;
+    }
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pZ5V5QEAW64JL_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_scan.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent8(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_scan_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_scan_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_stop.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent9(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_stop_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_stop_c_none_, FALSE);
     #endif
     return TRUE;
 }
@@ -210,7 +334,7 @@ static BoolType execEvent3(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent4(void) {
+static BoolType execEvent10(void) {
     BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_YoloxDetection_) == (_controller_initializing)) || ((component_YoloxDetection_) == (_controller_detected)));
     if (!guard) return FALSE;
 
@@ -235,7 +359,7 @@ static BoolType execEvent4(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent5(void) {
+static BoolType execEvent11(void) {
     BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_YoloxDetection_) == (_controller_initializing)) || ((component_YoloxDetection_) == (_controller_detected)));
     if (!guard) return FALSE;
 
@@ -260,7 +384,7 @@ static BoolType execEvent5(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent6(void) {
+static BoolType execEvent12(void) {
     BoolType guard = ((component_EmergencyStop_) == (_controller_stopped)) || ((component_Scanner_v_distance_) == (_controller_person));
     if (!guard) return FALSE;
 
@@ -279,7 +403,7 @@ static BoolType execEvent6(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent7(void) {
+static BoolType execEvent13(void) {
     BoolType guard = ((component_EmergencyStop_) == (_controller_in_service)) && ((component_YoloxDetection_) == (_controller_detected));
     if (!guard) return FALSE;
 
@@ -298,7 +422,7 @@ static BoolType execEvent7(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent8(void) {
+static BoolType execEvent14(void) {
     BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_YoloxDetection_) == (_controller_initializing)) || ((component_YoloxDetection_) == (_controller_detected)));
     if (!guard) return FALSE;
 
@@ -319,7 +443,7 @@ static BoolType execEvent8(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent9(void) {
+static BoolType execEvent15(void) {
     BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_YoloxDetection_) == (_controller_initializing)) || ((component_YoloxDetection_) == (_controller_detected)));
     if (!guard) return FALSE;
 
@@ -377,12 +501,18 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "data_halt.c_pDYX3P39GULHB". */
-        if (execEvent1()) continue;  /* (Try to) perform event "data_move.c_p6LEEHU8C2ML5". */
-        if (execEvent2()) continue;  /* (Try to) perform event "data_move.c_p9H7QCPCAOSPZ". */
-        if (execEvent3()) continue;  /* (Try to) perform event "data_move.c_pAW6SND3CDD7U". */
-        if (execEvent6()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
-        if (execEvent7()) continue;  /* (Try to) perform event "message_move.c_trigger". */
+        if (execEvent0()) continue;  /* (Try to) perform event "data_bounding_boxes.c_none". */
+        if (execEvent1()) continue;  /* (Try to) perform event "data_continue.c_none". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_none". */
+        if (execEvent3()) continue;  /* (Try to) perform event "data_halt.c_p6WZCO3K0ZNNX". */
+        if (execEvent4()) continue;  /* (Try to) perform event "data_move.c_none". */
+        if (execEvent5()) continue;  /* (Try to) perform event "data_move.c_pIIIA1GTQHQ1J". */
+        if (execEvent6()) continue;  /* (Try to) perform event "data_move.c_pYGU09SQQL1OQ". */
+        if (execEvent7()) continue;  /* (Try to) perform event "data_move.c_pZ5V5QEAW64JL". */
+        if (execEvent8()) continue;  /* (Try to) perform event "data_scan.c_none". */
+        if (execEvent9()) continue;  /* (Try to) perform event "data_stop.c_none". */
+        if (execEvent12()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
+        if (execEvent13()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         break; /* No event fired, done with discrete steps. */
     }
 }
@@ -446,26 +576,38 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case data_halt_c_pDYX3P39GULHB_:
+        case data_bounding_boxes_c_none_:
             return execEvent0();
-        case data_move_c_p6LEEHU8C2ML5_:
+        case data_continue_c_none_:
             return execEvent1();
-        case data_move_c_p9H7QCPCAOSPZ_:
+        case data_halt_c_none_:
             return execEvent2();
-        case data_move_c_pAW6SND3CDD7U_:
+        case data_halt_c_p6WZCO3K0ZNNX_:
             return execEvent3();
-        case message_bounding_boxes_u_response_:
+        case data_move_c_none_:
             return execEvent4();
-        case message_continue_u_response_:
+        case data_move_c_pIIIA1GTQHQ1J_:
             return execEvent5();
-        case message_halt_c_trigger_:
+        case data_move_c_pYGU09SQQL1OQ_:
             return execEvent6();
-        case message_move_c_trigger_:
+        case data_move_c_pZ5V5QEAW64JL_:
             return execEvent7();
-        case message_scan_u_response_:
+        case data_scan_c_none_:
             return execEvent8();
-        case message_stop_u_response_:
+        case data_stop_c_none_:
             return execEvent9();
+        case message_bounding_boxes_u_response_:
+            return execEvent10();
+        case message_continue_u_response_:
+            return execEvent11();
+        case message_halt_c_trigger_:
+            return execEvent12();
+        case message_move_c_trigger_:
+            return execEvent13();
+        case message_scan_u_response_:
+            return execEvent14();
+        case message_stop_u_response_:
+            return execEvent15();
         default:
             return FALSE;
     }

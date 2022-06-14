@@ -32,25 +32,38 @@ int EnumTypePrint(controllerEnum value, char *dest, int start, int end) {
 
 /** Event names. */
 const char *controller_event_names[] = {
-    "initial-step",                  /**< Initial step. */
-    "delay-step",                    /**< Delay step. */
-    "tau",                           /**< Tau step. */
-    "message_correction.u_response", /**< Event message_correction.u_response. */
-    "message_no_line.u_response",    /**< Event message_no_line.u_response. */
-    "message_move.c_trigger",        /**< Event message_move.c_trigger. */
-    "data_move.c_pV24H53N28SSH",     /**< Event data_move.c_pV24H53N28SSH. */
-    "message_stop.u_response",       /**< Event message_stop.u_response. */
-    "message_continue.u_response",   /**< Event message_continue.u_response. */
+    "initial-step",                          /**< Initial step. */
+    "delay-step",                            /**< Delay step. */
+    "tau",                                   /**< Tau step. */
+    "message_correction.u_response",         /**< Event message_correction.u_response. */
+    "data_correction.c_none",                /**< Event data_correction.c_none. */
+    "message_no_line.u_response",            /**< Event message_no_line.u_response. */
+    "data_no_line.c_none",                   /**< Event data_no_line.c_none. */
+    "component_LidarSensor.c_pJ1D3ZC7ZI0OO", /**< Event component_LidarSensor.c_pJ1D3ZC7ZI0OO. */
+    "component_LidarSensor.c_p61BJP35U68B2", /**< Event component_LidarSensor.c_p61BJP35U68B2. */
+    "message_scan.u_response",               /**< Event message_scan.u_response. */
+    "data_scan.c_none",                      /**< Event data_scan.c_none. */
+    "message_move.c_trigger",                /**< Event message_move.c_trigger. */
+    "data_move.c_none",                      /**< Event data_move.c_none. */
+    "data_move.c_pP0SEMY32VZLJ",             /**< Event data_move.c_pP0SEMY32VZLJ. */
+    "message_stop.u_response",               /**< Event message_stop.u_response. */
+    "data_stop.c_none",                      /**< Event data_stop.c_none. */
+    "message_continue.u_response",           /**< Event message_continue.u_response. */
+    "data_continue.c_none",                  /**< Event data_continue.c_none. */
 };
 
 /** Enumeration names. */
 const char *enum_names[] = {
-    "data_p0DDETV4SQSKY",
+    "data_pBL18S4SB5G6Y",
     "in_service",
     "line_found",
     "no_line",
     "none",
+    "safe",
+    "safe_distance",
     "stopped",
+    "unsafe",
+    "unsafe_distance",
 };
 
 /* Constants. */
@@ -60,12 +73,14 @@ const char *enum_names[] = {
 
 
 /* Input variables. */
-
+controllerEnum message_scan_i_response_; /**< Input variable "E message_scan.i_response". */
 
 /* State variables. */
-controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
-controllerEnum data_move_;               /**< Discrete variable "E data_move". */
+controllerEnum component_EmergencyStop_;                  /**< Discrete variable "E component_EmergencyStop". */
+controllerEnum component_LidarSensor_v_current_distance_; /**< Discrete variable "E component_LidarSensor.v_current_distance". */
+controllerEnum component_LidarSensor_;                    /**< Discrete variable "E component_LidarSensor". */
+controllerEnum component_LineDetector_;                   /**< Discrete variable "E component_LineDetector". */
+controllerEnum data_move_;                                /**< Discrete variable "E data_move". */
 
 RealType model_time; /**< Current model time. */
 
@@ -83,26 +98,173 @@ static void PrintOutput(controller_Event_ event, BoolType pre) {
 /* Event execution code. */
 
 /**
- * Execute code for event "data_move.c_pV24H53N28SSH".
+ * Execute code for event "component_LidarSensor.c_p61BJP35U68B2".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent0(void) {
-    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_p0DDETV4SQSKY));
+    BoolType guard = ((component_LidarSensor_) == (_controller_safe_distance)) && ((component_LidarSensor_v_current_distance_) == (_controller_unsafe));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pV24H53N28SSH_, TRUE);
+        controller_InfoEvent(component_LidarSensor_c_p61BJP35U68B2_, TRUE);
     #endif
 
-    if ((data_move_) == (_controller_none)) {
-        data_move_ = _controller_data_p0DDETV4SQSKY;
-    } else if ((data_move_) == (_controller_data_p0DDETV4SQSKY)) {
-        data_move_ = _controller_data_p0DDETV4SQSKY;
+    component_LidarSensor_ = _controller_unsafe_distance;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(component_LidarSensor_c_p61BJP35U68B2_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "component_LidarSensor.c_pJ1D3ZC7ZI0OO".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent1(void) {
+    BoolType guard = ((component_LidarSensor_) == (_controller_unsafe_distance)) && ((component_LidarSensor_v_current_distance_) == (_controller_safe));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(component_LidarSensor_c_pJ1D3ZC7ZI0OO_, TRUE);
+    #endif
+
+    component_LidarSensor_ = _controller_safe_distance;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(component_LidarSensor_c_pJ1D3ZC7ZI0OO_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_continue.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent2(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_continue_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_continue_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_correction.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent3(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_correction_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_correction_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_move.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent4(void) {
+    BoolType guard = FALSE;
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_none_, TRUE);
+    #endif
+
+    if (FALSE) {
+        data_move_ = _controller_none;
+    } else if (FALSE) {
+        data_move_ = _controller_none;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_move_c_pV24H53N28SSH_, FALSE);
+        controller_InfoEvent(data_move_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_move.c_pP0SEMY32VZLJ".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent5(void) {
+    BoolType guard = ((data_move_) == (_controller_none)) || ((data_move_) == (_controller_data_pBL18S4SB5G6Y));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pP0SEMY32VZLJ_, TRUE);
+    #endif
+
+    if ((data_move_) == (_controller_none)) {
+        data_move_ = _controller_data_pBL18S4SB5G6Y;
+    } else if ((data_move_) == (_controller_data_pBL18S4SB5G6Y)) {
+        data_move_ = _controller_data_pBL18S4SB5G6Y;
+    }
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_move_c_pP0SEMY32VZLJ_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_no_line.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent6(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_no_line_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_no_line_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_scan.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent7(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_scan_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_scan_c_none_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
+ * Execute code for event "data_stop.c_none".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent8(void) {
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_stop_c_none_, TRUE);
+    #endif
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(data_stop_c_none_, FALSE);
     #endif
     return TRUE;
 }
@@ -112,8 +274,8 @@ static BoolType execEvent0(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent1(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
+static BoolType execEvent9(void) {
+    BoolType guard = ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LidarSensor_) == (_controller_unsafe_distance)) || ((component_LidarSensor_) == (_controller_safe_distance)))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -137,8 +299,8 @@ static BoolType execEvent1(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent2(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
+static BoolType execEvent10(void) {
+    BoolType guard = ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LidarSensor_) == (_controller_unsafe_distance)) || ((component_LidarSensor_) == (_controller_safe_distance)))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -162,8 +324,8 @@ static BoolType execEvent2(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent3(void) {
-    BoolType guard = ((component_LineDetector_) == (_controller_line_found)) && ((component_EmergencyStop_) == (_controller_in_service));
+static BoolType execEvent11(void) {
+    BoolType guard = ((component_LineDetector_) == (_controller_line_found)) && (((component_EmergencyStop_) == (_controller_in_service)) && ((component_LidarSensor_) == (_controller_safe_distance)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -181,8 +343,8 @@ static BoolType execEvent3(void) {
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent4(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
+static BoolType execEvent12(void) {
+    BoolType guard = ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LidarSensor_) == (_controller_unsafe_distance)) || ((component_LidarSensor_) == (_controller_safe_distance)))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -202,12 +364,37 @@ static BoolType execEvent4(void) {
 }
 
 /**
+ * Execute code for event "message_scan.u_response".
+ *
+ * @return Whether the event was performed.
+ */
+static BoolType execEvent13(void) {
+    BoolType guard = ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LidarSensor_) == (_controller_unsafe_distance)) || ((component_LidarSensor_) == (_controller_safe_distance)))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
+    if (!guard) return FALSE;
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(message_scan_u_response_, TRUE);
+    #endif
+
+    if ((component_LidarSensor_) == (_controller_unsafe_distance)) {
+        component_LidarSensor_v_current_distance_ = message_scan_i_response_;
+    } else if ((component_LidarSensor_) == (_controller_safe_distance)) {
+        component_LidarSensor_v_current_distance_ = message_scan_i_response_;
+    }
+
+    #if EVENT_OUTPUT
+        controller_InfoEvent(message_scan_u_response_, FALSE);
+    #endif
+    return TRUE;
+}
+
+/**
  * Execute code for event "message_stop.u_response".
  *
  * @return Whether the event was performed.
  */
-static BoolType execEvent5(void) {
-    BoolType guard = (((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
+static BoolType execEvent14(void) {
+    BoolType guard = ((((component_EmergencyStop_) == (_controller_in_service)) || ((component_EmergencyStop_) == (_controller_stopped))) && (((component_LidarSensor_) == (_controller_unsafe_distance)) || ((component_LidarSensor_) == (_controller_safe_distance)))) && (((component_LineDetector_) == (_controller_no_line)) || ((component_LineDetector_) == (_controller_line_found)));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
@@ -264,8 +451,16 @@ static void PerformEvents(void) {
             break;
         }
 
-        if (execEvent0()) continue;  /* (Try to) perform event "data_move.c_pV24H53N28SSH". */
-        if (execEvent3()) continue;  /* (Try to) perform event "message_move.c_trigger". */
+        if (execEvent0()) continue;  /* (Try to) perform event "component_LidarSensor.c_p61BJP35U68B2". */
+        if (execEvent1()) continue;  /* (Try to) perform event "component_LidarSensor.c_pJ1D3ZC7ZI0OO". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_continue.c_none". */
+        if (execEvent3()) continue;  /* (Try to) perform event "data_correction.c_none". */
+        if (execEvent4()) continue;  /* (Try to) perform event "data_move.c_none". */
+        if (execEvent5()) continue;  /* (Try to) perform event "data_move.c_pP0SEMY32VZLJ". */
+        if (execEvent6()) continue;  /* (Try to) perform event "data_no_line.c_none". */
+        if (execEvent7()) continue;  /* (Try to) perform event "data_scan.c_none". */
+        if (execEvent8()) continue;  /* (Try to) perform event "data_stop.c_none". */
+        if (execEvent11()) continue;  /* (Try to) perform event "message_move.c_trigger". */
         break; /* No event fired, done with discrete steps. */
     }
 }
@@ -275,8 +470,10 @@ void controller_EngineFirstStep(void) {
     InitConstants();
 
     model_time = 0.0;
-
+    controller_AssignInputVariables();
     component_EmergencyStop_ = _controller_in_service;
+    component_LidarSensor_v_current_distance_ = _controller_unsafe;
+    component_LidarSensor_ = _controller_unsafe_distance;
     component_LineDetector_ = _controller_no_line;
     data_move_ = _controller_none;
 
@@ -299,7 +496,7 @@ void controller_EngineFirstStep(void) {
  * @param delta Length of the time step.
  */
 void controller_EngineTimeStep(double delta) {
-
+    controller_AssignInputVariables();
 
     /* Update continuous variables. */
     if (delta > 0.0) {
@@ -327,18 +524,36 @@ void controller_EngineTimeStep(double delta) {
   */
 BoolType controller_EnginePerformEvent(controller_Event_ event) {
     switch (event) {
-        case data_move_c_pV24H53N28SSH_:
+        case component_LidarSensor_c_p61BJP35U68B2_:
             return execEvent0();
-        case message_continue_u_response_:
+        case component_LidarSensor_c_pJ1D3ZC7ZI0OO_:
             return execEvent1();
-        case message_correction_u_response_:
+        case data_continue_c_none_:
             return execEvent2();
-        case message_move_c_trigger_:
+        case data_correction_c_none_:
             return execEvent3();
-        case message_no_line_u_response_:
+        case data_move_c_none_:
             return execEvent4();
-        case message_stop_u_response_:
+        case data_move_c_pP0SEMY32VZLJ_:
             return execEvent5();
+        case data_no_line_c_none_:
+            return execEvent6();
+        case data_scan_c_none_:
+            return execEvent7();
+        case data_stop_c_none_:
+            return execEvent8();
+        case message_continue_u_response_:
+            return execEvent9();
+        case message_correction_u_response_:
+            return execEvent10();
+        case message_move_c_trigger_:
+            return execEvent11();
+        case message_no_line_u_response_:
+            return execEvent12();
+        case message_scan_u_response_:
+            return execEvent13();
+        case message_stop_u_response_:
+            return execEvent14();
         default:
             return FALSE;
     }

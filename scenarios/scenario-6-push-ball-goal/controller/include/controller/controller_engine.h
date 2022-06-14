@@ -15,11 +15,11 @@ enum Enumcontroller_ {
     _controller_awaiting,
     _controller_ball_found,
     _controller_ball_in_front,
-    _controller_data_p4WFYGT86LJK9,
-    _controller_data_p641V0HTAP6A3,
-    _controller_data_pJ7PR7U36O9D9,
-    _controller_data_pR8MHMD5FPBMS,
-    _controller_data_pX11JBUY6PUJ1,
+    _controller_data_p8FSQAWK0EEMZ,
+    _controller_data_pNSBW9JQ6OU9X,
+    _controller_data_pRT63KQSV3XHI,
+    _controller_data_pV1KX6UX45Q6O,
+    _controller_data_pV31RVEZ6ALCC,
     _controller_free,
     _controller_goal_found,
     _controller_in_service,
@@ -41,22 +41,34 @@ enum controllerEventEnum_ {
     EVT_DELAY_,                           /**< Delay step. */
     EVT_TAU_,                             /**< Tau step. */
     message_scan_u_response_,             /**< Event message_scan.u_response. */
+    data_scan_c_none_,                    /**< Event data_scan.c_none. */
     message_ball_correction_u_response_,  /**< Event message_ball_correction.u_response. */
+    data_ball_correction_c_none_,         /**< Event data_ball_correction.c_none. */
     message_no_ball_u_response_,          /**< Event message_no_ball.u_response. */
+    data_no_ball_c_none_,                 /**< Event data_no_ball.c_none. */
     message_needs_ajustment_u_response_,  /**< Event message_needs_ajustment.u_response. */
+    data_needs_ajustment_c_none_,         /**< Event data_needs_ajustment.c_none. */
     message_no_adjustment_u_response_,    /**< Event message_no_adjustment.u_response. */
+    data_no_adjustment_c_none_,           /**< Event data_no_adjustment.c_none. */
     message_ball_front_check_u_response_, /**< Event message_ball_front_check.u_response. */
+    data_ball_front_check_c_none_,        /**< Event data_ball_front_check.c_none. */
     message_goal_correction_u_response_,  /**< Event message_goal_correction.u_response. */
+    data_goal_correction_c_none_,         /**< Event data_goal_correction.c_none. */
     message_no_goal_u_response_,          /**< Event message_no_goal.u_response. */
+    data_no_goal_c_none_,                 /**< Event data_no_goal.c_none. */
     message_stop_u_response_,             /**< Event message_stop.u_response. */
+    data_stop_c_none_,                    /**< Event data_stop.c_none. */
     message_continue_u_response_,         /**< Event message_continue.u_response. */
+    data_continue_c_none_,                /**< Event data_continue.c_none. */
     message_move_c_trigger_,              /**< Event message_move.c_trigger. */
-    data_move_c_pP7JD423L253E_,           /**< Event data_move.c_pP7JD423L253E. */
-    data_move_c_pP4MR7QKY1OJY_,           /**< Event data_move.c_pP4MR7QKY1OJY. */
-    data_move_c_pBZQBH3JQ63HW_,           /**< Event data_move.c_pBZQBH3JQ63HW. */
-    data_move_c_pQ39O1MCHV35W_,           /**< Event data_move.c_pQ39O1MCHV35W. */
+    data_move_c_none_,                    /**< Event data_move.c_none. */
+    data_move_c_pRQWLNTV29I63_,           /**< Event data_move.c_pRQWLNTV29I63. */
+    data_move_c_p36BWWUSNJC3L_,           /**< Event data_move.c_p36BWWUSNJC3L. */
+    data_move_c_pD5RBQXC0II53_,           /**< Event data_move.c_pD5RBQXC0II53. */
+    data_move_c_p06V0RK2WWOPV_,           /**< Event data_move.c_p06V0RK2WWOPV. */
     message_halt_c_trigger_,              /**< Event message_halt.c_trigger. */
-    data_halt_c_pM4VG4RLT77T1_,           /**< Event data_halt.c_pM4VG4RLT77T1. */
+    data_halt_c_none_,                    /**< Event data_halt.c_none. */
+    data_halt_c_p0Q71S5GMFHQU_,           /**< Event data_halt.c_p0Q71S5GMFHQU. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

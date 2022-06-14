@@ -41,27 +41,6 @@ void shuffle_events(controller_Event_ *x, size_t n)
     }
 }
 
-std::string serialize_json_vector(const std::vector<std::string>& list) {
-    std::stringstream output;
-    output << "[";
-    
-    bool first = true;
-
-    for (const auto& value : list) {
-        if (!first) {
-            output << ", ";
-        }
-        
-        first = false;
-
-        output << "\"" << value << "\"";
-    }
-    
-    output << "]";   
-    
-    return output.str();
-}
-
 double code_LineDetector_current_correction = 0.0;
 
 class Controller : public rclcpp::Node {
@@ -71,7 +50,6 @@ public:
 	rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr subscriber_client_correction;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_no_line;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
-	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
 	std::vector<std::string> taken_transitions;
 
 	Controller() : Node("controller") {
@@ -79,7 +57,6 @@ public:
 		subscriber_client_no_line = this->create_subscription<std_msgs::msg::Empty>("/no_line", 10, std::bind(&Controller::callback_message_no_line, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/simple_movement", 10);
 
-		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
 	}
@@ -115,33 +92,6 @@ public:
 		
 		this->publisher_client_move->publish(value);
 	}
-	
-	void emit_current_state() {
-		std::stringstream output;
-		
-		output << "{";
-		
-		output << "\"current\": {" << "";
-		output << "\"LineDetector\": {";
-		output << "\"state\": \"" << enum_names[component_LineDetector_] << "\",";
-		output << "\"variables\": {";
-		
-		output << "\"current_correction\": \"" << code_LineDetector_current_correction << "\"";				
-		
-		output << "}";
-		output << "}";
-		output << "},";
-		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"LineFollowerSupervised\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"SimpleMovement\",\"messages\":[\"move\"],\"services\":[],\"actions\":[]}]}";
-		output << "}";
-		
-		auto msg = std_msgs::msg::String();
-		msg.data = output.str();
-		
-		this->state_information->publish(msg);
-	
-		taken_transitions.clear();
-	}
 private:
 	// Heart of the controller
 	void tick() {
@@ -165,8 +115,6 @@ private:
 				break;
 			}
 		}
-
-		this->emit_current_state();
 	}
 	
 	rclcpp::TimerBase::SharedPtr timer;

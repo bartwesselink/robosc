@@ -11,13 +11,17 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_pD4IR9513ODHE,
-    _controller_data_pXQ126KPL2J3Q,
+    _controller_data_p7P5N82K4LV3P,
+    _controller_data_pG29KG3OCDJOI,
     _controller_in_service,
     _controller_line_found,
     _controller_no_line,
     _controller_none,
+    _controller_safe,
+    _controller_safe_distance,
     _controller_stopped,
+    _controller_unsafe,
+    _controller_unsafe_distance,
 };
 typedef enum Enumcontroller_ controllerEnum;
 
@@ -27,17 +31,27 @@ extern int EnumTypePrint(controllerEnum value, char *dest, int start, int end);
 
 /* Event declarations. */
 enum controllerEventEnum_ {
-    EVT_INITIAL_,                   /**< Initial step. */
-    EVT_DELAY_,                     /**< Delay step. */
-    EVT_TAU_,                       /**< Tau step. */
-    message_correction_u_response_, /**< Event message_correction.u_response. */
-    message_no_line_u_response_,    /**< Event message_no_line.u_response. */
-    message_stop_u_response_,       /**< Event message_stop.u_response. */
-    message_continue_u_response_,   /**< Event message_continue.u_response. */
-    message_move_c_trigger_,        /**< Event message_move.c_trigger. */
-    data_move_c_pXKXTO3QW1ZOR_,     /**< Event data_move.c_pXKXTO3QW1ZOR. */
-    message_halt_c_trigger_,        /**< Event message_halt.c_trigger. */
-    data_halt_c_pHH8UCZ6MO5KK_,     /**< Event data_halt.c_pHH8UCZ6MO5KK. */
+    EVT_INITIAL_,                           /**< Initial step. */
+    EVT_DELAY_,                             /**< Delay step. */
+    EVT_TAU_,                               /**< Tau step. */
+    message_correction_u_response_,         /**< Event message_correction.u_response. */
+    data_correction_c_none_,                /**< Event data_correction.c_none. */
+    message_no_line_u_response_,            /**< Event message_no_line.u_response. */
+    data_no_line_c_none_,                   /**< Event data_no_line.c_none. */
+    component_LidarSensor_c_pJUDKAUYT2BXU_, /**< Event component_LidarSensor.c_pJUDKAUYT2BXU. */
+    component_LidarSensor_c_pGXBLBAH1KTCF_, /**< Event component_LidarSensor.c_pGXBLBAH1KTCF. */
+    message_scan_u_response_,               /**< Event message_scan.u_response. */
+    data_scan_c_none_,                      /**< Event data_scan.c_none. */
+    message_stop_u_response_,               /**< Event message_stop.u_response. */
+    data_stop_c_none_,                      /**< Event data_stop.c_none. */
+    message_continue_u_response_,           /**< Event message_continue.u_response. */
+    data_continue_c_none_,                  /**< Event data_continue.c_none. */
+    message_move_c_trigger_,                /**< Event message_move.c_trigger. */
+    data_move_c_none_,                      /**< Event data_move.c_none. */
+    data_move_c_pE63X028AZT1X_,             /**< Event data_move.c_pE63X028AZT1X. */
+    message_halt_c_trigger_,                /**< Event message_halt.c_trigger. */
+    data_halt_c_none_,                      /**< Event data_halt.c_none. */
+    data_halt_c_pR5A6CU0MDHUS_,             /**< Event data_halt.c_pR5A6CU0MDHUS. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 
@@ -48,19 +62,21 @@ extern const char *controller_event_names[];
 
 
 /* Input variables. */
+extern controllerEnum message_scan_i_response_; /**< Input variable "E message_scan.i_response". */
 
-
-
+extern void controller_AssignInputVariables();
 
 /* Declaration of internal functions. */
 
 
 /* State variables (use for output only). */
 extern RealType model_time; /**< Current model time. */
-extern controllerEnum component_EmergencyStop_; /**< Discrete variable "E component_EmergencyStop". */
-extern controllerEnum component_LineDetector_;  /**< Discrete variable "E component_LineDetector". */
-extern controllerEnum data_halt_;               /**< Discrete variable "E data_halt". */
-extern controllerEnum data_move_;               /**< Discrete variable "E data_move". */
+extern controllerEnum component_EmergencyStop_;                  /**< Discrete variable "E component_EmergencyStop". */
+extern controllerEnum component_LidarSensor_v_current_distance_; /**< Discrete variable "E component_LidarSensor.v_current_distance". */
+extern controllerEnum component_LidarSensor_;                    /**< Discrete variable "E component_LidarSensor". */
+extern controllerEnum component_LineDetector_;                   /**< Discrete variable "E component_LineDetector". */
+extern controllerEnum data_halt_;                                /**< Discrete variable "E data_halt". */
+extern controllerEnum data_move_;                                /**< Discrete variable "E data_move". */
 
 /* Algebraic and derivative functions (use for output only). */
 

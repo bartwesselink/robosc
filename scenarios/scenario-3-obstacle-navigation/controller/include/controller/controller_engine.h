@@ -12,7 +12,7 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting_point,
-    _controller_data_pFQ0DS05QD572,
+    _controller_data_pKRN56FXDJPW6,
     _controller_error,
     _controller_executing,
     _controller_has_point,
@@ -35,16 +35,21 @@ enum controllerEventEnum_ {
     EVT_DELAY_,                       /**< Delay step. */
     EVT_TAU_,                         /**< Tau step. */
     message_point_u_response_,        /**< Event message_point.u_response. */
+    data_point_c_none_,               /**< Event data_point.c_none. */
     message_initial_pose_u_response_, /**< Event message_initial_pose.u_response. */
+    data_initial_pose_c_none_,        /**< Event data_initial_pose.c_none. */
     action_navigate_c_trigger_,       /**< Event action_navigate.c_trigger. */
     action_navigate_c_reset_,         /**< Event action_navigate.c_reset. */
     action_navigate_c_cancel_,        /**< Event action_navigate.c_cancel. */
     action_navigate_u_feedback_,      /**< Event action_navigate.u_feedback. */
     action_navigate_u_response_,      /**< Event action_navigate.u_response. */
     action_navigate_u_error_,         /**< Event action_navigate.u_error. */
-    data_navigate_c_pM5PF259U4OMK_,   /**< Event data_navigate.c_pM5PF259U4OMK. */
+    data_navigate_c_none_,            /**< Event data_navigate.c_none. */
+    data_navigate_c_pPOS5YMEJUPC6_,   /**< Event data_navigate.c_pPOS5YMEJUPC6. */
     message_stop_u_response_,         /**< Event message_stop.u_response. */
+    data_stop_c_none_,                /**< Event data_stop.c_none. */
     message_continue_u_response_,     /**< Event message_continue.u_response. */
+    data_continue_c_none_,            /**< Event data_continue.c_none. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

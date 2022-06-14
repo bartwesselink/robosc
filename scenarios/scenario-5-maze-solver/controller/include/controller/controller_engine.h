@@ -11,10 +11,10 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_pDDB21I3VMY48,
-    _controller_data_pO8WK0L2AL9IA,
-    _controller_data_pPPAODT8F5XY0,
-    _controller_data_pX0B2B93HB72Z,
+    _controller_data_p5BZ7N0434SVB,
+    _controller_data_p5XTILLQ2Z43J,
+    _controller_data_pJ5U3TUZ6JUE4,
+    _controller_data_pME01R4PQ72J6,
     _controller_in_service,
     _controller_no_wall_diag_right,
     _controller_no_wall_front,
@@ -39,19 +39,29 @@ enum controllerEventEnum_ {
     EVT_DELAY_,                          /**< Delay step. */
     EVT_TAU_,                            /**< Tau step. */
     message_scan_right_u_response_,      /**< Event message_scan_right.u_response. */
+    data_scan_right_c_none_,             /**< Event data_scan_right.c_none. */
     message_scan_front_u_response_,      /**< Event message_scan_front.u_response. */
+    data_scan_front_c_none_,             /**< Event data_scan_front.c_none. */
     message_scan_diag_right_u_response_, /**< Event message_scan_diag_right.u_response. */
+    data_scan_diag_right_c_none_,        /**< Event data_scan_diag_right.c_none. */
     message_movement_c_trigger_,         /**< Event message_movement.c_trigger. */
-    data_movement_c_pN424YLRMTPEQ_,      /**< Event data_movement.c_pN424YLRMTPEQ. */
+    data_movement_c_none_,               /**< Event data_movement.c_none. */
+    data_movement_c_pDZEQTIRGW9N1_,      /**< Event data_movement.c_pDZEQTIRGW9N1. */
     message_halt_c_trigger_,             /**< Event message_halt.c_trigger. */
-    data_halt_c_pIPOENAZQC01P_,          /**< Event data_halt.c_pIPOENAZQC01P. */
+    data_halt_c_none_,                   /**< Event data_halt.c_none. */
+    data_halt_c_pYCT8ND9MZYDA_,          /**< Event data_halt.c_pYCT8ND9MZYDA. */
     message_turn_left_c_trigger_,        /**< Event message_turn_left.c_trigger. */
-    data_turn_left_c_pIJEI4VE120XV_,     /**< Event data_turn_left.c_pIJEI4VE120XV. */
+    data_turn_left_c_none_,              /**< Event data_turn_left.c_none. */
+    data_turn_left_c_pGXOS0946TCCC_,     /**< Event data_turn_left.c_pGXOS0946TCCC. */
     message_turn_right_c_trigger_,       /**< Event message_turn_right.c_trigger. */
-    data_turn_right_c_pDO33MZTFRCFQ_,    /**< Event data_turn_right.c_pDO33MZTFRCFQ. */
+    data_turn_right_c_none_,             /**< Event data_turn_right.c_none. */
+    data_turn_right_c_pWYRY9DSBD3QZ_,    /**< Event data_turn_right.c_pWYRY9DSBD3QZ. */
     message_rotate_done_u_response_,     /**< Event message_rotate_done.u_response. */
+    data_rotate_done_c_none_,            /**< Event data_rotate_done.c_none. */
     message_stop_u_response_,            /**< Event message_stop.u_response. */
+    data_stop_c_none_,                   /**< Event data_stop.c_none. */
     message_continue_u_response_,        /**< Event message_continue.u_response. */
+    data_continue_c_none_,               /**< Event data_continue.c_none. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

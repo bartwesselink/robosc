@@ -1,6 +1,6 @@
 robot PersonFollowing {
     interface laser use LaserScan from sensor_msgs
-    interface boxes use BoundingBoxes from bbox_ex_msgs
+    interface boxes use BoundingBoxes from bboxes_ex_msgs
 
     datatype object BoundingBoxes {
         bounding_boxes: array(BoundingBox)

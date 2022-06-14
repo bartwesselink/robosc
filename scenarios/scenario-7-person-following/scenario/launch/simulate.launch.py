@@ -59,10 +59,10 @@ def generate_launch_description():
             name='emergency_stop'
         ),
 
-        Node(
-            package='controller',
-            namespace='controller',
-            executable='interface',
-            name='controller'
-        ),
+        # Node(
+        #     package='controller',
+        #     namespace='controller',
+        #     executable='interface',
+        #     name='controller'
+        # ),
     ])

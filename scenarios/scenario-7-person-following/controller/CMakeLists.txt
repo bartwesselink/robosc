@@ -15,7 +15,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(darknet_ros_msgs REQUIRED)
+find_package(bboxes_ex_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 
@@ -26,7 +26,7 @@ add_definitions(-DMAX_NUM_EVENTS=0 -DEVENT_OUTPUT=1)
 
 target_link_libraries(interface controller_engine)
 
-ament_target_dependencies(interface rclcpp std_msgs rclcpp_action sensor_msgs darknet_ros_msgs geometry_msgs)
+ament_target_dependencies(interface rclcpp std_msgs rclcpp_action sensor_msgs bboxes_ex_msgs geometry_msgs)
 
 install(TARGETS
         interface

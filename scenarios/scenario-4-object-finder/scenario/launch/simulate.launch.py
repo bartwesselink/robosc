@@ -52,10 +52,10 @@ def generate_launch_description():
             name='fixed_rotator'
         ),
 
-        Node(
-            package='controller',
-            namespace='controller',
-            executable='interface',
-            name='controller'
-        ),
+        # Node(
+        #     package='controller',
+        #     namespace='controller',
+        #     executable='interface',
+        #     name='controller'
+        # ),
     ])
