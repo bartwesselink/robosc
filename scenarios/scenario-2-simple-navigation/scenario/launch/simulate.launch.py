@@ -20,12 +20,12 @@ def generate_launch_description():
             }.items(),
         ),
 
-        # Node(
-        #     package='controller',
-        #     namespace='controller',
-        #     executable='interface',
-        #     name='controller'
-        # ),
+        Node(
+            package='controller',
+            namespace='controller',
+            executable='interface',
+            name='controller'
+        ),
 
         Node(
             package='emergency_stop',

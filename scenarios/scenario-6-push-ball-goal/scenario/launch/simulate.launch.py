@@ -54,10 +54,10 @@ def generate_launch_description():
             name='goal_detector'
         ),
 
-        # Node(
-        #     package='controller',
-        #     namespace='controller',
-        #     executable='interface',
-        #     name='controller'
-        # ),
+        Node(
+            package='controller',
+            namespace='controller',
+            executable='interface',
+            name='controller'
+        ),
     ])

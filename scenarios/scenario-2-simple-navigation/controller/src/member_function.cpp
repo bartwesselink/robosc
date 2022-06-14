@@ -234,7 +234,7 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]));
+			controller_EnginePerformEvent(controllable_events[i]);
 		}
 
 		this->emit_current_state();

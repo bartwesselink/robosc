@@ -178,6 +178,7 @@ public:
 	
 	
 	void call_message_rotate_left() {
+		fprintf(stderr, "[debug] Rotate left\n");
 		auto value = std_msgs::msg::Empty();
 		
 		
@@ -222,6 +223,7 @@ public:
 	
 	
 	void call_message_move() {
+		fprintf(stderr, "[debug] Move\n");
 		auto value = geometry_msgs::msg::Twist();
 		
 		if (data_move_ == _controller_data_pO6JO6QW5TBOU) {
@@ -234,6 +236,7 @@ public:
 	
 	
 	void call_message_halt() {
+		fprintf(stderr, "[debug] Halt\n");
 		auto value = geometry_msgs::msg::Twist();
 		
 		if (data_halt_ == _controller_data_pLV2V0NPQH35K) {
@@ -333,7 +336,7 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]));
+			controller_EnginePerformEvent(controllable_events[i]);
 		}
 
 		this->emit_current_state();
