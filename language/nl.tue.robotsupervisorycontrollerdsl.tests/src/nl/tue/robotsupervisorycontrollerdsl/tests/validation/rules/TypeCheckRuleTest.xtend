@@ -35,6 +35,7 @@ class TypeCheckRuleTest {
 
 					behaviour {
 						variable result_integer: integer(0..20) = 0
+						variable result_double: double
 						variable result_boolean: boolean = false
 
 						initial state idle {
@@ -48,7 +49,7 @@ class TypeCheckRuleTest {
 							on response from test_message_one do result_boolean := !true
 							on response from test_message_one do result_integer := -5
 							on response from test_message_one do result_integer := 5 * 0
-							on response from test_message_one do result_integer := 0 / 5
+							on response from test_message_one do result_double := 0 / 5
 							on response from test_message_one do result_integer := 1 + 2
 							on response from test_message_one do result_integer := 1 - 2
 							transition if true

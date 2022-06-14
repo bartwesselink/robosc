@@ -68,4 +68,7 @@ class PlatformTypeGenerator extends AbstractPlatformTypeGenerator {
 		
 		this->state_information.publish(msg);
 	'''
+	
+	override enumPointerType() '''ConstPtr&'''
+	
 }

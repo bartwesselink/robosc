@@ -13,4 +13,5 @@ abstract class AbstractPlatformTypeGenerator {
 	abstract def CharSequence serviceImport(Interface ^interface)
 	abstract def String platformType(BasicDataType dataType)
 	abstract def String informationPublisher()
+	abstract def String enumPointerType()
 }
