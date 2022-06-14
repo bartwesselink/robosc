@@ -1,5 +1,6 @@
 import './assets/main.scss'
 import { updateState, visualizeComponent } from './component';
+import { initializeMiddlewareToggle } from './middleware-toggle';
 
 let lastDefinition = null;
 let lastSerialized = null;
@@ -36,7 +37,10 @@ const handleData = (data) => {
 window.addEventListener('message', event => {
     const wrapper = event.data;
 
-    if (wrapper.command !== 'visualize') return;
-
-    handleData(wrapper.data);
+    switch (wrapper.command) {
+        case 'visualize':
+            return handleData(wrapper.data);
+        case 'settings':
+            return initializeMiddlewareToggle(wrapper.data);
+    }
 });

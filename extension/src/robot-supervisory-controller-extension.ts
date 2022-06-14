@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { LanguageClient, LanguageClientOptions, ServerOptions, Trace } from 'vscode-languageclient/node';
-import { startListener } from './ros-listener';
+import { startRos1Listener } from './ros-1-listener';
+import { startRos2Listener } from './ros-2-listener';
+import { Configuration, Middleware } from './models';
 
 export function activate(context: vscode.ExtensionContext) {
     const executable = process.platform === 'win32' ? 'nl.tue.robotsupervisorycontrollerdsl.ide.bat' : 'nl.tue.robotsupervisorycontrollerdsl.ide';
@@ -51,6 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
                 {
                     enableScripts: true,
                     localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'visualization')],
+                    retainContextWhenHidden: true,
                 }
             );
 
@@ -62,12 +65,45 @@ export function activate(context: vscode.ExtensionContext) {
                 context.subscriptions
               );
 
+            const configuration = vscode.workspace.getConfiguration('rscd') as unknown as Configuration;
+            let currentDisposeFunction: () => Promise<void>;
+
+            currentPanel.webview.onDidReceiveMessage(async (message) => {
+                if (message.command !== 'middleware') return;
+
+                if (currentDisposeFunction) {
+                    await currentDisposeFunction();
+                }
+
+                switch (message.data) {
+                    case Middleware.ROS1:
+                        const ros1 = await startRos1Listener(() => currentPanel!!.webview, configuration);
+                        currentDisposeFunction = async () => await ros1.shutdown();
+
+                        break;
+                    case Middleware.ROS2:
+                        const ros2 = await startRos2Listener(() => currentPanel!!.webview, configuration);
+                        currentDisposeFunction = async () => await ros2.shutdown()
+                        break;
+                }
+            }, undefined, context.subscriptions);
+
             currentPanel.webview.html = getWebviewContent(currentPanel.webview, context);
-            
-            startListener(() => currentPanel!!.webview)
-                .then(ros => context.subscriptions.push(vscode.Disposable.from({
-                    dispose: async () => await ros.shutdown(),
-                })));
+
+            setTimeout(() => {
+                currentPanel?.webview.postMessage({
+                    command: 'settings',
+                    data: configuration,
+                })
+            });
+
+            context.subscriptions.push(vscode.Disposable.from({
+                dispose: async () => {
+                    if (currentDisposeFunction) {
+                        await currentDisposeFunction();
+                    }
+                },
+            }));
         })
     );
 
@@ -86,6 +122,10 @@ function getWebviewContent(webview: vscode.Webview, context: vscode.ExtensionCon
         </head>
         <body>
             <div id="root">Connecting to controller...</div>
+            <div class="middleware-switcher">
+                <div class="middleware-option">ROS1</div>
+                <div class="middleware-option">ROS2</div>
+            </div>
             <script src="${scriptPath}" type="text/javascript"></script>
         </body>
     </html>`;

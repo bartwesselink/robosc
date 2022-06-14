@@ -49,7 +49,31 @@
             "editor/title": [],
             "explorer/context": []
         },
-        "keybindings": []
+        "keybindings": [],
+        "configuration": {
+            "title": "Robot Supervisory Controller DSL",
+            "properties": {
+              "rscd.ros1.masterUri": {
+                "type": "string",
+                "default": "http://localhost:11311/",
+                "description": "The ROS1 master uri to use."
+              },
+              "rscd.ros2.domainId": {
+                "type": "integer",
+                "default": 0,
+                "description": "The ROS2 domain ID to use."
+              },
+              "rscd.default": {
+                "type": "string",
+                "default": "ROS2",
+                "enum": ["ROS1", "ROS2"],
+                "enumDescriptions": [
+                    "Uses ROS1 as the default middleware for visualizations",
+                    "Uses ROS2 as the default middleware for visualizations"
+                ]
+              }
+            }
+          }
     },
     "activationEvents": [
         "onLanguage:rscd",
@@ -63,6 +87,7 @@
     ],
     "main": "./pack/robot-supervisory-controller-extension",
     "dependencies": {
+        "@foxglove/ros1": "^1.5.0",
         "@foxglove/ros2": "^3.3.0",
         "vscode-languageclient": "^7.0.0"
     },

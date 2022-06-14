@@ -81,3 +81,34 @@ table {
     }
 }
   
+.middleware-switcher {
+    display: flex;
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    background: var(--vscode-breadcrumbPicker-background);
+    height: 2rem;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+.middleware-option {
+    transition: all 400ms ease-in-out;
+    padding: 0 0.6rem;
+    height: 1.8rem;
+    border-radius: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    margin-right: 0.5rem;
+}
+
+.middleware-option.active {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.middleware-option:last-of-type {
+    margin-right: 0;
+}
