@@ -13,18 +13,15 @@ export const startRos2Listener = async (fetchWebview: () => vscode.Webview, conf
     });
 
     await ros.start();
-    console.log('3');
 
     const msgDefinition = parseMsgDef('string data', { ros2: true });
 
-    console.log('4');
     const subscription = ros.subscribe({
         topic: '/state',
         dataType: 'std_msgs/msg/String',
         msgDefinition,
     });
 
-    console.log('5');
     subscription.on('message', (timestamp: any, msg: any, data: any, publisher: any) => {
         const strMsg = msg as { data: string };
         const parsed = JSON.parse(strMsg.data);

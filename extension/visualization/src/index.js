@@ -5,11 +5,20 @@ import { initializeMiddlewareToggle } from './middleware-toggle';
 let lastDefinition = null;
 let lastSerialized = null;
 
+const root = document.getElementById('root');
+
+const reset = () => {
+    lastDefinition = null;
+    lastSerialized = null;
+    root.innerText = 'Connecting to controller...';
+};
+
+reset();
+
 const handleData = (data) => {
     const current = JSON.stringify(data.definition);
 
     if (lastSerialized !== current) {
-        const root = document.getElementById('root');
         root.innerHTML = '';
 
         const definition = data.definition;
@@ -41,6 +50,6 @@ window.addEventListener('message', event => {
         case 'visualize':
             return handleData(wrapper.data);
         case 'settings':
-            return initializeMiddlewareToggle(wrapper.data);
+            return initializeMiddlewareToggle(wrapper.data, () => reset());
     }
 });

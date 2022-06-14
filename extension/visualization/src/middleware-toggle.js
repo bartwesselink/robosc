@@ -17,7 +17,7 @@ const updateActiveValue = (element, value) => {
     });
 }
 
-export const initializeMiddlewareToggle = (settings) => {
+export const initializeMiddlewareToggle = (settings, reset) => {
     const element = document.querySelector('.middleware-switcher');
     const items = element.querySelectorAll('.middleware-option');
 
@@ -26,6 +26,7 @@ export const initializeMiddlewareToggle = (settings) => {
 
     items.forEach(it => {
         it.addEventListener('click', () => {
+            reset();
             updateActiveValue(element, it.innerText);
         });
     });

@@ -121,7 +121,7 @@ function getWebviewContent(webview: vscode.Webview, context: vscode.ExtensionCon
             <meta http-equiv="Content-Security-Policy" content="default-src 'none';  img-src ${webview.cspSource} https:; script-src 'unsafe-eval' ${webview.cspSource}; style-src 'unsafe-inline' ${webview.cspSource};">
         </head>
         <body>
-            <div id="root">Connecting to controller...</div>
+            <div id="root"></div>
             <div class="middleware-switcher">
                 <div class="middleware-option">ROS1</div>
                 <div class="middleware-option">ROS2</div>
