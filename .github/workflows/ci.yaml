@@ -46,15 +46,17 @@ jobs:
         distribution: 'zulu'
         java-version: '11'
         cache: 'maven' # Maven cache is used for building CIF
-    - run: gradle jar
+    - run: rm -rf ~/.m2/repository/.meta/p2-artifacts.properties
+      name: Fix corrupt cache
+    - run: |-
+        gradle build
+        gradle jar
       name: Build Escet
       working-directory: language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper
     - name: Copy libraries
       run: |-
         mkdir -p language/nl.tue.robotsupervisorycontrollerdsl/libs/
         cp language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper/build/libs/escet-wrapper.jar language/nl.tue.robotsupervisorycontrollerdsl/libs/escet-wrapper.jar
-    - run: rm -rf ~/.m2/repository/.meta/p2-artifacts.properties
-      name: Fix corrupt cache
     - run: mvn package
       working-directory: language/
     - uses: actions/upload-artifact@v3
