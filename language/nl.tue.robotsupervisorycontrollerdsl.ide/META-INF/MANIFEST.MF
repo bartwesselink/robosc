@@ -13,3 +13,4 @@ Require-Bundle: nl.tue.robotsupervisorycontrollerdsl,
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: nl.tue.robotsupervisorycontrollerdsl.ide.contentassist.antlr,
  nl.tue.robotsupervisorycontrollerdsl.ide.contentassist.antlr.internal
+Bundle-ClassPath: ., libs/org.eclipse.lsp4j.jsonrpc.jar, libs/org.eclipse.lsp4j.jar
