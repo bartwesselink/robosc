@@ -44,7 +44,7 @@ jobs:
         distribution: 'zulu'
         java-version: '11'
         cache: 'maven' # Maven cache is used for building CIF
-    - run: ./build_escet.sh
+    - run: gradle build
       working-directory: language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper
     - run: mvn package
       working-directory: language/
