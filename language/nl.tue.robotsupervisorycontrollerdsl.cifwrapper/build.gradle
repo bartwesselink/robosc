@@ -39,10 +39,10 @@ jar {
 }
 
 ext.repository = 'https://gitlab.eclipse.org/bartwesselink/escet.git';
-ext.branch = 'merge-two-funcs';
+ext.sha = 'ea89ebcc79fe2307503bdadbbc5a1a3daa5376e6';
 
 task downloadAndBuildEscet(type: Exec) {
-    commandLine './build_escet.sh', repository, branch
+    commandLine './build_escet.sh', repository, sha
 
     inputs.property("is-built", true)
     outputs.dir "escet-repo"
