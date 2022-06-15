@@ -75,7 +75,14 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         path: artifacts/
-    # - uses: ncipollo/release-action@v1
-    #   with:
-    #     artifacts: "release.tar.gz,foo/*.txt"
-    #     token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: artifacts/
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "artifacts/eclipse-updatesite/*.zip,artifacts/vscode-extension/*.vsix"
+        omitBody: true
+        generateReleaseNotes: true
+        removeArtifacts: true
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
