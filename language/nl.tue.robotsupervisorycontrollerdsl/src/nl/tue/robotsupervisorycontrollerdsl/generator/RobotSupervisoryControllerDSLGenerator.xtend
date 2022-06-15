@@ -14,6 +14,9 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.ros2.Ros2Generator
 import nl.tue.robotsupervisorycontrollerdsl.generator.ros1.Ros1Generator
 import nl.tue.robotsupervisorycontrollerdsl.generator.config.ConfigService
 import nl.tue.robotsupervisorycontrollerdsl.generator.supervisor.ros2.Ros2SupervisorGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.CommunicationType
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.ComponentBehaviour
 
 /**
  * Generates code from your model files on save.
@@ -28,7 +31,7 @@ class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
 	@Inject ConfigService configService
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		resource.findInstancesOfRobot.forEach[
+		resource.findInstancesOfRobot.filter[it.shouldGenerateArtifacts].forEach[
 			val robotResource = it.eResource
 			val config = configService.getConfig(robotResource, fsa)
 			
@@ -41,5 +44,11 @@ class RobotSupervisoryControllerDSLGenerator extends AbstractGenerator {
 	
 	private def findInstancesOfRobot(Resource resource) {
 		return resource.allContents.toIterable.filter(Robot)
+	}
+	
+	private def shouldGenerateArtifacts(Robot robot) {
+		// Only generate artifacts when there is at least one automata or communication type
+		return !ModelHelper.findWithinRobot(robot, CommunicationType).empty
+			|| !ModelHelper.findWithinRobot(robot, ComponentBehaviour).empty
 	}
 }

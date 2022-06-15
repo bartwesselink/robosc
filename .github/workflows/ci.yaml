@@ -49,6 +49,7 @@ jobs:
     - run: gradle build
       name: Build Escet
       working-directory: language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper
+    - run: ls -R language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper/build/
     - run: rm -rf ~/.m2/repository/.meta/p2-artifacts.properties
       name: Fix corrupt cache
     - run: mvn package
@@ -69,6 +70,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         path: artifacts/
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: artifacts/
+    # - uses: ncipollo/release-action@v1
+    #   with:
+    #     artifacts: "release.tar.gz,foo/*.txt"
+    #     token: ${{ secrets.GITHUB_TOKEN }}
