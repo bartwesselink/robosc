@@ -49,7 +49,8 @@ jobs:
     - run: gradle build
       name: Build Escet
       working-directory: language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper
-    - run: ls -R language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper/build/
+    - name: Copy libraries
+      run: cp language/nl.tue.robotsupervisorycontrollerdsl.cifwrapper/build/libs/escet-wrapper.jar language/nl.tue.robotsupervisorycontrollerdsl/libs/escet-wrapper.jar
     - run: rm -rf ~/.m2/repository/.meta/p2-artifacts.properties
       name: Fix corrupt cache
     - run: mvn package
