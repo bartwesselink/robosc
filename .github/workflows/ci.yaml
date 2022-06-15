@@ -75,9 +75,6 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         path: artifacts/
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: artifacts/
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "artifacts/eclipse-updatesite/*.zip,artifacts/vscode-extension/*.vsix"
