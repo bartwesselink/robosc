@@ -14,7 +14,6 @@ dependencies {
 	mwe2 "org.eclipse.xtext:org.eclipse.xtext.common.types:${xtextVersion}"
 	mwe2 "org.eclipse.xtext:org.eclipse.xtext.xtext.generator:${xtextVersion}"
 	mwe2 'org.eclipse.xtext:xtext-antlr-generator'
-	mwe2 project(':nl.tue.robotsupervisorycontrollerdsl.mwe2')
 
 	implementation project(':nl.tue.robotsupervisorycontrollerdsl.cifwrapper')
 	implementation 'com.google.code.gson:gson:2.8.9'

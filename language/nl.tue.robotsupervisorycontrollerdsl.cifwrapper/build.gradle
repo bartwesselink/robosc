@@ -39,7 +39,7 @@ jar {
 }
 
 ext.repository = 'https://gitlab.eclipse.org/bartwesselink/escet.git';
-ext.branch = 'merge-two-funcs';
+ext.branch = 'feature/add-uncontrollable-events-and-individual-event-execution';
 
 task downloadAndBuildEscet(type: Exec) {
     commandLine './build_escet.sh', repository, branch

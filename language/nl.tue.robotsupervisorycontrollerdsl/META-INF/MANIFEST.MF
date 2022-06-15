@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.xtext,
  com.google.gson,
  org.apache.commons.io,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
- org.eclipse.core.resources;bundle-version="3.16.100"
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.impl,
  nl.tue.robotsupervisorycontrollerdsl,
