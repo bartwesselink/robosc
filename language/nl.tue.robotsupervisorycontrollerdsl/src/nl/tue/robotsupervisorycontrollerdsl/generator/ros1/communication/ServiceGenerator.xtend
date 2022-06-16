@@ -11,6 +11,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.MethodNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesisTool
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractCommunicationTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogOutputConverter
 
 @Singleton
 class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
@@ -19,24 +21,31 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	@Inject extension MethodNames
 	@Inject extension DataPlantHelper
 	@Inject extension TransitionNames
+	@Inject extension LogOutputConverter
 
-	override initializeField(Service entity, Robot robot) '''«entity.fieldName» = node.serviceClient<«entity.links.serviceType»>("«entity.topicName»");'''
+	override initializeField(Service entity, Robot robot, Config config) '''«entity.fieldName» = node.serviceClient<«entity.links.serviceType»>("«entity.topicName»");'''
 
-	override declareField(Service entity, Robot robot) '''ros::ServiceClient «entity.fieldName»;'''
+	override declareField(Service entity, Robot robot, Config config) '''ros::ServiceClient «entity.fieldName»;'''
 
-	override functions(Service entity, Robot robot)'''
+	override functions(Service entity, Robot robot, Config config)'''
 	void «entity.callMethod»() {
 		«entity.links.serviceType» srv;
 		auto request = std::make_shared<«entity.links.serviceType»::Request>();
 		
 		«entity.compileDataStates(entity.requestType, 'srv.request', robot, false)»
+
+		«IF config.writeEventsToLog»
+		this->write_to_outgoing_log("«entity.requestOutput»");
+		«ENDIF»
 		
 		if («entity.fieldName».call(srv)) {		
 			«entity.prepareResult(entity.responseType, robot, 'srv.response')»
-			
-			fprintf(stderr, "[debug] Received service answer\n");
-			
+
 			«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.responseTransitionName»);
+					
+			«IF config.writeEventsToLog»
+			this->write_to_incoming_log("«entity.responseOutput»");
+			«ENDIF»
 		} else {
 			«CifSynthesisTool.codePrefix»EnginePerformEvent(«entity.errorTransitionName»);
 		}

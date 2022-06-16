@@ -4,6 +4,7 @@ public class Config {
 	private Output output = new Output();
 	private boolean publishStateInformation = true;
 	private Supervisor supervisor = null;
+	private boolean writeEventsToLog = false;
 
 	public Output getOutput() {
 		return output;
@@ -27,5 +28,13 @@ public class Config {
 
 	public void setSupervisor(Supervisor supervisor) {
 		this.supervisor = supervisor;
+	}
+
+	public boolean isWriteEventsToLog() {
+		return writeEventsToLog;
+	}
+
+	public void setWriteEventsToLog(boolean writeEventsToLog) {
+		this.writeEventsToLog = writeEventsToLog;
 	}
 }

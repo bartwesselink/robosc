@@ -13,6 +13,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Robot
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractCommunicationTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.supervisor.ros2.remapping.SupervisorMappingNamer
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogOutputConverter
 
 @Singleton
 class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
@@ -21,8 +23,9 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 	@Inject extension MethodNames
 	@Inject extension TransitionNames
 	@Inject SupervisorMappingNamer supervisorMappingNamer
+	@Inject extension LogOutputConverter
 
-	override initializeField(Message entity, Robot robot) {
+	override initializeField(Message entity, Robot robot, Config config) {
 		// Allow all uncontrollable events just to happen
 		if (entity.direction instanceof MessageFrom) {
 			return '''
@@ -38,7 +41,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 		}
 	}
 	
-	override declareField(Message entity, Robot robot) {
+	override declareField(Message entity, Robot robot, Config config) {
 		if (entity.direction instanceof MessageFrom) {
 			return '''
 			rclcpp::Publisher<«entity.type.messageType(entity.links)»>::SharedPtr «entity.fieldNameSupervised»;
@@ -55,7 +58,7 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 		}
 	}
 	
-	override functions(Message entity, Robot robot)'''
+	override functions(Message entity, Robot robot, Config config)'''
 	«IF entity.direction instanceof MessageFrom»
 	void «entity.callbackMethod»(const «entity.type.messageType(entity.links)»::SharedPtr msg) {
 		«entity.prepareResult(entity.type, robot, 'msg')»
@@ -67,6 +70,10 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 		this->«entity.fieldNameSupervised»->publish(*msg);
 
 		this->execute_all_silent();
+		
+		«IF config.writeEventsToLog»
+		this->write_to_incoming_log("«entity.responseOutput»");
+		«ENDIF»
 	}
 	«ENDIF»
 	
@@ -88,6 +95,10 @@ class MessageGenerator extends AbstractCommunicationTypeGenerator<Message> {
 
 	void «entity.callMethod»() {
 		this->«entity.fieldName»->publish(*this->«entity.dataHolderNameSupervised»);
+
+		«IF config.writeEventsToLog»
+		this->write_to_outgoing_log("«entity.requestOutput»");
+		«ENDIF»
 	}
 	«ENDIF»
 	'''

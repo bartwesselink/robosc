@@ -11,6 +11,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesis
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractCommunicationTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.supervisor.ros2.remapping.SupervisorMappingNamer
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogOutputConverter
 
 @Singleton
 class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
@@ -19,13 +21,14 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	@Inject extension MethodNames
 	@Inject extension TransitionNames
 	@Inject SupervisorMappingNamer supervisorMappingNamer
+	@Inject extension LogOutputConverter
 
-	override initializeField(Service entity, Robot robot) '''
+	override initializeField(Service entity, Robot robot, Config config) '''
 	«entity.fieldNameSupervised» = this->create_service<«entity.links.serviceType»>("«entity.topicName(supervisorMappingNamer)»", std::bind(&Supervisor::«entity.handleSupervised», this, std::placeholders::_1, std::placeholders::_2));
 	«entity.fieldName» = this->create_client<«entity.links.serviceType»>("«entity.topicName»");
 	'''
 
-	override declareField(Service entity, Robot robot) '''
+	override declareField(Service entity, Robot robot, Config config) '''
 	rclcpp::Service<«entity.links.serviceType»>::SharedPtr «entity.fieldNameSupervised»;
 	rclcpp::Client<«entity.links.serviceType»>::SharedPtr «entity.fieldName»;
 	std::mutex «entity.mutexLockNameSupervised»;
@@ -35,7 +38,7 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 	bool «entity.responseReadySupervised» = false;
 	'''
 	
-	override functions(Service entity, Robot robot)'''
+	override functions(Service entity, Robot robot, Config config)'''
 	// Handle incoming request
 	void «entity.handleSupervised»(const std::shared_ptr<«entity.links.serviceType»::Request> request, std::shared_ptr<«entity.links.serviceType»::Response> response) {
 		this->«entity.mutexLockNameSupervised».lock();
@@ -71,13 +74,21 @@ class ServiceGenerator extends AbstractCommunicationTypeGenerator<Service> {
 		«entity.conditionVariableSupervised».notify_one();
 		
 		this->execute_all_silent();
-				
+
+		«IF config.writeEventsToLog»
+		this->write_to_incoming_log("«entity.responseOutput»");
+		«ENDIF»
+
 		return true;
 	}
 	
 	
 	void «entity.callMethod»() {
 		«entity.fieldName»->async_send_request(this->«entity.dataHolderNameSupervised», std::bind(&Supervisor::«entity.responseMethod», this, std::placeholders::_1));
+				
+		«IF config.writeEventsToLog»
+		this->write_to_outgoing_log("«entity.requestOutput»");
+		«ENDIF»
 	}
 	'''
 }

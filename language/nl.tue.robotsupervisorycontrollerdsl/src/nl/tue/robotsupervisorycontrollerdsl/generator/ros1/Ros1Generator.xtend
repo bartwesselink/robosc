@@ -23,6 +23,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.info.InfoUtilitiesGene
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.SerializationHelperGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.output.OutputCopyUtil
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogGenerator
 
 @Singleton
 class Ros1Generator implements GeneratorInterface {
@@ -41,6 +42,7 @@ class Ros1Generator implements GeneratorInterface {
 	@Inject CifSynthesisTool cifSynthesisTool
 	@Inject PlatformTypeGenerator platformTypeGenerator
 	@Inject OutputCopyUtil outputCopyUtil
+	@Inject LogGenerator logGenerator
 
 	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess, Config config) {
 		val base = '''«robot.name»/ros1/controller'''
@@ -62,6 +64,7 @@ class Ros1Generator implements GeneratorInterface {
 
 	def controller(Robot robot, Config config) '''
 	«robot.determineRequiredImports»
+	«logGenerator.compileImports»
 
 	// Utility functions
 	«shuffleHelperGenerator.generateShuffleFunction»
@@ -78,27 +81,41 @@ class Ros1Generator implements GeneratorInterface {
 		// Enum conversions
 		«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
 
-		«robot.compileCommunicationFieldDefinitions»
+		«robot.compileCommunicationFieldDefinitions(config)»
 		«IF config.publishStateInformation»
 		ros::Publisher state_information;
 		«ENDIF»
 		«robot.compileActivationFields»
 		
 		void start(ros::NodeHandle& node) {
-			«robot.compileCommunicationFieldInitializations»
+			«robot.compileCommunicationFieldInitializations(config)»
 
 			«IF config.publishStateInformation»
 			state_information = node.advertise<std_msgs::String>("/state", 10);
 			«ENDIF»
 			timer = node.createTimer(ros::Duration(0.1), &Controller::tick, this);
 			«CifSynthesisTool.codePrefix»_EngineFirstStep();
+								
+			«IF config.writeEventsToLog»
+			«logGenerator.compileInitialization»
+			«ENDIF»
 		}
 
-		«robot.compileCommunicationFunctions»
+		«robot.compileCommunicationFunctions(config)»
 		
 		«IF config.publishStateInformation»
 		«robot.compileInfoFunction(platformTypeGenerator)»
 		«ENDIF»
+		
+		«IF config.writeEventsToLog»
+		«logGenerator.compileFunctions»
+		«ENDIF»
+
+		~Controller() {
+			«IF config.writeEventsToLog»
+			«logGenerator.compileDestruction»
+			«ENDIF»
+		}
 	private:
 		// Heart of the controller
 		void tick(const ros::TimerEvent &) {
@@ -110,6 +127,9 @@ class Ros1Generator implements GeneratorInterface {
 		}
 		
 		ros::Timer timer;
+		«IF config.writeEventsToLog»
+		«logGenerator.compileFields»
+		«ENDIF»
 	};
 	
 	std::shared_ptr<Controller> node = nullptr;

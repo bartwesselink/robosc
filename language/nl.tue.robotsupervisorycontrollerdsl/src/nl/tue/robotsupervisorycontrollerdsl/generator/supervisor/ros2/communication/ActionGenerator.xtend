@@ -11,6 +11,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesis
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractCommunicationTypeGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.supervisor.ros2.remapping.SupervisorMappingNamer
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogOutputConverter
 
 @Singleton
 class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
@@ -19,8 +21,9 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	@Inject extension MethodNames
 	@Inject extension TransitionNames
 	@Inject SupervisorMappingNamer supervisorMappingNamer
+	@Inject extension LogOutputConverter
 
-	override initializeField(Action entity, Robot robot) '''
+	override initializeField(Action entity, Robot robot, Config config) '''
 	«entity.fieldNameSupervised» = rclcpp_action::create_server<«entity.links.actionType»>(
 	      this,
 	      "«entity.topicName(supervisorMappingNamer)»",
@@ -29,7 +32,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	      std::bind(&Supervisor::«entity.handleAcceptedSupervised», this, std::placeholders::_1));
 	«entity.fieldName» = rclcpp_action::create_client<«entity.links.actionType»>(this, "«entity.topicName»");
 	'''
-	override declareField(Action entity, Robot robot) '''
+	override declareField(Action entity, Robot robot, Config config) '''
 	rclcpp_action::Client<«entity.links.actionType»>::SharedPtr «entity.fieldName»;
 	rclcpp_action::Server<«entity.links.actionType»>::SharedPtr «entity.fieldNameSupervised»;
 	std::mutex «entity.mutexLockNameSupervised»;
@@ -37,7 +40,7 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	std::shared_ptr<rclcpp_action::ServerGoalHandle<«entity.links.actionType»>> «entity.goalHandleNameSupervised»;
 	'''
 
-	override functions(Action entity, Robot robot)'''
+	override functions(Action entity, Robot robot, Config config)'''
 	// Act as proxy server
 	rclcpp_action::GoalResponse «entity.handleGoalSupervised»(const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const «entity.links.actionType»::Goal> goal) {
 		this->«entity.mutexLockNameSupervised».lock();
@@ -93,6 +96,10 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		// Call engine function
 		«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.responseTransitionName»);
 		this->execute_all_silent();
+
+		«IF config.writeEventsToLog»
+		this->write_to_incoming_log("«entity.responseOutput»");
+		«ENDIF»
 	}
 	
 	void «entity.feedbackMethod»(rclcpp_action::ClientGoalHandle<«entity.links.actionType»>::SharedPtr handle, const std::shared_ptr<const «entity.links.actionType»::Feedback> feedback) {
@@ -104,6 +111,10 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		// Call engine function
 		«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.feedbackTransitionName»);
 		this->execute_all_silent();
+		
+		«IF config.writeEventsToLog»
+		this->write_to_incoming_log("«entity.responseOutput»");
+		«ENDIF»
 	}
 	
 	void «entity.callMethod»() {
@@ -116,6 +127,10 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		send_options.result_callback = std::bind(&Supervisor::«entity.responseMethod», this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Supervisor::«entity.feedbackMethod», this, std::placeholders::_1, std::placeholders::_2);
 		this->«entity.fieldName»->async_send_goal(*this->«entity.dataHolderNameSupervised», send_options);
+		
+		«IF config.writeEventsToLog»
+		this->write_to_outgoing_log("«entity.requestOutput»");
+		«ENDIF»
 	}
 		
 	rclcpp_action::CancelResponse «entity.cancelMethod»() {

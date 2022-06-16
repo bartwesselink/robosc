@@ -24,6 +24,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.output.OutputCopyUtil
 import nl.tue.robotsupervisorycontrollerdsl.generator.supervisor.ros2.metadata.LaunchFileGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.engine.EventExecutionGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogGenerator
 
 @Singleton
 class Ros2SupervisorGenerator implements GeneratorInterface {
@@ -43,6 +44,7 @@ class Ros2SupervisorGenerator implements GeneratorInterface {
 	@Inject CifSynthesisTool cifSynthesisTool
 	@Inject PlatformTypeGenerator platformTypeGenerator
 	@Inject OutputCopyUtil outputCopyUtil
+	@Inject LogGenerator logGenerator
 
 	override generate(Robot robot, IFileSystemAccess2 fileSystemAccess, Config config) {
 		val base = '''«robot.name»/supervisor/ros2/supervisor'''
@@ -65,6 +67,7 @@ class Ros2SupervisorGenerator implements GeneratorInterface {
 
 	def supervisor(Robot robot, Config config) '''
 	«robot.determineRequiredImports»
+	«logGenerator.compileImports»
 
 	// Utility functions
 	«shuffleHelperGenerator.generateShuffleFunction»
@@ -80,7 +83,7 @@ class Ros2SupervisorGenerator implements GeneratorInterface {
 		// Enum conversions
 		«FOR component : robot.definitions.filter(EnumDataType)»«component.compile(platformTypeGenerator)»«ENDFOR»
 
-		«robot.compileCommunicationFieldDefinitions»
+		«robot.compileCommunicationFieldDefinitions(config)»
 		«IF config.publishStateInformation»
 		rclcpp::Publisher<std_msgs::msg::String>::SharedPtr state_information;
 		«ENDIF»
@@ -88,7 +91,7 @@ class Ros2SupervisorGenerator implements GeneratorInterface {
 		«robot.compileActivationFields»
 
 		Supervisor() : Node("supervisor") {
-			«robot.compileCommunicationFieldInitializations»
+			«robot.compileCommunicationFieldInitializations(config)»
 
 			blocked = this->create_publisher<std_msgs::msg::String>("/blocked", 10);
 			«IF config.publishStateInformation»
@@ -96,13 +99,27 @@ class Ros2SupervisorGenerator implements GeneratorInterface {
 			«ENDIF»
 			timer = this->create_wall_timer(100ms, std::bind(&Supervisor::tick, this));
 			«CifSynthesisTool.codePrefix»_EngineFirstStep();
+
+			«IF config.writeEventsToLog»
+			«logGenerator.compileInitialization»
+			«ENDIF»
 		}
 
-		«robot.compileCommunicationFunctions»
+		«robot.compileCommunicationFunctions(config)»
 		
 		«IF config.publishStateInformation»
 		«robot.compileInfoFunction(platformTypeGenerator)»
 		«ENDIF»
+				
+		«IF config.writeEventsToLog»
+		«logGenerator.compileFunctions»
+		«ENDIF»
+	
+		~Supervisor() {
+			«IF config.writeEventsToLog»
+			«logGenerator.compileDestruction»
+			«ENDIF»
+		}
 	private:
 		// Only used to emit state information
 		void tick() {
@@ -123,6 +140,9 @@ class Ros2SupervisorGenerator implements GeneratorInterface {
 		}
 		
 		rclcpp::TimerBase::SharedPtr timer;
+		«IF config.writeEventsToLog»
+		«logGenerator.compileFields»
+		«ENDIF»
 	};
 	
 	std::shared_ptr<Supervisor> node = nullptr;

@@ -17,6 +17,7 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.EliminationHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.expressions.ExpressionGenerator
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.naming.IdentifierNamerInterface
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.naming.DefaultIdentifierNamer
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
 
 abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	@Inject extension MethodNames
@@ -28,9 +29,9 @@ abstract class AbstractCommunicationTypeGenerator<T extends CommunicationType> {
 	@Inject DefaultIdentifierNamer defaultIdentifierNamer
 	@Inject extension ExpressionGenerator
 
-	abstract def CharSequence initializeField(T entity, Robot robot)
-	abstract def CharSequence declareField(T entity, Robot robot)
-	abstract def CharSequence functions(T entity, Robot robot)
+	abstract def CharSequence initializeField(T entity, Robot robot, Config config)
+	abstract def CharSequence declareField(T entity, Robot robot, Config config)
+	abstract def CharSequence functions(T entity, Robot robot, Config config)
 
 	protected def prepareResult(CommunicationType entity, DataType type, Robot robot, String access)'''
 	«IF type.simple»

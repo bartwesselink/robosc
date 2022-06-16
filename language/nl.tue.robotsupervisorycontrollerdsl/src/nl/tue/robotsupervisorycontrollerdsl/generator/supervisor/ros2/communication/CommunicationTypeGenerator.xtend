@@ -8,6 +8,7 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Servic
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Action
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Message
 import javax.inject.Inject
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
 
 @Singleton
 class CommunicationTypeGenerator {
@@ -15,33 +16,33 @@ class CommunicationTypeGenerator {
 	@Inject ServiceGenerator serviceGenerator
 	@Inject ActionGenerator actionGenerator
 
-	def compileCommunicationFieldDefinitions(Robot robot)'''
+	def compileCommunicationFieldDefinitions(Robot robot, Config config)'''
 	«FOR communication : ModelHelper.findWithinRobot(robot, CommunicationType)»
-	«communication.declareField(robot)»
+	«communication.declareField(robot, config)»
 	«ENDFOR»
 	'''
 	
-	def compileCommunicationFieldInitializations(Robot robot)'''
+	def compileCommunicationFieldInitializations(Robot robot, Config config)'''
 	«FOR communication : ModelHelper.findWithinRobot(robot, CommunicationType)»
-	«communication.initializeField(robot)»
+	«communication.initializeField(robot, config)»
 	«ENDFOR»
 	'''
 	
-	def compileCommunicationFunctions(Robot robot)'''
+	def compileCommunicationFunctions(Robot robot, Config config)'''
 	«FOR communication : ModelHelper.findWithinRobot(robot, CommunicationType)»
-	«communication.functions(robot)»
+	«communication.functions(robot, config)»
 	«ENDFOR»
 	'''
 	
-	private def dispatch initializeField(Message entity, Robot robot) '''«messageGenerator.initializeField(entity, robot)»'''
-	private def dispatch initializeField(Service entity, Robot robot) '''«serviceGenerator.initializeField(entity, robot)»'''
-	private def dispatch initializeField(Action entity, Robot robot) '''«actionGenerator.initializeField(entity, robot)»'''
+	private def dispatch initializeField(Message entity, Robot robot, Config config) '''«messageGenerator.initializeField(entity, robot, config)»'''
+	private def dispatch initializeField(Service entity, Robot robot, Config config) '''«serviceGenerator.initializeField(entity, robot, config)»'''
+	private def dispatch initializeField(Action entity, Robot robot, Config config) '''«actionGenerator.initializeField(entity, robot, config)»'''
 	
-	private def dispatch declareField(Message entity, Robot robot) '''«messageGenerator.declareField(entity, robot)»'''
-	private def dispatch declareField(Service entity, Robot robot) '''«serviceGenerator.declareField(entity, robot)»'''
-	private def dispatch declareField(Action entity, Robot robot) '''«actionGenerator.declareField(entity, robot)»'''
+	private def dispatch declareField(Message entity, Robot robot, Config config) '''«messageGenerator.declareField(entity, robot, config)»'''
+	private def dispatch declareField(Service entity, Robot robot, Config config) '''«serviceGenerator.declareField(entity, robot, config)»'''
+	private def dispatch declareField(Action entity, Robot robot, Config config) '''«actionGenerator.declareField(entity, robot, config)»'''
 	
-	private def dispatch functions(Message entity, Robot robot) '''«messageGenerator.functions(entity, robot)»'''
-	private def dispatch functions(Service entity, Robot robot) '''«serviceGenerator.functions(entity, robot)»'''
-	private def dispatch functions(Action entity, Robot robot) '''«actionGenerator.functions(entity, robot)»'''
+	private def dispatch functions(Message entity, Robot robot, Config config) '''«messageGenerator.functions(entity, robot, config)»'''
+	private def dispatch functions(Service entity, Robot robot, Config config) '''«serviceGenerator.functions(entity, robot, config)»'''
+	private def dispatch functions(Action entity, Robot robot, Config config) '''«actionGenerator.functions(entity, robot, config)»'''
 }

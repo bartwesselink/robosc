@@ -11,6 +11,8 @@ import nl.tue.robotsupervisorycontrollerdsl.generator.cif.synthesis.CifSynthesis
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.naming.TransitionNames
 import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.data.DataPlantHelper
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.ros.AbstractCommunicationTypeGenerator
+import nl.tue.robotsupervisorycontrollerdsl.generator.config.model.Config
+import nl.tue.robotsupervisorycontrollerdsl.generator.cpp.logging.LogOutputConverter
 
 @Singleton
 class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
@@ -19,34 +21,37 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 	@Inject extension MethodNames
 	@Inject extension TransitionNames
 	@Inject extension DataPlantHelper
+	@Inject extension LogOutputConverter
 
-	override initializeField(Action entity, Robot robot) ''''''
-	override declareField(Action entity, Robot robot) '''actionlib::SimpleActionClient<«entity.links.actionType»Action>«entity.fieldName»;'''
+	override initializeField(Action entity, Robot robot, Config config) ''''''
+	override declareField(Action entity, Robot robot, Config config) '''actionlib::SimpleActionClient<«entity.links.actionType»Action>«entity.fieldName»;'''
 	def constructorInvocation(Action entity, Robot robot) '''«entity.fieldName»("«entity.topicName»", false)'''
 
-	override functions(Action entity, Robot robot)'''
+	override functions(Action entity, Robot robot, Config config)'''
 	void «entity.responseMethod»(const actionlib::SimpleClientGoalState& state, const «entity.links.actionType»ResultConstPtr& result) {
 		«entity.prepareResult(entity.responseType, robot, 'result.result')»
 
-		fprintf(stderr, "[debug] Received action response\n");
-		
 		// Call engine function		        
 		if (state == actionlib::SimpleClientGoalState::SUCCEEDED) {
-			fprintf(stderr, "[debug] Received response from action.\n");
 			«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.responseTransitionName»);
 		} else {
-			fprintf(stderr, "[debug] Received error from action.\n");
 			«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.errorTransitionName»);
 		}
+				
+		«IF config.writeEventsToLog»
+		this->write_to_incoming_log("«entity.responseOutput»");
+		«ENDIF»
 	}
 	
 	void «entity.feedbackMethod»(const «entity.links.actionType»FeedbackConstPtr& feedback) {
 		«entity.prepareResult(entity.responseType, robot, 'feedback')»
-
-		fprintf(stderr, "[debug] Received action feedback\n");
 		
 		// Call engine function
 		«CifSynthesisTool.codePrefix»_EnginePerformEvent(«entity.feedbackTransitionName»);
+				
+		«IF config.writeEventsToLog»
+		this->write_to_incoming_log("«entity.feedbackOutput»");
+		«ENDIF»
 	}
 	
 	void «entity.callMethod»() {
@@ -56,10 +61,18 @@ class ActionGenerator extends AbstractCommunicationTypeGenerator<Action> {
 		«entity.compileDataStates(entity.requestType, 'goal_msg', robot, false)»
 		
 		«entity.fieldName».sendGoal(goal_msg, boost::bind(&Controller::«entity.responseMethod», this, _1, _2), actionlib::SimpleActionClient<«entity.links.actionType»Action>::SimpleActiveCallback(), boost::bind(&Controller::«entity.feedbackMethod», this, _1));
+				
+		«IF config.writeEventsToLog»
+		this->write_to_outgoing_log("«entity.requestOutput»");
+		«ENDIF»
 	}
 			
 	void «entity.cancelMethod»() {
 		this->«entity.fieldName».cancelAllGoals();
+
+		«IF config.writeEventsToLog»
+		this->write_to_outgoing_log("«entity.cancelOutput»");
+		«ENDIF»
 	}
 	'''
 	
