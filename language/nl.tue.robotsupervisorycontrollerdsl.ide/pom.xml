@@ -51,7 +51,7 @@
 				<executions>
 					<execution>
 						<id>copy-libraries</id>
-						<phase>validate</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
