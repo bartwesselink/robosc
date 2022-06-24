@@ -15,8 +15,10 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.TypeCheckRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueCommunicationTypeNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueComponentNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueDataTypeNameRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniquePropertyNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueStateNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueTopicNameRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UniqueVariableNameRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.UsedDataTypeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.ValidEnumValueRule;
 
@@ -37,6 +39,8 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.ValidEnumValueRule;
 		InterfaceLinkRequiredRule.class,
 		UsedDataTypeRule.class,
 		UniqueComponentNameRule.class,
+		UniquePropertyNameRule.class,
+		UniqueVariableNameRule.class,
 		ValidEnumValueRule.class,
 })
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
