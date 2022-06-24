@@ -3,5 +3,5 @@
    <feature url="features/nl.tue.robotsupervisorycontrollerdsl.sdk_0.0.0.jar" id="nl.tue.robotsupervisorycontrollerdsl.sdk" version="0.0.0">
       <category name="nl.tue.robotsupervisorycontrollerdsl"/>
    </feature>
-   <category-def name="nl.tue.robotsupervisorycontrollerdsl" label="Robot Supervisory Controller DSL"/>
+   <category-def name="nl.tue.robotsupervisorycontrollerdsl" label="RoboSC"/>
 </site>

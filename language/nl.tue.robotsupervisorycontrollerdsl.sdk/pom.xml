@@ -13,5 +13,5 @@
   <artifactId>nl.tue.robotsupervisorycontrollerdsl.sdk</artifactId>
   <packaging>eclipse-feature</packaging>
 
-  <name>Robot Supervisory Controller DSL</name>
+  <name>RoboSC</name>
 </project>

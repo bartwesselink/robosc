@@ -1,7 +1,7 @@
 {
-	"name": "Robot Supervisory Controller DSL",
-    "scopeName": "source.rscd",
-    "fileTypes": ["rscd"],
+	"name": "RoboSC",
+    "scopeName": "source.rsc",
+    "fileTypes": ["rsc"],
     "repository": {
         "general": {
             "patterns": [
@@ -17,17 +17,17 @@
             ]
         },
         "linecomment": {
-            "name": "comment.line.double-dash.rscd",
+            "name": "comment.line.double-dash.rsc",
             "begin": "(^[ \\t]+)?(?=//)",
 			"end": "(?=$)"
         },
         "blockcomment": {
-            "name": "comment.block.rscd",
+            "name": "comment.block.rsc",
             "begin": "/\\*(\\*)?(?!/)",
 			"end": "\\*/"
         },
         "keyword": {
-            "name": "keyword.control.rscd",
+            "name": "keyword.control.rsc",
             "match": "\\b(cancel|use|do|integer|none|robot|feedback|action|from|links|state|if|needs|incoming|double|disables|enum|provide|true|object|outgoing|request|import|string|error|interface|default|library|goto|array|datatype|and|value|on|or|initial|false|requirement|message|transition|with|component|boolean|service|response|variable|behaviour|to)\\b"
         }
     },

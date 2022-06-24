@@ -13,7 +13,7 @@
   <artifactId>nl.tue.robotsupervisorycontrollerdsl.updatesite</artifactId>
   <packaging>eclipse-repository</packaging>
 
-  <name>Robot Supervisory Controller DSL Update Site</name>
+  <name>RoboSC Update Site</name>
 
 	<build>
 		<plugins>

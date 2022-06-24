@@ -1,6 +1,6 @@
 {
     "name": "robot-supervisory-controller-dsl",
-    "displayName": "Robot Supervisory Controller DSL",
+    "displayName": "RoboSC",
     "description": "A domain-specific language (DSL) to accelerate the development of safe, autonomous robots.",
     "publisher": "TUE",
     "license": "MIT",
@@ -18,29 +18,29 @@
     "contributes": {
         "languages": [
             {
-                "id": "rscd",
+                "id": "rsc",
                 "aliases": [
                     "robot-supervisory-controller",
-                    "rscd"
+                    "rsc"
                 ],
                 "extensions": [
-                    ".rscd"
+                    ".rsc"
                 ],
                 "configuration": "./language-configuration.json"
             }
         ],
         "grammars": [
             {
-                "language": "rscd",
-                "scopeName": "source.rscd",
-                "path": "./syntaxes/rscd.tmLanguage.json"
+                "language": "rsc",
+                "scopeName": "source.rsc",
+                "path": "./syntaxes/rsc.tmLanguage.json"
             }
         ],
         "commands": [
             {
-                "command": "rscd.visualizeController",
+                "command": "rsc.visualizeController",
                 "title": "Visualize current controller execution",
-                "category": "Robot Supervisory Controller"
+                "category": "RoboSC"
             }
         ],
         "menus": {
@@ -51,19 +51,19 @@
         },
         "keybindings": [],
         "configuration": {
-            "title": "Robot Supervisory Controller DSL",
+            "title": "RoboSC",
             "properties": {
-              "rscd.ros1.masterUri": {
+              "rsc.ros1.masterUri": {
                 "type": "string",
                 "default": "http://localhost:11311/",
                 "description": "The ROS1 master uri to use."
               },
-              "rscd.ros2.domainId": {
+              "rsc.ros2.domainId": {
                 "type": "integer",
                 "default": 0,
                 "description": "The ROS2 domain ID to use."
               },
-              "rscd.default": {
+              "rsc.default": {
                 "type": "string",
                 "default": "ROS2",
                 "enum": ["ROS1", "ROS2"],
@@ -76,8 +76,8 @@
           }
     },
     "activationEvents": [
-        "onLanguage:rscd",
-        "onCommand:rscd.visualizeController"
+        "onLanguage:rsc",
+        "onCommand:rsc.visualizeController"
     ],
     "files": [
         "lib",

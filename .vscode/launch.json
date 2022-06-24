@@ -2,7 +2,7 @@
 	"version": "0.2.0",
     "configurations": [
         {
-            "name": "Robot Supervisory Controller Extension",
+            "name": "RoboSC Extension",
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
