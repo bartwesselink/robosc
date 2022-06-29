@@ -27,6 +27,8 @@ extern "C" {
 }
 
 using namespace std::chrono_literals;
+#include <iostream>
+#include <fstream>
 
 // Utility functions
 void shuffle_events(controller_Event_ *x, size_t n)
@@ -112,6 +114,7 @@ public:
 		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
+				
 	}
 
 	void callback_message_scan(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
@@ -121,6 +124,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_scan_u_response_);
+								
 	}
 	
 	
@@ -132,6 +136,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_ball_correction_u_response_);
+								
 	}
 	
 	
@@ -141,6 +146,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_no_ball_u_response_);
+								
 	}
 	
 	
@@ -150,6 +156,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_needs_ajustment_u_response_);
+								
 	}
 	
 	
@@ -159,6 +166,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_no_adjustment_u_response_);
+								
 	}
 	
 	
@@ -168,6 +176,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_ball_front_check_u_response_);
+								
 	}
 	
 	
@@ -178,6 +187,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_goal_correction_u_response_);
+								
 	}
 	
 	
@@ -187,6 +197,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_no_goal_u_response_);
+								
 	}
 	
 	
@@ -196,6 +207,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_stop_u_response_);
+								
 	}
 	
 	
@@ -205,6 +217,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_continue_u_response_);
+								
 	}
 	
 	
@@ -213,35 +226,37 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pV31RVEZ6ALCC) {
+		if (data_move_ == _controller_data_p3FWU5LJD83KP) {
 			value.linear.x = 0.2;
 			value.angular.z = (0.0 - code_BallDetector_current_correction) / 500;
 		} else 
-		if (data_move_ == _controller_data_pRT63KQSV3XHI) {
+		if (data_move_ == _controller_data_pZQUQLRDM9OJ6) {
 			value.linear.x = 0.2;
 			value.angular.z = (code_BallDetector_current_correction) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pNSBW9JQ6OU9X) {
+		if (data_move_ == _controller_data_pZQUXVJGJO0YV) {
 			value.linear.x = 0.2;
 			value.angular.z = (0.0 - code_GoalDetector_current_correction) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pV1KX6UX45Q6O) {
+		if (data_move_ == _controller_data_pWKTMPZDWUE17) {
 			value.angular.z = 0.5;
 		}
 		
 		this->publisher_client_move->publish(value);
+	
 	}
 	
 	
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_p8FSQAWK0EEMZ) {
+		if (data_halt_ == _controller_data_pT6I8XRJ5MOT3) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
 		
 		this->publisher_client_halt->publish(value);
+	
 	}
 	
 	void emit_current_state() {
@@ -293,11 +308,15 @@ public:
 	
 		taken_transitions.clear();
 	}
+	
+	
+	~Controller() {
+	}
 private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 5;
-		      controller_Event_ data_events[5] = { data_move_c_pRQWLNTV29I63_,data_move_c_p36BWWUSNJC3L_,data_move_c_pD5RBQXC0II53_,data_move_c_p06V0RK2WWOPV_,data_halt_c_p0Q71S5GMFHQU_ };
+		      controller_Event_ data_events[5] = { data_move_c_pNLRTW551QX6M_,data_move_c_pLQBN5IDMMNA0_,data_move_c_pZ6VVX7FHA9UC_,data_move_c_pHKVHWHN6EUM1_,data_halt_c_p7A4YL2QMRJC0_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

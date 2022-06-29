@@ -18,27 +18,27 @@
     "contributes": {
         "languages": [
             {
-                "id": "rsc",
+                "id": "rscd",
                 "aliases": [
                     "robot-supervisory-controller",
-                    "rsc"
+                    "rscd"
                 ],
                 "extensions": [
-                    ".rsc"
+                    ".rscd"
                 ],
                 "configuration": "./language-configuration.json"
             }
         ],
         "grammars": [
             {
-                "language": "rsc",
-                "scopeName": "source.rsc",
-                "path": "./syntaxes/rsc.tmLanguage.json"
+                "language": "rscd",
+                "scopeName": "source.rscd",
+                "path": "./syntaxes/rscd.tmLanguage.json"
             }
         ],
         "commands": [
             {
-                "command": "rsc.visualizeController",
+                "command": "rscd.visualizeController",
                 "title": "Visualize current controller execution",
                 "category": "RoboSC"
             }
@@ -53,17 +53,17 @@
         "configuration": {
             "title": "RoboSC",
             "properties": {
-              "rsc.ros1.masterUri": {
+              "rscd.ros1.masterUri": {
                 "type": "string",
                 "default": "http://localhost:11311/",
                 "description": "The ROS1 master uri to use."
               },
-              "rsc.ros2.domainId": {
+              "rscd.ros2.domainId": {
                 "type": "integer",
                 "default": 0,
                 "description": "The ROS2 domain ID to use."
               },
-              "rsc.default": {
+              "rscd.default": {
                 "type": "string",
                 "default": "ROS2",
                 "enum": ["ROS1", "ROS2"],
@@ -76,8 +76,8 @@
           }
     },
     "activationEvents": [
-        "onLanguage:rsc",
-        "onCommand:rsc.visualizeController"
+        "onLanguage:rscd",
+        "onCommand:rscd.visualizeController"
     ],
     "files": [
         "lib",

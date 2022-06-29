@@ -24,7 +24,7 @@ class DataTypeGenerator {
 
 
 	def dispatch String primitiveType(BooleanDataType type)'''bool'''
-	def dispatch String primitiveType(StringDataType type)'''string'''
+	def dispatch String primitiveType(StringDataType type)'''std::string'''
 	def dispatch String primitiveType(DoubleDataType type)'''double'''
 	def dispatch String primitiveType(IntegerDataType type)'''int'''
 	def dispatch String primitiveType(NoneDataType type)'''void'''

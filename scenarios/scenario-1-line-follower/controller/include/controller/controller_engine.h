@@ -11,8 +11,8 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_p7P5N82K4LV3P,
-    _controller_data_pG29KG3OCDJOI,
+    _controller_data_pAAFE7NL4YJ61,
+    _controller_data_pHZNUBDL4PMMX,
     _controller_in_service,
     _controller_line_found,
     _controller_no_line,
@@ -38,8 +38,8 @@ enum controllerEventEnum_ {
     data_correction_c_none_,                /**< Event data_correction.c_none. */
     message_no_line_u_response_,            /**< Event message_no_line.u_response. */
     data_no_line_c_none_,                   /**< Event data_no_line.c_none. */
-    component_LidarSensor_c_pJUDKAUYT2BXU_, /**< Event component_LidarSensor.c_pJUDKAUYT2BXU. */
-    component_LidarSensor_c_pGXBLBAH1KTCF_, /**< Event component_LidarSensor.c_pGXBLBAH1KTCF. */
+    component_LidarSensor_c_pQHC1TW0JFBD8_, /**< Event component_LidarSensor.c_pQHC1TW0JFBD8. */
+    component_LidarSensor_c_pMC9INZ2RT4EM_, /**< Event component_LidarSensor.c_pMC9INZ2RT4EM. */
     message_scan_u_response_,               /**< Event message_scan.u_response. */
     data_scan_c_none_,                      /**< Event data_scan.c_none. */
     message_stop_u_response_,               /**< Event message_stop.u_response. */
@@ -48,10 +48,10 @@ enum controllerEventEnum_ {
     data_continue_c_none_,                  /**< Event data_continue.c_none. */
     message_move_c_trigger_,                /**< Event message_move.c_trigger. */
     data_move_c_none_,                      /**< Event data_move.c_none. */
-    data_move_c_pE63X028AZT1X_,             /**< Event data_move.c_pE63X028AZT1X. */
+    data_move_c_pTJDXN1OGHOSV_,             /**< Event data_move.c_pTJDXN1OGHOSV. */
     message_halt_c_trigger_,                /**< Event message_halt.c_trigger. */
     data_halt_c_none_,                      /**< Event data_halt.c_none. */
-    data_halt_c_pR5A6CU0MDHUS_,             /**< Event data_halt.c_pR5A6CU0MDHUS. */
+    data_halt_c_pUVNTUPAMV0KV_,             /**< Event data_halt.c_pUVNTUPAMV0KV. */
 };
 typedef enum controllerEventEnum_ controller_Event_;
 

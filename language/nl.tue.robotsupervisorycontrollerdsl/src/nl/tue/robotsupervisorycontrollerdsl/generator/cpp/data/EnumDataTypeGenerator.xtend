@@ -73,7 +73,7 @@ class EnumDataTypeGenerator {
 			
 			return null
 		} else if (type instanceof BasicDataType) {
-			return type.compile(generator)
+			return type.primitiveType
 		}
 	}
 }

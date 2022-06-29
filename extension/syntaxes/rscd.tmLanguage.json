@@ -1,7 +1,7 @@
 {
 	"name": "RoboSC",
-    "scopeName": "source.rsc",
-    "fileTypes": ["rsc"],
+    "scopeName": "source.rscd",
+    "fileTypes": ["rscd"],
     "repository": {
         "general": {
             "patterns": [
@@ -17,17 +17,17 @@
             ]
         },
         "linecomment": {
-            "name": "comment.line.double-dash.rsc",
+            "name": "comment.line.double-dash.rscd",
             "begin": "(^[ \\t]+)?(?=//)",
 			"end": "(?=$)"
         },
         "blockcomment": {
-            "name": "comment.block.rsc",
+            "name": "comment.block.rscd",
             "begin": "/\\*(\\*)?(?!/)",
 			"end": "\\*/"
         },
         "keyword": {
-            "name": "keyword.control.rsc",
+            "name": "keyword.control.rscd",
             "match": "\\b(cancel|use|do|integer|none|robot|feedback|action|from|links|state|if|needs|incoming|double|disables|enum|provide|true|object|outgoing|request|import|string|error|interface|default|library|goto|array|datatype|and|value|on|or|initial|false|requirement|message|transition|with|component|boolean|service|response|variable|behaviour|to)\\b"
         }
     },

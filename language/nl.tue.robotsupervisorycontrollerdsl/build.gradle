@@ -31,7 +31,7 @@ task generateXtextLanguage(type: JavaExec) {
 }
 
 task copyTextMateFile(type: Copy) {
-	from "${buildDir}/../../nl.tue.robotsupervisorycontrollerdsl.ide/textmate-gen/rsc.tmLanguage.json"
+	from "${buildDir}/../../nl.tue.robotsupervisorycontrollerdsl.ide/textmate-gen/rscd.tmLanguage.json"
 	into "${buildDir}/../../../extension/syntaxes/"
 }
 

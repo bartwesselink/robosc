@@ -26,6 +26,8 @@ extern "C" {
 }
 
 using namespace std::chrono_literals;
+#include <iostream>
+#include <fstream>
 
 // Utility functions
 void shuffle_events(controller_Event_ *x, size_t n)
@@ -90,6 +92,7 @@ public:
 		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
+				
 	}
 
 	void callback_message_point(const geometry_msgs::msg::PointStamped::SharedPtr msg) {
@@ -102,6 +105,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_point_u_response_);
+								
 	}
 	
 	
@@ -116,6 +120,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_initial_pose_u_response_);
+								
 	}
 	
 	
@@ -123,20 +128,18 @@ public:
 		
 		
 	
-		fprintf(stderr, "[debug] Received action response\n");
-		
 		// Call engine function
 		controller_EnginePerformEvent(action_navigate_u_response_);
+		
 	}
 	
 	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msgs::action::NavigateToPose::Feedback> feedback) {
 		
 		
 	
-		fprintf(stderr, "[debug] Received action feedback\n");
-		
 		// Call engine function
 		controller_EnginePerformEvent(action_navigate_u_feedback_);
+				
 	}
 	
 	void call_action_navigate() {
@@ -146,7 +149,7 @@ public:
 		}
 		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_pKRN56FXDJPW6) {
+		if (data_navigate_ == _controller_data_p93Y3DT3CEL5Z) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
@@ -156,10 +159,12 @@ public:
 		send_options.result_callback = std::bind(&Controller::response_action_navigate, this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::feedback_action_navigate, this, std::placeholders::_1, std::placeholders::_2);
 		this->action_client_navigate->async_send_goal(goal_msg, send_options);
+						
 	}
 		
 	void cancel_action_navigate() {
 		this->action_client_navigate->async_cancel_all_goals();
+								
 	}
 	void callback_message_stop(const std_msgs::msg::Empty::SharedPtr msg) {
 		
@@ -167,6 +172,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_stop_u_response_);
+								
 	}
 	
 	
@@ -176,6 +182,7 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_continue_u_response_);
+								
 	}
 	
 	
@@ -215,11 +222,15 @@ public:
 	
 		taken_transitions.clear();
 	}
+	
+	
+	~Controller() {
+	}
 private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_pPOS5YMEJUPC6_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pFLTS95EOYOZG_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

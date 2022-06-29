@@ -11,7 +11,7 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_pBL18S4SB5G6Y,
+    _controller_data_p7H2JXWWT4LDZ,
     _controller_in_service,
     _controller_line_found,
     _controller_no_line,
@@ -37,13 +37,13 @@ enum controllerEventEnum_ {
     data_correction_c_none_,                /**< Event data_correction.c_none. */
     message_no_line_u_response_,            /**< Event message_no_line.u_response. */
     data_no_line_c_none_,                   /**< Event data_no_line.c_none. */
-    component_LidarSensor_c_pJ1D3ZC7ZI0OO_, /**< Event component_LidarSensor.c_pJ1D3ZC7ZI0OO. */
-    component_LidarSensor_c_p61BJP35U68B2_, /**< Event component_LidarSensor.c_p61BJP35U68B2. */
+    component_LidarSensor_c_p6IKBNCE0CF2A_, /**< Event component_LidarSensor.c_p6IKBNCE0CF2A. */
+    component_LidarSensor_c_pGNFFIMP7J5DD_, /**< Event component_LidarSensor.c_pGNFFIMP7J5DD. */
     message_scan_u_response_,               /**< Event message_scan.u_response. */
     data_scan_c_none_,                      /**< Event data_scan.c_none. */
     message_move_c_trigger_,                /**< Event message_move.c_trigger. */
     data_move_c_none_,                      /**< Event data_move.c_none. */
-    data_move_c_pP0SEMY32VZLJ_,             /**< Event data_move.c_pP0SEMY32VZLJ. */
+    data_move_c_pK6XY8M2QGABW_,             /**< Event data_move.c_pK6XY8M2QGABW. */
     message_stop_u_response_,               /**< Event message_stop.u_response. */
     data_stop_c_none_,                      /**< Event data_stop.c_none. */
     message_continue_u_response_,           /**< Event message_continue.u_response. */

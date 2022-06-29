@@ -6,8 +6,6 @@
 #include <future>
 #include <memory>
 #include <sstream>
-#include <mutex>
-#include <condition_variable>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
@@ -17,7 +15,6 @@
 #include "std_msgs/msg/int16.hpp"
 #include "std_msgs/msg/float32.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
-#include "bboxes_ex_msgs/msg/bounding_boxes.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
@@ -28,8 +25,6 @@ extern "C" {
 }
 
 using namespace std::chrono_literals;
-#include <iostream>
-#include <fstream>
 
 // Utility functions
 void shuffle_events(controller_Event_ *x, size_t n)
@@ -68,24 +63,23 @@ std::string serialize_json_vector(const std::vector<std::string>& list) {
     return output.str();
 }
 
-controllerEnum code_Scanner_distance = _controller_person;
-double code_YoloxDetection_current_image_size = 0.0;
-double code_YoloxDetection_current_xmax = 0.0;
-double code_YoloxDetection_current_xmin = 0.0;
+double code_LineDetector_current_correction = 0.0;
+controllerEnum code_LidarSensor_current_distance = _controller_unsafe;
 
 class Controller : public rclcpp::Node {
 public:	
 	// Enum conversions
-	controllerEnum convert_enum_Distance(const sensor_msgs::msg::LaserScan::SharedPtr input) {
-		if (input->ranges[0] > 5.0 && input->ranges[350] > 5.0 && input->ranges[10] > 5.0) {
-			return _controller_free;
+	controllerEnum convert_enum_DistanceSafety(const sensor_msgs::msg::LaserScan::SharedPtr input) {
+		if (input->ranges[0] > 1.0 && input->ranges[270] > 0.5 && input->ranges[90] > 0.5 && input->ranges[45] > 0.7 && input->ranges[305] > 0.7) {
+			return _controller_safe;
 		}
 	
-		return _controller_person;
+		return _controller_unsafe;
 	}
 
+	rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr subscriber_client_correction;
+	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_no_line;
 	rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_client_scan;
-	rclcpp::Subscription<bboxes_ex_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_bounding_boxes;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
@@ -94,41 +88,45 @@ public:
 	std::vector<std::string> taken_transitions;
 
 	Controller() : Node("controller") {
+		subscriber_client_correction = this->create_subscription<std_msgs::msg::Float32>("/correction", 10, std::bind(&Controller::callback_message_correction, this, std::placeholders::_1));
+		subscriber_client_no_line = this->create_subscription<std_msgs::msg::Empty>("/no_line", 10, std::bind(&Controller::callback_message_no_line, this, std::placeholders::_1));
 		subscriber_client_scan = this->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, std::bind(&Controller::callback_message_scan, this, std::placeholders::_1));
-		subscriber_client_bounding_boxes = this->create_subscription<bboxes_ex_msgs::msg::BoundingBoxes>("/bounding_boxes", 10, std::bind(&Controller::callback_message_bounding_boxes, this, std::placeholders::_1));
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 		publisher_client_halt = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 
-		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
+		state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
-				
 	}
 
+	void callback_message_correction(const std_msgs::msg::Float32::SharedPtr msg) {
+		
+		code_LineDetector_current_correction = msg->data;
+		
+		
+		// Call engine function
+		controller_EnginePerformEvent(message_correction_u_response_);
+	}
+	
+	
+	void callback_message_no_line(const std_msgs::msg::Empty::SharedPtr msg) {
+		
+		
+		
+		// Call engine function
+		controller_EnginePerformEvent(message_no_line_u_response_);
+	}
+	
+	
 	void callback_message_scan(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
-		message_scan_i_response_ = convert_enum_Distance(msg);
+		message_scan_i_response_ = convert_enum_DistanceSafety(msg);
 		
 		
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_scan_u_response_);
-								
-	}
-	
-	
-	void callback_message_bounding_boxes(const bboxes_ex_msgs::msg::BoundingBoxes::SharedPtr msg) {
-		
-		code_YoloxDetection_current_xmax = msg->bounding_boxes[0].xmax;
-		
-		code_YoloxDetection_current_xmin = msg->bounding_boxes[0].xmin;
-		
-		code_YoloxDetection_current_image_size = msg->bounding_boxes[0].img_width;
-		
-		// Call engine function
-		controller_EnginePerformEvent(message_bounding_boxes_u_response_);
-								
 	}
 	
 	
@@ -138,7 +136,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_stop_u_response_);
-								
 	}
 	
 	
@@ -148,7 +145,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_continue_u_response_);
-								
 	}
 	
 	
@@ -157,34 +153,24 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_p0Q75TJOH95KQ) {
-			value.linear.x = 0.0;
-			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
-		} else 
-		if (data_move_ == _controller_data_pOEAI5JZDSB7U) {
-			value.linear.x = 0.2;
-			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
-		} else 
-		if (data_move_ == _controller_data_pNB5OZ9AD5ICW) {
-			value.linear.x = 0.0;
-			value.angular.z = 0.3;
+		if (data_move_ == _controller_data_pP4EJS61ZGJN7) {
+			value.linear.x = 0.6;
+			value.angular.z = (-code_LineDetector_current_correction) / 100;
 		}
 		
 		this->publisher_client_move->publish(value);
-	
 	}
 	
 	
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pI6051UITZCXO) {
+		if (data_halt_ == _controller_data_pOBKAH8J4AUS2) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
 		
 		this->publisher_client_halt->publish(value);
-	
 	}
 	
 	void emit_current_state() {
@@ -193,21 +179,19 @@ public:
 		output << "{";
 		
 		output << "\"current\": {" << "";
-		output << "\"Scanner\": {";
-		output << "\"state\": \"" << "sensing""" << "\",";
+		output << "\"LineDetector\": {";
+		output << "\"state\": \"" << enum_names[component_LineDetector_] << "\",";
 		output << "\"variables\": {";
 		
-		output << "\"distance\": \"" << enum_names[component_Scanner_v_distance_] << "\"";				
+		output << "\"current_correction\": \"" << code_LineDetector_current_correction << "\"";				
 		
 		output << "}";
 		output << "},";
-		output << "\"YoloxDetection\": {";
-		output << "\"state\": \"" << enum_names[component_YoloxDetection_] << "\",";
+		output << "\"LidarSensor\": {";
+		output << "\"state\": \"" << enum_names[component_LidarSensor_] << "\",";
 		output << "\"variables\": {";
 		
-		output << "\"current_image_size\": \"" << code_YoloxDetection_current_image_size << "\",";				
-		output << "\"current_xmax\": \"" << code_YoloxDetection_current_xmax << "\",";				
-		output << "\"current_xmin\": \"" << code_YoloxDetection_current_xmin << "\"";				
+		output << "\"current_distance\": \"" << enum_names[component_LidarSensor_v_current_distance_] << "\"";				
 		
 		output << "}";
 		output << "},";
@@ -220,7 +204,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"PersonFollowing\",\"components\":[{\"name\":\"Scanner\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"distance\"],\"states\":[{\"name\":\"sensing\",\"initial\":true,\"transitions\":[{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"YoloxDetection\",\"messages\":[\"bounding_boxes\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_image_size\",\"current_xmax\",\"current_xmin\"],\"states\":[{\"name\":\"initializing\",\"initial\":true,\"transitions\":[{\"next\":\"detected\",\"id\":\"message_bounding_boxes_u_response_\",\"type\":\"response\",\"communication\":\"bounding_boxes\"}]},{\"name\":\"detected\",\"initial\":false,\"transitions\":[{\"next\":\"detected\",\"id\":\"message_bounding_boxes_u_response_\",\"type\":\"response\",\"communication\":\"bounding_boxes\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
+		output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"LidarSensor\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_distance\"],\"states\":[{\"name\":\"unsafe_distance\",\"initial\":true,\"transitions\":[{\"next\":\"safe_distance\",\"id\":\"component_LidarSensor_c_pLWT0LHM5Q1BZ_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]},{\"name\":\"safe_distance\",\"initial\":false,\"transitions\":[{\"next\":\"unsafe_distance\",\"id\":\"component_LidarSensor_c_pKFOXDOTN7RW4_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -230,15 +214,11 @@ public:
 	
 		taken_transitions.clear();
 	}
-	
-	
-	~Controller() {
-	}
 private:
 	// Heart of the controller
 	void tick() {
-		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_move_c_pE7UYQJY79SM8_,data_move_c_p4BF22BNB53W7_,data_move_c_p3QQTOJTJJA3D_,data_halt_c_p3N8RD73YSOWM_ };
+		int nOfDataEvents = 2;
+		      controller_Event_ data_events[2] = { data_move_c_pV7ARK2JK8ZPM_,data_halt_c_pKEYX6EBNIJQ6_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -247,13 +227,15 @@ private:
 			controller_EnginePerformEvent(data_events[i]);
 		}
 		
-		int nOfControllableEvents = 2;
-		      controller_Event_ controllable_events[2] = { message_move_c_trigger_,message_halt_c_trigger_ };
+		int nOfControllableEvents = 4;
+		      controller_Event_ controllable_events[4] = { component_LidarSensor_c_pLWT0LHM5Q1BZ_,component_LidarSensor_c_pKFOXDOTN7RW4_,message_move_c_trigger_,message_halt_c_trigger_ };
 		
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]);
+			if (controller_EnginePerformEvent(controllable_events[i])) {
+				break;
+			}
 		}
 
 		this->emit_current_state();
@@ -262,7 +244,7 @@ private:
 	rclcpp::TimerBase::SharedPtr timer;
 };
 
-std::shared_ptr<Controller> node = nullptr;
+std::shared_ptr<Controller> node_controller = nullptr;
 
 // Control synthesis engine
 bool assigned = false;
@@ -270,22 +252,22 @@ bool assigned = false;
 void controller_AssignInputVariables() {
 	if (assigned) return;
 	
-	message_scan_i_response_ = _controller_person;
+	message_scan_i_response_ = _controller_unsafe;
 	
 	assigned = true;
 }
 void controller_InfoEvent(controller_Event_ event, BoolType pre) {
     if (pre) {
-    	node->taken_transitions.push_back(controller_event_names[event]);
+    	node_controller->taken_transitions.push_back(controller_event_names[event]);
     	return;
     }
     
     switch (event) {
 case message_move_c_trigger_:
-	node->call_message_move();
+	node_controller->call_message_move();
 break;
 case message_halt_c_trigger_:
-	node->call_message_halt();
+	node_controller->call_message_halt();
 break;
 
     default:
@@ -296,9 +278,9 @@ break;
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
 
-    node = std::make_shared<Controller>();
+    node_controller = std::make_shared<Controller>();
 
-    rclcpp::spin(node);
+    rclcpp::spin(node_controller);
     rclcpp::shutdown();
 
     return 0;

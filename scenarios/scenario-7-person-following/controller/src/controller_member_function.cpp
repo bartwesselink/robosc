@@ -15,7 +15,7 @@
 #include "std_msgs/msg/int16.hpp"
 #include "std_msgs/msg/float32.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
-#include "darknet_ros_msgs/msg/bounding_boxes.hpp"
+#include "bboxes_ex_msgs/msg/bounding_boxes.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
@@ -81,7 +81,7 @@ public:
 	}
 
 	rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscriber_client_scan;
-	rclcpp::Subscription<darknet_ros_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_bounding_boxes;
+	rclcpp::Subscription<bboxes_ex_msgs::msg::BoundingBoxes>::SharedPtr subscriber_client_bounding_boxes;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_stop;
 	rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr subscriber_client_continue;
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_client_move;
@@ -91,7 +91,7 @@ public:
 
 	Controller() : Node("controller") {
 		subscriber_client_scan = this->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, std::bind(&Controller::callback_message_scan, this, std::placeholders::_1));
-		subscriber_client_bounding_boxes = this->create_subscription<darknet_ros_msgs::msg::BoundingBoxes>("/bounding_boxes", 10, std::bind(&Controller::callback_message_bounding_boxes, this, std::placeholders::_1));
+		subscriber_client_bounding_boxes = this->create_subscription<bboxes_ex_msgs::msg::BoundingBoxes>("/bounding_boxes", 10, std::bind(&Controller::callback_message_bounding_boxes, this, std::placeholders::_1));
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
@@ -112,7 +112,7 @@ public:
 	}
 	
 	
-	void callback_message_bounding_boxes(const darknet_ros_msgs::msg::BoundingBoxes::SharedPtr msg) {
+	void callback_message_bounding_boxes(const bboxes_ex_msgs::msg::BoundingBoxes::SharedPtr msg) {
 		
 		code_YoloxDetection_current_xmax = msg->bounding_boxes[0].xmax;
 		
@@ -148,15 +148,15 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pUP5ML8JMWW4T) {
+		if (data_move_ == _controller_data_p9RSDX8LJLCV2) {
 			value.linear.x = 0.0;
 			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pS7U2UXZ9YXWR) {
+		if (data_move_ == _controller_data_pKC0ZPGU0T0PA) {
 			value.linear.x = 0.2;
 			value.angular.z = ((code_YoloxDetection_current_image_size / 2) - ((code_YoloxDetection_current_xmin + code_YoloxDetection_current_xmax) / 2)) / 1000;
 		} else 
-		if (data_move_ == _controller_data_p4031IU0R40HC) {
+		if (data_move_ == _controller_data_pK10KKSJ4FU2H) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.3;
 		}
@@ -168,7 +168,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pZKSUMSQ690TU) {
+		if (data_halt_ == _controller_data_pW0PL5VVJ732S) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -223,7 +223,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_move_c_pY9JIS4IKG45G_,data_move_c_pZI0DWYK8T3Y0_,data_move_c_pX4CT3G20G9PI_,data_halt_c_p4UYOSVYGG7AG_ };
+		      controller_Event_ data_events[4] = { data_move_c_pVY0EXDHMYUDI_,data_move_c_pEBEQC0UBG1MQ_,data_move_c_pQU2P3GUXINAL_,data_halt_c_pCTXCJ5ML2OD5_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);

@@ -6,8 +6,6 @@
 #include <future>
 #include <memory>
 #include <sstream>
-#include <mutex>
-#include <condition_variable>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
@@ -31,8 +29,6 @@ extern "C" {
 }
 
 using namespace std::chrono_literals;
-#include <iostream>
-#include <fstream>
 
 // Utility functions
 void shuffle_events(controller_Event_ *x, size_t n)
@@ -125,10 +121,9 @@ public:
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 
-		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
+		state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
-				
 	}
 
 	void callback_message_scan_right(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
@@ -138,7 +133,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_scan_right_u_response_);
-								
 	}
 	
 	
@@ -149,7 +143,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_scan_front_u_response_);
-								
 	}
 	
 	
@@ -160,7 +153,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_scan_diag_right_u_response_);
-								
 	}
 	
 	
@@ -169,48 +161,44 @@ public:
 	void call_message_movement() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_movement_ == _controller_data_pV2HDUFCVMIEN) {
+		if (data_movement_ == _controller_data_pJPVRZ4E2EPLC) {
 			value.linear.x = 0.3;
 		}
 		
 		this->publisher_client_movement->publish(value);
-	
 	}
 	
 	
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_p6XQ99ZAH3DNB) {
+		if (data_halt_ == _controller_data_pHX3XSV8MVCIK) {
 			value.linear.x = 0.0;
 		}
 		
 		this->publisher_client_halt->publish(value);
-	
 	}
 	
 	
 	void call_message_turn_left() {
 		auto value = std_msgs::msg::Int16();
 		
-		if (data_turn_left_ == _controller_data_p4SNXF9MTRQWX) {
+		if (data_turn_left_ == _controller_data_pRN9QI6OO9MWT) {
 			value.data = 90;
 		}
 		
 		this->publisher_client_turn_left->publish(value);
-	
 	}
 	
 	
 	void call_message_turn_right() {
 		auto value = std_msgs::msg::Int16();
 		
-		if (data_turn_right_ == _controller_data_pB4OUNV12MZEC) {
+		if (data_turn_right_ == _controller_data_p98OL20J8SX9A) {
 			value.data = 90;
 		}
 		
 		this->publisher_client_turn_right->publish(value);
-	
 	}
 	void callback_message_rotate_done(const std_msgs::msg::Empty::SharedPtr msg) {
 		
@@ -218,7 +206,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_rotate_done_u_response_);
-								
 	}
 	
 	
@@ -228,7 +215,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_stop_u_response_);
-								
 	}
 	
 	
@@ -238,7 +224,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_continue_u_response_);
-								
 	}
 	
 	
@@ -285,15 +270,11 @@ public:
 	
 		taken_transitions.clear();
 	}
-	
-	
-	~Controller() {
-	}
 private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 4;
-		      controller_Event_ data_events[4] = { data_movement_c_p6GUY3B2Y88AZ_,data_halt_c_p5UHK7UNFZPYT_,data_turn_left_c_pUKB85UT3KGEA_,data_turn_right_c_pSTZACE0OI243_ };
+		      controller_Event_ data_events[4] = { data_movement_c_pLAO6JAM2KUUX_,data_halt_c_p52ZOE3NJSSHB_,data_turn_left_c_pXKPJEGFLBSB1_,data_turn_right_c_p6E53XGUTSKSZ_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -308,7 +289,9 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]);
+			if (controller_EnginePerformEvent(controllable_events[i])) {
+				break;
+			}
 		}
 
 		this->emit_current_state();
@@ -317,7 +300,7 @@ private:
 	rclcpp::TimerBase::SharedPtr timer;
 };
 
-std::shared_ptr<Controller> node = nullptr;
+std::shared_ptr<Controller> node_controller = nullptr;
 
 // Control synthesis engine
 bool assigned = false;
@@ -333,22 +316,22 @@ void controller_AssignInputVariables() {
 }
 void controller_InfoEvent(controller_Event_ event, BoolType pre) {
     if (pre) {
-    	node->taken_transitions.push_back(controller_event_names[event]);
+    	node_controller->taken_transitions.push_back(controller_event_names[event]);
     	return;
     }
     
     switch (event) {
 case message_movement_c_trigger_:
-	node->call_message_movement();
+	node_controller->call_message_movement();
 break;
 case message_halt_c_trigger_:
-	node->call_message_halt();
+	node_controller->call_message_halt();
 break;
 case message_turn_left_c_trigger_:
-	node->call_message_turn_left();
+	node_controller->call_message_turn_left();
 break;
 case message_turn_right_c_trigger_:
-	node->call_message_turn_right();
+	node_controller->call_message_turn_right();
 break;
 
     default:
@@ -359,9 +342,9 @@ break;
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
 
-    node = std::make_shared<Controller>();
+    node_controller = std::make_shared<Controller>();
 
-    rclcpp::spin(node);
+    rclcpp::spin(node_controller);
     rclcpp::shutdown();
 
     return 0;

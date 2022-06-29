@@ -6,8 +6,6 @@
 #include <future>
 #include <memory>
 #include <sstream>
-#include <mutex>
-#include <condition_variable>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
@@ -26,8 +24,6 @@ extern "C" {
 }
 
 using namespace std::chrono_literals;
-#include <iostream>
-#include <fstream>
 
 // Utility functions
 void shuffle_events(controller_Event_ *x, size_t n)
@@ -89,10 +85,9 @@ public:
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Controller::callback_message_stop, this, std::placeholders::_1));
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Controller::callback_message_continue, this, std::placeholders::_1));
 
-		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
+		state_information = this->create_publisher<std_msgs::msg::String>("/controller/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Controller::tick, this));
 		controller_EngineFirstStep();
-				
 	}
 
 	void callback_message_point(const geometry_msgs::msg::PointStamped::SharedPtr msg) {
@@ -105,7 +100,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_point_u_response_);
-								
 	}
 	
 	
@@ -120,7 +114,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_initial_pose_u_response_);
-								
 	}
 	
 	
@@ -128,18 +121,20 @@ public:
 		
 		
 	
+		fprintf(stderr, "[debug] Received action response\n");
+		
 		// Call engine function
 		controller_EnginePerformEvent(action_navigate_u_response_);
-		
 	}
 	
 	void feedback_action_navigate(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr, const std::shared_ptr<const nav2_msgs::action::NavigateToPose::Feedback> feedback) {
 		
 		
 	
+		fprintf(stderr, "[debug] Received action feedback\n");
+		
 		// Call engine function
 		controller_EnginePerformEvent(action_navigate_u_feedback_);
-				
 	}
 	
 	void call_action_navigate() {
@@ -149,7 +144,7 @@ public:
 		}
 		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_p1H8IM0967RAQ) {
+		if (data_navigate_ == _controller_data_pKEND5QM4JCM5) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
@@ -159,12 +154,10 @@ public:
 		send_options.result_callback = std::bind(&Controller::response_action_navigate, this, std::placeholders::_1);
 		send_options.feedback_callback = std::bind(&Controller::feedback_action_navigate, this, std::placeholders::_1, std::placeholders::_2);
 		this->action_client_navigate->async_send_goal(goal_msg, send_options);
-						
 	}
 		
 	void cancel_action_navigate() {
 		this->action_client_navigate->async_cancel_all_goals();
-								
 	}
 	void callback_message_stop(const std_msgs::msg::Empty::SharedPtr msg) {
 		
@@ -172,7 +165,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_stop_u_response_);
-								
 	}
 	
 	
@@ -182,7 +174,6 @@ public:
 		
 		// Call engine function
 		controller_EnginePerformEvent(message_continue_u_response_);
-								
 	}
 	
 	
@@ -212,7 +203,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"SimpleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"ObstacleNavigation\",\"components\":[{\"name\":\"Nav2\",\"messages\":[\"point\",\"initial_pose\"],\"services\":[],\"actions\":[\"navigate\"],\"behaviour\":{\"variables\":[\"current_x\",\"current_y\",\"current_z\"],\"states\":[{\"name\":\"no_initial_pose\",\"initial\":true,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"message_initial_pose_u_response_\",\"type\":\"response\",\"communication\":\"initial_pose\"}]},{\"name\":\"awaiting_point\",\"initial\":false,\"transitions\":[{\"next\":\"has_point\",\"id\":\"message_point_u_response_\",\"type\":\"response\",\"communication\":\"point\"}]},{\"name\":\"has_point\",\"initial\":false,\"transitions\":[{\"next\":\"awaiting_point\",\"id\":\"action_navigate_u_response_\",\"type\":\"response\",\"communication\":\"navigate\"},{\"next\":\"awaiting_point\",\"id\":\"action_navigate_c_cancel_\",\"type\":\"cancel\",\"communication\":\"navigate\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -222,15 +213,11 @@ public:
 	
 		taken_transitions.clear();
 	}
-	
-	
-	~Controller() {
-	}
 private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_p5DVFPXIKI0QU_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_pZCGYOTWH6IK8_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -245,7 +232,9 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]);
+			if (controller_EnginePerformEvent(controllable_events[i])) {
+				break;
+			}
 		}
 
 		this->emit_current_state();
@@ -254,7 +243,7 @@ private:
 	rclcpp::TimerBase::SharedPtr timer;
 };
 
-std::shared_ptr<Controller> node = nullptr;
+std::shared_ptr<Controller> node_controller = nullptr;
 
 // Control synthesis engine
 bool assigned = false;
@@ -267,16 +256,16 @@ void controller_AssignInputVariables() {
 }
 void controller_InfoEvent(controller_Event_ event, BoolType pre) {
     if (pre) {
-    	node->taken_transitions.push_back(controller_event_names[event]);
+    	node_controller->taken_transitions.push_back(controller_event_names[event]);
     	return;
     }
     
     switch (event) {
 case action_navigate_c_trigger_:
-	node->call_action_navigate();
+	node_controller->call_action_navigate();
 break;
 case action_navigate_c_cancel_:
-	node->cancel_action_navigate();
+	node_controller->cancel_action_navigate();
 break;
 
     default:
@@ -287,9 +276,9 @@ break;
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
 
-    node = std::make_shared<Controller>();
+    node_controller = std::make_shared<Controller>();
 
-    rclcpp::spin(node);
+    rclcpp::spin(node_controller);
     rclcpp::shutdown();
 
     return 0;

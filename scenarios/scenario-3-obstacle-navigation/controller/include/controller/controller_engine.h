@@ -12,7 +12,7 @@
  */
 enum Enumcontroller_ {
     _controller_awaiting_point,
-    _controller_data_pKRN56FXDJPW6,
+    _controller_data_p93Y3DT3CEL5Z,
     _controller_error,
     _controller_executing,
     _controller_has_point,
@@ -45,7 +45,7 @@ enum controllerEventEnum_ {
     action_navigate_u_response_,      /**< Event action_navigate.u_response. */
     action_navigate_u_error_,         /**< Event action_navigate.u_error. */
     data_navigate_c_none_,            /**< Event data_navigate.c_none. */
-    data_navigate_c_pPOS5YMEJUPC6_,   /**< Event data_navigate.c_pPOS5YMEJUPC6. */
+    data_navigate_c_pFLTS95EOYOZG_,   /**< Event data_navigate.c_pFLTS95EOYOZG. */
     message_stop_u_response_,         /**< Event message_stop.u_response. */
     data_stop_c_none_,                /**< Event data_stop.c_none. */
     message_continue_u_response_,     /**< Event message_continue.u_response. */

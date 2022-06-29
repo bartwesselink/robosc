@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     let clientOptions: LanguageClientOptions = {
-        documentSelector: ['rsc'],
+        documentSelector: ['rscd'],
         synchronize: {
             fileEvents: vscode.workspace.createFileSystemWatcher('**/*.*')
         }
@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Add visualization command
     context.subscriptions.push(
-        vscode.commands.registerCommand('rsc.visualizeController', async () => {
+        vscode.commands.registerCommand('rscd.visualizeController', async () => {
             const column = vscode.window.activeTextEditor
                 ? vscode.window.activeTextEditor.viewColumn
                 : undefined;
@@ -65,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
                 context.subscriptions
               );
 
-            const configuration = vscode.workspace.getConfiguration('rsc') as unknown as Configuration;
+            const configuration = vscode.workspace.getConfiguration('rscd') as unknown as Configuration;
             let currentDisposeFunction: () => Promise<void>;
 
             currentPanel.webview.onDidReceiveMessage(async (message) => {

@@ -25,12 +25,9 @@ public class InterfaceLinkRequiredRule extends AbstractValidationRule {
 		if (entity instanceof Message) {
 			required = referencesObjectDataType(((Message) entity).getType());
 		} else if (entity instanceof Service) {
-			required = referencesObjectDataType(((Service) entity).getResponseType())
-					|| referencesObjectDataType(((Service) entity).getRequestType());
+			required = true;
 		} else if (entity instanceof Action) {
-			required = referencesObjectDataType(((Action) entity).getResponseType())
-					|| referencesObjectDataType(((Action) entity).getRequestType())
-					|| referencesObjectDataType(((Action) entity).getFeedbackType());
+			required = true;
 		}
 		
 		if (required) {

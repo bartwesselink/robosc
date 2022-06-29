@@ -26,6 +26,8 @@ extern "C" {
 }
 
 using namespace std::chrono_literals;
+#include <iostream>
+#include <fstream>
 
 // Utility functions
 void shuffle_events(controller_Event_ *x, size_t n)
@@ -97,23 +99,24 @@ public:
 	std::vector<std::string> taken_transitions;
 
 	Supervisor() : Node("supervisor") {
-		supervised_subscriber_client_correction = this->create_publisher<std_msgs::msg::Float32>("/correction_pAKO3XD5LXQVY", 10);
+		supervised_subscriber_client_correction = this->create_publisher<std_msgs::msg::Float32>("/correction_pD03NAUQLGW9U", 10);
 		subscriber_client_correction = this->create_subscription<std_msgs::msg::Float32>("/correction", 10, std::bind(&Supervisor::callback_message_correction, this, std::placeholders::_1));
-		supervised_subscriber_client_no_line = this->create_publisher<std_msgs::msg::Empty>("/no_line_p2O7AZU3ZS3KR", 10);
+		supervised_subscriber_client_no_line = this->create_publisher<std_msgs::msg::Empty>("/no_line_pPWS7VOXLHSV1", 10);
 		subscriber_client_no_line = this->create_subscription<std_msgs::msg::Empty>("/no_line", 10, std::bind(&Supervisor::callback_message_no_line, this, std::placeholders::_1));
-		supervised_subscriber_client_scan = this->create_publisher<sensor_msgs::msg::LaserScan>("/scan_pKP7IMHKLB4Q5", 10);
+		supervised_subscriber_client_scan = this->create_publisher<sensor_msgs::msg::LaserScan>("/scan_pLGJ50J0RL33J", 10);
 		subscriber_client_scan = this->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, std::bind(&Supervisor::callback_message_scan, this, std::placeholders::_1));
-		supervised_publisher_client_move = this->create_subscription<geometry_msgs::msg::Twist>("/simple_movement_pE3M1TMNNE85C", 10, std::bind(&Supervisor::callback_message_move_supervised, this, std::placeholders::_1));
+		supervised_publisher_client_move = this->create_subscription<geometry_msgs::msg::Twist>("/simple_movement_pNGAJWRO2BE69", 10, std::bind(&Supervisor::callback_message_move_supervised, this, std::placeholders::_1));
 		publisher_client_move = this->create_publisher<geometry_msgs::msg::Twist>("/simple_movement", 10);
-		supervised_subscriber_client_stop = this->create_publisher<std_msgs::msg::Empty>("/stop_pGDVQ0MDSIZEK", 10);
+		supervised_subscriber_client_stop = this->create_publisher<std_msgs::msg::Empty>("/stop_pO55LCZMBJI3R", 10);
 		subscriber_client_stop = this->create_subscription<std_msgs::msg::Empty>("/stop", 10, std::bind(&Supervisor::callback_message_stop, this, std::placeholders::_1));
-		supervised_subscriber_client_continue = this->create_publisher<std_msgs::msg::Empty>("/continue_p1C6LQOF7DJST", 10);
+		supervised_subscriber_client_continue = this->create_publisher<std_msgs::msg::Empty>("/continue_pE153PVY940FM", 10);
 		subscriber_client_continue = this->create_subscription<std_msgs::msg::Empty>("/continue", 10, std::bind(&Supervisor::callback_message_continue, this, std::placeholders::_1));
 
 		blocked = this->create_publisher<std_msgs::msg::String>("/blocked", 10);
 		state_information = this->create_publisher<std_msgs::msg::String>("/state", 10);
 		timer = this->create_wall_timer(100ms, std::bind(&Supervisor::tick, this));
 		controller_EngineFirstStep();
+
 	}
 
 	void callback_message_correction(const std_msgs::msg::Float32::SharedPtr msg) {
@@ -128,6 +131,7 @@ public:
 		this->supervised_subscriber_client_correction->publish(*msg);
 	
 		this->execute_all_silent();
+		
 	}
 	
 	void callback_message_no_line(const std_msgs::msg::Empty::SharedPtr msg) {
@@ -141,6 +145,7 @@ public:
 		this->supervised_subscriber_client_no_line->publish(*msg);
 	
 		this->execute_all_silent();
+		
 	}
 	
 	void callback_message_scan(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
@@ -155,6 +160,7 @@ public:
 		this->supervised_subscriber_client_scan->publish(*msg);
 	
 		this->execute_all_silent();
+		
 	}
 	
 	
@@ -175,6 +181,7 @@ public:
 	
 	void call_message_move() {
 		this->publisher_client_move->publish(*this->data_holder_supervised_publisher_client_move);
+	
 	}
 	void callback_message_stop(const std_msgs::msg::Empty::SharedPtr msg) {
 		
@@ -187,6 +194,7 @@ public:
 		this->supervised_subscriber_client_stop->publish(*msg);
 	
 		this->execute_all_silent();
+		
 	}
 	
 	void callback_message_continue(const std_msgs::msg::Empty::SharedPtr msg) {
@@ -200,6 +208,7 @@ public:
 		this->supervised_subscriber_client_continue->publish(*msg);
 	
 		this->execute_all_silent();
+		
 	}
 	
 	
@@ -234,7 +243,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"LineFollowerSupervised\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"LidarSensor\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_distance\"],\"states\":[{\"name\":\"unsafe_distance\",\"initial\":true,\"transitions\":[{\"next\":\"safe_distance\",\"id\":\"component_LidarSensor_c_pJ1D3ZC7ZI0OO_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]},{\"name\":\"safe_distance\",\"initial\":false,\"transitions\":[{\"next\":\"unsafe_distance\",\"id\":\"component_LidarSensor_c_p61BJP35U68B2_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"SimpleMovement\",\"messages\":[\"move\"],\"services\":[],\"actions\":[]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
+		output << "\"definition\": " << "{\"name\":\"LineFollowerSupervised\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"LidarSensor\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_distance\"],\"states\":[{\"name\":\"unsafe_distance\",\"initial\":true,\"transitions\":[{\"next\":\"safe_distance\",\"id\":\"component_LidarSensor_c_p6IKBNCE0CF2A_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]},{\"name\":\"safe_distance\",\"initial\":false,\"transitions\":[{\"next\":\"unsafe_distance\",\"id\":\"component_LidarSensor_c_pGNFFIMP7J5DD_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"SimpleMovement\",\"messages\":[\"move\"],\"services\":[],\"actions\":[]},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -244,6 +253,10 @@ public:
 	
 		taken_transitions.clear();
 	}
+			
+
+	~Supervisor() {
+	}
 private:
 	// Only used to emit state information
 	void tick() {
@@ -252,7 +265,7 @@ private:
 	
 	void execute_all_silent() {
 		int nOfControllableEvents = 2;
-		      controller_Event_ controllable_events[2] = { component_LidarSensor_c_pJ1D3ZC7ZI0OO_,component_LidarSensor_c_p61BJP35U68B2_ };
+		      controller_Event_ controllable_events[2] = { component_LidarSensor_c_p6IKBNCE0CF2A_,component_LidarSensor_c_pGNFFIMP7J5DD_ };
 		
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
