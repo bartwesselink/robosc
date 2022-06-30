@@ -24,7 +24,7 @@ robot LineFollowerController {
     }
 
     datatype enum DistanceSafety from LaserScan to {
-        value.ranges[0] > 0.25 -> safe
+        value.ranges[0] > 0.25 or value.ranges[0] <= 0.0 -> safe
         default -> unsafe
     }
 
