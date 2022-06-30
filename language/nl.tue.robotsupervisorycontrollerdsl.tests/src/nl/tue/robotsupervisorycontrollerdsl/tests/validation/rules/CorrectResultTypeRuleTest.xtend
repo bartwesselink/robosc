@@ -22,9 +22,11 @@ class CorrectResultTypeRuleTest {
 	def void checkValid() {
 		"
 			robot UnitTestRobot {
+				interface unit use Unit from package
+
 				component Component {
 					incoming message test_message with type: boolean
-					service test_service with request: boolean, response: boolean
+					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
 						initial state idle {
@@ -42,9 +44,11 @@ class CorrectResultTypeRuleTest {
 	def void checkServiceFeedbackError() {
 		"
 			robot UnitTestRobot {
+				interface unit use Unit from package
+
 				component Component {
 					incoming message test_message with type: boolean
-					service test_service with request: boolean, response: boolean
+					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
 						initial state idle {
@@ -63,9 +67,11 @@ class CorrectResultTypeRuleTest {
 	def void checkMessageResponseError() {
 		"
 			robot UnitTestRobot {
+				interface unit use Unit from package
+
 				component Component {
 					outgoing message test_message with type: boolean
-					service test_service with request: boolean, response: boolean
+					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
 						initial state idle {
@@ -84,9 +90,11 @@ class CorrectResultTypeRuleTest {
 	def void checkMessageRequestError() {
 		"
 			robot UnitTestRobot {
+				interface unit use Unit from package
+	
 				component Component {
 					incoming message test_message with type: boolean
-					service test_service with request: boolean, response: boolean
+					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
 						initial state idle {
