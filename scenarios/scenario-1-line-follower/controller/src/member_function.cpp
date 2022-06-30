@@ -74,7 +74,7 @@ class Controller : public rclcpp::Node {
 public:	
 	// Enum conversions
 	controllerEnum convert_enum_DistanceSafety(const sensor_msgs::msg::LaserScan::SharedPtr input) {
-		if (input->ranges[0] > 1.0 && input->ranges[270] > 0.5 && input->ranges[90] > 0.5 && input->ranges[45] > 0.7 && input->ranges[305] > 0.7) {
+		if (input->ranges[0] > 0.25) {
 			return _controller_safe;
 		}
 	
@@ -163,7 +163,7 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_pHZNUBDL4PMMX) {
+		if (data_move_ == _controller_data_pF7625V5A8DNJ) {
 			value.linear.x = 0.6;
 			value.angular.z = (-code_LineDetector_current_correction) / 100;
 		}
@@ -176,7 +176,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pAAFE7NL4YJ61) {
+		if (data_halt_ == _controller_data_pZFE78F5HPAQJ) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -216,7 +216,7 @@ public:
 		output << "}";
 		output << "},";
 		output << "\"transitions\": " << serialize_json_vector(taken_transitions) << ",";
-		output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"LidarSensor\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_distance\"],\"states\":[{\"name\":\"unsafe_distance\",\"initial\":true,\"transitions\":[{\"next\":\"safe_distance\",\"id\":\"component_LidarSensor_c_pQHC1TW0JFBD8_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]},{\"name\":\"safe_distance\",\"initial\":false,\"transitions\":[{\"next\":\"unsafe_distance\",\"id\":\"component_LidarSensor_c_pMC9INZ2RT4EM_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
+		output << "\"definition\": " << "{\"name\":\"LineFollowerController\",\"components\":[{\"name\":\"LineDetector\",\"messages\":[\"correction\",\"no_line\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_correction\"],\"states\":[{\"name\":\"no_line\",\"initial\":true,\"transitions\":[{\"next\":\"line_found\",\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]},{\"name\":\"line_found\",\"initial\":false,\"transitions\":[{\"next\":\"no_line\",\"id\":\"message_no_line_u_response_\",\"type\":\"response\",\"communication\":\"no_line\"},{\"next\":null,\"id\":\"message_correction_u_response_\",\"type\":\"response\",\"communication\":\"correction\"}]}]}},{\"name\":\"LidarSensor\",\"messages\":[\"scan\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[\"current_distance\"],\"states\":[{\"name\":\"unsafe_distance\",\"initial\":true,\"transitions\":[{\"next\":\"safe_distance\",\"id\":\"component_LidarSensor_c_pXJJ894Z1WA33_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]},{\"name\":\"safe_distance\",\"initial\":false,\"transitions\":[{\"next\":\"unsafe_distance\",\"id\":\"component_LidarSensor_c_pDN8SUO5WSYCZ_\",\"type\":\"tau\"},{\"next\":null,\"id\":\"message_scan_u_response_\",\"type\":\"response\",\"communication\":\"scan\"}]}]}},{\"name\":\"EmergencyStop\",\"messages\":[\"stop\",\"continue\"],\"services\":[],\"actions\":[],\"behaviour\":{\"variables\":[],\"states\":[{\"name\":\"in_service\",\"initial\":true,\"transitions\":[{\"next\":\"stopped\",\"id\":\"message_stop_u_response_\",\"type\":\"response\",\"communication\":\"stop\"}]},{\"name\":\"stopped\",\"initial\":false,\"transitions\":[{\"next\":\"in_service\",\"id\":\"message_continue_u_response_\",\"type\":\"response\",\"communication\":\"continue\"}]}]}},{\"name\":\"TurtlebotPlatform\",\"messages\":[\"move\",\"halt\"],\"services\":[],\"actions\":[]}]}";
 		output << "}";
 		
 		auto msg = std_msgs::msg::String();
@@ -234,7 +234,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 2;
-		      controller_Event_ data_events[2] = { data_move_c_pTJDXN1OGHOSV_,data_halt_c_pUVNTUPAMV0KV_ };
+		      controller_Event_ data_events[2] = { data_move_c_pP6QY1HSQ0ZAN_,data_halt_c_pESFXPJW17J4C_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -244,7 +244,7 @@ private:
 		}
 		
 		int nOfControllableEvents = 4;
-		      controller_Event_ controllable_events[4] = { component_LidarSensor_c_pQHC1TW0JFBD8_,component_LidarSensor_c_pMC9INZ2RT4EM_,message_move_c_trigger_,message_halt_c_trigger_ };
+		      controller_Event_ controllable_events[4] = { component_LidarSensor_c_pXJJ894Z1WA33_,component_LidarSensor_c_pDN8SUO5WSYCZ_,message_move_c_trigger_,message_halt_c_trigger_ };
 		
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
