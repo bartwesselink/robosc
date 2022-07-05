@@ -43,7 +43,7 @@ class MarkedStateRuleTest {
 			}
 		".parse.assertError(
 			RobotSupervisoryControllerDSLPackage.Literals.AUTOMATON,
-			MarkedStateRule.NO_MARKED_STATE
+			MarkedStateRule.NOT_ALL_REACH_MARKED_STATE
 		)
 	}
 }
