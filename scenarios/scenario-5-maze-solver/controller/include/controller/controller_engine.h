@@ -11,10 +11,10 @@
  * Note that integer ranges are ignored in C.
  */
 enum Enumcontroller_ {
-    _controller_data_p4SNXF9MTRQWX,
-    _controller_data_p6XQ99ZAH3DNB,
-    _controller_data_pB4OUNV12MZEC,
-    _controller_data_pV2HDUFCVMIEN,
+    _controller_data_p0L2DOVIZA0HQ,
+    _controller_data_p37TDJ4O4Z9W2,
+    _controller_data_p56AAXCY6NDQE,
+    _controller_data_p6Z88MTB24NZY,
     _controller_in_service,
     _controller_no_wall_diag_right,
     _controller_no_wall_front,
@@ -46,16 +46,16 @@ enum controllerEventEnum_ {
     data_scan_diag_right_c_none_,        /**< Event data_scan_diag_right.c_none. */
     message_movement_c_trigger_,         /**< Event message_movement.c_trigger. */
     data_movement_c_none_,               /**< Event data_movement.c_none. */
-    data_movement_c_p6GUY3B2Y88AZ_,      /**< Event data_movement.c_p6GUY3B2Y88AZ. */
+    data_movement_c_pNVA8LDXZ1W47_,      /**< Event data_movement.c_pNVA8LDXZ1W47. */
     message_halt_c_trigger_,             /**< Event message_halt.c_trigger. */
     data_halt_c_none_,                   /**< Event data_halt.c_none. */
-    data_halt_c_p5UHK7UNFZPYT_,          /**< Event data_halt.c_p5UHK7UNFZPYT. */
+    data_halt_c_p16BE8S338R6N_,          /**< Event data_halt.c_p16BE8S338R6N. */
     message_turn_left_c_trigger_,        /**< Event message_turn_left.c_trigger. */
     data_turn_left_c_none_,              /**< Event data_turn_left.c_none. */
-    data_turn_left_c_pUKB85UT3KGEA_,     /**< Event data_turn_left.c_pUKB85UT3KGEA. */
+    data_turn_left_c_pE8ZDXWKF7DDQ_,     /**< Event data_turn_left.c_pE8ZDXWKF7DDQ. */
     message_turn_right_c_trigger_,       /**< Event message_turn_right.c_trigger. */
     data_turn_right_c_none_,             /**< Event data_turn_right.c_none. */
-    data_turn_right_c_pSTZACE0OI243_,    /**< Event data_turn_right.c_pSTZACE0OI243. */
+    data_turn_right_c_pA9IRG3XACGBX_,    /**< Event data_turn_right.c_pA9IRG3XACGBX. */
     message_rotate_done_u_response_,     /**< Event message_rotate_done.u_response. */
     data_rotate_done_c_none_,            /**< Event data_rotate_done.c_none. */
     message_stop_u_response_,            /**< Event message_stop.u_response. */

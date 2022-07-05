@@ -27,7 +27,7 @@ robot PersonFollowing {
         behaviour {
             variable distance: Distance
 
-            initial state sensing {
+            initial marked state sensing {
                 on response from scan do distance := value
             }
         }
@@ -47,7 +47,7 @@ robot PersonFollowing {
                                             goto detected
 
             initial state initializing {}
-            state detected {}
+            marked state detected {}
         }
     }
 

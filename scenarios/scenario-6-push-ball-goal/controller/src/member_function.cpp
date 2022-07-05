@@ -226,19 +226,19 @@ public:
 	void call_message_move() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_move_ == _controller_data_p3FWU5LJD83KP) {
+		if (data_move_ == _controller_data_pG91L42WDTXHW) {
 			value.linear.x = 0.2;
 			value.angular.z = (0.0 - code_BallDetector_current_correction) / 500;
 		} else 
-		if (data_move_ == _controller_data_pZQUQLRDM9OJ6) {
+		if (data_move_ == _controller_data_pEPMG0RA510TK) {
 			value.linear.x = 0.2;
 			value.angular.z = (code_BallDetector_current_correction) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pZQUXVJGJO0YV) {
+		if (data_move_ == _controller_data_pCAZ89YPHWXZQ) {
 			value.linear.x = 0.2;
 			value.angular.z = (0.0 - code_GoalDetector_current_correction) / 1000;
 		} else 
-		if (data_move_ == _controller_data_pWKTMPZDWUE17) {
+		if (data_move_ == _controller_data_pHT24JRO2029H) {
 			value.angular.z = 0.5;
 		}
 		
@@ -250,7 +250,7 @@ public:
 	void call_message_halt() {
 		auto value = geometry_msgs::msg::Twist();
 		
-		if (data_halt_ == _controller_data_pT6I8XRJ5MOT3) {
+		if (data_halt_ == _controller_data_p19ECF3KTP0U8) {
 			value.linear.x = 0.0;
 			value.angular.z = 0.0;
 		}
@@ -316,7 +316,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 5;
-		      controller_Event_ data_events[5] = { data_move_c_pNLRTW551QX6M_,data_move_c_pLQBN5IDMMNA0_,data_move_c_pZ6VVX7FHA9UC_,data_move_c_pHKVHWHN6EUM1_,data_halt_c_p7A4YL2QMRJC0_ };
+		      controller_Event_ data_events[5] = { data_move_c_p0MTC7HSVMD25_,data_move_c_pPLIRMHMV31U1_,data_move_c_pWKYXT98G57H5_,data_move_c_pYG2W44S9M0LS_,data_halt_c_p9DORKK07C1FW_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -331,7 +331,9 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]);
+			if (controller_EnginePerformEvent(controllable_events[i])) {
+				break;
+			}
 		}
 
 		this->emit_current_state();

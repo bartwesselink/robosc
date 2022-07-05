@@ -24,7 +24,7 @@ class UniqueStateNameRuleTest {
 			robot UnitTestRobot {
 				component Component1 {
 					behaviour {
-						initial state one {}
+						initial marked state one {}
 						state two {}
 					}
 				}
@@ -38,7 +38,7 @@ class UniqueStateNameRuleTest {
 			robot UnitTestRobot {
 				component Component1 {
 					behaviour {
-						initial state one {}
+						initial marked state one {}
 						state one {}
 					}
 				}

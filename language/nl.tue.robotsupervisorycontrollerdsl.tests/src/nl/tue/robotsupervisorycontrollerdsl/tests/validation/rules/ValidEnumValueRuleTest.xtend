@@ -29,7 +29,7 @@ class ValidEnumValueRuleTest {
 
 				component Component1 {
 					behaviour {
-						initial state unique {}
+						initial marked state unique {}
 					}
 				}
 			}
@@ -47,7 +47,7 @@ class ValidEnumValueRuleTest {
 
 				component Component1 {
 					behaviour {
-						initial state positive {}
+						initial marked state positive {}
 					}
 				}
 			}

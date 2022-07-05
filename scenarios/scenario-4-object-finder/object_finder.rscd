@@ -36,7 +36,7 @@ robot ObjectFinder {
 
     datatype enum ScannedObject from BoundingBoxes to {
         value.bounding_boxes[0].class_id = "stop sign" -> stop_sign
-        default -> no_object
+        default -> no_object_found
     }
 
     component LidarScanner {
@@ -50,7 +50,7 @@ robot ObjectFinder {
             variable right: DistanceRight
             variable has_front: boolean = false
 
-            initial state sensing {
+            initial marked state sensing {
                 on response from scan_front do front := value, has_front := true
                 on response from scan_left do left := value
                 on response from scan_right do right := value
@@ -64,7 +64,7 @@ robot ObjectFinder {
         outgoing message rotate_done with identifier: "/rotate_done", type: none
 
         behaviour {
-            initial state awaiting_command {
+            initial marked state awaiting_command {
                 on request to rotate_left goto executing
                 on request to rotate_right goto executing
             }
@@ -86,7 +86,7 @@ robot ObjectFinder {
             on response from object_count do scanned_object_count := value.count
             on response from object_scan do scanned_object := value
 
-            initial state no_object {
+            initial marked state no_object {
                 transition if scanned_object_count > 0 and scanned_object = stop_sign goto object_found
             }
 

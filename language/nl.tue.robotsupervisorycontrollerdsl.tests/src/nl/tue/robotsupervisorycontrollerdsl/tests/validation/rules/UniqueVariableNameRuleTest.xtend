@@ -26,7 +26,7 @@ class UniqueVariableNameRuleTest {
 					behaviour {
 						variable one: boolean = false
 						variable two: boolean = false
-						initial state one {}
+						initial marked state one {}
 					}
 				}
 			}
@@ -42,7 +42,7 @@ class UniqueVariableNameRuleTest {
 						variable one: boolean = false
 						variable one: boolean = false
 
-						initial state one {}
+						initial marked state one {}
 					}
 				}
 			}

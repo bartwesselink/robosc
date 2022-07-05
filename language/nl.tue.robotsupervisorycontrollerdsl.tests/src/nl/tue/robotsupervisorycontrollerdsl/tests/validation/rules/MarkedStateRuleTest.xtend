@@ -10,11 +10,11 @@ import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Base
 import nl.tue.robotsupervisorycontrollerdsl.tests.RobotSupervisoryControllerDSLInjectorProvider
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotSupervisoryControllerDSLPackage
-import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleInitialStateRule
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.MarkedStateRule
 
 @ExtendWith(InjectionExtension)
 @InjectWith(RobotSupervisoryControllerDSLInjectorProvider)
-class SingleInitialStateRuleTest {
+class MarkedStateRuleTest {
 	@Inject extension ParseHelper<Base>
 	@Inject extension ValidationTestHelper
 
@@ -32,35 +32,18 @@ class SingleInitialStateRuleTest {
 	}
 
 	@Test
-	def void checkErrorMultipleInitialStates() {
+	def void checkNoMarkedState() {
 		"
 			robot UnitTestRobot {
 				component Component {
 					behaviour {
-						initial marked state idle {}
-						initial marked state start {}
+						initial state idle {}
 					}
 				}
 			}
 		".parse.assertError(
 			RobotSupervisoryControllerDSLPackage.Literals.AUTOMATON,
-			SingleInitialStateRule.MULTIPLE_INITIAL_STATES
-		)
-	}
-
-	@Test
-	def void checkErrorNoInitialState() {
-		"
-			robot UnitTestRobot {
-				component Component {
-					behaviour {
-						marked state test {}
-					}
-				}
-			}
-		".parse.assertError(
-			RobotSupervisoryControllerDSLPackage.Literals.AUTOMATON,
-			SingleInitialStateRule.NO_INITIAL_STATE
+			MarkedStateRule.NO_MARKED_STATE
 		)
 	}
 }

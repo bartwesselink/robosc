@@ -130,7 +130,7 @@ Transition:
 	ResultTransition | TauTransition;
 
 State:
-	{State} (initial?='initial')? 'state' name=ID '{'
+	{State} (initial?='initial')? (marked?='marked')? 'state' name=ID '{'
 	(transitions+=Transition)*
 	'}';
 

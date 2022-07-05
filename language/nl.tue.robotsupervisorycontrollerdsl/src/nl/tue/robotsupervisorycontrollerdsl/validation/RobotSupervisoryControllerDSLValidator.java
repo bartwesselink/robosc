@@ -6,6 +6,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.CorrectDataProvisio
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.CorrectResultTypeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.IntegerRangeRequiredRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.InterfaceLinkRequiredRule;
+import nl.tue.robotsupervisorycontrollerdsl.validation.rules.MarkedStateRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOnMessagesToNodeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.NoAssignmentOutsideScopeRule;
 import nl.tue.robotsupervisorycontrollerdsl.validation.rules.SingleComponentBehaviourRule;
@@ -42,6 +43,7 @@ import nl.tue.robotsupervisorycontrollerdsl.validation.rules.ValidEnumValueRule;
 		UniquePropertyNameRule.class,
 		UniqueVariableNameRule.class,
 		ValidEnumValueRule.class,
+		MarkedStateRule.class,
 })
 public class RobotSupervisoryControllerDSLValidator extends AbstractRobotSupervisoryControllerDSLValidator {
 }

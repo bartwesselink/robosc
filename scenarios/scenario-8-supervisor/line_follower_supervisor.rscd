@@ -20,7 +20,7 @@ robot LineFollowerSupervised {
         behaviour {
             variable current_correction: double = 0.0
 
-            initial state no_line {
+            initial marked state no_line {
                 on response from correction goto line_found
             }
 
@@ -48,7 +48,7 @@ robot LineFollowerSupervised {
 
             on response from scan do current_distance := value            
 
-            initial state unsafe_distance {
+            initial marked state unsafe_distance {
                 transition if current_distance = safe goto safe_distance
             }
 

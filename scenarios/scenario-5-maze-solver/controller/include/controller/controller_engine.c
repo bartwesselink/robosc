@@ -43,16 +43,16 @@ const char *controller_event_names[] = {
     "data_scan_diag_right.c_none",        /**< Event data_scan_diag_right.c_none. */
     "message_movement.c_trigger",         /**< Event message_movement.c_trigger. */
     "data_movement.c_none",               /**< Event data_movement.c_none. */
-    "data_movement.c_p6GUY3B2Y88AZ",      /**< Event data_movement.c_p6GUY3B2Y88AZ. */
+    "data_movement.c_pNVA8LDXZ1W47",      /**< Event data_movement.c_pNVA8LDXZ1W47. */
     "message_halt.c_trigger",             /**< Event message_halt.c_trigger. */
     "data_halt.c_none",                   /**< Event data_halt.c_none. */
-    "data_halt.c_p5UHK7UNFZPYT",          /**< Event data_halt.c_p5UHK7UNFZPYT. */
+    "data_halt.c_p16BE8S338R6N",          /**< Event data_halt.c_p16BE8S338R6N. */
     "message_turn_left.c_trigger",        /**< Event message_turn_left.c_trigger. */
     "data_turn_left.c_none",              /**< Event data_turn_left.c_none. */
-    "data_turn_left.c_pUKB85UT3KGEA",     /**< Event data_turn_left.c_pUKB85UT3KGEA. */
+    "data_turn_left.c_pE8ZDXWKF7DDQ",     /**< Event data_turn_left.c_pE8ZDXWKF7DDQ. */
     "message_turn_right.c_trigger",       /**< Event message_turn_right.c_trigger. */
     "data_turn_right.c_none",             /**< Event data_turn_right.c_none. */
-    "data_turn_right.c_pSTZACE0OI243",    /**< Event data_turn_right.c_pSTZACE0OI243. */
+    "data_turn_right.c_pA9IRG3XACGBX",    /**< Event data_turn_right.c_pA9IRG3XACGBX. */
     "message_rotate_done.u_response",     /**< Event message_rotate_done.u_response. */
     "data_rotate_done.c_none",            /**< Event data_rotate_done.c_none. */
     "message_stop.u_response",            /**< Event message_stop.u_response. */
@@ -63,10 +63,10 @@ const char *controller_event_names[] = {
 
 /** Enumeration names. */
 const char *enum_names[] = {
-    "data_p4SNXF9MTRQWX",
-    "data_p6XQ99ZAH3DNB",
-    "data_pB4OUNV12MZEC",
-    "data_pV2HDUFCVMIEN",
+    "data_p0L2DOVIZA0HQ",
+    "data_p37TDJ4O4Z9W2",
+    "data_p56AAXCY6NDQE",
+    "data_p6Z88MTB24NZY",
     "in_service",
     "no_wall_diag_right",
     "no_wall_front",
@@ -159,26 +159,26 @@ static BoolType execEvent1(void) {
 }
 
 /**
- * Execute code for event "data_halt.c_p5UHK7UNFZPYT".
+ * Execute code for event "data_halt.c_p16BE8S338R6N".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent2(void) {
-    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p6XQ99ZAH3DNB));
+    BoolType guard = ((data_halt_) == (_controller_none)) || ((data_halt_) == (_controller_data_p6Z88MTB24NZY));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p5UHK7UNFZPYT_, TRUE);
+        controller_InfoEvent(data_halt_c_p16BE8S338R6N_, TRUE);
     #endif
 
     if ((data_halt_) == (_controller_none)) {
-        data_halt_ = _controller_data_p6XQ99ZAH3DNB;
-    } else if ((data_halt_) == (_controller_data_p6XQ99ZAH3DNB)) {
-        data_halt_ = _controller_data_p6XQ99ZAH3DNB;
+        data_halt_ = _controller_data_p6Z88MTB24NZY;
+    } else if ((data_halt_) == (_controller_data_p6Z88MTB24NZY)) {
+        data_halt_ = _controller_data_p6Z88MTB24NZY;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_halt_c_p5UHK7UNFZPYT_, FALSE);
+        controller_InfoEvent(data_halt_c_p16BE8S338R6N_, FALSE);
     #endif
     return TRUE;
 }
@@ -209,26 +209,26 @@ static BoolType execEvent3(void) {
 }
 
 /**
- * Execute code for event "data_movement.c_p6GUY3B2Y88AZ".
+ * Execute code for event "data_movement.c_pNVA8LDXZ1W47".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent4(void) {
-    BoolType guard = ((data_movement_) == (_controller_none)) || ((data_movement_) == (_controller_data_pV2HDUFCVMIEN));
+    BoolType guard = ((data_movement_) == (_controller_none)) || ((data_movement_) == (_controller_data_p56AAXCY6NDQE));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_movement_c_p6GUY3B2Y88AZ_, TRUE);
+        controller_InfoEvent(data_movement_c_pNVA8LDXZ1W47_, TRUE);
     #endif
 
     if ((data_movement_) == (_controller_none)) {
-        data_movement_ = _controller_data_pV2HDUFCVMIEN;
-    } else if ((data_movement_) == (_controller_data_pV2HDUFCVMIEN)) {
-        data_movement_ = _controller_data_pV2HDUFCVMIEN;
+        data_movement_ = _controller_data_p56AAXCY6NDQE;
+    } else if ((data_movement_) == (_controller_data_p56AAXCY6NDQE)) {
+        data_movement_ = _controller_data_p56AAXCY6NDQE;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_movement_c_p6GUY3B2Y88AZ_, FALSE);
+        controller_InfoEvent(data_movement_c_pNVA8LDXZ1W47_, FALSE);
     #endif
     return TRUE;
 }
@@ -339,26 +339,26 @@ static BoolType execEvent10(void) {
 }
 
 /**
- * Execute code for event "data_turn_left.c_pUKB85UT3KGEA".
+ * Execute code for event "data_turn_left.c_pE8ZDXWKF7DDQ".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent11(void) {
-    BoolType guard = ((data_turn_left_) == (_controller_none)) || ((data_turn_left_) == (_controller_data_p4SNXF9MTRQWX));
+    BoolType guard = ((data_turn_left_) == (_controller_none)) || ((data_turn_left_) == (_controller_data_p37TDJ4O4Z9W2));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_turn_left_c_pUKB85UT3KGEA_, TRUE);
+        controller_InfoEvent(data_turn_left_c_pE8ZDXWKF7DDQ_, TRUE);
     #endif
 
     if ((data_turn_left_) == (_controller_none)) {
-        data_turn_left_ = _controller_data_p4SNXF9MTRQWX;
-    } else if ((data_turn_left_) == (_controller_data_p4SNXF9MTRQWX)) {
-        data_turn_left_ = _controller_data_p4SNXF9MTRQWX;
+        data_turn_left_ = _controller_data_p37TDJ4O4Z9W2;
+    } else if ((data_turn_left_) == (_controller_data_p37TDJ4O4Z9W2)) {
+        data_turn_left_ = _controller_data_p37TDJ4O4Z9W2;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_turn_left_c_pUKB85UT3KGEA_, FALSE);
+        controller_InfoEvent(data_turn_left_c_pE8ZDXWKF7DDQ_, FALSE);
     #endif
     return TRUE;
 }
@@ -389,26 +389,26 @@ static BoolType execEvent12(void) {
 }
 
 /**
- * Execute code for event "data_turn_right.c_pSTZACE0OI243".
+ * Execute code for event "data_turn_right.c_pA9IRG3XACGBX".
  *
  * @return Whether the event was performed.
  */
 static BoolType execEvent13(void) {
-    BoolType guard = ((data_turn_right_) == (_controller_none)) || ((data_turn_right_) == (_controller_data_pB4OUNV12MZEC));
+    BoolType guard = ((data_turn_right_) == (_controller_none)) || ((data_turn_right_) == (_controller_data_p0L2DOVIZA0HQ));
     if (!guard) return FALSE;
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_turn_right_c_pSTZACE0OI243_, TRUE);
+        controller_InfoEvent(data_turn_right_c_pA9IRG3XACGBX_, TRUE);
     #endif
 
     if ((data_turn_right_) == (_controller_none)) {
-        data_turn_right_ = _controller_data_pB4OUNV12MZEC;
-    } else if ((data_turn_right_) == (_controller_data_pB4OUNV12MZEC)) {
-        data_turn_right_ = _controller_data_pB4OUNV12MZEC;
+        data_turn_right_ = _controller_data_p0L2DOVIZA0HQ;
+    } else if ((data_turn_right_) == (_controller_data_p0L2DOVIZA0HQ)) {
+        data_turn_right_ = _controller_data_p0L2DOVIZA0HQ;
     }
 
     #if EVENT_OUTPUT
-        controller_InfoEvent(data_turn_right_c_pSTZACE0OI243_, FALSE);
+        controller_InfoEvent(data_turn_right_c_pA9IRG3XACGBX_, FALSE);
     #endif
     return TRUE;
 }
@@ -676,18 +676,18 @@ static void PerformEvents(void) {
 
         if (execEvent0()) continue;  /* (Try to) perform event "data_continue.c_none". */
         if (execEvent1()) continue;  /* (Try to) perform event "data_halt.c_none". */
-        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_p5UHK7UNFZPYT". */
+        if (execEvent2()) continue;  /* (Try to) perform event "data_halt.c_p16BE8S338R6N". */
         if (execEvent3()) continue;  /* (Try to) perform event "data_movement.c_none". */
-        if (execEvent4()) continue;  /* (Try to) perform event "data_movement.c_p6GUY3B2Y88AZ". */
+        if (execEvent4()) continue;  /* (Try to) perform event "data_movement.c_pNVA8LDXZ1W47". */
         if (execEvent5()) continue;  /* (Try to) perform event "data_rotate_done.c_none". */
         if (execEvent6()) continue;  /* (Try to) perform event "data_scan_diag_right.c_none". */
         if (execEvent7()) continue;  /* (Try to) perform event "data_scan_front.c_none". */
         if (execEvent8()) continue;  /* (Try to) perform event "data_scan_right.c_none". */
         if (execEvent9()) continue;  /* (Try to) perform event "data_stop.c_none". */
         if (execEvent10()) continue;  /* (Try to) perform event "data_turn_left.c_none". */
-        if (execEvent11()) continue;  /* (Try to) perform event "data_turn_left.c_pUKB85UT3KGEA". */
+        if (execEvent11()) continue;  /* (Try to) perform event "data_turn_left.c_pE8ZDXWKF7DDQ". */
         if (execEvent12()) continue;  /* (Try to) perform event "data_turn_right.c_none". */
-        if (execEvent13()) continue;  /* (Try to) perform event "data_turn_right.c_pSTZACE0OI243". */
+        if (execEvent13()) continue;  /* (Try to) perform event "data_turn_right.c_pA9IRG3XACGBX". */
         if (execEvent15()) continue;  /* (Try to) perform event "message_halt.c_trigger". */
         if (execEvent16()) continue;  /* (Try to) perform event "message_movement.c_trigger". */
         if (execEvent22()) continue;  /* (Try to) perform event "message_turn_left.c_trigger". */
@@ -763,11 +763,11 @@ BoolType controller_EnginePerformEvent(controller_Event_ event) {
             return execEvent0();
         case data_halt_c_none_:
             return execEvent1();
-        case data_halt_c_p5UHK7UNFZPYT_:
+        case data_halt_c_p16BE8S338R6N_:
             return execEvent2();
         case data_movement_c_none_:
             return execEvent3();
-        case data_movement_c_p6GUY3B2Y88AZ_:
+        case data_movement_c_pNVA8LDXZ1W47_:
             return execEvent4();
         case data_rotate_done_c_none_:
             return execEvent5();
@@ -781,11 +781,11 @@ BoolType controller_EnginePerformEvent(controller_Event_ event) {
             return execEvent9();
         case data_turn_left_c_none_:
             return execEvent10();
-        case data_turn_left_c_pUKB85UT3KGEA_:
+        case data_turn_left_c_pE8ZDXWKF7DDQ_:
             return execEvent11();
         case data_turn_right_c_none_:
             return execEvent12();
-        case data_turn_right_c_pSTZACE0OI243_:
+        case data_turn_right_c_pA9IRG3XACGBX_:
             return execEvent13();
         case message_continue_u_response_:
             return execEvent14();

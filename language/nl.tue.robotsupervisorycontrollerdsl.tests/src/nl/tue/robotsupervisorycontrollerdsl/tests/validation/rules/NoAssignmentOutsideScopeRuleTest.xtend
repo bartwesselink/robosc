@@ -28,7 +28,7 @@ class NoAssignmentOutsideScopeRuleTest {
 					behaviour {
 						variable result: boolean = false
 
-						initial state idle {
+						initial marked state idle {
 							on response from test_message_one do result := value		
 						}
 					}
@@ -40,7 +40,7 @@ class NoAssignmentOutsideScopeRuleTest {
 					behaviour {
 						variable result: boolean = false
 
-						initial state idle {
+						initial marked state idle {
 							on response from test_message_two do result := value		
 						}
 					}
@@ -59,7 +59,7 @@ class NoAssignmentOutsideScopeRuleTest {
 					behaviour {
 						variable result: boolean = false
 
-						initial state idle {
+						initial marked state idle {
 							on response from test_message_one do Component2.result := value		
 						}
 					}
@@ -71,7 +71,7 @@ class NoAssignmentOutsideScopeRuleTest {
 					behaviour {
 						variable result: boolean = false
 
-						initial state idle {
+						initial marked state idle {
 							on response from test_message_two do Component1.result := value		
 						}
 					}

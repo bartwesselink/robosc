@@ -36,7 +36,7 @@ class UsedDataTypeRuleTest {
 						variable result_string: string = \"\"
 						variable result_double: double = 0.0
 
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}
@@ -54,7 +54,7 @@ class UsedDataTypeRuleTest {
 					behaviour {
 						variable result: boolean
 
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}
@@ -75,7 +75,7 @@ class UsedDataTypeRuleTest {
 					behaviour {
 						variable result: array(boolean)
 
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}
@@ -98,7 +98,7 @@ class UsedDataTypeRuleTest {
 						variable result_string: string = \"\"
 						variable result_double: double = 0.0
 
-						initial state idle {
+						initial marked state idle {
 							transition if result_string = \"\" goto idle
 						}
 					}
@@ -123,7 +123,7 @@ class UsedDataTypeRuleTest {
 						variable result_string: string = \"\"
 						variable result_double: double = 0.0
 
-						initial state idle {
+						initial marked state idle {
 							transition if result_double > 0.0 goto idle
 						}
 					}

@@ -47,7 +47,7 @@ robot ObstacleNavigation {
                 on response from initial_pose goto awaiting_point
             }
 
-            state awaiting_point {
+            marked state awaiting_point {
 			    on response from point do current_x := value.point.x, current_y := value.point.y, current_z := value.point.z goto has_point
             }
 

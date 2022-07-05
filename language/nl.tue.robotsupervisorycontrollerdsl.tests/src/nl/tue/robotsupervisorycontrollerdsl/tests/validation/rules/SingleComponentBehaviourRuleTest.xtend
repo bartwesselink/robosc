@@ -24,7 +24,7 @@ class SingleComponentBehaviourRuleTest {
 			robot UnitTestRobot {
 				component Component {
 					behaviour {
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}
@@ -37,11 +37,11 @@ class SingleComponentBehaviourRuleTest {
 			robot UnitTestRobot {
 				component Component {
 					behaviour {
-						initial state idle {}
+						initial marked state idle {}
 					}
 
 					behaviour {
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}

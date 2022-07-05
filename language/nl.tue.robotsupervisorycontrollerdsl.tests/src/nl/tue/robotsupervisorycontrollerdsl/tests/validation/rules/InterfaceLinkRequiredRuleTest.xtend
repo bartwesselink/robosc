@@ -32,7 +32,7 @@ class InterfaceLinkRequiredRuleTest {
 					outgoing message distance with type: Complex links test
 
 					behaviour {
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}
@@ -51,7 +51,7 @@ class InterfaceLinkRequiredRuleTest {
 					outgoing message distance with type: Complex
 
 					behaviour {
-						initial state idle {}
+						initial marked state idle {}
 					}
 				}
 			}

@@ -16,7 +16,7 @@ robot PushBallGoal {
         behaviour {
             variable distance: Distance
 
-            initial state sensing {
+            initial marked state sensing {
                 on response from scan do distance := value
             }
         }
@@ -44,12 +44,12 @@ robot PushBallGoal {
                 on response from ball_front_check goto ball_in_front
             }
 
-            state no_ball {
+            marked state no_ball {
                 on response from no_ball goto no_ball
                 on response from ball_correction goto ball_found
             }
 
-            state ball_in_front {
+            marked state ball_in_front {
                 on response from needs_ajustment goto adjusting
             }
 
@@ -76,7 +76,7 @@ robot PushBallGoal {
                 on response from goal_correction do current_correction := value
             }
 
-            state no_goal {
+            marked state no_goal {
                 on response from goal_correction goto goal_found
             }
         }

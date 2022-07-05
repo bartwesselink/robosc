@@ -46,7 +46,7 @@ robot MazeSolver {
             on response from scan_front do front := value
             on response from scan_diag_right do diag_right := value
 
-            initial state sensing {}
+            initial marked state sensing {}
         }
     }
 
@@ -60,7 +60,7 @@ robot MazeSolver {
         outgoing message rotate_done with identifier: "/rotate_done", type: none
 
         behaviour {
-            initial state ready {
+            initial marked state ready {
                 on request to turn_left goto turning
                 on request to turn_right goto turning
             }

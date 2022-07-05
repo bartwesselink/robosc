@@ -29,7 +29,7 @@ class CorrectResultTypeRuleTest {
 					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
-						initial state idle {
+						initial marked state idle {
 							on request to test_message		
 							on request to test_service	
 							on response from test_service		
@@ -51,7 +51,7 @@ class CorrectResultTypeRuleTest {
 					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
-						initial state idle {
+						initial marked state idle {
 							on feedback from test_service		
 						}
 					}
@@ -74,7 +74,7 @@ class CorrectResultTypeRuleTest {
 					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
-						initial state idle {
+						initial marked state idle {
 							on request to test_message	
 						}	
 					}
@@ -97,7 +97,7 @@ class CorrectResultTypeRuleTest {
 					service test_service with request: boolean, response: boolean links unit
 
 					behaviour {
-						initial state idle {
+						initial marked state idle {
 							on response to test_message		
 						}
 					}

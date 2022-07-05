@@ -107,7 +107,7 @@ class AutomatonGenerator {
 
 	private def compile(State state, Robot robot, Automaton automaton) '''
 		location «state.name»:
-			«IF state.initial»initial;«ENDIF» marked;
+			«IF state.initial»initial;«ENDIF» «IF state.marked»marked;«ENDIF»
 					
 			«robot.allowUncontrollableEvents(automaton, state)»
 			

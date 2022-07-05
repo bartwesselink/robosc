@@ -29,7 +29,7 @@ class IntegerRangeRequiredRuleTest {
 					behaviour {
 						variable current_distance: integer(0..20) = 0
 
-						initial state idle {
+						initial marked state idle {
 							on response from distance do current_distance := value		
 						}
 					}
@@ -50,7 +50,7 @@ class IntegerRangeRequiredRuleTest {
 					behaviour {
 						variable current_distance: integer = 0
 
-						initial state idle {
+						initial marked state idle {
 							on response from distance do current_distance := value		
 						}
 					}
@@ -74,7 +74,7 @@ class IntegerRangeRequiredRuleTest {
 					behaviour {
 						variable current_distance: integer(0..20) = 0
 
-						initial state idle {
+						initial marked state idle {
 							on response from distance do current_distance := value		
 						}
 					}
@@ -102,7 +102,7 @@ class IntegerRangeRequiredRuleTest {
 					behaviour {
 						variable current_distance: integer(0..20) = 0
 
-						initial state idle {
+						initial marked state idle {
 							on response from distance do current_distance := value.distance	
 						}
 					}

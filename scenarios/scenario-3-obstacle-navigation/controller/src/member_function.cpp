@@ -149,7 +149,7 @@ public:
 		}
 		auto goal_msg = nav2_msgs::action::NavigateToPose::Goal();
 	
-		if (data_navigate_ == _controller_data_p93Y3DT3CEL5Z) {
+		if (data_navigate_ == _controller_data_pO0APPT5EVPIR) {
 			goal_msg.pose.pose.position.x = code_Nav2_current_x;
 			goal_msg.pose.pose.position.y = code_Nav2_current_y;
 			goal_msg.pose.pose.position.z = code_Nav2_current_z;
@@ -230,7 +230,7 @@ private:
 	// Heart of the controller
 	void tick() {
 		int nOfDataEvents = 1;
-		      controller_Event_ data_events[1] = { data_navigate_c_pFLTS95EOYOZG_ };
+		      controller_Event_ data_events[1] = { data_navigate_c_p72TI1CQTP6QY_ };
 		
 		// Always execute data transitions that are possible
 		shuffle_events(data_events, nOfDataEvents);
@@ -245,7 +245,9 @@ private:
 		shuffle_events(controllable_events, nOfControllableEvents);
 		
 		for (int i = 0; i < nOfControllableEvents; i++) {
-			controller_EnginePerformEvent(controllable_events[i]);
+			if (controller_EnginePerformEvent(controllable_events[i])) {
+				break;
+			}
 		}
 
 		this->emit_current_state();

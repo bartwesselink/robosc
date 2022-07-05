@@ -8,12 +8,12 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
 	remappings = [
-		("/correction", "/correction_pD03NAUQLGW9U"),
-		("/no_line", "/no_line_pPWS7VOXLHSV1"),
-		("/scan", "/scan_pLGJ50J0RL33J"),
-		("/simple_movement", "/simple_movement_pNGAJWRO2BE69"),
-		("/stop", "/stop_pO55LCZMBJI3R"),
-		("/continue", "/continue_pE153PVY940FM"),
+		("/correction", "/correction_p7PRNQJ53OH1G"),
+		("/no_line", "/no_line_pNTO0V7A8NW2W"),
+		("/scan", "/scan_pV4REPE6TL8AC"),
+		("/simple_movement", "/simple_movement_p3KAN9HMKYC27"),
+		("/stop", "/stop_pS5SS07H3L3YR"),
+		("/continue", "/continue_p0GQQSL4MR92X"),
 	]
 
 	return LaunchDescription([

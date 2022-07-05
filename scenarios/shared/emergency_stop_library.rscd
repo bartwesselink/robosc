@@ -4,7 +4,7 @@ library EmergencyStopLibrary {
         outgoing message continue with identifier: "/continue", type: none
 
         behaviour {
-            initial state in_service {
+            initial marked state in_service {
                 on response from stop goto stopped
             }
 

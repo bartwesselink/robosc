@@ -28,7 +28,7 @@ class NoAssignmentOnMessagesToNodeRuleTest {
 					behaviour {
 						variable result: boolean = false
 
-						initial state idle {
+						initial marked state idle {
 							on response from test_message do result := value		
 						}
 					}
@@ -47,7 +47,7 @@ class NoAssignmentOnMessagesToNodeRuleTest {
 					behaviour {
 						variable result: boolean = false
 
-						initial state idle {
+						initial marked state idle {
 							on request to test_message do result := value		
 						}
 					}
