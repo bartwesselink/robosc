@@ -35,7 +35,7 @@ public class MarkedStateRule extends AbstractValidationRule {
 			for (nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State reachable : reachableStates) { 
 				List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> seen = new ArrayList<>();
 
-				if (!this.hasReachableMarkedState(reachable, seen)) {
+				if (!this.hasReachableMarkedState(entity, reachable, seen)) {
 					error("The automaton has reachable states that can not reach a marked state.",
 							RobotSupervisoryControllerDSLPackage.Literals.AUTOMATON__DEFINITIONS,
 							NOT_ALL_REACH_MARKED_STATE);
@@ -78,6 +78,7 @@ public class MarkedStateRule extends AbstractValidationRule {
 	}
 	
 	private boolean hasReachableMarkedState(
+			Automaton automaton,
 			nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State current,
 			List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> seen
 		) {
@@ -93,6 +94,17 @@ public class MarkedStateRule extends AbstractValidationRule {
 				.stream()
 				.map(it -> it.getState())
 				.collect(Collectors.toList());
+
+		// Also use global transitions
+		stateChanges.addAll(
+				automaton.getDefinitions()
+				.stream()
+				.filter(it -> it instanceof Transition)
+				.map(it -> (Transition) it)
+				.filter(it -> it.getStateChange() != null)
+				.map(it -> it.getStateChange().getState())
+				.collect(Collectors.toList())
+			);
 		
 		for (nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State otherState : stateChanges) {
 			if (seen.contains(otherState)) {
@@ -101,7 +113,7 @@ public class MarkedStateRule extends AbstractValidationRule {
 			
 			List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> copy = new ArrayList<>(seen);
 			
-			if (this.hasReachableMarkedState(otherState, copy)) {
+			if (this.hasReachableMarkedState(automaton, otherState, copy)) {
 				return true;
 			}
 		}
