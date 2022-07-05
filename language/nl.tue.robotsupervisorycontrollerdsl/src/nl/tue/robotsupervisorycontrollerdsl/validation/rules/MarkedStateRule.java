@@ -9,6 +9,7 @@ import org.eclipse.xtext.validation.Check;
 import nl.tue.robotsupervisorycontrollerdsl.generator.common.util.ModelHelper;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Automaton;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.RobotSupervisoryControllerDSLPackage;
+import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.Transition;
 import nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.TransitionStateChange;
 import nl.tue.robotsupervisorycontrollerdsl.validation.common.AbstractValidationRule;
 
@@ -29,7 +30,7 @@ public class MarkedStateRule extends AbstractValidationRule {
 		
 		if (initialStates.size() == 1) {			
 			List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> reachableStates = new ArrayList<>();
-			this.fillReachableStates(initialStates.get(0), reachableStates);
+			this.fillReachableStates(entity, initialStates.get(0), reachableStates);
 			
 			for (nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State reachable : reachableStates) { 
 				List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> seen = new ArrayList<>();
@@ -44,9 +45,11 @@ public class MarkedStateRule extends AbstractValidationRule {
 	}
 	
 	private void fillReachableStates(
+			Automaton automaton,
 			nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State current,
 			List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> result
 		) {
+		result.add(current);
 		
 		List<nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State> stateChanges =
 				ModelHelper.findChildren(current, TransitionStateChange.class)
@@ -54,10 +57,21 @@ public class MarkedStateRule extends AbstractValidationRule {
 				.map(it -> it.getState())
 				.collect(Collectors.toList());
 		
+		// Also use global transitions
+		stateChanges.addAll(
+				automaton.getDefinitions()
+				.stream()
+				.filter(it -> it instanceof Transition)
+				.map(it -> (Transition) it)
+				.filter(it -> it.getStateChange() != null)
+				.map(it -> it.getStateChange().getState())
+				.collect(Collectors.toList())
+			);
+		
 		for (nl.tue.robotsupervisorycontrollerdsl.robotSupervisoryControllerDSL.State otherState : stateChanges) {
 			if (!result.contains(otherState)) {
 				result.add(otherState);
-				this.fillReachableStates(otherState, result);
+				this.fillReachableStates(automaton, otherState, result);
 			}
 
 		}
