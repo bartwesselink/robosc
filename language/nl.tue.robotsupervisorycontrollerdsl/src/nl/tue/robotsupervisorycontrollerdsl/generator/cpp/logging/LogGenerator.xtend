@@ -47,7 +47,7 @@ class LogGenerator {
 	}
 	
 	void write_to_incoming_log(std::string value) {
-	   logging_out_file << "[" << logging_time_human() << "] "<< value << std::endl;
+	   logging_in_file << "[" << logging_time_human() << "] "<< value << std::endl;
 	}
 		
 	void write_to_outgoing_log(std::string value) {
