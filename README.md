@@ -6,3 +6,6 @@ Currently, the DSL supports the generation of controllers for:
 
 * ROS1
 * ROS2
+
+## Video
+[Link to a video of a line follower and maze solver running with RoboSC](scenarios/scenarios.mp4)
