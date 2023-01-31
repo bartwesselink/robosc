@@ -1,0 +1,25 @@
+<app-slide>
+  <app-title label="CIF"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Compositional Interchange Format
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Developed at <span class="emphasize">TU/e</span></app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="3">
+        Specification of automata for
+        <app-list>
+          <app-list-item [current]="step" [step]="4">Discrete event systems</app-list-item>
+          <app-list-item [current]="step" [step]="5">Timed systems</app-list-item>
+          <app-list-item [current]="step" [step]="5">Hybrid systems</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="6">
+        Support for <span class="emphasize">supervisory controller synthesis</span>
+      </app-list-item>
+    </app-list>
+  </app-two-column-layout>
+</app-slide>

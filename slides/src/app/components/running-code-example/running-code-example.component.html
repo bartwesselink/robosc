@@ -1,0 +1,10 @@
+<div class="overlay" [class.active]="current >= start && current <= end"></div>
+<div class="code" [class.active]="current >= start && current <= end">
+  <app-title *ngIf="text" label="Example" [small]="true"></app-title>
+
+  <div class="paragraph" *ngIf="text">
+    <strong>Scenario:</strong> The robot should be able to follow a black line, and stop as soon as something is in front of it.
+  </div>
+
+  <app-code [code]="code" [current]="current"></app-code>
+</div>

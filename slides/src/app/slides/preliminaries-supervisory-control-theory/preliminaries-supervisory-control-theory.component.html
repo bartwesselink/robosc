@@ -1,0 +1,57 @@
+<app-slide>
+  <app-title label="Supervisory Control Theory"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">By Ramadge and Woham <app-citation-reference [citation]="ramadge"></app-citation-reference></app-list-item>
+      <app-list-item [current]="step" [step]="2">
+        <span class="emphasize">Restrict</span> behaviour of discrete event system based on specifications
+      </app-list-item>
+      <app-list-item [current]="step" [step]="3">Model <span class="emphasize">plants</span> with automata</app-list-item>
+      <app-list-item [current]="step" [step]="4"><span class="emphasize">Controllable</span> and <span class="emphasize">uncontrollable</span> events</app-list-item>
+      <app-list-item [current]="step" [step]="5">Specify <span class="emphasize">requirements</span></app-list-item>
+      <app-list-item [current]="step" [step]="6">Synthesize supervisory controller</app-list-item>
+    </app-list>
+    <app-figure caption="Example of two plants and requirements in Supervisory Control Theory." [offset]="0" [current]="step" [step]="3">
+      <svg width="500" viewBox="0 0 560 688" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g transform="translate(15)"><circle stroke="#979797" stroke-width="4" cx="60.5" cy="157.5" r="58.5"/><circle stroke="#979797" stroke-width="4" cx="60.5" cy="157.5" r="58.5"/><circle stroke="#979797" stroke-width="4" cx="440.5" cy="157.5" r="58.5"/><circle stroke="#979797" stroke-width="4" cx="60.5" cy="157.5" r="45.5"/><path  class="opacity-transition" [class.opacity-active]="step >= 4" d="m374.214 140.88 7.957 16.543 1.156 2.403-2.654-.26-18.27-1.79.293-2.986 15.615 1.53-6.8-14.14 2.703-1.3Zm-245.91 9.591 1.699 2.472a322.246 322.246 0 0 0-6.493 4.583l-1.623 1.183-1.774-2.418c2.73-2.003 5.46-3.943 8.19-5.82Zm235.53-5.87c1.198.763 2.396 1.539 3.607 2.335l1.215.804 3.534 2.47-1.718 2.46-3.506-2.451c-1.054-.7-2.109-1.392-3.163-2.074l-1.582-1.015 1.613-2.53Zm-218.599-4.961 1.529 2.582a282.714 282.714 0 0 0-6.777 4.142l-1.694 1.076-1.618-2.526a287.558 287.558 0 0 1 8.56-5.274Zm201.308-5.22a267.205 267.205 0 0 1 7.006 3.922l1.751 1.024-1.523 2.584a267.587 267.587 0 0 0-6.927-3.946l-1.732-.944 1.425-2.64Zm-183.628-4.366 1.326 2.692a248.977 248.977 0 0 0-7.061 3.618l-1.766.95-1.43-2.637a253.529 253.529 0 0 1 8.931-4.623Zm165.533-4.483a236.592 236.592 0 0 1 7.304 3.35l1.826.885-1.319 2.694a236.377 236.377 0 0 0-7.212-3.382l-1.803-.8 1.204-2.747ZM181.36 121.93l1.087 2.796c-2.447.951-4.894 1.953-7.34 3.006l-1.836.8-1.21-2.745c3.1-1.367 6.2-2.652 9.3-3.857Zm128.282-3.605c2.528.84 5.056 1.735 7.584 2.683l1.896.72-1.08 2.8a211.336 211.336 0 0 0-7.477-2.725l-1.87-.63.947-2.848Zm-109.203-2.785.812 2.888c-2.53.711-5.059 1.478-7.589 2.299l-1.897.626-.954-2.844a203.825 203.825 0 0 1 9.628-2.97Zm89.798-2.605c2.715.606 5.43 1.275 8.146 2.005l1.63.446-.805 2.89a192.713 192.713 0 0 0-7.7-1.973l-1.925-.44.654-2.928Zm-70.123-1.842.505 2.958c-2.702.461-5.405.985-8.108 1.572l-1.622.359-.662-2.926c3.296-.746 6.591-1.4 9.887-1.963Zm50.238-1.486c2.774.31 5.548.683 8.322 1.122l1.665.272-.496 2.958a180.589 180.589 0 0 0-8.186-1.18l-1.638-.19.333-2.982Zm-30.23-.805.175 2.995c-2.744.16-5.488.385-8.233.674l-1.646.181-.342-2.98c3.349-.385 6.698-.674 10.047-.87Zm10.375-.302c2.724 0 5.445.062 8.166.187l1.632.082-.165 2.996a175.327 175.327 0 0 0-7.705-.254l-1.928-.011h-.282l-.005-3h.287Z" fill="#979797" fill-rule="nonzero"/><path  class="opacity-transition" [class.opacity-active]="step >= 4" d="M250.5 217.5c-39.017 0-78.007-12.824-116.978-38.461l-1.18-.78-8.325-5.82 5.472 11.381-2.703 1.3-7.957-16.543-1.156-2.403 2.654.26 18.27 1.79-.293 2.986-12.571-1.232 8.298 5.802c38.865 25.824 77.68 38.72 116.469 38.72 42.399 0 84.833-15.41 127.325-46.27l1.288-.94 1.774 2.42c-43.41 31.845-86.881 47.79-130.387 47.79Z" fill="#979797" fill-rule="nonzero"/><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000" class="opacity-transition" [class.opacity-active]="step >= 4">
+                        <tspan x="244.2" y="90">a</tspan>
+                    </text><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000" class="opacity-transition" [class.opacity-active]="step >= 4">
+                        <tspan x="243.575" y="254">b</tspan>
+                    </text><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+                        <tspan x="55.087" y="165">1</tspan>
+                    </text><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+                        <tspan x="435.262" y="162">2</tspan>
+                    </text><text font-family="FiraSans-Bold, Fira Sans" font-size="25" font-weight="bold" fill="#000">
+                        <tspan x=".75" y="29">Plant A</tspan>
+                    </text></g><g transform="translate(15 297)"><circle stroke="#979797" stroke-width="4" cx="60.5" cy="144.5" r="58.5"/><circle stroke="#979797" stroke-width="4" cx="60.5" cy="144.5" r="58.5"/><circle stroke="#979797" stroke-width="4" cx="440.5" cy="144.5" r="58.5"/><circle stroke="#979797" stroke-width="4" cx="60.5" cy="144.5" r="45.5"/><path  class="opacity-transition" [class.opacity-active]="step >= 4" d="m374.214 127.88 7.957 16.543 1.156 2.403-2.654-.26-18.27-1.79.293-2.986 15.615 1.53-6.8-14.14 2.703-1.3Zm-245.91 9.591 1.699 2.472a322.246 322.246 0 0 0-6.493 4.583l-1.623 1.183-1.774-2.418c2.73-2.003 5.46-3.943 8.19-5.82Zm235.53-5.87c1.198.763 2.396 1.539 3.607 2.335l1.215.804 3.534 2.47-1.718 2.46-3.506-2.451c-1.054-.7-2.109-1.392-3.163-2.074l-1.582-1.015 1.613-2.53Zm-218.599-4.961 1.529 2.582a282.714 282.714 0 0 0-6.777 4.142l-1.694 1.076-1.618-2.526a287.558 287.558 0 0 1 8.56-5.274Zm201.308-5.22a267.205 267.205 0 0 1 7.006 3.922l1.751 1.024-1.523 2.584a267.587 267.587 0 0 0-6.927-3.946l-1.732-.944 1.425-2.64Zm-183.628-4.366 1.326 2.692a248.977 248.977 0 0 0-7.061 3.618l-1.766.95-1.43-2.637a253.529 253.529 0 0 1 8.931-4.623Zm165.533-4.483a236.592 236.592 0 0 1 7.304 3.35l1.826.885-1.319 2.694a236.377 236.377 0 0 0-7.212-3.382l-1.803-.8 1.204-2.747ZM181.36 108.93l1.087 2.796c-2.447.951-4.894 1.953-7.34 3.006l-1.836.8-1.21-2.745c3.1-1.367 6.2-2.652 9.3-3.857Zm128.282-3.605c2.528.84 5.056 1.735 7.584 2.683l1.896.72-1.08 2.8a211.336 211.336 0 0 0-7.477-2.725l-1.87-.63.947-2.848Zm-109.203-2.785.812 2.888c-2.53.711-5.059 1.478-7.589 2.299l-1.897.626-.954-2.844a203.825 203.825 0 0 1 9.628-2.97Zm89.798-2.605c2.715.606 5.43 1.275 8.146 2.005l1.63.446-.805 2.89a192.713 192.713 0 0 0-7.7-1.973l-1.925-.44.654-2.928Zm-70.123-1.842.505 2.958c-2.702.461-5.405.985-8.108 1.572l-1.622.359-.662-2.926c3.296-.746 6.591-1.4 9.887-1.963Zm50.238-1.486c2.774.31 5.548.683 8.322 1.122l1.665.272-.496 2.958a180.589 180.589 0 0 0-8.186-1.18l-1.638-.19.333-2.982Zm-30.23-.805.175 2.995c-2.744.16-5.488.385-8.233.674l-1.646.181-.342-2.98a180.05 180.05 0 0 1 10.047-.87Zm10.375-.302c2.724 0 5.445.062 8.166.187l1.632.082-.165 2.996a175.329 175.329 0 0 0-7.705-.254l-1.928-.011h-.282l-.005-3h.287Z" fill="#979797" fill-rule="nonzero"/><path  class="opacity-transition" [class.opacity-active]="step >= 4" d="M250.5 204.5c-39.017 0-78.007-12.824-116.978-38.461l-1.18-.78-8.325-5.82 5.472 11.381-2.703 1.3-7.957-16.543-1.156-2.403 2.654.26 18.27 1.79-.293 2.986-12.571-1.232 8.298 5.802c38.865 25.824 77.68 38.72 116.469 38.72 42.399 0 84.833-15.41 127.325-46.27l1.288-.94 1.774 2.42c-43.41 31.845-86.881 47.79-130.387 47.79Z" fill="#979797" fill-rule="nonzero"/><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000" class="opacity-transition" [class.opacity-active]="step >= 4">
+                        <tspan x="245.025" y="77">c</tspan>
+                    </text><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000" class="opacity-transition" [class.opacity-active]="step >= 4">
+                        <tspan x="243.525" y="241">d</tspan>
+                    </text><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+                        <tspan x="54.263" y="153">3</tspan>
+                    </text><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+                        <tspan x="433.85" y="152">4</tspan>
+                    </text><text font-family="FiraSans-Bold, Fira Sans" font-size="25" font-weight="bold" fill="#000">
+                        <tspan x=".412" y="29">Plant B</tspan>
+                    </text></g><g class="opacity-transition" [class.opacity-active]="step >= 5"><text transform="translate(0 608)" fill="#000" font-family="FiraSans-Bold, Fira Sans" font-size="25" font-weight="bold">
+                        <tspan x="0" y="29">requirement </tspan>
+                        <tspan x="147.425" y="29" font-family="FiraSans-Regular, Fira Sans" font-weight="normal">b </tspan>
+                        <tspan x="168.9" y="29">needs</tspan>
+                        <tspan x="238" y="29" font-family="FiraSans-Regular, Fira Sans" font-weight="normal"> Plant B </tspan>
+                        <tspan x="331.825" y="29">to be in state</tspan>
+                        <tspan x="481.725" y="29" font-family="FiraSans-Regular, Fira Sans" font-weight="normal"> 4</tspan>
+                    </text><text transform="translate(1 652)" fill="#000" font-family="FiraSans-Bold, Fira Sans" font-size="25" font-weight="bold">
+                        <tspan x="0" y="29">requirement </tspan>
+                        <tspan x="147.425" y="29" font-family="FiraSans-Regular, Fira Sans" font-weight="normal">d </tspan>
+                        <tspan x="169" y="29">needs</tspan>
+                        <tspan x="238.1" y="29" font-family="FiraSans-Regular, Fira Sans" font-weight="normal"> Plant A </tspan>
+                        <tspan x="331.05" y="29">to be in state</tspan>
+                        <tspan x="480.95" y="29" font-family="FiraSans-Regular, Fira Sans" font-weight="normal"> 1</tspan>
+                    </text></g></g></svg>
+    </app-figure>
+  </app-two-column-layout>
+
+  <app-citations>
+    <app-citation #ramadge text="Peter J. Ramadge and W. Murray Wonham. Supervisory control of a class of discrete event processes. SIAM journal on control and optimization, 25(1):206–230, 1987. 1, 2, 6"></app-citation>
+  </app-citations>
+</app-slide>

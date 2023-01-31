@@ -1,0 +1,20 @@
+<app-slide>
+  <app-title label="Editors"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1"><span class="emphasize">Xtext</span> as language workbench</app-list-item>
+      <app-list-item [current]="step" [step]="2"><span class="emphasize">Java/Xtend</span> for generators, validation, typing</app-list-item>
+      <app-list-item [current]="step" [step]="3">
+        Supported <span class="emphasize">editors</span>
+        <app-list>
+          <app-list-item [current]="step" [step]="4">Eclipse</app-list-item>
+          <app-list-item [current]="step" [step]="5">Visual Studio Code (LSP)</app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+    <app-figure caption="Overview of RoboSC supported editors." [current]="step" [step]="3">
+      <img class="image" src="/assets/editors.png">
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

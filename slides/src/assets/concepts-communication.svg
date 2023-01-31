@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1039" height="645" viewBox="0 0 1039 645">
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(402 162)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="22.776" y="31">Communication Type</tspan>
+      </text>
+    </g>
+    <text fill="#000" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="21">
+      <tspan x="460.426" y="238">name: string</tspan>
+    </text>
+    <g transform="translate(402 390)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="85.106" y="31">Service</tspan>
+      </text>
+    </g>
+    <g transform="translate(97 390)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="79.436" y="31">Message</tspan>
+      </text>
+    </g>
+    <g transform="translate(707 390)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="88.996" y="31">Action</tspan>
+      </text>
+    </g>
+    <polygon stroke="#EE7773" stroke-linecap="square" stroke-width="4" points="520 263 530 283 510 283"/>
+    <line x1="214.5" x2="214.5" y1="328.5" y2="390.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="519.5" x2="520.5" y1="283.5" y2="389.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="824.5" x2="824.5" y1="328.5" y2="390.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="824.5" x2="214.5" y1="328.5" y2="328.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+  </g>
+</svg>

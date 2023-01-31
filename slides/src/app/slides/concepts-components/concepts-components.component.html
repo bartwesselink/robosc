@@ -1,0 +1,35 @@
+<app-slide>
+  <app-title label="Components"></app-title>
+
+  <app-running-code-example [code]="code" [start]="5" [end]="9" [current]="step"></app-running-code-example>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        <span class="emphasize">Virtual</span> separation of robot parts
+
+        <app-list>
+          <app-list-item [current]="step" [step]="2">
+            Close relation to <span class="emphasize">ROS-nodes</span>
+          </app-list-item>
+        </app-list>
+      </app-list-item>
+      <!-- <app-list-item [current]="step" [step]="3">
+        Specify <span class="emphasize">communication</span>
+      </app-list-item> -->
+      <app-list-item [current]="step" [step]="3">
+        Define component <span class="emphasize">behaviour</span>
+
+        <app-list>
+          <app-list-item [current]="step" [step]="4">
+            Using automata
+          </app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+    <!-- <app-code [code]="code" [current]="step"></app-code> -->
+    <app-figure caption="Partial and simplified of the metamodel of components." [offset]="10">
+      <img class="image" src="/assets/concepts-component.svg" width="100%">
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

@@ -1,0 +1,34 @@
+<app-slide>
+  <app-title label="Robot Operating System"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">Robotic middleware</app-list-item>
+      <app-list-item [current]="step" [step]="2">ROS1 and ROS2</app-list-item>
+      <app-list-item [current]="step" [step]="3">
+        Separation in <span class="emphasize">nodes</span>
+        <app-list>
+          <app-list-item [current]="step" [step]="4">A process that performs computation</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="5"><span class="emphasize">Communication</span> between different nodes of the robot</app-list-item>
+    </app-list>
+    <app-figure caption="Sketch of ROS graph connected to parts of the robot." [offset]="20" [current]="step" [step]="3">
+      <svg width="530" viewBox="0 0 831 629" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m90.087 40.585 2.164 2.751 46.199 58.738 12.576-9.89 8.783 42.709-39.437-18.6 12.576-9.891-46.199-58.738-2.164-2.751 5.502-4.328Z" fill="#EE7773" fill-rule="nonzero"/><path stroke="#EE7773" stroke-width="7" stroke-linecap="square" d="m254.5 219.5 102 33"/><path stroke="#EE7773" stroke-width="7" stroke-linecap="square" d="m566.5 219.5-83 33"/><path stroke="#EE7773" stroke-width="7" stroke-linecap="square" d="M420.5 371.5v-44"/><path d="M424 494v23h16l-19.5 39-19.5-39h16v-23h7Z" fill="#EE7773" fill-rule="nonzero"/><rect fill="#EE7773" width="180" height="74" rx="37"/><text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="41.998" y="45">Sensor 1</tspan>
+    </text><rect fill="#EE7773" x="324" y="555" width="180" height="74" rx="37"/><text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="356.736" y="600">Actuator 1</tspan>
+    </text><path d="m737.175 40.561 5.264 4.614-2.307 2.632-52.625 60.045 12.033 10.546-40.37 16.478 11.04-42.183 12.033 10.546 52.625-60.046 2.307-2.632Z" fill="#EE7773" fill-rule="nonzero"/><g transform="translate(651)"><rect fill="#EE7773" width="180" height="74" rx="37"/><text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="41.224" y="45">Sensor 2</tspan>
+        </text></g><g transform="translate(141 118)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+            <tspan x="32.375" y="71">Node</tspan>
+        </text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g><g transform="translate(553 118)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+            <tspan x="32.375" y="71">Node</tspan>
+        </text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g><g transform="translate(357 201)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+            <tspan x="32.375" y="71">Node</tspan>
+        </text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g><g transform="translate(357 371)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+            <tspan x="32.375" y="71">Node</tspan>
+        </text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g></g></svg>
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

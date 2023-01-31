@@ -1,0 +1,42 @@
+<app-slide>
+  <app-title label="Problem"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">Development of <span class="emphasize">safe software</span> for robots
+      </app-list-item>
+      <app-list-item [current]="step" [step]="2">
+        <span class="emphasize">Manual</span> implementation and (safety) testing takes time
+        <app-list>
+          <app-list-item [current]="step" [step]="3">Failed test requires re-modelling, re-implementation and re-testing
+          </app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="7">Can be <span class="emphasize">time-consuming</span></app-list-item>
+    </app-list>
+    <app-figure caption="Development cycle." [offset]="20" [current]="step" [step]="2">
+      <svg width="610" height="359" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(2 2)" fill-rule="nonzero" fill="none">
+          <rect stroke="#979797" stroke-width="5" fill="#FFF" x="189.5" y=".5" width="227" height="74" rx="29" />
+          <rect stroke="#979797" stroke-width="5" fill="#FFF" x=".5" y="280.5" width="227" height="74" rx="29" />
+          <rect stroke="#979797" stroke-width="5" fill="#FFF" x="378.5" y="280.5" width="227" height="74" rx="29" />
+          <text fill="#979797" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="79.136" y="325">Model</tspan>
+          </text><text fill="#979797" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="400.435" y="325">Implementation</tspan>
+          </text><text fill="#979797" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="238.344" y="45">Verification</tspan>
+          </text>
+          <path fill="#979797"
+            [class.emphasize-fill]="step === 6"
+            d="m303.428 74.673 2.899 2.755-1.377 1.449-173.471 182.6 7.251 6.888-25.23 9.135 7.83-25.665 7.249 6.887L302.05 76.123z" />
+          <path
+          [class.emphasize-fill]="step === 4" fill="#979797" d="m353 305 24 12-24 12v-10H229v-4h124z" />
+          <path
+          [class.emphasize-fill]="step === 5" fill="#979797"
+            d="m304 77 25.158 9.331-7.303 6.83 171.606 183.473 1.366 1.46-2.921 2.733-1.367-1.461L318.933 95.894l-7.303 6.831z" />
+        </g>
+      </svg>
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

@@ -1,0 +1,23 @@
+<app-slide>
+  <app-title label="Communication"></app-title>
+
+  <app-running-code-example [text]="false" [code]="code" [start]="6" [end]="16" [current]="step"></app-running-code-example>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Types of <span class="emphasize">communication</span> per component
+
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Messages</app-list-item>
+          <app-list-item [current]="step" [step]="3">Services</app-list-item>
+          <app-list-item [current]="step" [step]="4">Actions</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="5">Define <span class="emphasize">bindings</span> to middleware</app-list-item>
+    </app-list>
+    <app-figure caption="Partial and simplified of the metamodel of communication.">
+      <img class="image" src="/assets/concepts-communication.svg" width="100%">
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

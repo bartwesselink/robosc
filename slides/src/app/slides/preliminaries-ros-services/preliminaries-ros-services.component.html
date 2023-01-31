@@ -1,0 +1,31 @@
+<app-slide>
+  <app-title label="Robot Operating System" subTitle="Services"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+        <app-list-item [current]="step" [step]="1">Request/response</app-list-item>
+        <app-list-item [current]="step" [step]="2"><span class="emphasize">Client</span> sends a request</app-list-item>
+        <app-list-item [current]="step" [step]="3"><span class="emphasize">Server</span> responds</app-list-item>
+        <app-list-item [current]="step" [step]="4">ROS1: synchronous</app-list-item>
+        <app-list-item [current]="step" [step]="5">ROS2: asynchronous</app-list-item>
+    </app-list>
+
+    <app-figure caption="Service communication between client and server in ROS, idea from ROS2 website." [offset]="0">
+      <svg width="540" height="541" viewBox="0 0 741 541" xmlns="http://www.w3.org/2000/svg"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="services-example"><rect id="Rectangle" stroke="#DE0A10" stroke-width="4" x="296" y="128" width="214" height="258" rx="37"/><g id="response" class="opacity-transition" [class.opacity-active]="step >= 3" transform="translate(120.5 125.5)" fill="#EE7773" fill-rule="nonzero"><path id="Line" d="M194.324 205.619 183.95 247.97l-12.35-10.484a340.566 340.566 0 0 1-68.198 54.997C67.664 314.405 33.588 326.41 1.18 328.436l-.982.058-3.494.197-.394-6.988 3.494-.197c31.458-1.774 64.77-13.417 99.94-34.99a333.553 333.553 0 0 0 66.51-53.569l-12.035-10.217 40.106-17.111Z"/><path id="Line" d="m564.205-.456 1.841 43.564-14.742-6.608c-17.118 33.94-37.743 64.064-61.874 90.366-31.861 34.727-69.076 61.963-111.625 81.695l-1.345.62-3.182 1.46-2.919-6.363 3.181-1.46c42.262-19.39 79.165-46.278 110.732-80.684 23.621-25.747 43.834-55.244 60.638-88.5l-14.452-6.478L564.205-.456Z"/></g><g id="Group-2" transform="translate(315 198)"><rect id="Rectangle" fill="#EE7773" x="0" y="0" width="180" height="74" rx="37"/><text id="Request" fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal">
+        <tspan x="43.536" y="45">Request</tspan>
+    </text></g><g id="request" class="opacity-transition" [class.opacity-active]="step >= 2" transform="translate(83.5 107.5)" fill="#EE7773" fill-rule="nonzero"><path id="Line" d="m555.222-3.757.535 6.979-3.49.268c-18.207 1.397-40.93 13.894-67.957 37.64a342.914 342.914 0 0 0-47.973 51.807l13.17 8.716-37.783 21.764 5.259-43.285 13.505 8.935a349.93 349.93 0 0 1 49.202-53.196c27.78-24.408 51.526-37.559 71.44-39.311l.602-.05 3.49-.267Z"/><path id="Line" d="m233.557 123.762 1.681 6.795-3.398.84c-45.798 11.33-89.047 32.845-129.764 64.573-30.433 23.715-56.55 50.872-78.36 81.48l13.36 8.463-37.344 22.51 4.399-43.382 13.664 8.657c22.249-31.29 48.911-59.041 79.978-83.25 41.061-31.995 84.729-53.835 130.984-65.495l1.403-.35 3.397-.841Z"/></g><g id="Group-2" transform="translate(315 294)"><rect id="Rectangle" fill="#EE7773" x="0" y="0" width="180" height="74" rx="37"/><text id="Response" fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal">
+        <tspan x="34.911" y="45">Response</tspan>
+    </text></g><g id="Group-3" transform="translate(615)"><circle id="Oval" stroke="#DE0A10" stroke-width="4" fill="#FFF" cx="63" cy="63" r="61"/><g id="Group" transform="translate(33 38)" font-family="FiraSans-Regular, Fira Sans" font-weight="normal"><text id="Node" font-size="25" fill="#000">
+            <tspan x=".375" y="23">Node</tspan>
+        </text><text id="Client" font-size="18" fill="#A5A5A5">
+            <tspan x="6.947" y="45">Client</tspan>
+        </text></g></g><g id="Group-3" transform="translate(0 415)"><g id="Group" transform="translate(33 38)" font-family="FiraSans-Regular, Fira Sans" font-weight="normal"><text id="Node" font-size="25" fill="#000">
+            <tspan x=".375" y="23">Node</tspan>
+        </text><text id="Server" font-size="18" fill="#A5A5A5">
+            <tspan x="4.445" y="45">Server</tspan>
+        </text></g><circle id="Oval" stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g><text id="Service" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+    <tspan x="361.837" y="169">Service</tspan>
+</text></g></g></svg>
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

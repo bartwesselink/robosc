@@ -1,0 +1,98 @@
+.slideshow {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.main-content {
+  --scale: 0;
+  --width: 1920px;
+  --height: 1080px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin-left: calc(var(--width) / -2);
+  margin-top: calc(var(--height) / -2);
+
+  display: block;
+  width: var(--width);
+  height: var(--height);
+  background: var(--primary);
+  overflow: hidden;
+  transform: scale(var(--scale));
+  transition: background 300ms ease-in-out;
+}
+
+.main-content.started {
+  background: var(--slide-background);
+}
+
+.camera {
+  --x: 1;
+  --y: 1;
+  --opacity: 0;
+
+  transform: translateX(calc(calc(var(--x) - 1) * calc(var(--width) * -1))) translateY(calc(calc(var(--y) - 1) * calc(var(--height) * -1)));
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  opacity: var(--opacity);
+}
+
+.footer {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.footer.started {
+  opacity: 1;
+}
+
+.opening {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-in-out;
+}
+
+.opening.started {
+  animation: slideOut 300ms ease-in-out 1 forwards;
+}
+
+.ending {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(0);
+}
+
+.ending.ended {
+  animation: slideIn 300ms ease-in-out 1 forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

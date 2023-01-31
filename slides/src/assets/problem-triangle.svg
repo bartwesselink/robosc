@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="610" height="359" viewBox="0 0 610 359">
+  <g fill="none" fill-rule="evenodd">
+    <rect width="227" height="74" x="191.5" y="2.5" fill="#FFF" stroke="#979797" stroke-width="5" rx="29"/>
+    <rect width="227" height="74" x="2.5" y="282.5" fill="#FFF" stroke="#979797" stroke-width="5" rx="29"/>
+    <rect width="227" height="74" x="380.5" y="282.5" fill="#FFF" stroke="#979797" stroke-width="5" rx="29"/>
+    <text fill="#979797" font-family="FiraSans-Regular, Fira Sans" font-size="25" letter-spacing=".156">
+      <tspan x="81.136" y="327">Model</tspan>
+    </text>
+    <text fill="#979797" font-family="FiraSans-Regular, Fira Sans" font-size="25" letter-spacing=".156">
+      <tspan x="402.435" y="327">Implementation</tspan>
+    </text>
+    <text fill="#979797" font-family="FiraSans-Regular, Fira Sans" font-size="25" letter-spacing=".156">
+      <tspan x="240.344" y="47">Verification</tspan>
+    </text>
+    <path fill="#979797" fill-rule="nonzero" d="M305.4275 76.6725022L308.327498 79.4275001 306.949999 80.8774989 133.479 263.477 140.72998 270.365007 115.5 279.5 123.329994 253.83502 130.579 260.722 304.050001 78.1225011 305.4275 76.6725022zM355 307L379 319 355 331 355 321 231 321 231 317 355 317 355 307z"/>
+    <path fill="#979797" fill-rule="nonzero" d="M306,79 L331.158229,88.3307818 L323.855,95.161 L495.46066,278.633811 L496.826849,280.094471 L493.905529,282.826849 L492.53934,281.366189 L320.933,97.894 L313.630312,104.725053 L306,79 Z"/>
+  </g>
+</svg>

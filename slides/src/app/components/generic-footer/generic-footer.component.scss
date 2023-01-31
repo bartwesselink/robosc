@@ -1,0 +1,17 @@
+.text {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  left: 0;
+  padding: 0 6rem;
+  color: var(--white);
+  transition: color 300ms ease-in-out;
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+}
+
+.section {
+  color: var(--gray);
+}

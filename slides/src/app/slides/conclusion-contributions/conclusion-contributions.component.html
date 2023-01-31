@@ -1,0 +1,22 @@
+<app-slide>
+  <app-title label="Contributions"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Presented <span class="emphasize">RoboSC</span>
+
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Domain-Specific Language</app-list-item>
+          <app-list-item [current]="step" [step]="3">Stimulate use of <span class="emphasize">supervisory controllers</span> for ROS-based applications</app-list-item>
+          <app-list-item [current]="step" [step]="4"><span class="emphasize">Safe</span> development of robotic software</app-list-item>
+          <app-list-item [current]="step" [step]="5">Live <span class="emphasize">visualization</span> tools for easier debugging</app-list-item>
+          <app-list-item [current]="step" [step]="6">Use as a <span class="emphasize">supervisory layer</span></app-list-item>
+          <app-list-item [current]="step" [step]="7">Evaluated using <span class="emphasize">8 scenarios</span></app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item></app-list-item>
+      <app-list-item [current]="step" [step]="8">All code is available on GitHub: <a href="https://github.com/bartwesselink/robosc">https://github.com/bartwesselink/robosc</a></app-list-item>
+    </app-list>
+  </app-two-column-layout>
+</app-slide>

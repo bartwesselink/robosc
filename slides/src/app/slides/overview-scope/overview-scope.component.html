@@ -1,0 +1,22 @@
+<app-slide>
+  <app-title label="Scope"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Robot Operating System (ROS)
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Both versions</app-list-item>
+          <app-list-item [current]="step" [step]="3">Ensure familiarity with concepts</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="4">
+        Supervisory Control Theory
+        <app-list>
+          <app-list-item [current]="step" [step]="5">Only generated using CIF</app-list-item>
+          <app-list-item [current]="step" [step]="6">Generic concepts</app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+  </app-two-column-layout>
+</app-slide>

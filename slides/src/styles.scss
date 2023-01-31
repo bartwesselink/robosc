@@ -1,0 +1,68 @@
+:root {
+  --background: #000;
+  --black: #000;
+  --slide-background: #fff;
+  --window-red: #f15f59;
+  --window-yellow: #febb2b;
+  --window-green: #4bb749;
+  --gray: #898989;
+  --light-gray: #ccccce;
+  --font-family: 'Fira Sans', sans-serif;
+  --primary: #CA101A;
+  --secondary-text: #DF6E74;
+  --secondary: #FAE7E8;
+  --text: #5E5E5E;
+  --white: #fff;
+  --animate-delay: 250ms;
+  --citation: #7F7F7F;
+  --overlay-gray: #bdc3c7;
+  --blue: #3498db;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  background: var(--background);
+  width: 100vw;
+  height: 100vh;
+}
+
+* {
+  user-select: none;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+video {
+  pointer-events: all;
+}
+
+.emphasize {
+  color: var(--primary);
+}
+
+.emphasize-fill {
+  fill: var(--primary);
+}
+
+.emphasize-stroke {
+  stroke: var(--primary);
+}
+
+.opacity-transition {
+  transition: opacity 300ms ease-in-out;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.opacity-active {
+  opacity: 1;
+}
+
+a {
+  text-decoration: none !important;
+  color: var(--blue) !important;
+}

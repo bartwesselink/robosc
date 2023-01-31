@@ -1,0 +1,68 @@
+<div class="slideshow">
+  <div class="main-content" [style.--scale]="scale" [class.started]="started && !ended">
+    <div class="opening" [class.started]="started">
+      <app-opening></app-opening>
+    </div>
+
+    <div class="ending" [class.ended]="ended">
+      <app-ending></app-ending>
+    </div>
+
+    <div class="camera" [style.--x]="x" [style.--y]="y" [style.--opacity]="started && !ended ? 1 : 0">
+      <app-section [number]="1" label="Introduction">
+        <app-introduction-problem #slide></app-introduction-problem>
+        <app-introduction-demonstration-robot #slide></app-introduction-demonstration-robot>
+      </app-section>
+
+      <app-section [number]="2" label="Preliminaries">
+        <app-preliminaries-supervisory-control-theory #slide></app-preliminaries-supervisory-control-theory>
+        <app-preliminaries-ros #slide></app-preliminaries-ros>
+        <app-preliminaries-ros-messages #slide></app-preliminaries-ros-messages>
+        <app-preliminaries-ros-services #slide></app-preliminaries-ros-services>
+        <app-preliminaries-ros-actions #slide></app-preliminaries-ros-actions>
+        <!-- <app-preliminaries-cif #slide></app-preliminaries-cif> -->
+        <app-preliminaries-mde #slide></app-preliminaries-mde>
+      </app-section>
+
+      <app-section [number]="3" label="Overview">
+        <app-overview-idea #slide></app-overview-idea>
+        <app-overview-main-idea #slide></app-overview-main-idea>
+        <app-overview-control-loop #slide></app-overview-control-loop>
+        <!-- <app-overview-scope #slide></app-overview-scope> -->
+      </app-section>
+
+      <app-section [number]="4" label="Concepts">
+        <app-concepts-base #slide></app-concepts-base>
+        <app-concepts-components #slide></app-concepts-components>
+        <app-concepts-communication #slide></app-concepts-communication>
+        <app-concepts-data #slide></app-concepts-data>
+        <app-concepts-requirements #slide></app-concepts-requirements>
+      </app-section>
+
+      <app-section [number]="5" label="Tools">
+        <app-tools-generation #slide></app-tools-generation>
+        <app-tools-editors #slide></app-tools-editors>
+        <app-tools-debugging #slide></app-tools-debugging>
+      </app-section>
+
+      <app-section [number]="6" label="Supervisory Layer">
+        <app-supervisor-idea #slide></app-supervisor-idea>
+        <app-supervisor-limitations #slide></app-supervisor-limitations>
+      </app-section>
+
+      <app-section [number]="7" label="Evaluation">
+        <app-evaluation-scenarios #slide></app-evaluation-scenarios>
+        <app-evaluation-lines-of-code #slide></app-evaluation-lines-of-code>
+      </app-section>
+
+      <app-section [number]="8" label="Conclusion">
+        <app-conclusion-contributions #slide></app-conclusion-contributions>
+        <app-conclusion-video #slide></app-conclusion-video>
+      </app-section>
+    </div>
+
+    <div class="footer" [class.started]="started && !ended">
+      <app-generic-footer [page]="currentPage" [section]="section"></app-generic-footer>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1204" height="645" viewBox="0 0 1204 645">
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(70 77)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="71.136" y="33">Variable</tspan>
+      </text>
+    </g>
+    <g transform="translate(482 77)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="61.636" y="33">Data Type</tspan>
+      </text>
+    </g>
+    <g transform="translate(71 439)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="46.136" y="33">Object Value</tspan>
+      </text>
+    </g>
+    <g transform="translate(894 77)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="85.636" y="33">Enum</tspan>
+      </text>
+    </g>
+    <g transform="translate(895 258)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <rect width="232" height="94" x="1.5" y="1.5" stroke="#EE7773" stroke-width="3" rx="8"/>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="80.636" y="33">Object</tspan>
+      </text>
+    </g>
+    <g transform="translate(70 258)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <rect width="232" height="94" x="1.5" y="1.5" stroke="#EE7773" stroke-width="3" rx="8"/>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+        <tspan x="12.636" y="34">Provide Statement</tspan>
+      </text>
+    </g>
+    <line x1="305.5" x2="482.5" y1="125.5" y2="125.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="305.5" x2="482.5" y1="306.5" y2="306.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="602.5" x2="602.5" y1="174.5" y2="258.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="187.5" x2="187.5" y1="439.5" y2="355.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <g transform="translate(482 258)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="22.776" y="31">Communication Type</tspan>
+      </text>
+    </g>
+    <line x1="741.5" x2="894.5" y1="125.5" y2="125.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <polygon stroke="#EE7773" stroke-linecap="square" stroke-width="4" points="731 115 741 135 721 135" transform="rotate(-90 731 125)"/>
+    <line x1="799.5" x2="799.5" y1="125.5" y2="306.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="894.5" x2="799.5" y1="306.5" y2="306.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <text fill="#888" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+      <tspan x="373.79" y="292">[0..*]</tspan>
+    </text>
+  </g>
+</svg>

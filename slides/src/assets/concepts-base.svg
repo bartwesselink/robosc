@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1155" height="541" viewBox="0 0 1155 541">
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(21 57)">
+      <path stroke="#EE7773" stroke-linecap="square" stroke-width="5" d="M417.5,48.5 L310.5,48.5 M416.5,380.5 L310.5,380.5 M310.5,48.5 L310.5,215.5 M310.5,213.5 L310.5,380.5 M310.5,215.5 L259.5,215.5"/>
+      <polygon stroke="#EE7773" stroke-linecap="square" stroke-width="4" points="247 206 257 226 237 226" transform="rotate(-90 247 216)"/>
+      <line x1="652.5" x2="782.5" y1="47.5" y2="47.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+      <line x1="652.5" x2="782.5" y1="380.5" y2="380.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+      <g transform="translate(0 159)">
+        <g stroke="#EE7773" stroke-width="3">
+          <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+          <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+        </g>
+        <text fill="#000" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="21">
+          <tspan x="58.426" y="73">name: string</tspan>
+        </text>
+        <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+          <tspan x="90.636" y="33">Base</tspan>
+        </text>
+      </g>
+      <g transform="translate(417)">
+        <g stroke="#EE7773" stroke-width="3">
+          <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+          <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+        </g>
+        <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+          <tspan x="78.136" y="33">Library</tspan>
+        </text>
+        <g transform="translate(365)">
+          <g stroke="#EE7773" stroke-width="3">
+            <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+            <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+          </g>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="18.636" y="33">Library Definition</tspan>
+          </text>
+        </g>
+        <g transform="translate(365 319)">
+          <g stroke="#EE7773" stroke-width="3">
+            <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+            <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+          </g>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="21">
+            <tspan x="12.752" y="31">Component Definition</tspan>
+          </text>
+        </g>
+        <g transform="translate(0 319)">
+          <g stroke="#EE7773" stroke-width="3">
+            <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+            <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+          </g>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="52.136" y="33">Component</tspan>
+          </text>
+        </g>
+      </g>
+    </g>
+    <text fill="#888" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+      <tspan x="719.79" y="94">[0..*]</tspan>
+    </text>
+    <text fill="#888" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+      <tspan x="719.79" y="429">[0..*]</tspan>
+    </text>
+  </g>
+</svg>

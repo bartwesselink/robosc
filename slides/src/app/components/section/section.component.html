@@ -1,0 +1,18 @@
+<div class="wrapper" [style.--offset-x]="offsetX" [style.--offset-y]="offsetY">
+  <div class="section">
+    <ng-container *ngIf="active">
+      <div class="svg-holder" inlineSVG="/assets/section-wave.svg"></div>
+      <div class="overview">
+        <app-section-overview [current]="number"></app-section-overview>
+      </div>
+      <div class="information">
+        <div class="number">{{ number | number:'2.0-0' }}</div>
+        <div class="title">{{ label }}</div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="slides">
+    <ng-content></ng-content>
+  </div>
+</div>

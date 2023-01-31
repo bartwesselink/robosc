@@ -1,0 +1,69 @@
+.wrapper {
+  --offset-x: 0;
+  --offset-y: 0;
+
+  transform: translateX(calc(var(--offset-x) * var(--width))) translateY(calc(var(--offset-y) * var(--height)));
+}
+
+.slides {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.section {
+  width: var(--width);
+  height: var(--height);
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: space-between;
+}
+
+.overview {
+  margin-left: 11rem;
+  margin-top: -20rem;
+}
+
+.svg-holder {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  transform-origin: top right;
+  transform: scale(0.8);
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 24rem;
+  color: var(--primary);
+  animation-delay: var(--animate-delay);
+  animation: slide 300ms ease-in-out 100ms 1 forwards;
+  opacity: 0;
+}
+
+.number {
+  font-size: 8rem;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 3.6669rem;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: 3fr 2fr;
+  height: 100%;
+  grid-auto-flow: column;
+}
+
+:host {
+  flex: 1;
+}

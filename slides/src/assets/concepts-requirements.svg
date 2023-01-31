@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="943" height="452" viewBox="0 0 943 452">
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(167 181)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="59.166" y="31">Requirement</tspan>
+      </text>
+    </g>
+    <g transform="translate(589 61)">
+      <g stroke="#EE7773" stroke-width="3">
+        <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+        <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+      </g>
+      <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+        <tspan x="22.776" y="31">Communication Type</tspan>
+      </text>
+      <g transform="translate(0 240)">
+        <g stroke="#EE7773" stroke-width="3">
+          <rect width="232" height="94" x="1.5" y="1.5" rx="8"/>
+          <path fill="#EE7773" d="M227,1.5 C228.794925,1.5 230.419925,2.22753728 231.596194,3.40380592 C232.772463,4.58007456 233.5,6.20507456 233.5,8 L233.5,8 L233.5,45.5909091 L1.5,45.5909091 L1.5,8 C1.5,6.20507456 2.22753728,4.58007456 3.40380592,3.40380592 C4.58007456,2.22753728 6.20507456,1.5 8,1.5 L8,1.5 Z"/>
+        </g>
+        <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+          <tspan x="68.726" y="31">Expression</tspan>
+        </text>
+      </g>
+    </g>
+    <line x1="495.5" x2="589.5" y1="357.5" y2="357.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="495.5" x2="495.5" y1="357.5" y2="248.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="402.5" x2="495.5" y1="248.5" y2="248.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="495.5" x2="495.5" y1="109.5" y2="248.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <line x1="495.5" x2="589.5" y1="109.5" y2="109.5" stroke="#EE7773" stroke-linecap="square" stroke-width="5"/>
+    <text fill="#888" font-family="FiraSans-Regular, Fira Sans" font-size="20">
+      <tspan x="523.83" y="98">[1..*]</tspan>
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,45 @@
+.title {
+  color: var(--primary);
+  font-size: 3.6669rem;
+  position: relative;
+  margin-left: -3px;
+  width: 100%;
+  margin-bottom: 4rem;
+  font-weight: 500;
+
+  &::after {
+    display: block;
+    content: '';
+    width: 1.8rem;
+    height: 0.5rem;
+    border-radius: 1rem;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left center;
+    left: 3px;
+    position: absolute;
+    bottom: -0.75rem;
+    animation: scale 300ms ease-in-out var(--animate-delay) 1 forwards;
+  }
+}
+
+.small {
+  font-size: 2.8rem;
+}
+
+@keyframes scale {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.sub-title {
+  color: var(--primary);
+  opacity: 0.65;
+  display: inline-block;
+  font-size: 2.4rem;
+}

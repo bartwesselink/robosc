@@ -1,0 +1,67 @@
+<app-slide>
+  <app-title label="Generation"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Synthesize <span class="emphasize">supervisory controller</span>
+
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Convert code to <span class="emphasize">CIF</span></app-list-item>
+          <app-list-item [current]="step" [step]="3">Apply synthesis</app-list-item>
+        </app-list>
+      </app-list-item>
+
+      <app-list-item [current]="step" [step]="4">Generate <span class="emphasize">engine</span> code from controller</app-list-item>
+      <app-list-item [current]="step" [step]="5">
+        Embed engine in <span class="emphasize">ROS-node</span> (for both versions)
+        <app-list>
+          <app-list-item [current]="step" [step]="6">Listen for <span class="emphasize">incoming</span> data</app-list-item>
+          <app-list-item [current]="step" [step]="7">Execute <span class="emphasize">control loop</span></app-list-item>
+          <app-list-item [current]="step" [step]="8">Handle data <span class="emphasize">storage</span></app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+    <app-figure caption="Artifact generator pipeline.">
+      <svg xmlns="http://www.w3.org/2000/svg" width="559" height="610" viewBox="0 0 559 610">
+        <g fill="none" transform="translate(3.5 .5)">
+          <rect width="222" height="69" x="2.5" y="2.5" fill="#EE7773" stroke="#EE7773" stroke-width="5" rx="29"/>
+          <text fill="#FFF" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="52.636" y="46.5">DSL-model</tspan>
+          </text>
+          <g transform="translate(227 31.658)" class="opacity-transition" [class.opacity-active]="step >= 2">
+            <rect width="227" height="74" x="97" y="115.342" stroke="#EE7773" stroke-width="5" rx="29"/>
+            <text fill="#000" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+              <tspan x="193.136" y="160.842">CIF</tspan>
+            </text>
+            <path fill="#EE7773" d="M121.272026,17.6275257 C152.363405,33.9134859 178.008131,57.8164166 198.183542,89.2993471 L208.787163,83.3885597 L210.243468,115.778823 L183.457474,97.5097095 L193.808005,91.7387844 C174.119156,61.102744 149.174641,37.8875955 118.951991,22.0566834 C81.5150286,2.44684598 42.5159712,-2.4120499 1.83924549,7.46374299 L0.606103794,7.76751958 L-1.81931126,8.37362337 L-3.03151885,3.52279326 L-0.606103794,2.91668947 C41.7073322,-7.65730858 82.3730791,-2.74811309 121.272026,17.6275257 Z"/>
+          </g>
+          <g transform="translate(325 220.5)" class="opacity-transition" [class.opacity-active]="step >= 3">
+            <rect width="227" height="74" y="58.5" stroke="#EE7773" stroke-width="5" rx="29"/>
+            <text fill="#000" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+              <tspan x="55.136" y="106">Controller</tspan>
+            </text>
+            <path fill="#EE7773" d="M115.456531,-2.04272554 L115.499629,0.456902957 L116.008,29.961 L128.006539,29.7542722 L114.008619,58.9999257 L99.0108484,30.2541979 L111.009,30.047 L110.500371,0.543097043 L110.457274,-1.95653146 L115.456531,-2.04272554 Z"/>
+          </g>
+          <g transform="translate(324 352.5)" class="opacity-transition" [class.opacity-active]="step >= 4">
+            <rect width="227" height="74" y="61.5" stroke="#EE7773" stroke-width="5" rx="29"/>
+            <text fill="#000" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+              <tspan x="84.636" y="108">Code</tspan>
+            </text>
+            <path fill="#EE7773" d="M115.5,-2 L115.5,33 L127.5,33 L113,62 L98.5,33 L110.5,33 L110.5,-2 L115.5,-2 Z"/>
+          </g>
+          <g transform="translate(0 73.5)" class="opacity-transition" [class.opacity-active]="step >= 5">
+            <g transform="translate(0 458.5)">
+              <rect width="227" height="74" fill="#EE7773" stroke="#EE7773" stroke-width="5" rx="29"/>
+              <text fill="#FFF" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+                <tspan x="56.136" y="46.5">ROS-node</tspan>
+              </text>
+            </g>
+            <path fill="#EE7773" d="M115.5-2L115.5 430 127.5 430 113 459 98.5 430 110.5 430 110.5-2 115.5-2zM436.657917 411.851482L441.648518 412.157917 441.4953 414.653218C439.881069 440.942522 429.32447 463.687915 409.888054 482.783341 392.001044 500.356544 340.656447 505.982277 255.215262 500.218844L254.263128 512.209933 226.501568 495.460431 256.558105 483.300885 255.61186 495.234187C339.482589 500.884694 389.952707 495.35963 406.383946 479.216659 424.750045 461.172772 434.752785 439.84975 436.452742 415.144886L436.5047 414.346782 436.657917 411.851482z"/>
+          </g>
+        </g>
+      </svg>
+
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

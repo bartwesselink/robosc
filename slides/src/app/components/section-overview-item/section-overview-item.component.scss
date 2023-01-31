@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  color: var(--secondary-text);
+  font-size: 1rem;
+  transition: all 300ms ease-in-out;
+  transition-delay: var(--animate-delay);
+}
+
+.rectangle {
+  width: 1.8rem;
+  height: 0.75rem;
+  border-radius: 1rem;
+  background: var(--secondary);
+  transition: background 300ms ease-in-out;
+  transition-delay: var(--animate-delay);
+}
+
+.item.active {
+  color: var(--primary);
+  font-weight: bold;
+
+  .rectangle {
+    background: var(--primary);
+  }
+}

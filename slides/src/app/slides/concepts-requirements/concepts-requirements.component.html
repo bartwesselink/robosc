@@ -1,0 +1,28 @@
+<app-slide>
+  <app-title label="Requirements"></app-title>
+
+  <app-running-code-example [code]="code" [start]="8" [end]="11" [current]="step"></app-running-code-example>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1"><span class="emphasize">Restrict</span> communication from controller to middleware</app-list-item>
+      <app-list-item [current]="step" [step]="2">
+        Two types of requirements
+        <app-list>
+          <app-list-item [current]="step" [step]="3">Conditions that <span class="emphasize">need</span> to hold for communication to take place</app-list-item>
+          <app-list-item [current]="step" [step]="4">Conditions that <span class="emphasize">disable</span> communication if they hold</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="5">
+        Examples
+        <app-list>
+          <app-list-item [current]="step" [step]="6">Require component to be in <span class="emphasize">state</span></app-list-item>
+          <app-list-item [current]="step" [step]="7">Require variable to <span class="emphasize">equal</span> a specific value</app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+    <app-figure caption="Partial and simplified of the metamodel of requirements.">
+      <img class="image" src="/assets/concepts-requirements.svg" width="100%">
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

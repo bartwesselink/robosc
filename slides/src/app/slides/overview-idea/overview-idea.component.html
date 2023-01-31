@@ -1,0 +1,64 @@
+<app-slide>
+  <app-title label="Idea"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Create a <span class="emphasize">supervisory controller</span> to control the <span class="emphasize">behaviour</span> of a robot
+      </app-list-item>
+      <app-list-item [current]="step" [step]="2">
+        Continue with work done by Kok et al. <app-citation-reference [citation]="kok"></app-citation-reference>
+        <app-list>
+          <app-list-item [current]="step" [step]="3">Apply supervisory control theory</app-list-item>
+          <app-list-item [current]="step" [step]="4">Synthesize a controller</app-list-item>
+          <app-list-item [current]="step" [step]="5">Manually define connection to the middleware
+          </app-list-item>
+        </app-list>
+      </app-list-item>
+
+      <app-list-item [current]="step" [step]="6">Extend this approach by
+        <app-list>
+          <app-list-item [current]="step" [step]="7">Using <span class="emphasize">model-driven engineering</span> (MDE) to increase the level of abstraction</app-list-item>
+          <app-list-item [current]="step" [step]="8"><span class="emphasize">Automatically</span> generate platform connections</app-list-item>
+          <app-list-item [current]="step" [step]="9">Supporting <span class="emphasize">multiple</span> platforms</app-list-item>
+        </app-list>
+        </app-list-item>
+    </app-list>
+    <!-- <app-figure caption="Inserting a supervisory controller into a robot." [offset]="0" [current]="step" [step]="3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" viewBox="0 0 831 629">
+        <g fill="none" fill-rule="evenodd">
+          <path fill="#EE7773" fill-rule="nonzero" d="M738.204107,40.6005885 L742.399412,46.204107 L739.597652,48.3017593 L579.417,168.227 L589.006272,181.035627 L546.099749,188.799665 L565.632433,149.816024 L575.221,162.624 L735.402348,42.6982407 L738.204107,40.6005885 Z"/>
+          <path fill="#EE7773" fill-rule="nonzero" d="M88.795893 40.6005885L91.5976522 42.6982407 251.778 162.624 261.367567 149.816024 280.900251 188.799665 237.993728 181.035627 247.582 168.227 87.4023478 48.3017593 84.6005885 46.204107 88.795893 40.6005885zM418 237L418 517 434 517 414.5 556 395 517 411 517 411 237 418 237z"/>
+          <rect width="274" height="174" x="277" y="180" fill="#FFF" fill-rule="nonzero" stroke="#EE7773" stroke-width="5" rx="29"/>
+          <rect width="180" height="74" fill="#EE7773" rx="37"/>
+          <rect width="227" height="74" x="303.5" y="209.5" fill="#DE0A10" fill-rule="nonzero" rx="29"/>
+          <text fill="#0E0E0E" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="326.661" y="323">Controller Node</tspan>
+          </text>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="41.998" y="45">Sensor 1</tspan>
+          </text>
+          <rect width="180" height="74" x="324" y="555" fill="#EE7773" rx="37"/>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="356.736" y="600">Actuator 1</tspan>
+          </text>
+          <g transform="translate(651)">
+            <rect width="180" height="74" fill="#EE7773" rx="37"/>
+            <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+              <tspan x="41.224" y="45">Sensor 2</tspan>
+            </text>
+          </g>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Bold, Fira Sans" font-size="25" font-weight="bold">
+            <tspan x="348.136" y="247">Supervisory</tspan> <tspan x="359.086" y="275">Controller</tspan>
+          </text>
+        </g>
+      </svg>
+
+
+    </app-figure> -->
+  </app-two-column-layout>
+
+  <app-citations>
+    <app-citation #kok text="JW Kok, E Torta, MA Reniers, JM van de Mortel-Fronczak, and MJG van de Molen- graft. Synthesis-based engineering of supervisory controllers for autonomous robotic naviga- tion. IFAC-PapersOnLine, 54(2):259–264, 2021. 1, 13, 15, 74    "></app-citation>
+  </app-citations>
+</app-slide>

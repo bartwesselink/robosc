@@ -1,0 +1,24 @@
+<app-slide>
+  <app-title label="Robot Operating System" subTitle="Messages"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+        <app-list-item [current]="step" [step]="1">Publisher/subscriber</app-list-item>
+        <app-list-item [current]="step" [step]="2">Anonymous</app-list-item>
+        <app-list-item [current]="step" [step]="3">Nodes <span class="emphasize">publish</span> to a <span class="emphasize">topic</span></app-list-item>
+        <app-list-item [current]="step" [step]="4">Nodes <span class="emphasize">subscribe</span> to a <span class="emphasize">topic</span></app-list-item>
+    </app-list>
+
+    <app-figure caption="Message communication between nodes in ROS, idea from ROS2 website." [offset]="0">
+      <svg width="492" height="424" viewBox="0 0 492 424" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path class="opacity-transition" [class.opacity-active]="step >= 4" d="m247.576 239.669 3.755 5.907-2.953 1.878-96.51 61.345 8.584 13.504-43.374 4.465 22.453-37.378 8.582 13.502 96.51-61.346 2.953-1.877Z" fill="#EE7773" fill-rule="nonzero"/><path class="opacity-transition" [class.opacity-active]="step >= 4" d="m245.458 239.661 2.94 1.899 94.656 61.115 8.68-13.44 22.186 37.536L330.58 322l8.678-13.443-94.655-61.116-2.94-1.898 3.796-5.88Z" fill="#EE7773" fill-rule="nonzero"/><g transform="translate(0 298)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+        <tspan x="32.375" y="71">Node</tspan>
+    </text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g><g transform="translate(366 298)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+        <tspan x="32.375" y="71">Node</tspan>
+    </text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g><g transform="translate(156 205)"><rect fill="#EE7773" width="180" height="74" rx="37"/><text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+    <tspan x="59.636" y="45">Topic</tspan>
+</text></g><path class="opacity-transition" [class.opacity-active]="step >= 3" d="M250 123v44h16l-19.5 39-19.5-39h16v-44h7Z" fill="#EE7773" fill-rule="nonzero"/><g transform="translate(183)"><text font-family="FiraSans-Regular, Fira Sans" font-size="25" fill="#000">
+    <tspan x="32.375" y="71">Node</tspan>
+</text><circle stroke="#DE0A10" stroke-width="4" cx="63" cy="63" r="61"/></g></g></svg>
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

@@ -1,0 +1,17 @@
+<app-slide>
+  <app-title label="Control loop"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">Executed using a <span class="emphasize">timer</span></app-list-item>
+      <app-list-item [current]="step" [step]="2"><span class="emphasize">Shuffle</span> controllable events</app-list-item>
+      <app-list-item [current]="step" [step]="3">Ensure data is always <span class="emphasize">up-to-date</span></app-list-item>
+      <app-list-item [current]="step" [step]="4">
+        Execute <span class="emphasize">enabled</span> controllable events
+        <app-list>
+          <app-list-item [current]="step" [step]="5"><span class="emphasize">Communicate</span> with the middleware</app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+  </app-two-column-layout>
+</app-slide>

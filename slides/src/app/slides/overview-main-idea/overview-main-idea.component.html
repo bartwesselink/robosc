@@ -1,0 +1,50 @@
+<app-slide>
+  <app-title label="Solution"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">Domain-specific language: <span class="emphasize">RoboSC</span></app-list-item>
+      <app-list-item [current]="step" [step]="2">Run <span class="emphasize">ROS-node</span> that acts as a controller</app-list-item>
+      <app-list-item [current]="step" [step]="3">Use <span class="emphasize">supervisory control theory</span>
+        <app-list>
+          <app-list-item [current]="step" [step]="4">Generate plants</app-list-item>
+          <app-list-item [current]="step" [step]="5">Define requirements</app-list-item>
+          <app-list-item [current]="step" [step]="6">Synthesize <span class="emphasize">supervisory controller</span></app-list-item>
+        </app-list>
+      </app-list-item>
+
+      <app-list-item [current]="step" [step]="7">Map <span class="emphasize">incoming</span> data to <span class="emphasize">uncontrollable</span> events
+        <app-list>
+          <app-list-item [current]="step" [step]="8">Update state</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="9">Map <span class="emphasize">outgoing</span> data to <span class="emphasize">controllable</span> events</app-list-item>
+    </app-list>
+    <app-figure caption="Illustration of supervisory controller in ROS idea.">
+      <svg width="550" viewBox="0 0 831 898" xmlns="http://www.w3.org/2000/svg"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Main-idea" transform="translate(-162 -104)"><g id="main-idea-sketch" transform="translate(162 104)"><g id="uncontrollable" transform="translate(242.5 221)" class="opacity-transition" [class.opacity-active]="step >= 7"><path id="Line" d="M99.149 76.68 100 103.5 78.034 88.09l8.752-4.731-.074-.128 3.471-1.988.123.215 8.843-4.777Zm-19.56-12.552 1.097 1.673a299.112 299.112 0 0 1 4.602 7.248l.774 1.263 1.04 1.708-3.415 2.081-1.041-1.707a304.207 304.207 0 0 0-4.553-7.247l-.752-1.153-1.096-1.672 3.345-2.194ZM67.64 47.861l1.252 1.56a184.543 184.543 0 0 1 5.33 6.995l.769 1.065 1.165 1.626-3.25 2.33-1.166-1.625a187.027 187.027 0 0 0-5.23-6.96l-.738-.928-1.252-1.56 3.12-2.503ZM53.462 33.285l1.505 1.317a90.68 90.68 0 0 1 2.02 1.823c1.5 1.394 3.007 2.892 4.527 4.495l.76.81 1.362 1.465-2.93 2.724-1.361-1.465a99.208 99.208 0 0 0-5.082-5.1 86.402 86.402 0 0 0-1.28-1.167l-.651-.575-1.505-1.318 2.635-3.01ZM36.57 21.882l1.74.985a106.216 106.216 0 0 1 7.59 4.725l1.032.714 1.637 1.15-2.299 3.273-1.637-1.149a100.738 100.738 0 0 0-7.212-4.61l-1.082-.622-1.74-.986 1.971-3.48ZM17.979 13.67l1.876.695a137.01 137.01 0 0 1 8.083 3.286l1.297.586 1.818.833-1.666 3.637-1.818-.834c-2.5-1.146-5.088-2.23-7.76-3.252l-1.345-.506-1.875-.695 1.39-3.75ZM-1.484 8.092l1.946.462c2.876.682 5.68 1.418 8.412 2.208l1.36.399 1.917.571-1.142 3.834-1.917-.572a172.54 172.54 0 0 0-8.153-2.21l-1.4-.338-1.947-.462.924-3.892Z" fill="#EE7773" fill-rule="nonzero"/><path id="Line" d="m243.803 73.913 3.619 1.703-.852 1.81a293.942 293.942 0 0 0-2.122 4.615l9.196 3.733L233.5 103.5l-2.094-26.751 9.333 3.787c.53-1.182 1.062-2.346 1.595-3.494l.617-1.32.852-1.81Zm9.482-17.799 3.455 2.016-1.007 1.728a199.414 199.414 0 0 0-4.177 7.542l-.594 1.135-.922 1.774-3.55-1.844.922-1.774a209.35 209.35 0 0 1 4.254-7.793l.612-1.056 1.007-1.728Zm11.604-16.64 3.124 2.499-1.25 1.562a116.01 116.01 0 0 0-5.156 6.995l-.641.947-1.115 1.66-3.321-2.228 1.114-1.661a124.025 124.025 0 0 1 5.325-7.363l.67-.848 1.25-1.562Zm15.354-13.694 2.243 3.312-1.655 1.122a58.17 58.17 0 0 0-6.922 5.465l-.618.582-1.445 1.382-2.765-2.89 1.445-1.383a60.907 60.907 0 0 1 7.26-5.916l.801-.552 1.656-1.122Zm18.436-8.826 1.419 3.74-1.87.709a98.07 98.07 0 0 0-8.04 3.452l-.94.463-1.789.895-1.79-3.577 1.788-.895a99.277 99.277 0 0 1 8.254-3.655l1.098-.423 1.87-.71Zm19.541-5.451.874 3.903-1.952.437a158.832 158.832 0 0 0-8.416 2.119l-1.149.329-1.92.559-1.118-3.841 1.92-.559a158.499 158.499 0 0 1 8.537-2.22l1.273-.29 1.951-.437Zm19.928-3.24.505 3.968-1.984.252c-2.896.369-5.712.778-8.446 1.226l-1.36.227-1.972.337-.672-3.943 1.971-.337a235.33 235.33 0 0 1 8.509-1.287l1.465-.19 1.984-.253Z" fill="#EE7773" fill-rule="nonzero"/><text id="/b" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+                              <tspan x="233.075" y="23">/b</tspan>
+                          </text><text id="/a" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+                              <tspan x="73.325" y="23">/a</tspan>
+                          </text></g><g id="controllable" class="opacity-transition" [class.opacity-active]="step >= 9" transform="translate(412 504.5)"><path id="Line" d="M2.5-2v112.5h10l-12 24-12-24h10V-2h4Z" fill="#EE7773" fill-rule="nonzero"/><text id="/c" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+                              <tspan x="19.65" y="67.5">/c</tspan>
+                          </text></g><circle id="Oval" stroke="#DE0A10" stroke-width="4" fill="#FFF" cx="413" cy="702" r="61"/><circle id="Oval" stroke="#DE0A10" stroke-width="4" fill="#FFF" cx="204" cy="181" r="61"/><circle id="Oval" stroke="#DE0A10" stroke-width="4" fill="#FFF" cx="616" cy="181" r="61"/><path id="Line" d="m90.087 40.585 2.164 2.751 46.199 58.738 12.576-9.89 8.783 42.709-39.437-18.6 12.576-9.891-46.199-58.738-2.164-2.751 5.502-4.328Z" fill="#EE7773" fill-rule="nonzero"/><path id="Line" d="M417 762v23h16l-19.5 39-19.5-39h16v-23h7Z" fill="#EE7773" fill-rule="nonzero"/><g id="Group-2" transform="translate(324 824)"><rect id="Rectangle" fill="#EE7773" x="0" y="0" width="180" height="74" rx="37"/><text id="Motor" fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal">
+                              <tspan x="56.161" y="45">Motor</tspan>
+                          </text></g><text id="Node" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+                          <tspan x="382.375" y="710">Node</tspan>
+                      </text><rect id="Rectangle" fill="#EE7773" x="0" y="0" width="180" height="74" rx="37"/><text id="Distance" fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal">
+                          <tspan x="41.136" y="45">Distance</tspan>
+                      </text><path id="Line" d="m737.175 40.561 5.264 4.614-2.307 2.632-52.625 60.045 12.033 10.546-40.37 16.478 11.04-42.183 12.033 10.546 52.625-60.046 2.307-2.632Z" fill="#EE7773" fill-rule="nonzero"/><rect id="Rectangle" fill="#EE7773" x="651" y="0" width="180" height="74" rx="37"/><text id="Line" fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal">
+                          <tspan x="716.749" y="45">Line</tspan>
+                      </text><text id="Node" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+                          <tspan x="173.375" y="189">Node</tspan>
+                      </text><text id="Node" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal" fill="#000">
+                          <tspan x="585.375" y="189">Node</tspan>
+                      </text><g id="sc" class="opacity-transition" [class.opacity-active]="step >= 2" transform="translate(277 330)" fill-rule="nonzero"><g id="Group"><rect id="Rectangle" stroke="#EE7773" stroke-width="5" fill="#FFF" x="0" y="0" width="274" height="174" rx="29"/><rect class="opacity-transition" [class.opacity-active]="step >= 6" id="Rectangle" fill="#DE0A10" x="26.5" y="29.5" width="227" height="74" rx="29"/><text id="Controller-Node" fill="#0E0E0E" font-family="FiraSans-Regular, Fira Sans" font-size="25" font-weight="normal">
+                                  <tspan x="49.661" y="143">Controller Node</tspan>
+                              </text></g><text id="Supervisory-Controll" class="opacity-transition" [class.opacity-active]="step >= 6" fill="#FFF" font-family="FiraSans-Bold, Fira Sans" font-size="25" font-weight="bold">
+                              <tspan x="68" y="66">Supervisory</tspan>
+                              <tspan x="78.95" y="94">Controller</tspan>
+                          </text></g></g></g></g></svg>
+        </app-figure>
+  </app-two-column-layout>
+</app-slide>

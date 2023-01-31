@@ -1,0 +1,24 @@
+
+.prepare-corner-animation {
+  will-change: transform;
+  transform: translate(0, 0) rotateZ(0deg);
+}
+
+.corner-animation {
+  animation: cornerRobot 5s ease-in-out 1 forwards;
+  // cubic-bezier(0,1.12,1,.02)
+}
+
+@keyframes cornerRobot {
+  0% {
+    transform: translate(0, 0) rotateZ(0deg);
+  }
+
+  50% {
+    transform: translate(435px, -210px) rotateZ(-135deg);
+  }
+
+  100% {
+    transform: translate(555px, -280px) rotateZ(-135deg);
+  }
+}

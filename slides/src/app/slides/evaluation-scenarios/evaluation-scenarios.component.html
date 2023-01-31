@@ -1,0 +1,26 @@
+<app-slide>
+  <app-title label="Scenarios"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Different <span class="emphasize">scenarios</span>
+
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Line follower</app-list-item>
+          <app-list-item [current]="step" [step]="3">Simple navigation</app-list-item>
+          <app-list-item [current]="step" [step]="4">Obstacle navigation</app-list-item>
+          <app-list-item [current]="step" [step]="5">Object finder</app-list-item>
+          <app-list-item [current]="step" [step]="6">Maze solver</app-list-item>
+          <app-list-item [current]="step" [step]="7">Push ball into goal</app-list-item>
+          <app-list-item [current]="step" [step]="8">Person follower</app-list-item>
+          <app-list-item [current]="step" [step]="9">Line follower (supervisor)</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="10"><span class="emphasize">Measure</span> memory, build time, execution time and generated lines</app-list-item>
+    </app-list>
+    <app-figure caption="Screenshots of the simulations of all scenarios." [current]="step" [step]="1">
+      <img class="image" src="/assets/simulation-scenarios.png" width="80%">
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

@@ -1,0 +1,60 @@
+<app-slide>
+  <app-title label="Robot Operating System" subTitle="Actions"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+        <app-list-item [current]="step" [step]="1">Longer running tasks</app-list-item>
+        <app-list-item [current]="step" [step]="2">Client sends a <span class="emphasize">goal</span></app-list-item>
+        <app-list-item [current]="step" [step]="3">Server accepts and provides <span class="emphasize">feedback</span></app-list-item>
+        <app-list-item [current]="step" [step]="4">Server sends a <span class="emphasize">response</span> when finished</app-list-item>
+    </app-list>
+
+    <app-figure caption="Action communication between client and server in ROS, idea from ROS2 website." [offset]="0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="550" height="541" viewBox="0 0 741 541">
+        <g fill="none" fill-rule="evenodd">
+          <rect width="214" height="340" x="296" y="87" stroke="#DE0A10" stroke-width="4" rx="37"/>
+          <path class="opacity-transition" [class.opacity-active]="step >= 4" fill="#EE7773" fill-rule="nonzero" d="M194.43797 235.75879L169.683532 271.654023 161.990361 257.68308C144.184009 267.847108 124.65428 279.44736 103.402181 292.483441 67.664071 314.405271 33.5882813 326.409253 1.17860864 328.436086L.197007331 328.494451-3.29744371 328.691458-3.69145838 321.702556-.197007331 321.505549C31.2611892 319.732024 64.5729147 308.089399 99.7420827 286.516559 121.091019 273.421078 140.714383 261.765923 158.613187 251.550699L150.86912 237.49238 194.43797 235.75879zM564.025172-.499365947L581.536995 39.4329027 565.385534 38.6192935C559.924428 91.537747 544.017104 132.452982 517.579 161.269116 485.533821 196.196666 438.908274 222.045844 377.772304 238.871115L375.915258 239.37821 372.537048 240.293468 370.706532 233.537048 374.084742 232.62179C434.939413 216.134445 481.02747 190.754063 512.421 156.536777 537.683995 129.001449 553.033174 89.6096694 558.384615 38.2662823L542.586451 37.469453 564.025172-.499365947z" transform="translate(120.5 125.5)"/>
+          <path class="opacity-transition" [class.opacity-active]="step >= 3" fill="#EE7773" fill-rule="nonzero" d="M170.379085 148.720793L213.476 155.346951 182.316925 185.848788 177.47801 170.801209C153.808836 179.909034 130.279158 191.635505 106.888405 205.983441 72.0418034 227.358419 37.6871917 261.397581 3.86559499 308.124532L2.84086132 309.544384.796477067 312.385246-4.88524557 308.296477-2.84086132 305.455616C31.8163305 257.296237 67.1586265 222.141776 103.228307 200.016559 127.097306 185.375266 151.132157 173.411037 175.332281 164.126732L170.379085 148.720793zM546.580816-.493425521L559.520749 41.1455963 543.29695 38.4890026C534.240985 68.0804809 516.554471 90.9870017 490.330049 107.073117 455.083935 128.693156 423.848005 145.720711 396.610895 158.157136L395.446039 158.687314 392.258724 160.133353 389.366647 153.758724 392.553961 152.312686C419.775364 139.962728 451.151312 122.89344 486.669951 101.106234 511.163566 86.0818007 527.684649 64.8720507 536.322813 37.3459672L521.033559 34.8419339 546.580816-.493425521z" transform="translate(101.5 121)"/>
+          <rect width="180" height="74" x="315" y="158" fill="#EE7773" rx="37"/>
+          <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="358.536" y="203">Request</tspan>
+          </text>
+          <path class="opacity-transition" [class.opacity-active]="step >= 2" fill="#EE7773" fill-rule="nonzero" d="M554.359857-4.3509857L556.350986 2.35985665 552.995565 3.35542118C522.929973 12.2759814 499.862101 21.6679007 483.827539 31.4849796 473.193323 37.9957239 459.419132 48.7743335 442.553138 63.8017208L453.432511 75.4232849 411.634992 87.8417148 426.778759 46.9526416 437.768071 58.6897149C454.978149 43.3478826 469.096751 32.2960679 480.172461 25.5150204 496.591334 15.4626496 519.799409 5.97047409 549.830924-3.00595119L551.004435-3.35542118 554.359857-4.3509857zM233.25243 83.0924432L235.407557 89.7524304 232.077563 90.8299936C180.503034 107.519159 134.33952 131.746503 93.5688019 163.515894 60.9517331 188.931791 35.083703 225.331881 15.9815223 272.780762L30.9450647 277.918395-.162360722 308.472905-5.94151348 265.254258 9.35223565 270.504248C28.9062396 221.800589 55.5386015 184.27558 89.2662548 157.994292 130.257366 126.053166 176.604007 101.621086 228.28852 84.7018022L229.922437 84.1700064 233.25243 83.0924432z" transform="translate(83.5 107.5)"/>
+          <g transform="translate(315 324)">
+            <rect width="180" height="75" fill="#EE7773" rx="37"/>
+            <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+              <tspan x="34.911" y="45.5">Response</tspan>
+            </text>
+          </g>
+          <g transform="translate(315 239)">
+            <rect width="180" height="75" fill="#EE7773" rx="37"/>
+            <text fill="#FFF" fill-rule="nonzero" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+              <tspan x="36.361" y="45.5">Feedback</tspan>
+            </text>
+          </g>
+          <circle cx="678" cy="63" r="61" fill="#FFF" stroke="#DE0A10" stroke-width="4"/>
+          <g font-family="FiraSans-Regular, Fira Sans" transform="translate(648 38)">
+            <text fill="#000" font-size="25">
+              <tspan x=".375" y="23">Node</tspan>
+            </text>
+            <text fill="#A5A5A5" font-size="18">
+              <tspan x="6.947" y="45">Client</tspan>
+            </text>
+          </g>
+          <g font-family="FiraSans-Regular, Fira Sans" transform="translate(33 453)">
+            <text fill="#000" font-size="25">
+              <tspan x=".375" y="23">Node</tspan>
+            </text>
+            <text fill="#A5A5A5" font-size="18">
+              <tspan x="4.445" y="45">Server</tspan>
+            </text>
+          </g>
+          <circle cx="63" cy="478" r="61" stroke="#DE0A10" stroke-width="4"/>
+          <text fill="#000" font-family="FiraSans-Regular, Fira Sans" font-size="25">
+            <tspan x="366.7" y="129">Action</tspan>
+          </text>
+        </g>
+      </svg>
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

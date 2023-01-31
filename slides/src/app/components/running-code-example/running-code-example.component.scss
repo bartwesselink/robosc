@@ -1,0 +1,45 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--black);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.overlay.active {
+  opacity: 0.4;
+}
+
+.code {
+  position: absolute;
+  z-index: 3;
+  background: var(--white);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 45%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  padding: 2rem;
+  flex-direction: column;
+  transition: transform 300ms ease-in-out;
+  transform: translateX(100%);
+}
+
+.code.active {
+  transform: translateX(0%);
+}
+
+app-code {
+  display: block;
+  width: 100%;
+}
+
+.paragraph {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}

@@ -1,0 +1,24 @@
+<app-slide>
+  <app-title label="Data"></app-title>
+
+  <app-running-code-example [code]="code" [start]="8" [end]="12" [current]="step"></app-running-code-example>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1"><span class="emphasize">Basic</span> data types</app-list-item>
+      <app-list-item [current]="step" [step]="2">
+        <span class="emphasize">Complex</span> data types
+        <app-list>
+          <app-list-item [current]="step" [step]="3">Objects</app-list-item>
+          <app-list-item [current]="step" [step]="4">Enums</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="5"><span class="emphasize">Provide</span> statements</app-list-item>
+      <app-list-item [current]="step" [step]="6">Variables</app-list-item>
+      <app-list-item [current]="step" [step]="7"><span class="emphasize">Interfaces</span> to link external definitions</app-list-item>
+    </app-list>
+    <app-figure caption="Partial and simplified of the metamodel of data.">
+      <img class="image" src="/assets/concepts-data.svg" width="100%">
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>

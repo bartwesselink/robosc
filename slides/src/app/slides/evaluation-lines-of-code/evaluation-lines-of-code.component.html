@@ -1,0 +1,34 @@
+<app-slide>
+  <app-title label="Generated lines"></app-title>
+
+  <app-two-column-layout>
+    <app-list>
+      <app-list-item [current]="step" [step]="1">
+        Evaluated <span class="emphasize">ratio</span> between DSL lines of code and
+        <app-list>
+          <app-list-item [current]="step" [step]="2">Lines of CIF code</app-list-item>
+          <app-list-item [current]="step" [step]="3">Lines of ROS1 code</app-list-item>
+          <app-list-item [current]="step" [step]="4">Lines of ROS2 code</app-list-item>
+        </app-list>
+      </app-list-item>
+      <app-list-item [current]="step" [step]="5">About 2-3 times <span class="emphasize">more</span> CIF-code generated</app-list-item>
+      <app-list-item [current]="step" [step]="6">
+        About 20 times <span class="emphasize">more</span> ROS-code generated
+        <app-list>
+          <app-list-item [current]="step" [step]="7">Includes CIF-controller code</app-list-item>
+        </app-list>
+      </app-list-item>
+    </app-list>
+    <app-figure caption="Generated source lines of code for all of the scenarios.">
+      <canvas baseChart
+            width="650"
+            height="700"
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            type="bar">
+      </canvas>
+    </app-figure>
+  </app-two-column-layout>
+</app-slide>
