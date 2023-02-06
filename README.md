@@ -12,6 +12,9 @@ Currently, the DSL supports the generation of controllers for:
 ## Video
 [Link to a video of a line follower and maze solver running with RoboSC](scenarios/scenarios.mp4)
 
+## Grammar
+The grammar of the language (in Xtext-format) can be found [here](language/nl.tue.robotsupervisorycontrollerdsl/src/nl/tue/robotsupervisorycontrollerdsl/RobotSupervisoryControllerDSL.xtext).
+
 ## Concepts
 This section contains all the concepts of the language and how they should be used. Throughout this section, a running example will be considered to make the concepts that are explained more concrete. The ontology of this robot consists of two motors that allow the robot to move in the two directions. Furthermore, it contains a sensor that can find a line, and if it has found one it can measure the offset of that line to the center of the robot. The robot is also equipped with a distance sensor which measures the distance to an object in front of the robot. If there is an obstacle, the robot can use its grabber to pick up the obstacle. Lastly, a light bulb is attached to the robot which can be used to represent the internal state of the robot.
 
